@@ -4,13 +4,13 @@ import { composeScenes } from "../pipeline/resolveScene";
 import { parseFacts, type Facts } from "../schema/facts";
 import { parseStoryboard, type Storyboard } from "../schema/storyboard";
 import {
-  assertCuesSupported, assertFactsTraceable, assertHeadlinesFit, assertMapRegions, assertTextScenes, assertVariety,
-  assertYears, sceneStamps,
+  assertCuesSupported, assertDisputedHedged, assertFactsTraceable, assertHeadlinesFit, assertMapRegions, assertSources,
+  assertSpokenFigures, assertTextScenes, assertVariety, assertYears, sceneStamps,
 } from "../schema/validate";
 import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
 import { stampTrack } from "../devices/tracks";
 import { synthWords } from "../voice/synthWords";
-import { adviceLint } from "./adviceLint";
+import { adviceLint, tickerHits } from "./adviceLint";
 import { TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
 
 export type Issue = { stage: string; message: string };
@@ -52,6 +52,12 @@ export function checkStoryboard(storyboardJson: unknown, factsJson: unknown): Ch
   perScene("map regions", assertMapRegions);
   perScene("year counter", assertYears);
   if (facts) perScene("fact tracing", (single) => assertFactsTraceable(single, facts));
+  if (facts) perScene("spoken figures", (single) => assertSpokenFigures(single, facts));
+  if (facts) perScene("disputed", (single) => assertDisputedHedged(single, facts));
+  if (facts) attempt(issues, "sources", () => assertSources(facts));
+  for (const hit of tickerHits(sb)) {
+    issues.push({ stage: "tickers", message: `Scene "${hit.sceneId}" shows or says the ticker "${hit.ticker}"; the brand never names tickers` });
+  }
   if (facts) {
     perScene("source stamp", (single) => {
       const [scene] = single.scenes;

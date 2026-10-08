@@ -8,7 +8,10 @@ import type { VerifyResult, VerifyStatus } from "./verifyTypes";
 export type ReviewModel = {
   title: string;
   scenes: { id: string; type: string; narration: string; image?: string; cues: string[]; factIds: string[] }[];
-  facts: { id: string; claim: string; sourceName: string; sourceUrl: string; verify?: VerifyStatus | "stale"; flags: string[] }[];
+  facts: {
+    id: string; claim: string; sourceName: string; sourceUrl: string; tier?: string; disputed: boolean;
+    verify?: VerifyStatus | "stale"; evidence: string[]; archiveUrl?: string; flags: string[];
+  }[];
   warnings: string[];
   stats: { scenes: number; words: number; estimatedSeconds: number };
 };
@@ -54,7 +57,7 @@ function untracedTextWarnings(scene: Scene): string[] {
 
 /** A verify result is stale when the numbers it checked are no longer the fact's numbers (the fact was edited after verify-facts ran). */
 function isStale(fact: Facts["facts"][number], result: VerifyResult): boolean {
-  const checked = [...result.found, ...result.missing].sort();
+  const checked = [...result.found, ...result.missing, ...(result.unverifiable ?? [])].sort();
   if (checked.length === 0) return false;
   const now = factTokens(fact).filter((t) => !t.includes(",")).sort();
   return checked.length !== now.length || checked.some((t, i) => t !== now[i]);
@@ -95,7 +98,11 @@ export function buildReviewModel(
       claim: f.claim,
       sourceName: f.source.name,
       sourceUrl: f.source.url,
+      tier: f.source.tier,
+      disputed: f.disputed === true,
       verify: ((v) => (v && isStale(f, v) ? "stale" : v?.status))(verifyById.get(f.id)),
+      evidence: (verifyById.get(f.id)?.evidence ?? []).map((ev) => `${ev.token}: "${ev.sentence}"`),
+      archiveUrl: verifyById.get(f.id)?.archiveUrl,
       flags: PLACEHOLDER.test(f.claim) ? ["placeholder wording in the claim: replace with the verified claim"] : [],
     })),
     warnings,
@@ -121,7 +128,11 @@ export function renderReviewHtml(model: ReviewModel): string {
   const facts = model.facts
     .map((f) => {
       const link = HTTP_URL.test(f.sourceUrl) ? `<a href="${e(f.sourceUrl)}" rel="noopener noreferrer">${e(f.sourceName)}</a>` : e(f.sourceName);
-      return `<tr><td>${e(f.id)}</td><td>${e(f.claim)}${f.flags.map((x) => `<br><b>${e(x)}</b>`).join("")}</td><td>${link}</td><td>${e(f.verify ?? "not checked")}</td></tr>`;
+      const snapshot = f.archiveUrl && HTTP_URL.test(f.archiveUrl) ? `<br><a href="${e(f.archiveUrl)}" rel="noopener noreferrer">snapshot</a>` : "";
+      const evidence = f.evidence.length ? `<ul class="meta">${f.evidence.map((x) => `<li>${e(x)}</li>`).join("")}</ul>` : "";
+      const tier = f.tier ? `<br><small>${e(f.tier)}</small>` : "";
+      const disputed = f.disputed ? "<br><b>disputed: the narration must say so</b>" : "";
+      return `<tr><td>${e(f.id)}</td><td>${e(f.claim)}${disputed}${f.flags.map((x) => `<br><b>${e(x)}</b>`).join("")}</td><td>${link}${tier}${snapshot}</td><td>${e(f.verify ?? "not checked")}${evidence}</td></tr>`;
     })
     .join("");
   const warnings = model.warnings.length

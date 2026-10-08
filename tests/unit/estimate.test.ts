@@ -5,7 +5,8 @@ import ancientSb from "../../fixtures/ancient.storyboard.json";
 import inflationSb from "../../fixtures/calibration/us-inflation.storyboard.json";
 import ruleSb from "../../fixtures/calibration/rule-of-72.storyboard.json";
 import romanSb from "../../fixtures/calibration/roman-republic.storyboard.json";
-import { BOOKEND_SECONDS, TARGET_SECONDS, WORDS_PER_SECOND, countWords, estimateSeconds, narrationSeconds, spokenWordCount, targetWords } from "../../src/skill/estimate";
+import no004Sb from "../../fixtures/no-004/rule-of-72.storyboard.json";
+import { ANDREW_WORDS_PER_SECOND, BOOKEND_SECONDS, TARGET_SECONDS, WORDS_PER_SECOND, countWords, estimateSeconds, narrationSeconds, spokenWordCount, targetWords } from "../../src/skill/estimate";
 
 const narrations = (sb: { scenes: { narration: string }[] }) => sb.scenes.map((s) => s.narration);
 
@@ -14,19 +15,19 @@ describe("estimate", () => {
     expect(countWords("  one  two\nthree ")).toBe(3);
     expect(countWords("")).toBe(0);
   });
-  it("matches the measured real-voice narration lengths of the six real runs within 12 percent", () => {
+  it("matches the measured narration lengths of the six real en-US-AndrewNeural runs within 12 percent", () => {
     const measured: [{ scenes: { narration: string }[] }, number][] = [
       [financeSb, 22.9], [historySb, 20.9], [ancientSb, 29.6], [inflationSb, 57.3], [ruleSb, 57.5], [romanSb, 58.9],
     ];
     for (const [sb, seconds] of measured) {
-      expect(Math.abs(narrationSeconds(narrations(sb)) - seconds) / seconds).toBeLessThan(0.12);
+      expect(Math.abs(narrationSeconds(narrations(sb), ANDREW_WORDS_PER_SECOND) - seconds) / seconds).toBeLessThan(0.12);
     }
   });
-  it("adds the fixed 2 s open and 3 s close to the narration", () => {
-    expect(BOOKEND_SECONDS).toBe(5);
-    expect(estimateSeconds(["one two three"])).toBeCloseTo(5 + narrationSeconds(["one two three"]));
+  it("adds the 2 s open and the measured 4.6 s door plate to the narration", () => {
+    expect(BOOKEND_SECONDS).toBeCloseTo(6.6);
+    expect(estimateSeconds(["one two three"])).toBeCloseTo(6.6 + narrationSeconds(["one two three"]));
   });
-  it("targetWords gives a script length that estimates inside the 65-70 s window, about 160 to 180 words", () => {
+  it("targetWords gives a script length that estimates inside the 65-70 s window, about 145 to 165 words", () => {
     for (const scenes of [6, 8, 10]) {
       const words = targetWords(scenes);
       const even = Array.from({ length: scenes }, () => "w ".repeat(Math.round(words / scenes)).trim());
@@ -34,9 +35,12 @@ describe("estimate", () => {
       expect(s).toBeGreaterThanOrEqual(TARGET_SECONDS.min);
       expect(s).toBeLessThanOrEqual(TARGET_SECONDS.max);
     }
-    expect(WORDS_PER_SECOND).toBe(2.85);
-    expect(targetWords(8)).toBeGreaterThanOrEqual(160);
-    expect(targetWords(8)).toBeLessThanOrEqual(180);
+    expect(WORDS_PER_SECOND).toBe(2.66);
+    expect(targetWords(8)).toBeGreaterThanOrEqual(145);
+    expect(targetWords(8)).toBeLessThanOrEqual(165);
+  });
+  it("matches the real en-GB-RyanNeural run of No. 004 (69.2 s) within 2 percent", () => {
+    expect(Math.abs(estimateSeconds(narrations(no004Sb)) - 69.2) / 69.2).toBeLessThan(0.02);
   });
 });
 

@@ -1,15 +1,24 @@
 import { describe, expect, it } from "vitest";
 import facts from "../../fixtures/finance.facts.json";
 import storyboard from "../../fixtures/finance.storyboard.json";
+import no004Facts from "../../fixtures/no-004/rule-of-72.facts.json";
+import no004Sb from "../../fixtures/no-004/rule-of-72.storyboard.json";
 import { checkStoryboard, formatReport } from "../../src/skill/check";
 
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes a valid storyboard and reports stats and a length warning when outside 65-70 s", () => {
-    const report = checkStoryboard(storyboard, facts);
+  it("passes the No. 004 reference video with no issues and an estimate inside 65-70 s", () => {
+    const report = checkStoryboard(no004Sb, no004Facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
+    expect(report.stats?.scenes).toBe(7);
+    expect(report.warnings).toEqual([]);
+  });
+
+  it("holds the older finance demo to the Lombard Row source rules and warns on its length", () => {
+    const report = checkStoryboard(storyboard, facts);
+    expect(new Set(report.issues.map((i) => i.stage))).toEqual(new Set(["sources", "spoken figures"]));
     expect(report.stats?.scenes).toBe(5);
     expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 65-70 s/);
   });

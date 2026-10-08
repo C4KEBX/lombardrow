@@ -31,6 +31,8 @@ const sceneBase = {
   year: z.number().int().min(-5000).max(2100).optional(),
   /** A fact whose source stamps this scene when the scene has no factId of its own (e.g. a title naming a year). */
   sourceFactId: z.string().min(1).optional(),
+  /** Facts behind the figures the narration speaks. Every number or year said aloud must match a fact the scene names. */
+  speaks: z.array(z.string().min(1)).min(1).optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -307,7 +309,7 @@ export function factIdsOf(scene: Scene): string[] {
       default: return [scene.props.factId];
     }
   })();
-  return scene.sourceFactId ? [...own, scene.sourceFactId] : own;
+  return [...new Set([...own, ...(scene.sourceFactId ? [scene.sourceFactId] : []), ...(scene.speaks ?? [])])];
 }
 
 export function parseStoryboard(input: unknown): Storyboard {

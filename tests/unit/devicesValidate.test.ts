@@ -31,10 +31,11 @@ describe("year counter rules", () => {
 describe("source stamps", () => {
   it("uses the fact's short stamp, else its source name", () => {
     const stamps = sceneStamps(parseStoryboard(storyboard), parseFacts(facts));
-    expect(stamps.venice).toBe("Source: Pacioli, Summa de arithmetica (1494)");
+    expect(stamps.venice).toBe("Source: British Actuarial Journal, 2019");
     expect(stamps.growth).toBe("Source: SEC, Investor.gov");
     expect(stamps.exact).toBe("Source: SEC, Investor.gov");
-    expect(stamps.hook).toBeUndefined();
+    expect(stamps.hook).toBe("Source: British Actuarial Journal, 2019");
+    expect(stamps.caveat).toBeUndefined();
   });
   it("requires a source for a scene that shows a year", () => {
     const sb = clone(storyboard);
@@ -51,8 +52,9 @@ describe("the No. 004 test video", () => {
     expect(built.totalFrames).toBe(built.close.startFrame + 90);
     expect(built.years).toEqual([expect.objectContaining({ from: 1494, to: 1494, fadeIn: true, fadeOut: true })]);
     expect(built.stamps.map((s) => s.text)).toEqual([
-      "Source: Pacioli, Summa de arithmetica (1494)",
+      "Source: British Actuarial Journal, 2019",
       "Source: SEC, Investor.gov",
+      "Source: SEC, Investor.gov; British Actuarial Journal, 2019",
     ]);
   });
 });

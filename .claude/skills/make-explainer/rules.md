@@ -49,14 +49,19 @@ Countries lit on their spoken names (modern borders, shown as approximate). `reg
 
 ## Narration style
 
-- About 170 words in total is the target for a 65-70 second video; `check` estimates it, open and close included.
+- About 155 words in total is the target for a 65-70 second video in the brand voice (No. 004: 158 words ran 69.2 s); `check` estimates it, open and close included, and `npm run voice` measures it.
 - Write numbers as digits in narration ("1494", "8%", "$1,000", "1920s", "19th"); captions show them as written and the voice reads a spelled-out form ("fourteen ninety-four", "eight percent", "one thousand dollars"). A four-digit number from 1000 to 2099 without a comma is read as a year; write "1,500" for a count. Spelled-out numbers still work. Cue words may be digit tokens ("1494").
 - Short sentences. One idea per scene. Scene 1 is a hook, the last scene lands the claim. Narration must contain every cue word.
 
 ## Facts
 
-`facts.json`: `{ "facts": [ { "id", "claim", "value"?, "dataset"?, "source": { "name", "url" } } ] }`. `url` is the page you opened. `claim` states what the source says, with units and period. Scene data must equal the fact exactly; `check` fails otherwise. Chart titles, callout text, title headlines, big-number and compare labels, and every number spoken in narration (also shown as captions) are not traced against facts; `check` cannot catch a wrong spoken figure, so say only figures the fact states. The review sheet flags digits in titles, labels and callouts.
+`facts.json`: `{ "facts": [ { "id", "claim", "value"?, "dataset"?, "source": { "name", "stamp"?, "url", "tier" }, "corroboration"?: [ { "name", "url", "tier" } ], "disputed"? } ] }`. `url` is the page you opened. `claim` states what the source says, with units and period. Scene data must equal the fact exactly; `check` fails otherwise.
+
+- **Spoken figures are traced.** Every number and year the narration says (digits or words) must match a number in a fact the scene names: its data fact, `sourceFactId`, or `speaks: ["fact-id", ...]`. A figure may be rounded to one or two significant figures ("about two thousand" for 1,999). Put arithmetic you say aloud in the claim ("1494, more than five hundred years before 2026"). A lone "one" is not counted.
+- **Source tiers.** Every source has `tier`: `primary` (Federal Reserve, SEC, Treasury, BLS, central bank archives, original laws and documents), `scholarly` (university press books, peer-reviewed journals, dictionaries of record) or `secondary` (major newspapers, established encyclopedias such as Wikipedia). A secondary source needs `corroboration` from a different site. The video cites at least 3 sites, at least 1 primary or scholarly. AI output, uncited blogs, social posts and listicles are never sources.
+- **Disputed stories.** Mark the fact `"disputed": true`; every scene that uses it must say so ("the popular story is", "historians disagree", "probably"), or cut it.
+- Still not traced: chart titles, callout text, title headlines, big-number and compare labels. The review sheet flags digits in them.
 
 ## Finance and investing
 
-Educational and historical only. Past data stays in the past tense with its period. No recommendations, no predictions, no certainty words ("guaranteed", "risk-free"). If the topic is a product or strategy, describe how it works and its trade-offs, not whether to use it.
+Educational and historical only. Past data stays in the past tense with its period. No recommendations, no predictions, no certainty words ("guaranteed", "risk-free"). If the topic is a product or strategy, describe how it works and its trade-offs, not whether to use it. Never name a ticker ("$AAPL", "NYSE: GE"), spoken or on screen; `check` fails on one. Avoid the guidelines' Don't phrasing ("you need to start investing", "experts say", "the best way to", "a long time ago"); `check` warns on it.

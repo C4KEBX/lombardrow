@@ -19,7 +19,10 @@
       "props": {
         "headline": "How fast money doubles",
         "kicker": "Compound interest"
-      }
+      },
+      "speaks": [
+        "f-pacioli"
+      ]
     },
     {
       "id": "venice",
@@ -54,6 +57,9 @@
           "do": "emphasize",
           "text": "rate"
         }
+      ],
+      "speaks": [
+        "f-8rule"
       ]
     },
     {
@@ -86,7 +92,10 @@
             "y": 7988
           }
         ]
-      }
+      },
+      "speaks": [
+        "f-8rule"
+      ]
     },
     {
       "id": "exact",
@@ -138,7 +147,11 @@
       "props": {
         "headline": "Divide, then double",
         "kicker": "Rule of seventy two"
-      }
+      },
+      "speaks": [
+        "f-8rule",
+        "f-pacioli"
+      ]
     }
   ]
 }

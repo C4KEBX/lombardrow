@@ -118,3 +118,24 @@ describe("renderReviewHtml", () => {
     expect(() => renderReviewHtml(bad)).toThrow(/data URI/);
   });
 });
+
+describe("review sheet evidence", () => {
+  it("shows each source's tier, snapshot link and the sentence where each number was found", () => {
+    const verify = [{
+      factId: "f-cpi", url: fx.facts.find((f) => f.id === "f-cpi")!.source.url, status: "supported" as const,
+      found: factTokens(fx.facts.find((f) => f.id === "f-cpi")!).filter((t) => !t.includes(",") && !/^\d{1,2}$/.test(t)),
+      missing: [], unverifiable: factTokens(fx.facts.find((f) => f.id === "f-cpi")!).filter((t) => /^\d{1,2}$/.test(t)),
+      evidence: [{ token: "3.2", sentence: "Prices <rose> 3.2 percent." }],
+      archiveUrl: "https://web.archive.org/web/20261008000000/https://www.bls.gov/cpi/",
+    }];
+    const withTier = parseFacts({ facts: fx.facts.map((f) => (f.id === "f-cpi" ? { ...f, source: { ...f.source, tier: "primary" } } : f)) });
+    const model = buildReviewModel(sb, withTier, { images, verify });
+    const cpi = model.facts.find((f) => f.id === "f-cpi")!;
+    expect(cpi.verify).toBe("supported");
+    expect(cpi.tier).toBe("primary");
+    const html = renderReviewHtml(model);
+    expect(html).toContain("3.2: &quot;Prices &lt;rose&gt; 3.2 percent.&quot;");
+    expect(html).toContain('href="https://web.archive.org/web/20261008000000/https://www.bls.gov/cpi/"');
+    expect(html).toContain("<small>primary</small>");
+  });
+});
