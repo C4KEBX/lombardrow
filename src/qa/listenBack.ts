@@ -9,18 +9,24 @@ type ExpectedWord = { word: string; written: string; captionMs?: number; sceneId
 
 export type Mismatch = { sceneId: string; atMs?: number; expected: string; heard: string; number: boolean };
 export type Drift = { sceneId: string; word: string; captionMs: number; heardMs: number };
-export type ListenBackReport = { words: number; heard: number; mismatches: Mismatch[]; drift: Drift[] };
+export type ListenBackReport = { words: number; heard: number; offsetMs: number; mismatches: Mismatch[]; drift: Drift[] };
 
-/** Captions more than this far from the voice read as out of sync. */
-export const DRIFT_MS = 300;
+/**
+ * Captions more than this far from the voice read as out of sync. Measured after removing the
+ * transcript's typical offset: whisper's DTW times run a steady 200 to 350 ms behind the voice.
+ */
+export const DRIFT_MS = 400;
 
-/** Spoken words in comparison form: numbers spelled out as the voice says them, lowercase, hyphens split. */
+const SCALE_WORDS = new Set(["hundred", "thousand", "million", "billion", "trillion"]);
+
+/** Spoken words in comparison form: numbers spelled out as the voice says them, lowercase, hyphens split, "a thousand" as "one thousand". */
 export function spokenWords(text: string): string[] {
-  return spellNarration(text, PRONUNCIATIONS)
+  const words = spellNarration(text, PRONUNCIATIONS)
     .spoken.toLowerCase()
     .split(/[\s-]+/)
-    .map((w) => w.replace(/[^\p{L}\p{N}']/gu, "").replace(/'s$/, "s"))
+    .map((w) => w.replace(/[^\p{L}\p{N}']/gu, "").replace(/^'+|'+$/g, "").replace(/'s$/, "s"))
     .filter(Boolean);
+  return words.map((w, i) => (w === "a" && SCALE_WORDS.has(words[i + 1]) ? "one" : w));
 }
 
 const toMs = (stamp: string): number => {
@@ -29,11 +35,35 @@ const toMs = (stamp: string): number => {
   return ((Number(m[1]) * 60 + Number(m[2])) * 60 + Number(m[3])) * 1000 + Number(m[4]);
 };
 
-/** Words from whisper.cpp's `-oj` JSON (run with `-ml 1 -sow` so each segment is one word). */
+type WhisperToken = { text: string; offsets?: { from: number; to: number }; t_dtw?: number };
+type WhisperSegment = { text?: string; offsets?: { from: number; to: number }; timestamps?: { from: string; to: string }; tokens?: WhisperToken[] };
+
+/** Words from one segment's tokens, timed by DTW (`--dtw`, in centiseconds): a token starting with a space starts a word. */
+function wordsFromTokens(tokens: readonly WhisperToken[]): HeardWord[] {
+  const out: HeardWord[] = [];
+  for (const t of tokens) {
+    if (t.text.startsWith("[_")) continue;
+    const ms = (t.t_dtw ?? -1) >= 0 ? (t.t_dtw as number) * 10 : (t.offsets?.from ?? 0);
+    const last = out[out.length - 1];
+    if (last && !t.text.startsWith(" ")) {
+      last.text += t.text;
+      last.endMs = ms;
+    } else {
+      out.push({ text: t.text.trim(), startMs: ms, endMs: ms });
+    }
+  }
+  return out.filter((w) => /[\p{L}\p{N}]/u.test(w.text));
+}
+
+/**
+ * Words from whisper.cpp JSON. With `-ojf --dtw <model>` (full JSON with token-level DTW times) each
+ * word is timed from its tokens; with plain `-oj -ml 1` each segment is one word.
+ */
 export function parseWhisperJson(json: unknown): HeardWord[] {
   const segments = (json as { transcription?: unknown }).transcription;
   if (!Array.isArray(segments)) throw new Error("whisper JSON has no transcription array");
-  return segments.flatMap((seg: { text?: string; offsets?: { from: number; to: number }; timestamps?: { from: string; to: string } }) => {
+  return (segments as WhisperSegment[]).flatMap((seg) => {
+    if (seg.tokens?.some((t) => (t.t_dtw ?? -1) >= 0)) return wordsFromTokens(seg.tokens);
     const text = (seg.text ?? "").trim();
     if (!text || /^\[.*\]$/.test(text)) return [];
     const startMs = seg.offsets?.from ?? toMs(seg.timestamps?.from ?? "");
@@ -58,7 +88,8 @@ export function expectedWords(
     }
   }
   for (const word of spokenWords(signoff)) out.push({ word, written: word, sceneId: "door", first: true });
-  return out;
+  // "A thousand" is two caption words; the voice may be heard as "one thousand".
+  return out.map((w, i) => (w.word === "a" && SCALE_WORDS.has(out[i + 1]?.word) ? { ...w, word: "one" } : w));
 }
 
 type Op = { kind: "same" | "sub" | "del" | "ins"; e?: number; h?: number };
@@ -94,10 +125,11 @@ function align(expected: readonly string[], heard: readonly string[]): Op[] {
 
 /** Compares the transcript of final.mp4 with the script: wrong or missing words (numbers marked) and captions out of sync. */
 export function listenBack(expected: readonly ExpectedWord[], heardWords: readonly HeardWord[]): ListenBackReport {
-  const heard = heardWords.flatMap((w) => spokenWords(w.text).map((word) => ({ word, startMs: w.startMs })));
+  // A heard "9.006" becomes four spoken words; only the first carries the time whisper gave it.
+  const heard = heardWords.flatMap((w) => spokenWords(w.text).map((word, k) => ({ word, startMs: w.startMs, first: k === 0 })));
   const ops = align(expected.map((e) => e.word), heard.map((h) => h.word));
   const mismatches: Mismatch[] = [];
-  const drift: Drift[] = [];
+  const timed: { e: ExpectedWord; heardMs: number }[] = [];
   let run: Op[] = [];
   let nextE = 0;
   const flush = () => {
@@ -122,15 +154,18 @@ export function listenBack(expected: readonly ExpectedWord[], heardWords: readon
       const e = expected[op.e as number];
       const h = heard[op.h as number];
       // Only the first spoken word of each caption word carries the caption's time.
-      if (e.captionMs !== undefined && e.first && Math.abs(h.startMs - e.captionMs) > DRIFT_MS) {
-        drift.push({ sceneId: e.sceneId, word: e.written, captionMs: Math.round(e.captionMs), heardMs: Math.round(h.startMs) });
-      }
+      if (e.captionMs !== undefined && e.first && h.first) timed.push({ e, heardMs: h.startMs });
     } else {
       run.push(op);
     }
   }
   flush();
-  return { words: expected.length, heard: heard.length, mismatches, drift };
+  const deltas = timed.map((t) => t.heardMs - (t.e.captionMs as number)).sort((a, b) => a - b);
+  const offsetMs = deltas.length ? deltas[Math.floor(deltas.length / 2)] : 0;
+  const drift = timed
+    .filter((t) => Math.abs(t.heardMs - (t.e.captionMs as number) - offsetMs) > DRIFT_MS)
+    .map((t): Drift => ({ sceneId: t.e.sceneId, word: t.e.written, captionMs: Math.round(t.e.captionMs as number), heardMs: Math.round(t.heardMs) }));
+  return { words: expected.length, heard: heard.length, offsetMs: Math.round(offsetMs), mismatches, drift };
 }
 
 const clock = (ms?: number): string => (ms === undefined ? "--:--" : `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}.${Math.floor((ms % 1000) / 100)}`);
@@ -148,6 +183,8 @@ export function renderListenBack(report: ListenBackReport): string {
       : ["None."]),
     "",
     `## Captions out of sync by more than ${DRIFT_MS} ms (${report.drift.length})`,
+    "",
+    `Measured against the transcript's typical offset of ${report.offsetMs} ms.`,
     "",
     ...(report.drift.length
       ? report.drift.map((d) => `- ${d.sceneId} "${d.word}": caption at ${clock(d.captionMs)}, heard at ${clock(d.heardMs)}`)
