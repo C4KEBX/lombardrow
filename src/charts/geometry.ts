@@ -33,6 +33,19 @@ export function valueAtX(points: readonly DataPoint[], x: number): number {
   return last.y;
 }
 
+/**
+ * The value of the last data point the cursor has reached. The readout steps from one sourced point
+ * to the next instead of counting through in-between values no fact states.
+ */
+export function reachedValueAtX(points: readonly DataPoint[], x: number): number {
+  let value = points[0].y;
+  for (const p of points) {
+    if (p.x <= x + 1e-9) value = p.y;
+    else break;
+  }
+  return value;
+}
+
 export function visibleMax(points: readonly DataPoint[], x: number): number {
   let max = valueAtX(points, x);
   for (const p of points) {
