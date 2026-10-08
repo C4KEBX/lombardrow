@@ -91,7 +91,7 @@
     {
       "id": "exact",
       "type": "compare",
-      "narration": "Is it accurate? At eight percent the rule says nine years. The exact answer is nine point zero zero six.",
+      "narration": "Is it accurate? The rule says nine years. The exact answer is nine point zero zero six.",
       "props": {
         "title": "Years to double at 8%",
         "suffix": " yrs",
@@ -111,7 +111,7 @@
     {
       "id": "caveat",
       "type": "kinetic-text",
-      "narration": "It is an estimate, not a promise. Real returns move year to year, and the rule leaves out taxes and fees.",
+      "narration": "It's an estimate, not a promise. Real returns move year to year, and the rule leaves out taxes and fees.",
       "props": {
         "lines": [
           "An estimate",
