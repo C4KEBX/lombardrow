@@ -15,7 +15,7 @@
     {
       "id": "hook",
       "type": "title",
-      "narration": "How long does it take money to double? There is a shortcut lenders have used for over five hundred years, and you can do it in your head.",
+      "narration": "How long does it take money to double? Lenders have used a shortcut for over five hundred years, and you can do it in your head.",
       "props": {
         "headline": "How fast money doubles",
         "kicker": "Compound interest"
@@ -26,7 +26,7 @@
       "type": "title",
       "year": 1494,
       "sourceFactId": "f-pacioli",
-      "narration": "It shows up in a book printed in Venice in fourteen ninety-four. The mathematician Luca Pacioli set it down as a rule of thumb for merchants lending at interest.",
+      "narration": "It shows up in a book printed in Venice in 1494. Luca Pacioli set it down as a rule of thumb for merchants lending at interest.",
       "props": {
         "headline": "A rule from Venice",
         "kicker": "Luca Pacioli"
@@ -60,7 +60,7 @@
       "id": "growth",
       "type": "line-chart",
       "ground": "parchment",
-      "narration": "At eight percent, seventy two over eight is nine. So a thousand dollars becomes about two thousand in nine years, four thousand in eighteen, and eight thousand in twenty seven.",
+      "narration": "At eight percent, seventy two over eight is nine. A thousand dollars becomes about two thousand in nine years, four thousand in eighteen, and eight thousand in twenty seven.",
       "props": {
         "title": "$1,000 at 8% a year",
         "xFormat": "number",
@@ -91,7 +91,7 @@
     {
       "id": "exact",
       "type": "compare",
-      "narration": "Is it accurate? At eight percent the rule says nine years. The exact answer is nine point zero zero six. The gap is tiny.",
+      "narration": "Is it accurate? At eight percent the rule says nine years. The exact answer is nine point zero zero six.",
       "props": {
         "title": "Years to double at 8%",
         "suffix": " yrs",
@@ -111,7 +111,7 @@
     {
       "id": "caveat",
       "type": "kinetic-text",
-      "narration": "It is an estimate, not a promise. Real returns move from year to year, and the rule leaves out taxes and fees.",
+      "narration": "It is an estimate, not a promise. Real returns move year to year, and the rule leaves out taxes and fees.",
       "props": {
         "lines": [
           "An estimate",
