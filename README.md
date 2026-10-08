@@ -2,7 +2,7 @@
 
 Video pipeline for Lombard Row, a faceless channel of 65 to 70 second animated finance-history explainers ("How money works, and how it got that way"). Remotion renders, Edge TTS narrates, ffmpeg finishes the audio, and Claude Code does the research and writing.
 
-The engine is ported from [motionexplainers](https://github.com/C4KEBX/motionexplainers) at commit `4a48273`. Its technical handoff is in `docs/engine/HANDOFF.md`, with the original spec, plans and spike measurements beside it. Until the Lombard Row brand layer lands, everything below still describes the ported engine (55 to 60 s, bold-flat theme).
+The engine is ported from [motionexplainers](https://github.com/C4KEBX/motionexplainers) at commit `4a48273`. Its technical handoff is in `docs/engine/HANDOFF.md`, with the original spec, plans and spike measurements beside it. Phase 1 of the Lombard Row build replaced the bold-flat look with the brand theme: Ledger Ink, Parchment and Banker's Green grounds (`meta.paletteLead`, or `ground` per scene), Brass as the single accent, Libre Caslon Text and Inter bundled in `public/fonts` (SIL OFL), and the content area and caption box from `src/brand/devices.json` (spec in `docs/brand/DEVICES.md`). Renders use every core but one; set `RENDER_CONCURRENCY` (a count or a percentage) to change that. The rest of this README still describes the ported engine (55 to 60 s) until later phases update it.
 
 ## One-time setup
 

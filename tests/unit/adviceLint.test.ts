@@ -5,7 +5,7 @@ import { adviceLint } from "../../src/skill/adviceLint";
 const board = (narration: string) =>
   parseStoryboard({
     schemaVersion: 1,
-    meta: { title: "t", theme: "bold-flat", voice: "v" },
+    meta: { title: "t", theme: "lombard-row", voice: "v" },
     audio: { music: null },
     scenes: [{ id: "s", type: "title", narration, props: { headline: "H" } }],
   });

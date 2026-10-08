@@ -15,7 +15,16 @@
         },
         "theme": {
           "type": "string",
-          "const": "bold-flat"
+          "const": "lombard-row"
+        },
+        "paletteLead": {
+          "default": "ink",
+          "type": "string",
+          "enum": [
+            "ink",
+            "parchment",
+            "green"
+          ]
         },
         "voice": {
           "type": "string",
@@ -25,6 +34,7 @@
       "required": [
         "title",
         "theme",
+        "paletteLead",
         "voice"
       ],
       "additionalProperties": false
@@ -104,6 +114,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -188,6 +206,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -306,6 +332,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -460,6 +494,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -616,6 +658,14 @@
                   "additionalProperties": false
                 }
               },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
+              },
               "type": {
                 "type": "string",
                 "const": "kinetic-text"
@@ -710,6 +760,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -859,6 +917,14 @@
                   "additionalProperties": false
                 }
               },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
+              },
               "type": {
                 "type": "string",
                 "const": "quote"
@@ -948,6 +1014,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",
@@ -1069,6 +1143,14 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
               },
               "type": {
                 "type": "string",

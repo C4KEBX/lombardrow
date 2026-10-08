@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { QUOTE_WORD_GAP_EM, TITLE_WORD_GAP_EM, fitTitleFontSize } from "../../src/design/layout";
+import { DISPLAY_CHAR_WIDTH_EM, QUOTE_WORD_GAP_EM, TITLE_WORD_GAP_EM, fitTitleFontSize } from "../../src/design/layout";
 
 const LANE_W = 960;
 const LANE_H = 1240;
@@ -16,7 +16,7 @@ describe("fitTitleFontSize", () => {
   });
   it("shrinks so the longest word fits the lane width", () => {
     const size = fitTitleFontSize("Bankruptcies", LANE_W, LANE_H, 190);
-    expect("Bankruptcies".length * size * 0.75).toBeLessThanOrEqual(LANE_W);
+    expect("Bankruptcies".length * size * DISPLAY_CHAR_WIDTH_EM).toBeLessThanOrEqual(LANE_W);
   });
   it("throws when even the minimum size cannot fit", () => {
     expect(() => fitTitleFontSize("Pneumonoultramicroscopicsilicovolcanoconiosis", LANE_W, LANE_H, 190)).toThrow(RangeError);

@@ -10,7 +10,7 @@ const mk = (value: number, decimals?: number) => {
   ];
   const sb = parseStoryboard({
     schemaVersion: 1,
-    meta: { title: "t", theme: "bold-flat", voice: "v" },
+    meta: { title: "t", theme: "lombard-row", voice: "v" },
     audio: { music: null },
     scenes: [{
       id: "r1", type: "bar-race", narration: "Race.",

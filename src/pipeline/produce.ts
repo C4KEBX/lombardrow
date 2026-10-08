@@ -10,7 +10,7 @@ import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import type { VoiceResult } from "../voice/types";
 import { buildVideo } from "./buildVideo";
-import { browserExecutable, getServeUrl } from "./bundle";
+import { browserExecutable, getServeUrl, renderConcurrency } from "./bundle";
 import { encodeFrames } from "./encode";
 import { muxVideoAudio } from "./finish";
 
@@ -67,6 +67,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   fs.rmSync(framesDir, { recursive: true, force: true });
   await renderFrames({
     composition, serveUrl, browserExecutable: browserExecutable(), inputProps, outputDir: framesDir, imageFormat: "jpeg",
+    concurrency: renderConcurrency(),
     onStart: () => undefined, onFrameUpdate: () => undefined,
   });
   const silentPath = path.join(opts.outDir, "silent.mp4");

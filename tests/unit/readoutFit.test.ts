@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readoutFontSize } from "../../src/charts/layout";
-import { fitFontSize, formatNumber } from "../../src/design/layout";
+import { NUMBER_CHAR_WIDTH_EM, fitFontSize, formatNumber } from "../../src/design/layout";
 
 const fmt = (v: number) => `$${formatNumber(v, 2)}`;
 
@@ -10,7 +10,7 @@ describe("readoutFontSize", () => {
     const size = readoutFontSize(falling, fmt, 960, 220);
     expect(size).toBe(fitFontSize("$1,234.56", 960, 220));
     expect(size).toBeLessThan(fitFontSize("$99.10", 960, 220));
-    for (const v of falling) expect(fmt(v).length * size * 0.75).toBeLessThanOrEqual(960);
+    for (const v of falling) expect(fmt(v).length * size * NUMBER_CHAR_WIDTH_EM).toBeLessThanOrEqual(960);
   });
   it("uses the max size for short values", () => {
     expect(readoutFontSize([1, 2, 3], (v) => String(v), 960, 220)).toBe(220);

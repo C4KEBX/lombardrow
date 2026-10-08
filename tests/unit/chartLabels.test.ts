@@ -14,13 +14,13 @@ describe("overlaps", () => {
 });
 
 describe("badgeRect", () => {
-  it("contains the badge body and its hard shadow", () => {
+  it("contains the tag body with a margin", () => {
     const badge = { x: 500, y: 400, width: 300, above: true };
     const r = badgeRect(badge);
     expect(r.x).toBeLessThan(500 - 150);
-    expect(r.x + r.width).toBeGreaterThan(500 + 150 + 8);
+    expect(r.x + r.width).toBeGreaterThan(500 + 150);
     expect(r.y).toBeLessThan(400 - BADGE.heightPx / 2);
-    expect(r.y + r.height).toBeGreaterThan(400 + BADGE.heightPx / 2 + 8);
+    expect(r.y + r.height).toBeGreaterThan(400 + BADGE.heightPx / 2);
   });
 });
 

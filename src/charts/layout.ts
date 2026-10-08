@@ -1,15 +1,16 @@
 import { fitFontSize } from "../design/layout";
-import { SAFE, VIDEO } from "../design/tokens";
+import { CONTENT, DEVICES } from "../design/tokens";
 
+/** The plot area. Its bottom edge is the ledger line's y (devices.json), so the open's rule becomes the axis. */
 export const CHART_BOX = {
-  left: SAFE.side,
-  right: VIDEO.width - SAFE.side,
-  top: 640,
-  bottom: 1250,
+  left: CONTENT.left,
+  right: CONTENT.right,
+  top: 600,
+  bottom: DEVICES.devices.ledger_line.rule.y,
 } as const;
 
-/** Callout badge metrics. charPx matches the display face at fontPx (about 0.75em per char). */
-export const BADGE = { charPx: 33, padPx: 28, heightPx: 84, offsetPx: 90, fontPx: 44 } as const;
+/** Callout tag metrics. charPx matches Inter 600 at fontPx (about 0.68em per char, capitals included). */
+export const BADGE = { charPx: 30, padPx: 28, heightPx: 84, offsetPx: 90, fontPx: 44 } as const;
 
 export type PlacedBadge = { x: number; y: number; width: number; above: boolean };
 

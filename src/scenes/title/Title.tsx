@@ -2,65 +2,81 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
 import { fitTitleFontSize } from "../../design/layout";
-import { popIn, staggerDelay, sustainDrift } from "../../design/motion";
-import { CAPTION_LANE, PALETTE, SAFE, TITLE_LANE, VIDEO } from "../../design/tokens";
+import { dataProgress, popIn, staggerDelay, sustainDrift } from "../../design/motion";
+import { useTheme } from "../../design/theme";
+import { CAPTION_LANE, SAFE, TITLE_LANE, VIDEO } from "../../design/tokens";
 import { TITLE_MAX_FONT_PX } from "../../schema/validate";
 import type { TitleProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
+/** Kicker in tracked capitals, a Caslon headline landing word by word, then a Brass rule drawing under it. */
 export const Title: React.FC<SceneRenderProps<TitleProps>> = ({ props, durationFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const theme = useTheme();
   const words = props.headline.split(/\s+/);
   const fontSize = fitTitleFontSize(props.headline, TITLE_LANE.width, TITLE_LANE.height, TITLE_MAX_FONT_PX);
   const exit = interpolate(frame, [durationFrames - 8, durationFrames], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const kickerIn = popIn(frame, fps, 0);
+  const kickerIn = Math.min(1, popIn(frame, fps, 0));
   const drift = sustainDrift(frame, 8, 80);
+  const rule = dataProgress(frame, 6 + staggerDelay(words.length), 18);
 
   return (
     <AbsoluteFill
       style={{
-        background: PALETTE.ground,
+        background: theme.ground,
         opacity: exit,
         justifyContent: "center",
-        padding: `${SAFE.top}px ${SAFE.side}px ${VIDEO.height - CAPTION_LANE.top}px`,
+        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       {props.kicker && (
         <div
           style={{
             fontFamily: BODY_FONT,
-            fontSize: 44,
-            letterSpacing: 8,
-            color: PALETTE.highlight,
-            transform: `scale(${kickerIn})`,
-            transformOrigin: "left center",
-            marginBottom: 32,
+            fontWeight: 500,
+            fontSize: 32,
+            letterSpacing: "0.28em",
+            textTransform: "uppercase",
+            color: theme.muted,
+            opacity: kickerIn,
+            marginBottom: 36,
           }}
         >
           {props.kicker}
         </div>
       )}
-      <div style={{ transform: `translateY(${drift}px)`, display: "flex", flexWrap: "wrap", gap: "0 28px" }}>
-        {words.map((word, i) => (
-          <span
-            key={`${word}-${i}`}
-            style={{
-              fontFamily: DISPLAY_FONT,
-              fontSize,
-              lineHeight: 1.02,
-              color: i % 2 === 0 ? PALETTE.ink : PALETTE.highlight,
-              display: "inline-block",
-              transform: `scale(${popIn(frame, fps, 6 + staggerDelay(i))})`,
-              transformOrigin: "left bottom",
-            }}
-          >
-            {word}
-          </span>
-        ))}
+      <div style={{ transform: `translateY(${drift}px)` }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: `0 ${Math.round(fontSize * 0.15)}px` }}>
+          {words.map((word, i) => {
+            const p = Math.min(1, popIn(frame, fps, 6 + staggerDelay(i)));
+            return (
+              <span
+                key={`${word}-${i}`}
+                style={{
+                  fontFamily: DISPLAY_FONT,
+                  fontSize,
+                  lineHeight: 1.02,
+                  color: theme.ink,
+                  display: "inline-block",
+                  opacity: p,
+                  transform: `translateY(${(1 - p) * 24}px)`,
+                }}
+              >
+                {word}
+              </span>
+            );
+          })}
+        </div>
+        <div
+          style={{
+            width: 220, height: 6, marginTop: 40, background: theme.accent,
+            transform: `scaleX(${rule})`, transformOrigin: "left center",
+          }}
+        />
       </div>
     </AbsoluteFill>
   );
