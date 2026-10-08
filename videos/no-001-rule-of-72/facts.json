@@ -1,0 +1,85 @@
+{
+  "facts": [
+    {
+      "id": "f-summa",
+      "claim": "Luca Pacioli's Summa de arithmetica, printed in Venice in 1494 (more than five hundred years, or five centuries, before 2026), states the rule of 72 on folio 181, problem 44, without a proof: to find in how many years a sum lent at a yearly rate per hundred will double, compounding yearly, divide 72 by the rate. Its examples: at 6 per hundred, 72 divided by 6 gives 12 years; at 8 per hundred, 72 divided by 8 gives 9 years.",
+      "value": 1494,
+      "source": {
+        "name": "Luca Pacioli, Summa de arithmetica (Venice: Paganino de Paganini, 1494), fol. 181, digitized by the Wellcome Collection",
+        "stamp": "Pacioli, Summa, 1494",
+        "url": "https://wellcomecollection.org/works/vh9466j6",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "C. G. Lewin, \"The emergence of compound interest\", British Actuarial Journal 24 (2019)",
+          "url": "https://www.cambridge.org/core/journals/british-actuarial-journal/article/emergence-of-compound-interest/799CB1D40CDD46F3010767BFC60F24DB",
+          "tier": "scholarly"
+        },
+        {
+          "name": "Wikipedia: Rule of 72",
+          "url": "https://en.wikipedia.org/wiki/Rule_of_72",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-range",
+      "claim": "The rule of 72 is only an approximation, but quite a good one for interest rates between 3% and 12%.",
+      "source": {
+        "name": "C. G. Lewin, \"The emergence of compound interest\", British Actuarial Journal 24 (2019)",
+        "stamp": "British Actuarial Journal, 2019",
+        "url": "https://www.cambridge.org/core/journals/british-actuarial-journal/article/emergence-of-compound-interest/799CB1D40CDD46F3010767BFC60F24DB",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-growth",
+      "claim": "$1,000 compounding at 8% a year, at 0, 9, 18 and 27 years, rounded to the dollar: 1,000, 1,999, 3,996, 7,988.",
+      "dataset": [
+        {
+          "x": 0,
+          "y": 1000
+        },
+        {
+          "x": 9,
+          "y": 1999
+        },
+        {
+          "x": 18,
+          "y": 3996
+        },
+        {
+          "x": 27,
+          "y": 7988
+        }
+      ],
+      "source": {
+        "name": "SEC, Investor.gov compound interest calculator",
+        "stamp": "SEC, Investor.gov",
+        "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-8rule",
+      "claim": "At 8% a year the rule of 72 gives 72 / 8 = 9 years to double.",
+      "value": 9,
+      "source": {
+        "name": "SEC, Investor.gov",
+        "url": "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-8exact",
+      "claim": "At 8% a year the exact doubling time is ln 2 / ln 1.08 = 9.006 years.",
+      "value": 9.006,
+      "source": {
+        "name": "SEC, Investor.gov",
+        "url": "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest",
+        "tier": "primary"
+      }
+    }
+  ]
+}
