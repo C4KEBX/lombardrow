@@ -4,6 +4,7 @@ import { SIGNOFF } from "../devices/tracks";
 import { parseStoryboard } from "../schema/storyboard";
 import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
 import type { VoiceProvider, VoiceResult } from "../voice/types";
+import { imagesFor } from "./assets";
 import { buildVideo } from "./buildVideo";
 
 export type VoiceReport = {
@@ -35,6 +36,7 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
     VIDEO.fps,
     Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
     signoff.audioMs,
+    imagesFor(storyboardPath),
   );
   const totalMs = framesMs(built.totalFrames);
   return {

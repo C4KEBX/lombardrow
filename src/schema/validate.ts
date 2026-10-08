@@ -150,11 +150,39 @@ export function assertFactsTraceable(sb: Storyboard, facts: Facts): void {
       case "bar-race":
         assertBarRaceFact(scene, lookup(scene.id, scene.props.factId));
         break;
+      case "archival":
+        break;
+      case "flow-diagram":
+      case "ledger-page":
+        assertOnScreenFigures(scene, factIdsOf(scene).map((id) => lookup(scene.id, id)));
+        break;
       default: {
         const unreachable: never = scene;
         throw new Error(`Unhandled scene type: ${JSON.stringify(unreachable)}`);
       }
     }
+  }
+}
+
+/** Text a flow diagram or ledger page shows that may carry numbers. */
+function onScreenTexts(scene: Extract<Scene, { type: "flow-diagram" | "ledger-page" }>): string[] {
+  if (scene.type === "flow-diagram") {
+    return [...scene.props.steps.flatMap((s) => [s.label, s.note ?? ""]), ...(scene.props.arrows ?? [])];
+  }
+  return [
+    ...scene.props.rows.flatMap((r) => [r.entry, r.amount, r.date ?? ""]),
+    ...(scene.props.total ? [scene.props.total.entry, scene.props.total.amount] : []),
+  ];
+}
+
+/** Every number shown in a flow diagram or ledger page must match a fact the scene names. */
+function assertOnScreenFigures(scene: Extract<Scene, { type: "flow-diagram" | "ledger-page" }>, named: Fact[]): void {
+  const numbers = named.flatMap(factNumbers);
+  const untraced = onScreenTexts(scene).flatMap(figuresIn).filter((f) => !numbers.some((n) => figureMatches(f.value, n)));
+  if (untraced.length) {
+    throw new StoryboardError(
+      `Scene "${scene.id}" (${scene.type}) shows ${untraced.map((f) => `"${f.text}"`).join(", ")}, which no fact it names states; set "factId" or "speaks" to the fact, or remove the number`,
+    );
   }
 }
 
@@ -176,6 +204,9 @@ const MAX_CALLOUTS: Record<Scene["type"], number> = {
   quote: 0,
   timeline: 0,
   map: 0,
+  archival: 0,
+  "flow-diagram": 0,
+  "ledger-page": 0,
 };
 
 function assertCueAnchor(scene: Scene, cue: Scene["cues"][number]): void {
@@ -195,12 +226,12 @@ function assertCueAnchor(scene: Scene, cue: Scene["cues"][number]): void {
   }
 }
 
-const NO_CUES: ReadonlySet<Scene["type"]> = new Set(["title", "quote"]);
+const NO_CUES: ReadonlySet<Scene["type"]> = new Set(["title", "quote", "archival"]);
 const MAX_EMPHASIS = 2;
 
-type EmphasisScene = Extract<Scene, { type: "kinetic-text" | "timeline" | "map" }>;
+type EmphasisScene = Extract<Scene, { type: "kinetic-text" | "timeline" | "map" | "flow-diagram" | "ledger-page" }>;
 const isEmphasisScene = (scene: Scene): scene is EmphasisScene =>
-  scene.type === "kinetic-text" || scene.type === "timeline" || scene.type === "map";
+  scene.type === "kinetic-text" || scene.type === "timeline" || scene.type === "map" || scene.type === "flow-diagram" || scene.type === "ledger-page";
 
 /** What an emphasize cue can point at, and whether every item needs exactly one cue. */
 function emphasisItems(scene: EmphasisScene): { items: string[]; noun: string; exact: boolean } {
@@ -211,6 +242,10 @@ function emphasisItems(scene: EmphasisScene): { items: string[]; noun: string; e
       return { items: scene.props.events.map((e) => e.label), noun: "event", exact: true };
     case "map":
       return { items: scene.props.regions, noun: "region", exact: true };
+    case "flow-diagram":
+      return { items: scene.props.steps.map((s) => s.label), noun: "step", exact: true };
+    case "ledger-page":
+      return { items: scene.props.rows.map((r) => r.entry), noun: "row", exact: true };
   }
 }
 

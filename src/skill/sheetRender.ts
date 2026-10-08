@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import { VIDEO } from "../design/tokens";
+import { imagesFor } from "../pipeline/assets";
 import { buildVideo, videoProps } from "../pipeline/buildVideo";
 import { browserExecutable, getServeUrl } from "../pipeline/bundle";
 import { parseFacts } from "../schema/facts";
@@ -12,7 +13,7 @@ import type { VerifyResult } from "./verifyTypes";
 
 const SETTLE_MARGIN = 10; // frames before the exit fade, as in the snapshot tests
 
-export type SheetOptions = { storyboardPath: string; factsPath: string; outDir: string; verifyPath?: string };
+export type SheetOptions = { storyboardPath: string; factsPath: string; outDir: string; verifyPath?: string; assetsPath?: string };
 
 /** One settled still per scene (synthetic timing, no voice needed) plus review.html. Returns the html path. */
 export async function renderSheet(opts: SheetOptions): Promise<string> {
@@ -23,6 +24,9 @@ export async function renderSheet(opts: SheetOptions): Promise<string> {
     storyboardJson, factsJson,
     (sb) => Object.fromEntries(sb.scenes.map((s) => [s.id, synthWords(s.narration)])),
     VIDEO.fps,
+    undefined,
+    undefined,
+    imagesFor(opts.storyboardPath, opts.assetsPath),
   );
   fs.mkdirSync(opts.outDir, { recursive: true });
   const serveUrl = await getServeUrl();

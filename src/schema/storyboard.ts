@@ -243,6 +243,62 @@ const MapSceneSchema = z.strictObject({
     }),
 });
 
+/** A public-domain scan or painting from assets.json, with a slow pan and zoom. */
+const ArchivalSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("archival"),
+  props: z.strictObject({
+    /** What the image shows, as a short header ("Pacioli's Summa, Venice"). */
+    title: z.string().min(1).max(32),
+    assetId: z.string().min(1),
+    /** Where the camera starts and ends, as fractions of the image (0 to 1), and the zoom at each end. */
+    from: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1 }),
+    to: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1.15 }),
+  }),
+});
+
+/** One sum of money traced step by step: boxes top to bottom, a token travelling down as each step is spoken. */
+const FlowStepSchema = z.strictObject({
+  label: z.string().min(1).max(22),
+  note: z.string().min(1).max(28).optional(),
+});
+const FlowDiagramSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("flow-diagram"),
+  props: z
+    .strictObject({
+      title: z.string().min(1).max(32),
+      steps: z.array(FlowStepSchema).min(2).max(5),
+      /** Text on each arrow between steps (one fewer than steps), e.g. the amount that moves. */
+      arrows: z.array(z.string().min(1).max(16)).optional(),
+      tone: z.enum(TONES).default("highlight"),
+      factId: z.string().min(1).optional(),
+    })
+    .superRefine((props, ctx) => {
+      if (props.arrows && props.arrows.length !== props.steps.length - 1) {
+        ctx.addIssue({ code: "custom", path: ["arrows"], message: `arrows needs one label per gap between steps (${props.steps.length - 1})` });
+      }
+    }),
+});
+
+/** A ledger page whose entries are written in one by one, with an optional ruled-off total. */
+const LedgerRowSchema = z.strictObject({
+  entry: z.string().min(1).max(24),
+  amount: z.string().min(1).max(10),
+  /** A small line above the entry ("Venice, 1494"). */
+  date: z.string().min(1).max(20).optional(),
+});
+const LedgerPageSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("ledger-page"),
+  props: z.strictObject({
+    title: z.string().min(1).max(32),
+    rows: z.array(LedgerRowSchema).min(1).max(5),
+    total: z.strictObject({ entry: z.string().min(1).max(24), amount: z.string().min(1).max(10) }).optional(),
+    factId: z.string().min(1).optional(),
+  }),
+});
+
 const SceneSchema = z.discriminatedUnion("type", [
   TitleSceneSchema,
   BigNumberSceneSchema,
@@ -253,6 +309,9 @@ const SceneSchema = z.discriminatedUnion("type", [
   QuoteSceneSchema,
   TimelineSceneSchema,
   MapSceneSchema,
+  ArchivalSceneSchema,
+  FlowDiagramSceneSchema,
+  LedgerPageSceneSchema,
 ]);
 
 export const SCENE_TYPES: readonly Scene["type"][] = SceneSchema.options.map((option) => option.shape.type.value);
@@ -299,13 +358,17 @@ export type QuoteProps = Extract<Scene, { type: "quote" }>["props"];
 export type TimelineProps = Extract<Scene, { type: "timeline" }>["props"];
 export type MapProps = Extract<Scene, { type: "map" }>["props"];
 export type BarRaceProps = Extract<Scene, { type: "bar-race" }>["props"];
+export type ArchivalProps = Extract<Scene, { type: "archival" }>["props"];
+export type FlowDiagramProps = Extract<Scene, { type: "flow-diagram" }>["props"];
+export type LedgerPageProps = Extract<Scene, { type: "ledger-page" }>["props"];
 
 /** Every fact a scene draws on: its own data facts, plus `sourceFactId` when it names one. */
 export function factIdsOf(scene: Scene): string[] {
   const own = (() => {
     switch (scene.type) {
       case "compare": return [scene.props.left.factId, scene.props.right.factId];
-      case "title": case "kinetic-text": return [];
+      case "title": case "kinetic-text": case "archival": return [];
+      case "flow-diagram": case "ledger-page": return scene.props.factId ? [scene.props.factId] : [];
       default: return [scene.props.factId];
     }
   })();

@@ -129,8 +129,8 @@ describe("check with a plan", () => {
   it("adds variation and plan-vs-storyboard issues to the storyboard check", async () => {
     const { checkStoryboard } = await import("../../src/skill/check");
     const facts = (await import("../../fixtures/no-004/rule-of-72.facts.json")).default;
-    expect(checkStoryboard(sbJson, facts, { plan: planJson, history: [], spec }).issues).toEqual([]);
-    const report = checkStoryboard(sbJson, facts, { plan: { ...planJson, paletteLead: "green" }, history: [past({ storyShape: "then_to_now" })], spec });
+    expect(checkStoryboard(sbJson, facts, { variation: { plan: planJson, history: [], spec } }).issues).toEqual([]);
+    const report = checkStoryboard(sbJson, facts, { variation: { plan: { ...planJson, paletteLead: "green" }, history: [past({ storyShape: "then_to_now" })], spec } });
     expect(report.issues.map((i) => i.stage)).toEqual(["variation", "plan vs storyboard"]);
   });
 });

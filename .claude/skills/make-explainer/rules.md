@@ -43,6 +43,20 @@ A sourced quotation. `quote` (<= 140) must appear in the fact's `claim` as the s
 ### map
 Countries lit on their spoken names (modern borders, shown as approximate). `regions` (1-6 atlas country names, e.g. "United States of America", "Czechia") must equal the fact's `dataset` (a string array, same order). `focus` is `[west, south, east, north]` with latitudes within +/-80 and every region overlapping it. Exactly one `emphasize` cue per region, `text` a single word of the region name.
 
+### archival
+
+A public-domain or CC0 image (a scan, painting, engraving or document) in a Brass frame, panning and zooming slowly for the whole scene. `title` (<= 32) says what it shows; `assetId` names an entry in `videos/<slug>/assets.json`; optional `from` and `to` (`x`, `y` as fractions of the image, `zoom` 1 to 2.5) aim the camera, by default a slow push in from the centre. No cues. The credit from assets.json is printed on the image.
+
+`assets.json`: `{ "assets": [ { "id", "file": "assets/<id>.jpg", "sourceUrl", "downloadUrl", "license": "public-domain" | "cc0", "credit" (<= 60, who made it and its license), "depicts" } ] }`. `sourceUrl` is the page that states the license (a Wikimedia Commons file page, a museum's open-access page). Any other license fails `check`. Run `npm run assets -- --assets videos/<slug>/assets.json` to download and resize every image once; renders then stay offline. Use an archival image only for what it actually shows; never present a later illustration as a photograph of the event.
+
+### flow-diagram
+
+Follow the money: 2 to 5 `steps` (`label` <= 22, optional `note` <= 28) stacked top to bottom, joined by arrows, with a Brass token travelling down as each step is spoken. Optional `arrows` (one per gap, <= 16) label what moves ("$1,000", "the IOU"). Exactly one emphasize cue per step, in order; the cue's `text` is a word of that step's label. Any number in a label, note or arrow must match a fact the scene names (`factId` or `speaks`).
+
+### ledger-page
+
+A ruled Parchment ledger page: 1 to 5 `rows` (`entry` <= 24, `amount` <= 10, optional `date` <= 20) written in left to right as each is spoken, and an optional `total` (`entry`, `amount`) under a Brass double rule. Exactly one emphasize cue per row, in order, on a word of that row's entry. Every number shown must match a fact the scene names (`factId` or `speaks`). Good for double entry, a merchant's accounts, a loan's payments.
+
 ## Cues
 
 `{ "atWord": <word spoken in this scene's narration>, "occurrence": 1, "do": "callout" | "emphasize", "text": ..., "x": ... }`. `atWord` is matched to the narration ignoring case and punctuation; `occurrence` picks the nth repeat. A cue needs `text`. `x` is only for line-chart callouts. The visual lands on the spoken word, so put the cue on the word that names the thing.

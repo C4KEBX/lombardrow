@@ -9,7 +9,7 @@ const SCHEMA_FILE = path.resolve(".claude/skills/make-explainer/storyboard.schem
 describe("SCENE_TYPES", () => {
   it("lists every scene type the renderer supports", () => {
     expect([...SCENE_TYPES].sort()).toEqual(
-      ["bar-race", "big-number", "compare", "kinetic-text", "line-chart", "map", "quote", "timeline", "title"],
+      ["archival", "bar-race", "big-number", "compare", "flow-diagram", "kinetic-text", "ledger-page", "line-chart", "map", "quote", "timeline", "title"],
     );
   });
 });

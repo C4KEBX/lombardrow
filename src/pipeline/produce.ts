@@ -10,6 +10,7 @@ import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import type { VoiceResult } from "../voice/types";
 import { SIGNOFF } from "../devices/tracks";
+import { imagesFor } from "./assets";
 import { buildVideo, videoProps } from "./buildVideo";
 import { browserExecutable, getServeUrl, renderConcurrency } from "./bundle";
 import { encodeFrames } from "./encode";
@@ -23,6 +24,8 @@ export type ProduceOptions = {
   enforceLength: boolean;
   musicDir?: string;
   cacheDir?: string;
+  /** assets.json for archival scenes; defaults to the one next to the storyboard. */
+  assetsPath?: string;
 };
 
 export type ProduceResult = {
@@ -54,6 +57,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     VIDEO.fps,
     Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
     signoff.audioMs,
+    imagesFor(opts.storyboardPath, opts.assetsPath),
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);

@@ -8,9 +8,10 @@ export type ProduceCliOptions = {
   enforceLength: boolean;
   musicDir?: string;
   cacheDir?: string;
+  assetsPath?: string;
 };
 
-const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir"]);
+const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir", "--assets"]);
 
 export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   const values = new Map<string, string>();
@@ -43,5 +44,6 @@ export function parseArgs(argv: readonly string[]): ProduceCliOptions {
     enforceLength,
     musicDir: values.get("--music-dir"),
     cacheDir: values.get("--cache-dir"),
+    assetsPath: values.get("--assets"),
   };
 }

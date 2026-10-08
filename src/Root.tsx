@@ -1,11 +1,13 @@
 import React from "react";
-import { Composition } from "remotion";
+import { Composition, staticFile } from "remotion";
 import financeFacts from "../fixtures/finance.facts.json";
 import financeStoryboard from "../fixtures/finance.storyboard.json";
 import ancientFacts from "../fixtures/ancient.facts.json";
 import ancientStoryboard from "../fixtures/ancient.storyboard.json";
 import historyFacts from "../fixtures/history.facts.json";
 import historyStoryboard from "../fixtures/history.storyboard.json";
+import ledgerFacts from "../fixtures/ledger.facts.json";
+import ledgerStoryboard from "../fixtures/ledger.storyboard.json";
 import facts from "../fixtures/hello.facts.json";
 import storyboardJson from "../fixtures/hello.storyboard.json";
 import words from "../fixtures/hello.words.json";
@@ -36,9 +38,20 @@ const ancient = buildVideo(
   VIDEO.fps,
 );
 
+/** Archival, flow-diagram and ledger-page scenes, with a generated stand-in for the archival image. */
+const ledger = buildVideo(
+  ledgerStoryboard,
+  ledgerFacts,
+  (sb) => Object.fromEntries(sb.scenes.map((s) => [s.id, synthWords(s.narration)])),
+  VIDEO.fps,
+  undefined,
+  undefined,
+  { "page-standin": { src: staticFile("demo/page-standin.jpg"), credit: "Generated stand-in image. Not archival." } },
+);
+
 /** Placeholder props for the Production composition; real props arrive as inputProps. */
 const EMPTY_VIDEO: VideoProps = {
-  scenes: [], captions: [], totalFrames: 1, years: [], stamps: [],
+  scenes: [], captions: [], totalFrames: 1, years: [], stamps: [], images: {},
   open: { frames: 0, doorNo: 1, series: "", handoffAxis: null },
   close: { startFrame: 0, frames: 0, doorNo: 1 },
 };
@@ -80,6 +93,15 @@ export const RemotionRoot: React.FC = () => (
       width={VIDEO.width}
       height={VIDEO.height}
       defaultProps={videoProps(ancient)}
+    />
+    <Composition
+      id="LedgerDemo"
+      component={Video}
+      durationInFrames={ledger.totalFrames}
+      fps={VIDEO.fps}
+      width={VIDEO.width}
+      height={VIDEO.height}
+      defaultProps={videoProps(ledger)}
     />
     <Composition
       id="Production"

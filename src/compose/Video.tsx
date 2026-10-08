@@ -11,13 +11,16 @@ import { MapScene } from "../scenes/map/MapScene";
 import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title } from "../scenes/title/Title";
+import { Archival } from "../scenes/archival/Archival";
+import { FlowDiagram } from "../scenes/flow-diagram/FlowDiagram";
+import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, LedgerLineOpen, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames } from "./wipe";
 
-const SceneSwitch: React.FC<{ composed: ComposedScene }> = ({ composed }) => {
+const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["images"] }> = ({ composed, images }) => {
   const { scene, cues, durationFrames } = composed;
   const year = scene.year;
   switch (scene.type) {
@@ -39,6 +42,14 @@ const SceneSwitch: React.FC<{ composed: ComposedScene }> = ({ composed }) => {
       return <Timeline props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
     case "map":
       return <MapScene props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
+    case "archival": {
+      const image = images[scene.props.assetId];
+      return <Archival props={scene.props} cues={cues} durationFrames={durationFrames} year={year} src={image?.src} credit={image?.credit} />;
+    }
+    case "flow-diagram":
+      return <FlowDiagram props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
+    case "ledger-page":
+      return <LedgerPage props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
     default: {
       const unreachable: never = scene;
       throw new Error(`Unhandled scene type: ${JSON.stringify(unreachable)}`);
@@ -47,7 +58,7 @@ const SceneSwitch: React.FC<{ composed: ComposedScene }> = ({ composed }) => {
 };
 
 /** Narrated scenes between the ledger-line open and the door-plate close, with the overlays on top. */
-export const Video: React.FC<VideoProps> = ({ scenes, captions, open, close, years, stamps }) => {
+export const Video: React.FC<VideoProps> = ({ scenes, captions, open, close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
   return (
     <AbsoluteFill style={{ background: BRAND.ledgerInk }}>
@@ -59,7 +70,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, open, close, yea
       {scenes.map((composed) => (
         <Sequence key={composed.id} from={composed.startFrame} durationInFrames={composed.durationFrames} name={composed.id}>
           <ThemeProvider ground={composed.ground}>
-            <SceneSwitch composed={composed} />
+            <SceneSwitch composed={composed} images={images} />
           </ThemeProvider>
         </Sequence>
       ))}

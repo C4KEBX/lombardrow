@@ -3,7 +3,7 @@ import { THEMES } from "../design/theme";
 import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
 import { closeFrames, openFrames, stampTrack, yearTrack, type StampSpan, type YearSpan } from "../devices/tracks";
 import { parseFacts } from "../schema/facts";
-import { parseStoryboard, type Storyboard } from "../schema/storyboard";
+import { StoryboardError, parseStoryboard, type Storyboard } from "../schema/storyboard";
 import type { WordTiming } from "../schema/timing";
 import {
   assertCuesSupported,
@@ -29,6 +29,8 @@ export type VideoProps = {
   close: { startFrame: number; frames: number; doorNo: number };
   years: YearSpan[];
   stamps: StampSpan[];
+  /** Archival images by asset id (data URIs or static URLs) with their on-image credit. */
+  images: Record<string, { src: string; credit: string }>;
 };
 
 export type BuiltVideo = VideoProps & { storyboard: Storyboard };
@@ -41,6 +43,7 @@ export function buildVideo(
   fps: number,
   audioMsByScene?: Record<string, number>,
   signoffAudioMs?: number,
+  images: VideoProps["images"] = {},
 ): BuiltVideo {
   const storyboard = parseStoryboard(storyboardJson);
   const facts = parseFacts(factsJson);
@@ -52,6 +55,11 @@ export function buildVideo(
   assertYears(storyboard);
   assertFactsTraceable(storyboard, facts);
   const stampBySceneId = sceneStamps(storyboard, facts);
+  for (const scene of storyboard.scenes) {
+    if (scene.type === "archival" && !images[scene.props.assetId]) {
+      throw new StoryboardError(`Scene "${scene.id}" uses asset "${scene.props.assetId}", but no image was loaded for it; check assets.json and run npm run assets`);
+    }
+  }
 
   const open = openFrames(fps);
   const scenes = composeScenes(storyboard, wordsFor(storyboard), fps, audioMsByScene, open);
@@ -78,6 +86,9 @@ export function buildVideo(
     close: { startFrame: closeStart, frames: close, doorNo },
     years,
     stamps,
+    images: Object.fromEntries(
+      storyboard.scenes.flatMap((s) => (s.type === "archival" ? [[s.props.assetId, images[s.props.assetId]]] : [])),
+    ),
   };
 }
 
