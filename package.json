@@ -15,6 +15,7 @@
     "setup:tts": "python3 -m venv tts/.venv && tts/.venv/bin/pip install -q -r tts/requirements.txt",
     "produce": "tsx scripts/produce.ts",
     "voice": "tsx scripts/voice.ts",
+    "variation": "tsx scripts/variation.ts",
     "check": "tsx scripts/check.ts",
     "catalog": "tsx scripts/catalog.ts",
     "sheet": "tsx scripts/sheet.ts",

@@ -11,6 +11,7 @@ import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
 import { stampTrack } from "../devices/tracks";
 import { synthWords } from "../voice/synthWords";
 import { adviceLint, tickerHits } from "./adviceLint";
+import { checkPlan, crossCheck, parsePlan, scriptOf, type HistoryEntry, type Spec } from "../variation/index";
 import { TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
 
 export type Issue = { stage: string; message: string };
@@ -34,7 +35,11 @@ function attempt<T>(issues: Issue[], stage: string, fn: () => T): T | undefined 
  * Runs every validation stage independently, and per scene, so one pass reports every bad scene (a scene with several faults in one stage still reports only its first). Cue
  * timing uses synthetic word timings; `produce` re-checks against the real voice.
  */
-export function checkStoryboard(storyboardJson: unknown, factsJson: unknown): CheckReport {
+export function checkStoryboard(
+  storyboardJson: unknown,
+  factsJson: unknown,
+  variation?: { plan: unknown; history: readonly HistoryEntry[]; spec: Spec },
+): CheckReport {
   const issues: Issue[] = [];
   const warnings: string[] = [];
   const sb: Storyboard | undefined = attempt(issues, "storyboard schema", () => parseStoryboard(storyboardJson));
@@ -55,6 +60,13 @@ export function checkStoryboard(storyboardJson: unknown, factsJson: unknown): Ch
   if (facts) perScene("spoken figures", (single) => assertSpokenFigures(single, facts));
   if (facts) perScene("disputed", (single) => assertDisputedHedged(single, facts));
   if (facts) attempt(issues, "sources", () => assertSources(facts));
+  if (variation) {
+    const plan = attempt(issues, "plan", () => parsePlan(variation.plan));
+    if (plan) {
+      for (const reason of checkPlan(plan, variation.history, variation.spec, scriptOf(sb)).reasons) issues.push({ stage: "variation", message: reason });
+      for (const reason of crossCheck(plan, sb, variation.spec)) issues.push({ stage: "plan vs storyboard", message: reason });
+    }
+  }
   for (const hit of tickerHits(sb)) {
     issues.push({ stage: "tickers", message: `Scene "${hit.sceneId}" shows or says the ticker "${hit.ticker}"; the brand never names tickers` });
   }
