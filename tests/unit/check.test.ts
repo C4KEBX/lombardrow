@@ -6,12 +6,12 @@ import { checkStoryboard, formatReport } from "../../src/skill/check";
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes a valid storyboard and reports stats and a length warning when outside 55-60 s", () => {
+  it("passes a valid storyboard and reports stats and a length warning when outside 65-70 s", () => {
     const report = checkStoryboard(storyboard, facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
     expect(report.stats?.scenes).toBe(5);
-    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 55-60 s/);
+    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 65-70 s/);
   });
 
   it("collects every independent issue in one run instead of stopping at the first", () => {

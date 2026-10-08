@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import { VIDEO } from "../design/tokens";
-import { buildVideo } from "../pipeline/buildVideo";
+import { buildVideo, videoProps } from "../pipeline/buildVideo";
 import { browserExecutable, getServeUrl } from "../pipeline/bundle";
 import { parseFacts } from "../schema/facts";
 import { parseStoryboard } from "../schema/storyboard";
@@ -26,7 +26,7 @@ export async function renderSheet(opts: SheetOptions): Promise<string> {
   );
   fs.mkdirSync(opts.outDir, { recursive: true });
   const serveUrl = await getServeUrl();
-  const inputProps = { scenes: built.scenes, captions: built.captions, totalFrames: built.totalFrames };
+  const inputProps = videoProps(built);
   const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Production", inputProps });
   const images: Record<string, string> = {};
   for (const scene of built.scenes) {

@@ -9,7 +9,8 @@ import { parseStoryboard } from "../schema/storyboard";
 import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import type { VoiceResult } from "../voice/types";
-import { buildVideo } from "./buildVideo";
+import { SIGNOFF } from "../devices/tracks";
+import { buildVideo, videoProps } from "./buildVideo";
 import { browserExecutable, getServeUrl, renderConcurrency } from "./bundle";
 import { encodeFrames } from "./encode";
 import { muxVideoAudio } from "./finish";
@@ -43,6 +44,8 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   const provider = makeVoiceProvider(opts.voice, opts.cacheDir ?? path.resolve("out/voice-cache"));
   const voices: Record<string, VoiceResult> = {};
   for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
+  // The same sign-off every video; the voice cache keys on text and voice, so this synthesizes once.
+  const signoff = await provider(SIGNOFF, storyboard.meta.voice);
 
   const built = buildVideo(
     storyboardJson,
@@ -50,6 +53,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
     Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
+    signoff.audioMs,
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);
@@ -60,7 +64,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     storyboard.audio.music, totalMs / 1000, opts.musicDir ?? path.resolve("music"), opts.outDir,
   );
 
-  const inputProps = { scenes: built.scenes, captions: built.captions, totalFrames: built.totalFrames };
+  const inputProps = videoProps(built);
   const serveUrl = await getServeUrl();
   const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Production", inputProps });
   const framesDir = path.join(opts.outDir, "frames");
@@ -74,10 +78,13 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   await encodeFrames(framesDir, VIDEO.fps, silentPath);
 
   const audioPath = path.join(opts.outDir, "audio.m4a");
-  const clips = built.scenes.map((scene) => ({
-    path: voices[scene.id].audioPath,
-    startMs: (scene.startFrame * 1000) / VIDEO.fps,
-  }));
+  const clips = [
+    ...built.scenes.map((scene) => ({
+      path: voices[scene.id].audioPath,
+      startMs: (scene.startFrame * 1000) / VIDEO.fps,
+    })),
+    { path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps },
+  ];
   await mixAudio({ clips, musicPath, totalMs, outPath: audioPath });
 
   const videoPath = path.join(opts.outDir, "final.mp4");

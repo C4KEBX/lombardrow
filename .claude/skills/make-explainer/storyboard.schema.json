@@ -26,6 +26,16 @@
             "green"
           ]
         },
+        "doorNo": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "series": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 28
+        },
         "voice": {
           "type": "string",
           "minLength": 1
@@ -35,6 +45,8 @@
         "title",
         "theme",
         "paletteLead",
+        "doorNo",
+        "series",
         "voice"
       ],
       "additionalProperties": false
@@ -122,6 +134,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -214,6 +235,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -340,6 +370,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -502,6 +541,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -666,6 +714,15 @@
                   "green"
                 ]
               },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
               "type": {
                 "type": "string",
                 "const": "kinetic-text"
@@ -768,6 +825,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -925,6 +991,15 @@
                   "green"
                 ]
               },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
               "type": {
                 "type": "string",
                 "const": "quote"
@@ -1022,6 +1097,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",
@@ -1151,6 +1235,15 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
               },
               "type": {
                 "type": "string",

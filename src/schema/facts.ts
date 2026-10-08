@@ -6,7 +6,11 @@ const FactSchema = z.strictObject({
   claim: z.string().min(1),
   value: z.number().optional(),
   dataset: z.json().optional(),
-  source: z.strictObject({ name: z.string().min(1), url: z.url().refine((u) => /^https?:\/\//i.test(u), "source url must be http(s)") }),
+  source: z.strictObject({
+    name: z.string().min(1),
+    /** Short form for the on-screen source stamp ("Federal Reserve, 2025"); defaults to `name`. */
+    stamp: z.string().min(1).max(52).optional(),
+    url: z.url().refine((u) => /^https?:\/\//i.test(u), "source url must be http(s)") }),
 });
 
 export const FactsSchema = z

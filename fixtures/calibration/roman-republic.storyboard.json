@@ -3,6 +3,8 @@
   "meta": {
     "title": "How the Roman Republic Ended",
     "theme": "lombard-row",
+    "doorNo": 1,
+    "series": "How it works",
     "voice": "en-US-AndrewNeural"
   },
   "audio": {

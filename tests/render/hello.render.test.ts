@@ -35,6 +35,6 @@ describe("HelloBigNumber golden render", () => {
     expect(probe.height).toBe(1920);
     expect(probe.r_frame_rate).toBe("30/1");
     expect(Number(probe.duration)).toBeCloseTo(composition.durationInFrames / composition.fps, 1);
-    expect(composition.durationInFrames).toBe(159); // 78 + 81 frames from the fixtures
+    expect(composition.durationInFrames).toBe(309); // 60 open + 78 + 81 narrated + 90 door plate
   });
 });

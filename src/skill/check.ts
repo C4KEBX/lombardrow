@@ -5,7 +5,10 @@ import { parseFacts, type Facts } from "../schema/facts";
 import { parseStoryboard, type Storyboard } from "../schema/storyboard";
 import {
   assertCuesSupported, assertFactsTraceable, assertHeadlinesFit, assertMapRegions, assertTextScenes, assertVariety,
+  assertYears, sceneStamps,
 } from "../schema/validate";
+import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
+import { stampTrack } from "../devices/tracks";
 import { synthWords } from "../voice/synthWords";
 import { adviceLint } from "./adviceLint";
 import { TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
@@ -47,7 +50,20 @@ export function checkStoryboard(storyboardJson: unknown, factsJson: unknown): Ch
   perScene("headlines", assertHeadlinesFit);
   perScene("text scenes", assertTextScenes);
   perScene("map regions", assertMapRegions);
+  perScene("year counter", assertYears);
   if (facts) perScene("fact tracing", (single) => assertFactsTraceable(single, facts));
+  if (facts) {
+    perScene("source stamp", (single) => {
+      const [scene] = single.scenes;
+      stampTrack([{ id: scene.id, startFrame: 0, durationFrames: 1, stamp: sceneStamps(single, facts)[scene.id] }], VIDEO.fps);
+    });
+  }
+  attempt(issues, "devices", () => {
+    const { doorNo, series } = sb.meta;
+    const years = sb.scenes.flatMap((s) =>
+      s.year === undefined ? [] : [{ from: s.year, to: s.year, startFrame: 0, endFrame: 1, fadeIn: true, fadeOut: true }]);
+    assertDevicesInBounds(deviceBoxes({ doorNo, series, years, stamps: [] }));
+  });
   perScene("timing", (single) => {
     const words = Object.fromEntries(single.scenes.map((s) => [s.id, synthWords(s.narration)]));
     assertSceneTiming(composeScenes(single, words, VIDEO.fps));

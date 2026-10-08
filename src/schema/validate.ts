@@ -1,13 +1,13 @@
 import { QUOTE_WORD_GAP_EM, fitTitleFontSize, formatNumber } from "../design/layout";
-import { QUOTE_LANE, TITLE_LANE } from "../design/tokens";
+import { lanesFor } from "../design/tokens";
 import type { Facts } from "./facts";
 import { COUNTRY_NAMES, regionTouchesBbox, suggestCountries } from "../map/atlas";
 import { deepEqual } from "./deepEqual";
 import { emphasisTarget } from "./emphasis";
-import { StoryboardError, type Scene, type Storyboard } from "./storyboard";
+import { StoryboardError, factIdsOf, type Scene, type Storyboard } from "./storyboard";
 
-export const MIN_VIDEO_MS = 55_000;
-export const MAX_VIDEO_MS = 60_000;
+export const MIN_VIDEO_MS = 65_000;
+export const MAX_VIDEO_MS = 70_000;
 
 export function assertVariety(sb: Storyboard): void {
   for (let i = 2; i < sb.scenes.length; i += 1) {
@@ -268,7 +268,8 @@ export function assertHeadlinesFit(sb: Storyboard): void {
   for (const scene of sb.scenes) {
     if (scene.type !== "title") continue;
     try {
-      fitTitleFontSize(scene.props.headline, TITLE_LANE.width, TITLE_LANE.height, TITLE_MAX_FONT_PX);
+      const { title } = lanesFor(scene.year !== undefined);
+      fitTitleFontSize(scene.props.headline, title.width, title.height, TITLE_MAX_FONT_PX);
     } catch (error) {
       if (error instanceof RangeError) {
         throw new StoryboardError(`Scene "${scene.id}" headline does not fit: ${error.message}`);
@@ -286,7 +287,8 @@ export function assertTextScenes(sb: Storyboard): void {
     }
     if (scene.type === "quote") {
       try {
-        fitTitleFontSize(scene.props.quote, QUOTE_LANE.width, QUOTE_LANE.height, QUOTE_LANE.maxFont, undefined, QUOTE_WORD_GAP_EM);
+        const { quote } = lanesFor(scene.year !== undefined);
+        fitTitleFontSize(scene.props.quote, quote.width, quote.height, quote.maxFont, undefined, QUOTE_WORD_GAP_EM);
       } catch (error) {
         if (error instanceof RangeError) throw new StoryboardError(`Scene "${scene.id}": the quote does not fit: ${error.message}`);
         throw error;
@@ -312,4 +314,51 @@ export function assertMapRegions(sb: Storyboard): void {
       );
     }
   }
+}
+
+/** Scene types whose layout leaves the top-left band (y 200 to 340) free for the year counter. */
+export const YEAR_SCENE_TYPES: readonly Scene["type"][] = ["title", "big-number", "kinetic-text", "quote"];
+
+/**
+ * The year counter is Ledger Ink only (devices.json) and needs the top-left band, so a scene that
+ * sets a year must be on ink and be a type that keeps that band clear.
+ */
+export function assertYears(sb: Storyboard): void {
+  for (const scene of sb.scenes) {
+    if (scene.year === undefined) continue;
+    const ground = scene.ground ?? sb.meta.paletteLead;
+    if (ground !== "ink") {
+      throw new StoryboardError(
+        `Scene "${scene.id}" sets year ${scene.year} on a ${ground} ground; the year counter is Ledger Ink only. Set "ground": "ink" on this scene or drop the year.`,
+      );
+    }
+    if (!YEAR_SCENE_TYPES.includes(scene.type)) {
+      throw new StoryboardError(
+        `Scene "${scene.id}" (${scene.type}) sets a year, but the year counter only fits over ${YEAR_SCENE_TYPES.join(", ")} scenes; ${scene.type} uses that space for its own header`,
+      );
+    }
+  }
+}
+
+/**
+ * Source-stamp text per scene: "Source: " plus each distinct fact source's stamp (or name). A scene
+ * that sets a year must name a source for it, through its own fact or `sourceFactId`.
+ */
+export function sceneStamps(sb: Storyboard, facts: Facts): Record<string, string | undefined> {
+  const byId = new Map(facts.facts.map((fact) => [fact.id, fact]));
+  const out: Record<string, string | undefined> = {};
+  for (const scene of sb.scenes) {
+    const names = [...new Set(factIdsOf(scene).map((id) => {
+      const fact = byId.get(id);
+      if (!fact) throw new StoryboardError(`Scene "${scene.id}" references unknown fact "${id}"`);
+      return fact.source.stamp ?? fact.source.name;
+    }))];
+    if (names.length === 0 && scene.year !== undefined) {
+      throw new StoryboardError(
+        `Scene "${scene.id}" shows the year ${scene.year} but names no source; add "sourceFactId" for the fact that dates it`,
+      );
+    }
+    out[scene.id] = names.length ? `Source: ${names.join("; ")}` : undefined;
+  }
+  return out;
 }

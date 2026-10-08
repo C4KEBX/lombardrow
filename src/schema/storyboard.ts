@@ -27,6 +27,10 @@ const sceneBase = {
   cues: z.array(CueSchema).default([]),
   /** Overrides the video's palette lead for this scene. */
   ground: z.enum(GROUNDS).optional(),
+  /** The year the story is in during this scene (negative is BC). Drives the year counter; omit for the present. */
+  year: z.number().int().min(-5000).max(2100).optional(),
+  /** A fact whose source stamps this scene when the scene has no factId of its own (e.g. a title naming a year). */
+  sourceFactId: z.string().min(1).optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -259,6 +263,10 @@ export const StoryboardSchema = z
       theme: z.literal("lombard-row"),
       /** The ground most scenes sit on (variation rule: no more than 2 videos in a row with the same lead). */
       paletteLead: z.enum(GROUNDS).default("ink"),
+      /** The door number on the open and the end card: this video's place on the Row. */
+      doorNo: z.number().int().min(1).max(999),
+      /** Series label above the door number on the open, e.g. "How it works". */
+      series: z.string().min(1).max(28),
       voice: z.string().min(1),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),
@@ -289,6 +297,18 @@ export type QuoteProps = Extract<Scene, { type: "quote" }>["props"];
 export type TimelineProps = Extract<Scene, { type: "timeline" }>["props"];
 export type MapProps = Extract<Scene, { type: "map" }>["props"];
 export type BarRaceProps = Extract<Scene, { type: "bar-race" }>["props"];
+
+/** Every fact a scene draws on: its own data facts, plus `sourceFactId` when it names one. */
+export function factIdsOf(scene: Scene): string[] {
+  const own = (() => {
+    switch (scene.type) {
+      case "compare": return [scene.props.left.factId, scene.props.right.factId];
+      case "title": case "kinetic-text": return [];
+      default: return [scene.props.factId];
+    }
+  })();
+  return scene.sourceFactId ? [...own, scene.sourceFactId] : own;
+}
 
 export function parseStoryboard(input: unknown): Storyboard {
   const result = StoryboardSchema.safeParse(input);

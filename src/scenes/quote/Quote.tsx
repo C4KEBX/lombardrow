@@ -5,18 +5,19 @@ import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
 import { QUOTE_WORD_GAP_EM, fitTitleFontSize } from "../../design/layout";
 import { popIn, sustainDrift } from "../../design/motion";
 import { useTheme } from "../../design/theme";
-import { CAPTION_LANE, QUOTE_LANE, SAFE, VIDEO } from "../../design/tokens";
+import { CAPTION_LANE, SAFE, VIDEO, lanesFor } from "../../design/tokens";
 import type { QuoteProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 import { QUOTE } from "./timing";
 
 /** A big Caslon quote mark, the words landing one by one, then a Brass rule and the attribution. */
-export const Quote: React.FC<SceneRenderProps<QuoteProps>> = ({ props, durationFrames }) => {
+export const Quote: React.FC<SceneRenderProps<QuoteProps>> = ({ props, durationFrames, year }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = useTheme();
   const words = props.quote.split(/\s+/).filter(Boolean);
-  const size = fitTitleFontSize(props.quote, QUOTE_LANE.width, QUOTE_LANE.height, QUOTE_LANE.maxFont, undefined, QUOTE_WORD_GAP_EM);
+  const lanes = lanesFor(year !== undefined);
+  const size = fitTitleFontSize(props.quote, lanes.quote.width, lanes.quote.height, lanes.quote.maxFont, undefined, QUOTE_WORD_GAP_EM);
   const attrDelay = QUOTE.start + (words.length - 1) * QUOTE.wordGap + QUOTE.attrLead;
   const exit = interpolate(frame, [durationFrames - EXIT_FRAMES, durationFrames], [1, 0], {
     extrapolateLeft: "clamp",
@@ -29,7 +30,7 @@ export const Quote: React.FC<SceneRenderProps<QuoteProps>> = ({ props, durationF
     <AbsoluteFill
       style={{
         background: theme.ground, opacity: exit, justifyContent: "center",
-        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
+        padding: `${lanes.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       <div style={{ transform: `translateY(${sustainDrift(frame, 6, 90)}px)` }}>

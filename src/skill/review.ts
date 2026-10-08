@@ -1,5 +1,5 @@
 import type { Facts } from "../schema/facts";
-import type { Scene, Storyboard } from "../schema/storyboard";
+import { factIdsOf, type Scene, type Storyboard } from "../schema/storyboard";
 import { adviceLint } from "./adviceLint";
 import { TARGET_SECONDS, countWords, estimateSeconds } from "./estimate";
 import { factTokens } from "./verifyFacts";
@@ -19,13 +19,6 @@ export const escapeHtml = (text: string): string =>
 const PLACEHOLDER = /demo data|verify before publishing|placeholder|todo/i;
 const HAS_DIGIT = /\d/;
 
-function factIdsOf(scene: Scene): string[] {
-  switch (scene.type) {
-    case "compare": return [scene.props.left.factId, scene.props.right.factId];
-    case "title": case "kinetic-text": return [];
-    default: return [scene.props.factId];
-  }
-}
 
 function titleOf(scene: Scene): string | undefined {
   return scene.type === "title" || scene.type === "kinetic-text" || scene.type === "big-number" || scene.type === "quote"

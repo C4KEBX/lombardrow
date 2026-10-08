@@ -12,7 +12,7 @@ import words from "../fixtures/hello.words.json";
 import { synthWords } from "./voice/synthWords";
 import { Video } from "./compose/Video";
 import { VIDEO } from "./design/tokens";
-import { buildVideo } from "./pipeline/buildVideo";
+import { buildVideo, videoProps, type VideoProps } from "./pipeline/buildVideo";
 
 const hello = buildVideo(storyboardJson, facts, () => words, VIDEO.fps);
 const finance = buildVideo(
@@ -36,6 +36,13 @@ const ancient = buildVideo(
   VIDEO.fps,
 );
 
+/** Placeholder props for the Production composition; real props arrive as inputProps. */
+const EMPTY_VIDEO: VideoProps = {
+  scenes: [], captions: [], totalFrames: 1, years: [], stamps: [],
+  open: { frames: 0, doorNo: 1, series: "", handoffAxis: null },
+  close: { startFrame: 0, frames: 0, doorNo: 1 },
+};
+
 export const RemotionRoot: React.FC = () => (
   <>
     <Composition
@@ -45,7 +52,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}
-      defaultProps={{ scenes: hello.scenes, captions: hello.captions }}
+      defaultProps={videoProps(hello)}
     />
     <Composition
       id="FinanceDemo"
@@ -54,7 +61,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}
-      defaultProps={{ scenes: finance.scenes, captions: finance.captions }}
+      defaultProps={videoProps(finance)}
     />
     <Composition
       id="HistoryDemo"
@@ -63,7 +70,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}
-      defaultProps={{ scenes: history.scenes, captions: history.captions }}
+      defaultProps={videoProps(history)}
     />
     <Composition
       id="AncientDemo"
@@ -72,7 +79,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}
-      defaultProps={{ scenes: ancient.scenes, captions: ancient.captions }}
+      defaultProps={videoProps(ancient)}
     />
     <Composition
       id="Production"
@@ -81,7 +88,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       width={VIDEO.width}
       height={VIDEO.height}
-      defaultProps={{ scenes: [], captions: [], totalFrames: 1 }}
+      defaultProps={EMPTY_VIDEO}
       calculateMetadata={({ props }) => ({ durationInFrames: Math.max(1, props.totalFrames ?? 1) })}
     />
   </>

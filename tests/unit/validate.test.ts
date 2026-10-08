@@ -16,7 +16,7 @@ const num = (id: string, value: number, factId = "f1") => ({
 const board = (scenes: unknown[]) =>
   parseStoryboard({
     schemaVersion: 1,
-    meta: { title: "t", theme: "lombard-row", voice: "v" },
+    meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
     audio: { music: null },
     scenes,
   });
@@ -56,13 +56,13 @@ describe("assertFactsTraceable", () => {
 });
 
 describe("assertDuration", () => {
-  it("accepts 55s to 60s inclusive", () => {
+  it("accepts 65s to 70s inclusive", () => {
     expect(() => assertDuration(MIN_VIDEO_MS)).not.toThrow();
     expect(() => assertDuration(MAX_VIDEO_MS)).not.toThrow();
   });
   it("rejects shorter and longer videos with the actual length", () => {
-    expect(() => assertDuration(54_999)).toThrow(/55.*60/);
-    expect(() => assertDuration(60_001)).toThrow(/60\.0/);
+    expect(() => assertDuration(64_999)).toThrow(/65.*70/);
+    expect(() => assertDuration(70_001)).toThrow(/70\.0/);
   });
   it("rejects NaN", () => {
     expect(() => assertDuration(NaN)).toThrow(StoryboardError);

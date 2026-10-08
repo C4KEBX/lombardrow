@@ -49,3 +49,19 @@ export const QUOTE_LANE = {
 
 /** The map's drawing area: below the title and footnote, above the caption lane. */
 export const MAP_BOX = { left: CONTENT.left, right: CONTENT.right, top: 300, bottom: CAPTION_LANE.top - 40 } as const;
+
+const YC = DEVICES.devices.year_counter;
+/** Where content may start under the year counter: its number, gap and rule, plus breathing room. */
+export const YEAR_CONTENT_TOP = YC.y + YC.number.size + YC.rule.gap + YC.rule.height + 45;
+
+/** Text lanes for a scene, shortened from the top when the year counter is showing. */
+export function lanesFor(hasYear: boolean) {
+  const top = hasYear ? YEAR_CONTENT_TOP : SAFE.top;
+  const cut = top - SAFE.top;
+  return {
+    top,
+    title: { ...TITLE_LANE, height: TITLE_LANE.height - cut },
+    kinetic: { ...KINETIC_LANE, height: KINETIC_LANE.height - cut },
+    quote: { ...QUOTE_LANE, height: QUOTE_LANE.height - cut },
+  };
+}

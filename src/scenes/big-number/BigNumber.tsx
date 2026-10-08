@@ -4,7 +4,7 @@ import { BODY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { fitFontSize, formatNumber } from "../../design/layout";
 import { countUp, dataProgress, popIn, staggerDelay, sustainDrift } from "../../design/motion";
 import { useTheme } from "../../design/theme";
-import { CAPTION_LANE, CONTENT, SAFE, VIDEO } from "../../design/tokens";
+import { CAPTION_LANE, CONTENT, SAFE, VIDEO, lanesFor } from "../../design/tokens";
 import type { BigNumberProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
@@ -15,7 +15,7 @@ const render = (p: BigNumberProps, value: number) =>
   `${p.prefix}${formatNumber(value, p.decimals)}${p.suffix}`;
 
 /** A counting figure in tabular Inter over a tone rule, the label beneath; a callout lands as a ruled tag. */
-export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, cues, durationFrames }) => {
+export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, cues, durationFrames, year }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = useTheme();
@@ -45,7 +45,7 @@ export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, c
         opacity: exit,
         justifyContent: "center",
         alignItems: "center",
-        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
+        padding: `${lanesFor(year !== undefined).top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", transform: `translateY(${drift}px)` }}>

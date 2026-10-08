@@ -4,18 +4,19 @@ import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
 import { fitTitleFontSize } from "../../design/layout";
 import { dataProgress, popIn, staggerDelay, sustainDrift } from "../../design/motion";
 import { useTheme } from "../../design/theme";
-import { CAPTION_LANE, SAFE, TITLE_LANE, VIDEO } from "../../design/tokens";
+import { CAPTION_LANE, SAFE, VIDEO, lanesFor } from "../../design/tokens";
 import { TITLE_MAX_FONT_PX } from "../../schema/validate";
 import type { TitleProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
 /** Kicker in tracked capitals, a Caslon headline landing word by word, then a Brass rule drawing under it. */
-export const Title: React.FC<SceneRenderProps<TitleProps>> = ({ props, durationFrames }) => {
+export const Title: React.FC<SceneRenderProps<TitleProps>> = ({ props, durationFrames, year }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = useTheme();
   const words = props.headline.split(/\s+/);
-  const fontSize = fitTitleFontSize(props.headline, TITLE_LANE.width, TITLE_LANE.height, TITLE_MAX_FONT_PX);
+  const lanes = lanesFor(year !== undefined);
+  const fontSize = fitTitleFontSize(props.headline, lanes.title.width, lanes.title.height, TITLE_MAX_FONT_PX);
   const exit = interpolate(frame, [durationFrames - 8, durationFrames], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -30,7 +31,7 @@ export const Title: React.FC<SceneRenderProps<TitleProps>> = ({ props, durationF
         background: theme.ground,
         opacity: exit,
         justifyContent: "center",
-        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
+        padding: `${lanes.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       {props.kicker && (

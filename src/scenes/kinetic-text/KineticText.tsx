@@ -4,20 +4,21 @@ import { EXIT_FRAMES } from "../../charts/timing";
 import { DISPLAY_FONT } from "../../design/fonts";
 import { popIn, sustainDrift } from "../../design/motion";
 import { useTheme } from "../../design/theme";
-import { CAPTION_LANE, SAFE, VIDEO } from "../../design/tokens";
+import { CAPTION_LANE, SAFE, VIDEO, lanesFor } from "../../design/tokens";
 import { emphasisTarget } from "../../schema/emphasis";
 import type { KineticTextProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 import { KINETIC, kineticFontSize } from "./timing";
 
 /** Stacked Caslon lines slide up out of masks; an emphasize cue draws a tone rule under its word and recolors it. */
-export const KineticText: React.FC<SceneRenderProps<KineticTextProps>> = ({ props, cues, durationFrames }) => {
+export const KineticText: React.FC<SceneRenderProps<KineticTextProps>> = ({ props, cues, durationFrames, year }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = useTheme();
   const mark = theme.tone[props.tone];
   const ink = theme.toneText[props.tone];
-  const size = kineticFontSize(props.lines);
+  const lanes = lanesFor(year !== undefined);
+  const size = kineticFontSize(props.lines, lanes.kinetic);
   const exit = interpolate(frame, [durationFrames - EXIT_FRAMES, durationFrames], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -33,7 +34,7 @@ export const KineticText: React.FC<SceneRenderProps<KineticTextProps>> = ({ prop
     <AbsoluteFill
       style={{
         background: theme.ground, opacity: exit, justifyContent: "center",
-        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
+        padding: `${lanes.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       <div style={{ transform: `translateY(${sustainDrift(frame, 6, 90)}px)` }}>

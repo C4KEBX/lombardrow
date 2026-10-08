@@ -32,9 +32,11 @@ export function composeScenes(
   wordsByScene: Record<string, readonly WordTiming[]>,
   fps: number,
   audioMsByScene: Record<string, number> = {},
+  /** Frames before the first scene (the ledger-line open). */
+  startOffset = 0,
 ): ComposedScene[] {
   const composed: ComposedScene[] = [];
-  let startFrame = 0;
+  let startFrame = startOffset;
   for (const scene of sb.scenes) {
     const words = wordsByScene[scene.id];
     if (!words) throw new CueResolutionError(`No word timings for scene "${scene.id}"`);
