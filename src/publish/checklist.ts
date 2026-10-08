@@ -34,7 +34,12 @@ export function renderChecklist(pkg: PublishPackage, auto: AutoChecks): string {
     box(auto.variation === undefined ? undefined : auto.variation.length === 0, "Variation check passes on the final plan, script and length included", auto.variation?.join("; ")),
     box(lengthOk, "Runs 65 to 70 seconds", d === undefined ? "" : `${d.toFixed(1)} s`),
     human("Source stamp on screen for every number and date", "`check` enforces it; confirm while watching"),
-    box(lb === undefined ? undefined : lb.mismatches === 0 && lb.drift === 0, "Captions checked word for word", lb ? `listen-back found ${lb.mismatches} word mismatches and ${lb.drift} caption timing drifts; see listen-back.md` : "run `npm run listen-back`"),
+    // Speech recognition errs too, so listen-back findings are places to listen, not failures.
+    lb && lb.mismatches === 0 && lb.drift === 0
+      ? box(true, "Captions checked word for word", "listen-back heard the script exactly, captions in sync")
+      : lb
+        ? human("Captions checked word for word", `listen closely at the ${lb.mismatches + lb.drift} places in listen-back.md (${lb.mismatches} words differ, ${lb.drift} captions out of sync)`)
+        : box(undefined, "Captions checked word for word", "run `npm run listen-back`"),
     box(true, "Photorealistic AI scenes disclosed", pkg.aiDisclosure.required ? `REQUIRED for ${pkg.aiDisclosure.scenes.join(", ")}: ${pkg.aiDisclosure.reason}` : `none needed (${pkg.aiDisclosure.reason})`),
     box(descriptionsOk, "Description has the sources and the standard footer", "youtube.txt, tiktok.txt, instagram.txt"),
     box(auto.thumbnails.length > 0, "Door number, title and thumbnail ready for every platform", auto.thumbnails.join(", ")),

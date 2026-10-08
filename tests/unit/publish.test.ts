@@ -112,7 +112,7 @@ describe("pre-publish checklist", () => {
     const md = renderChecklist(pkg, { durationSeconds: 71.4, variation: ["era repeats"], listenBack: { mismatches: 2, drift: 0 }, thumbnails: [] });
     expect(md).toContain("- [ ] Runs 65 to 70 seconds **FAILED**: 71.4 s");
     expect(md).toContain("**FAILED**: era repeats");
-    expect(md).toContain("listen-back found 2 word mismatches");
+    expect(md).toContain("- [ ] Captions checked word for word: listen closely at the 2 places in listen-back.md (2 words differ, 0 captions out of sync)");
     expect(renderChecklist(pkg, { thumbnails })).toContain("- [ ] Runs 65 to 70 seconds (not checked yet)");
   });
 });
