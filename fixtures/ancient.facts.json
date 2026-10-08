@@ -1,0 +1,21 @@
+{
+  "facts": [
+    {
+      "id": "f-regions",
+      "claim": "Modern countries that lie within the Roman Empire at its greatest extent, c. 117 AD (approximate; demo data, verify before publishing)",
+      "dataset": ["Italy", "Spain", "France", "Greece", "Turkey", "Egypt"],
+      "source": { "name": "Wikipedia: Roman Empire", "url": "https://en.wikipedia.org/wiki/Roman_Empire" }
+    },
+    {
+      "id": "f-dates",
+      "claim": "Key dates of Rome: traditional founding 753 BC; Caesar assassinated 44 BC; Augustus becomes first emperor 27 BC; Western Roman Empire ends 476 AD (demo data, verify before publishing)",
+      "dataset": [
+        { "year": -753, "label": "Rome is founded" },
+        { "year": -44, "label": "Caesar is assassinated" },
+        { "year": -27, "label": "Augustus becomes emperor" },
+        { "year": 476, "label": "Western empire falls" }
+      ],
+      "source": { "name": "Wikipedia: Timeline of ancient Rome", "url": "https://en.wikipedia.org/wiki/Timeline_of_ancient_Rome" }
+    }
+  ]
+}

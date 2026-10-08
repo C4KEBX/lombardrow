@@ -1,0 +1,7 @@
+{
+  "facts": [
+    { "id": "f-rome", "claim": "Roman Empire population around 2 AD, millions (rough scholarly estimate; demo data, verify before publishing)", "value": 50, "source": { "name": "Wikipedia: Demographics of the Roman Empire", "url": "https://en.wikipedia.org/wiki/Demographics_of_the_Roman_Empire" } },
+    { "id": "f-han", "claim": "Han dynasty census of 2 AD recorded about 57.7 million people (demo data, verify before publishing)", "value": 57.7, "source": { "name": "Wikipedia: Han dynasty", "url": "https://en.wikipedia.org/wiki/Han_dynasty" } },
+    { "id": "f-quote", "claim": "After the battle of Zela, Caesar reported: \"I came, I saw, I conquered.\" (Plutarch, Life of Caesar; Suetonius)", "source": { "name": "Plutarch, Life of Caesar", "url": "https://en.wikipedia.org/wiki/Veni,_vidi,_vici" } }
+  ]
+}

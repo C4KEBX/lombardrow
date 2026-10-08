@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "How Fast Prices Rose",
+    "theme": "bold-flat",
+    "voice": "en-US-AndrewNeural"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "Prices rose almost every year, but never at the same speed. This is the story of how fast they climbed, measured December to December, from twenty sixteen through twenty twenty three.",
+      "props": {
+        "headline": "How fast prices rose",
+        "kicker": "US INFLATION"
+      },
+      "cues": []
+    },
+    {
+      "id": "trend",
+      "type": "line-chart",
+      "narration": "From twenty sixteen through twenty nineteen, yearly inflation hovered near two percent. Then came twenty twenty one. It jumped sharply, hit its high mark, and then began falling again.",
+      "props": {
+        "title": "US CPI, yearly change",
+        "xFormat": "year",
+        "suffix": "%",
+        "decimals": 1,
+        "tone": "negative",
+        "factId": "f-cpi",
+        "points": [
+          {
+            "x": 2016,
+            "y": 2.1
+          },
+          {
+            "x": 2017,
+            "y": 2.1
+          },
+          {
+            "x": 2018,
+            "y": 1.9
+          },
+          {
+            "x": 2019,
+            "y": 2.3
+          },
+          {
+            "x": 2020,
+            "y": 1.4
+          },
+          {
+            "x": 2021,
+            "y": 7.0
+          },
+          {
+            "x": 2022,
+            "y": 6.5
+          },
+          {
+            "x": 2023,
+            "y": 3.4
+          }
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "hovered",
+          "do": "callout",
+          "text": "Steady",
+          "x": 2018
+        },
+        {
+          "atWord": "jumped",
+          "do": "callout",
+          "text": "Surge",
+          "x": 2021
+        }
+      ]
+    },
+    {
+      "id": "peak",
+      "type": "big-number",
+      "narration": "In December twenty twenty one, prices stood seven percent above where they were a year earlier. That was the fastest yearly pace in this whole stretch of years.",
+      "props": {
+        "value": 7,
+        "suffix": "%",
+        "decimals": 1,
+        "label": "Dec 2020 to Dec 2021",
+        "factId": "f-2021",
+        "tone": "negative"
+      },
+      "cues": [
+        {
+          "atWord": "seven",
+          "do": "callout",
+          "text": "Highest in this span"
+        }
+      ]
+    },
+    {
+      "id": "calm",
+      "type": "kinetic-text",
+      "narration": "By this December to December measure, the surge eased after that, and the yearly rate kept falling.",
+      "props": {
+        "lines": [
+          "The surge",
+          "eased",
+          "after that"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "surge",
+          "do": "emphasize",
+          "text": "surge"
+        },
+        {
+          "atWord": "eased",
+          "do": "emphasize",
+          "text": "eased"
+        }
+      ]
+    },
+    {
+      "id": "cooling",
+      "type": "compare",
+      "narration": "By December twenty twenty three, the yearly rate had fallen to three point four percent. That is less than half of the peak, though still above the early years.",
+      "props": {
+        "title": "Yearly CPI change",
+        "suffix": "%",
+        "decimals": 1,
+        "left": {
+          "label": "Dec 2021",
+          "value": 7,
+          "factId": "f-2021"
+        },
+        "right": {
+          "label": "Dec 2023",
+          "value": 3.4,
+          "factId": "f-2023"
+        }
+      },
+      "cues": [
+        {
+          "atWord": "peak",
+          "do": "callout",
+          "text": "The peak"
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "type": "title",
+      "narration": "Slower inflation still means higher prices than before. They just rise more gently now. That is the difference between a rate and a level.",
+      "props": {
+        "headline": "Slower is not lower",
+        "kicker": "PRICES"
+      },
+      "cues": []
+    }
+  ]
+}

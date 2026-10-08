@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "How the Roman Republic Ended",
+    "theme": "bold-flat",
+    "voice": "en-US-AndrewNeural"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "For almost five hundred years, Rome had no king. It was a republic. So how did that republic end, and what came after it? Here are the dates that mattered most.",
+      "props": {
+        "headline": "How Rome ended its republic",
+        "kicker": "ANCIENT ROME"
+      },
+      "cues": []
+    },
+    {
+      "id": "dates",
+      "type": "timeline",
+      "narration": "Tradition says the Roman Republic was founded in five oh nine BC. The First Punic War began in two sixty four BC. Caesar was assassinated in forty four BC. The Battle of Actium came in thirty one BC, and Augustus was proclaimed in twenty seven BC.",
+      "props": {
+        "title": "The Republic in five dates",
+        "factId": "f-dates",
+        "events": [
+          {
+            "year": -509,
+            "label": "Republic founded"
+          },
+          {
+            "year": -264,
+            "label": "First Punic War begins"
+          },
+          {
+            "year": -44,
+            "label": "Caesar assassinated"
+          },
+          {
+            "year": -31,
+            "label": "Battle of Actium"
+          },
+          {
+            "year": -27,
+            "label": "Augustus proclaimed"
+          }
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "founded",
+          "do": "emphasize",
+          "text": "founded"
+        },
+        {
+          "atWord": "Punic",
+          "do": "emphasize",
+          "text": "Punic"
+        },
+        {
+          "atWord": "assassinated",
+          "do": "emphasize",
+          "text": "assassinated"
+        },
+        {
+          "atWord": "Actium",
+          "do": "emphasize",
+          "text": "Actium"
+        },
+        {
+          "atWord": "Augustus",
+          "do": "emphasize",
+          "text": "Augustus"
+        }
+      ]
+    },
+    {
+      "id": "rival",
+      "type": "map",
+      "narration": "Rome's great rival was Carthage, an ancient city in northern Africa, in what is now Tunisia. The Romans fought three wars against Carthage, known as the Punic Wars, across the sea from Italy.",
+      "props": {
+        "title": "Rome and its rival",
+        "regions": [
+          "Italy",
+          "Tunisia"
+        ],
+        "focus": [
+          4,
+          28,
+          22,
+          48
+        ],
+        "factId": "f-carthage"
+      },
+      "cues": [
+        {
+          "atWord": "Rome's",
+          "do": "emphasize",
+          "text": "Italy"
+        },
+        {
+          "atWord": "Tunisia",
+          "do": "emphasize",
+          "text": "Tunisia"
+        }
+      ]
+    },
+    {
+      "id": "change",
+      "type": "kinetic-text",
+      "narration": "Caesar was assassinated, a sea battle at Actium followed, and Octavian was proclaimed Augustus. A republic had become an empire.",
+      "props": {
+        "lines": [
+          "A republic",
+          "became",
+          "an empire"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "republic",
+          "occurrence": 1,
+          "do": "emphasize",
+          "text": "republic"
+        },
+        {
+          "atWord": "empire",
+          "do": "emphasize",
+          "text": "empire"
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "type": "title",
+      "narration": "From five oh nine BC to twenty seven BC, the Republic lasted roughly four hundred eighty years. That is a long time for any government to hold.",
+      "props": {
+        "headline": "A republic, then an empire",
+        "kicker": "ROME"
+      },
+      "cues": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+node_modules/
+out/
+coverage/
+tests/render/_tmp/
+.superpowers/
+.DS_Store
+tts/.venv/
+music/generated/
+videos/*/review/

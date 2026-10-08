@@ -1,0 +1,53 @@
+{
+  "name": "lombard-row",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run tests/unit",
+    "test:cov": "vitest run tests/unit --coverage",
+    "test:render": "vitest run tests/render --testTimeout=240000 --no-file-parallelism",
+    "typecheck": "tsc --noEmit",
+    "studio": "remotion studio src/index.ts",
+    "render:hello": "rm -rf out/hello-frames && remotion render src/index.ts HelloBigNumber out/hello-frames --sequence --image-format=jpeg && ffmpeg -y -loglevel error -framerate 30 -pattern_type glob -i \"out/hello-frames/element-*.jpeg\" -c:v libx264 -pix_fmt yuv420p out/hello.mp4",
+    "render:finance": "rm -rf out/finance-frames && remotion render src/index.ts FinanceDemo out/finance-frames --sequence --image-format=jpeg && ffmpeg -y -loglevel error -framerate 30 -pattern_type glob -i \"out/finance-frames/element-*.jpeg\" -c:v libx264 -pix_fmt yuv420p out/finance.mp4",
+    "still:finance": "remotion still src/index.ts FinanceDemo",
+    "still:hello": "remotion still src/index.ts HelloBigNumber out/hello.png --frame=100",
+    "setup:tts": "python3 -m venv tts/.venv && tts/.venv/bin/pip install -q -r tts/requirements.txt",
+    "produce": "tsx scripts/produce.ts",
+    "check": "tsx scripts/check.ts",
+    "catalog": "tsx scripts/catalog.ts",
+    "sheet": "tsx scripts/sheet.ts",
+    "verify-facts": "tsx scripts/verify-facts.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.533",
+    "@remotion/cli": "4.0.533",
+    "@remotion/google-fonts": "4.0.533",
+    "@remotion/paths": "4.0.533",
+    "@remotion/renderer": "4.0.533",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "4.0.533",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "2.0.2",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^3.1.1",
+    "@types/d3-scale": "^4.0.9",
+    "@types/d3-shape": "^3.2.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^24.0.0",
+    "@types/pngjs": "^6.0.0",
+    "@types/react": "^19.0.0",
+    "@types/topojson-client": "^3.1.5",
+    "@vitest/coverage-v8": "^5.0.0",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.0"
+  }
+}

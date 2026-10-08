@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "meta": { "title": "Finance Demo", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "audio": { "music": null },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "Seventeen years of the S and P five hundred, in under a minute.",
+      "props": { "headline": "17 Years of the S&P 500", "kicker": "INVESTING" }
+    },
+    {
+      "id": "sp500",
+      "type": "line-chart",
+      "narration": "The index fell to nine hundred in two thousand eight, then climbed past forty seven hundred.",
+      "props": {
+        "title": "S&P 500 year-end close",
+        "xFormat": "year",
+        "decimals": 2,
+        "tone": "highlight",
+        "factId": "f-sp",
+        "points": [
+          { "x": 2007, "y": 1468.36 }, { "x": 2008, "y": 903.25 }, { "x": 2009, "y": 1115.1 },
+          { "x": 2010, "y": 1257.64 }, { "x": 2011, "y": 1257.6 }, { "x": 2012, "y": 1426.19 },
+          { "x": 2013, "y": 1848.36 }, { "x": 2014, "y": 2058.9 }, { "x": 2015, "y": 2043.94 },
+          { "x": 2016, "y": 2238.83 }, { "x": 2017, "y": 2673.61 }, { "x": 2018, "y": 2506.85 },
+          { "x": 2019, "y": 3230.78 }, { "x": 2020, "y": 3756.07 }, { "x": 2021, "y": 4766.18 },
+          { "x": 2022, "y": 3839.5 }, { "x": 2023, "y": 4769.83 }
+        ]
+      },
+      "cues": [
+        { "atWord": "fell", "do": "callout", "text": "2008: 903", "x": 2008 },
+        { "atWord": "climbed", "do": "callout", "text": "2021: 4,766", "x": 2021 }
+      ]
+    },
+    {
+      "id": "drop",
+      "type": "big-number",
+      "narration": "Peak to trough, it lost fifty seven percent of its value.",
+      "props": { "value": 57, "suffix": "%", "label": "peak-to-trough drop", "factId": "f-drop", "tone": "negative" },
+      "cues": [{ "atWord": "fifty", "do": "callout", "text": "Over half" }]
+    },
+    {
+      "id": "race",
+      "type": "bar-race",
+      "narration": "Meanwhile, the race for the biggest company kept changing hands.",
+      "props": {
+        "title": "Market cap, $B (synthetic data)",
+        "prefix": "$",
+        "suffix": "B",
+        "topN": 5,
+        "factId": "f-race",
+        "frames": [
+          { "label": "2018", "values": [{ "name": "Northwind", "value": 520 }, { "name": "Contoso", "value": 480 }, { "name": "Globex", "value": 300 }, { "name": "Initech", "value": 260 }, { "name": "Umbrella", "value": 190 }, { "name": "Hooli", "value": 120 }] },
+          { "label": "2019", "values": [{ "name": "Northwind", "value": 560 }, { "name": "Contoso", "value": 610 }, { "name": "Globex", "value": 340 }, { "name": "Initech", "value": 300 }, { "name": "Umbrella", "value": 250 }, { "name": "Hooli", "value": 180 }] },
+          { "label": "2020", "values": [{ "name": "Northwind", "value": 640 }, { "name": "Contoso", "value": 820 }, { "name": "Globex", "value": 410 }, { "name": "Initech", "value": 520 }, { "name": "Umbrella", "value": 280 }, { "name": "Hooli", "value": 330 }] },
+          { "label": "2021", "values": [{ "name": "Northwind", "value": 700 }, { "name": "Contoso", "value": 1010 }, { "name": "Globex", "value": 520 }, { "name": "Initech", "value": 880 }, { "name": "Umbrella", "value": 300 }, { "name": "Hooli", "value": 640 }, { "name": "Vandelay", "value": 450 }] },
+          { "label": "2022", "values": [{ "name": "Northwind", "value": 690 }, { "name": "Contoso", "value": 960 }, { "name": "Globex", "value": 540 }, { "name": "Initech", "value": 940 }, { "name": "Umbrella", "value": 360 }, { "name": "Hooli", "value": 810 }, { "name": "Vandelay", "value": 600 }] },
+          { "label": "2023", "values": [{ "name": "Northwind", "value": 720 }, { "name": "Contoso", "value": 1020 }, { "name": "Globex", "value": 560 }, { "name": "Initech", "value": 1180 }, { "name": "Umbrella", "value": 400 }, { "name": "Hooli", "value": 990 }, { "name": "Vandelay", "value": 760 }] }
+        ]
+      },
+      "cues": [{ "atWord": "changing", "do": "callout", "text": "New leader" }]
+    },
+    {
+      "id": "cpi",
+      "type": "line-chart",
+      "narration": "Then inflation spiked to eight percent in twenty twenty two.",
+      "props": {
+        "title": "US CPI inflation, yearly",
+        "xFormat": "year",
+        "suffix": "%",
+        "decimals": 1,
+        "tone": "negative",
+        "factId": "f-cpi",
+        "points": [
+          { "x": 2015, "y": 0.1 }, { "x": 2016, "y": 1.3 }, { "x": 2017, "y": 2.1 },
+          { "x": 2018, "y": 2.4 }, { "x": 2019, "y": 1.8 }, { "x": 2020, "y": 1.2 },
+          { "x": 2021, "y": 4.7 }, { "x": 2022, "y": 8.0 }, { "x": 2023, "y": 4.1 }
+        ]
+      },
+      "cues": [{ "atWord": "spiked", "do": "callout", "text": "2022: 8.0%", "x": 2022 }]
+    }
+  ]
+}

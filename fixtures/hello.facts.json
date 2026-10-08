@@ -1,0 +1,10 @@
+{
+  "facts": [
+    {
+      "id": "f1",
+      "claim": "S&P 500 peak-to-trough decline, Oct 2007 to Mar 2009 (fixture)",
+      "value": 57,
+      "source": { "name": "S&P Dow Jones Indices", "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" }
+    }
+  ]
+}

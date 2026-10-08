@@ -1,0 +1,47 @@
+import type { VoiceMode } from "../voice/index";
+
+export type ProduceCliOptions = {
+  storyboardPath: string;
+  factsPath: string;
+  outDir: string;
+  voice: VoiceMode;
+  enforceLength: boolean;
+  musicDir?: string;
+  cacheDir?: string;
+};
+
+const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir"]);
+
+export function parseArgs(argv: readonly string[]): ProduceCliOptions {
+  const values = new Map<string, string>();
+  let enforceLength = true;
+  for (let i = 0; i < argv.length; i += 1) {
+    const flag = argv[i];
+    if (flag === "--no-enforce-length") {
+      enforceLength = false;
+    } else if (VALUE_FLAGS.has(flag)) {
+      const value = argv[i + 1];
+      if (value === undefined || value.startsWith("--")) throw new Error(`${flag} needs a value`);
+      values.set(flag, value);
+      i += 1;
+    } else {
+      throw new Error(`Unknown flag ${flag}`);
+    }
+  }
+  const required = (flag: string): string => {
+    const value = values.get(flag);
+    if (value === undefined) throw new Error(`Missing required flag ${flag}`);
+    return value;
+  };
+  const voice = values.get("--voice") ?? "edge";
+  if (voice !== "edge" && voice !== "standin") throw new Error(`--voice must be "edge" or "standin", got "${voice}"`);
+  return {
+    storyboardPath: required("--storyboard"),
+    factsPath: required("--facts"),
+    outDir: required("--out"),
+    voice,
+    enforceLength,
+    musicDir: values.get("--music-dir"),
+    cacheDir: values.get("--cache-dir"),
+  };
+}
