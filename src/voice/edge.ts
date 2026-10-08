@@ -6,6 +6,8 @@ import { promisify } from "node:util";
 import { z } from "zod";
 import { probeDurationMs } from "../audio/probe";
 import { alignEvents, type RawEvent } from "./align";
+import { PRONUNCIATIONS } from "./pronunciations";
+import { foldTimings, spellNarration } from "./speller";
 import type { VoiceProvider } from "./types";
 
 const run = promisify(execFile);
@@ -55,18 +57,28 @@ const defaultDeps: EdgeDeps = {
   probe: probeDurationMs,
 };
 
-/** Edge TTS provider. Output is cached per (voice, narration); a failed run caches nothing. */
-export function makeEdgeProvider(cacheDir: string, deps: EdgeDeps = defaultDeps): VoiceProvider {
+/**
+ * Edge TTS provider. The voice reads the spelled-out narration ("1494" as "fourteen ninety-four");
+ * word timings fold back onto the written tokens. Output is cached per (voice, spoken text); a
+ * failed run caches nothing.
+ */
+export function makeEdgeProvider(
+  cacheDir: string,
+  deps: EdgeDeps = defaultDeps,
+  dictionary: Readonly<Record<string, string>> = PRONUNCIATIONS,
+): VoiceProvider {
   return async (narration, voice) => {
     fs.mkdirSync(cacheDir, { recursive: true });
-    const key = voiceCacheKey(voice, narration);
+    const spelled = spellNarration(narration, dictionary);
+    const spoken = spelled.spoken;
+    const key = voiceCacheKey(voice, spoken);
     const mp3 = path.join(cacheDir, `${key}.mp3`);
     const json = path.join(cacheDir, `${key}.events.json`);
     if (!(fs.existsSync(mp3) && fs.existsSync(json))) {
       const textFile = path.join(cacheDir, `${key}.txt`);
       const tmpMp3 = `${mp3}.part`;
       const tmpJson = `${json}.part`;
-      fs.writeFileSync(textFile, narration, "utf-8");
+      fs.writeFileSync(textFile, spoken, "utf-8");
       try {
         await deps.runTts(ttsArgs(voice, textFile, tmpMp3, tmpJson));
         fs.renameSync(tmpMp3, mp3);
@@ -77,6 +89,7 @@ export function makeEdgeProvider(cacheDir: string, deps: EdgeDeps = defaultDeps)
       }
     }
     const events = parseEvents(fs.readFileSync(json, "utf-8"));
-    return { audioPath: mp3, words: alignEvents(narration, events), audioMs: await deps.probe(mp3) };
+    const words = foldTimings(spelled, alignEvents(spoken, events));
+    return { audioPath: mp3, words, audioMs: await deps.probe(mp3) };
   };
 }

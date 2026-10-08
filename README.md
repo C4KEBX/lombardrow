@@ -28,6 +28,7 @@ The skill (`.claude/skills/make-explainer/`) researches sources, writes `videos/
 | `npm run check -- --storyboard S --facts F` | Reports every validation issue, estimated length and advice-phrasing warnings |
 | `npm run verify-facts -- --facts F [--out V]` | Advisory: do a fact's numbers appear on its source page |
 | `npm run sheet -- --storyboard S --facts F --out DIR [--verify V]` | Self-contained `review.html` with a still per scene |
+| `npm run voice -- --storyboard S --facts F` | Voices every scene and the sign-off, prints per-scene and total length, fails outside 65-70 s |
 | `npm run produce -- --storyboard S --facts F --out DIR` | Voice, render, mix, loudness-normalize to -14 LUFS |
 | `npm run catalog` | Regenerate the storyboard JSON Schema the skill reads |
 | `npm test`, `npm run test:cov`, `npm run test:render` | Unit tests, coverage, render snapshot tests (serial) |

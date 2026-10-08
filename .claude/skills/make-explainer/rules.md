@@ -50,7 +50,7 @@ Countries lit on their spoken names (modern borders, shown as approximate). `reg
 ## Narration style
 
 - About 170 words in total is the target for a 65-70 second video; `check` estimates it, open and close included.
-- Spell numbers out in narration ("fifty seven percent", "two thousand eight"); the screen shows the digits. Write "percent" and "dollars", never symbols.
+- Write numbers as digits in narration ("1494", "8%", "$1,000", "1920s", "19th"); captions show them as written and the voice reads a spelled-out form ("fourteen ninety-four", "eight percent", "one thousand dollars"). A four-digit number from 1000 to 2099 without a comma is read as a year; write "1,500" for a count. Spelled-out numbers still work. Cue words may be digit tokens ("1494").
 - Short sentences. One idea per scene. Scene 1 is a hook, the last scene lands the claim. Narration must contain every cue word.
 
 ## Facts

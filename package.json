@@ -14,6 +14,7 @@
     "still:hello": "remotion still src/index.ts HelloBigNumber out/hello.png --frame=100",
     "setup:tts": "python3 -m venv tts/.venv && tts/.venv/bin/pip install -q -r tts/requirements.txt",
     "produce": "tsx scripts/produce.ts",
+    "voice": "tsx scripts/voice.ts",
     "check": "tsx scripts/check.ts",
     "catalog": "tsx scripts/catalog.ts",
     "sheet": "tsx scripts/sheet.ts",

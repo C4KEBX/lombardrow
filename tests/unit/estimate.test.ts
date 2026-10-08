@@ -5,7 +5,7 @@ import ancientSb from "../../fixtures/ancient.storyboard.json";
 import inflationSb from "../../fixtures/calibration/us-inflation.storyboard.json";
 import ruleSb from "../../fixtures/calibration/rule-of-72.storyboard.json";
 import romanSb from "../../fixtures/calibration/roman-republic.storyboard.json";
-import { BOOKEND_SECONDS, TARGET_SECONDS, WORDS_PER_SECOND, countWords, estimateSeconds, narrationSeconds, targetWords } from "../../src/skill/estimate";
+import { BOOKEND_SECONDS, TARGET_SECONDS, WORDS_PER_SECOND, countWords, estimateSeconds, narrationSeconds, spokenWordCount, targetWords } from "../../src/skill/estimate";
 
 const narrations = (sb: { scenes: { narration: string }[] }) => sb.scenes.map((s) => s.narration);
 
@@ -37,5 +37,13 @@ describe("estimate", () => {
     expect(WORDS_PER_SECOND).toBe(2.85);
     expect(targetWords(8)).toBeGreaterThanOrEqual(160);
     expect(targetWords(8)).toBeLessThanOrEqual(180);
+  });
+});
+
+describe("spokenWordCount", () => {
+  it("counts the words the voice says, not the digits written", () => {
+    expect(spokenWordCount("In 1494 it began")).toBe(5);
+    expect(spokenWordCount("Up 8% to $1,000.")).toBe(7);
+    expect(spokenWordCount("Plain words only")).toBe(3);
   });
 });
