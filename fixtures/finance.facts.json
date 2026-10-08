@@ -1,0 +1,46 @@
+{
+  "facts": [
+    {
+      "id": "f-sp",
+      "claim": "S&P 500 year-end close, 2007-2023 (demo data; verify before publishing)",
+      "dataset": [
+        { "x": 2007, "y": 1468.36 }, { "x": 2008, "y": 903.25 }, { "x": 2009, "y": 1115.1 },
+        { "x": 2010, "y": 1257.64 }, { "x": 2011, "y": 1257.6 }, { "x": 2012, "y": 1426.19 },
+        { "x": 2013, "y": 1848.36 }, { "x": 2014, "y": 2058.9 }, { "x": 2015, "y": 2043.94 },
+        { "x": 2016, "y": 2238.83 }, { "x": 2017, "y": 2673.61 }, { "x": 2018, "y": 2506.85 },
+        { "x": 2019, "y": 3230.78 }, { "x": 2020, "y": 3756.07 }, { "x": 2021, "y": 4766.18 },
+        { "x": 2022, "y": 3839.5 }, { "x": 2023, "y": 4769.83 }
+      ],
+      "source": { "name": "S&P Dow Jones Indices", "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" }
+    },
+    {
+      "id": "f-drop",
+      "claim": "S&P 500 peak-to-trough decline, Oct 2007 to Mar 2009 (demo data)",
+      "value": 57,
+      "source": { "name": "S&P Dow Jones Indices", "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/" }
+    },
+    {
+      "id": "f-race",
+      "claim": "Fictional companies, synthetic market caps (demo data only)",
+      "dataset": [
+        { "label": "2018", "values": [{ "name": "Northwind", "value": 520 }, { "name": "Contoso", "value": 480 }, { "name": "Globex", "value": 300 }, { "name": "Initech", "value": 260 }, { "name": "Umbrella", "value": 190 }, { "name": "Hooli", "value": 120 }] },
+        { "label": "2019", "values": [{ "name": "Northwind", "value": 560 }, { "name": "Contoso", "value": 610 }, { "name": "Globex", "value": 340 }, { "name": "Initech", "value": 300 }, { "name": "Umbrella", "value": 250 }, { "name": "Hooli", "value": 180 }] },
+        { "label": "2020", "values": [{ "name": "Northwind", "value": 640 }, { "name": "Contoso", "value": 820 }, { "name": "Globex", "value": 410 }, { "name": "Initech", "value": 520 }, { "name": "Umbrella", "value": 280 }, { "name": "Hooli", "value": 330 }] },
+        { "label": "2021", "values": [{ "name": "Northwind", "value": 700 }, { "name": "Contoso", "value": 1010 }, { "name": "Globex", "value": 520 }, { "name": "Initech", "value": 880 }, { "name": "Umbrella", "value": 300 }, { "name": "Hooli", "value": 640 }, { "name": "Vandelay", "value": 450 }] },
+        { "label": "2022", "values": [{ "name": "Northwind", "value": 690 }, { "name": "Contoso", "value": 960 }, { "name": "Globex", "value": 540 }, { "name": "Initech", "value": 940 }, { "name": "Umbrella", "value": 360 }, { "name": "Hooli", "value": 810 }, { "name": "Vandelay", "value": 600 }] },
+        { "label": "2023", "values": [{ "name": "Northwind", "value": 720 }, { "name": "Contoso", "value": 1020 }, { "name": "Globex", "value": 560 }, { "name": "Initech", "value": 1180 }, { "name": "Umbrella", "value": 400 }, { "name": "Hooli", "value": 990 }, { "name": "Vandelay", "value": 760 }] }
+      ],
+      "source": { "name": "Synthetic demo data", "url": "https://example.com/synthetic-demo-data" }
+    },
+    {
+      "id": "f-cpi",
+      "claim": "US CPI annual average inflation, 2015-2023 (demo data; verify before publishing)",
+      "dataset": [
+        { "x": 2015, "y": 0.1 }, { "x": 2016, "y": 1.3 }, { "x": 2017, "y": 2.1 },
+        { "x": 2018, "y": 2.4 }, { "x": 2019, "y": 1.8 }, { "x": 2020, "y": 1.2 },
+        { "x": 2021, "y": 4.7 }, { "x": 2022, "y": 8.0 }, { "x": 2023, "y": 4.1 }
+      ],
+      "source": { "name": "US Bureau of Labor Statistics", "url": "https://www.bls.gov/cpi/" }
+    }
+  ]
+}

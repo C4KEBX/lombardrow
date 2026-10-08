@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "The Rule of Seventy Two",
+    "theme": "bold-flat",
+    "voice": "en-US-AndrewNeural"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "How long does it take money to double? There is a quick mental shortcut, and people have used it for centuries. It is called the rule of seventy two. Let us see how it works.",
+      "props": {
+        "headline": "How fast money doubles",
+        "kicker": "COMPOUND INTEREST"
+      },
+      "cues": []
+    },
+    {
+      "id": "rule",
+      "type": "kinetic-text",
+      "narration": "Divide seventy two by the yearly interest rate. The answer is roughly how many years it takes for savings to double.",
+      "props": {
+        "lines": [
+          "Divide",
+          "seventy two",
+          "by the rate"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "Divide",
+          "do": "emphasize",
+          "text": "Divide"
+        },
+        {
+          "atWord": "rate",
+          "do": "emphasize",
+          "text": "rate"
+        }
+      ]
+    },
+    {
+      "id": "nine",
+      "type": "big-number",
+      "narration": "At nine percent a year, seventy two divided by nine is eight. So a hundred dollars becomes two hundred in about eight years. Keep that same rate, and it doubles again eight years later.",
+      "props": {
+        "value": 8,
+        "suffix": " yrs",
+        "decimals": 0,
+        "label": "to double at 9% a year",
+        "factId": "f-9",
+        "tone": "positive"
+      },
+      "cues": [
+        {
+          "atWord": "eight",
+          "occurrence": 1,
+          "do": "callout",
+          "text": "Years to double"
+        }
+      ]
+    },
+    {
+      "id": "exact",
+      "type": "compare",
+      "narration": "Is the shortcut accurate? At eight percent, the rule says nine years. The exact math says nine point zero zero six. That is a very tiny gap between the two answers.",
+      "props": {
+        "title": "Years to double at 8%",
+        "suffix": " yrs",
+        "decimals": 3,
+        "left": {
+          "label": "Rule of 72",
+          "value": 9,
+          "factId": "f-8rule"
+        },
+        "right": {
+          "label": "Exact math",
+          "value": 9.006,
+          "factId": "f-8exact"
+        }
+      },
+      "cues": []
+    },
+    {
+      "id": "caveat",
+      "type": "kinetic-text",
+      "narration": "It is an estimate, not a promise. Real returns move around from year to year, so the rule only describes a steady rate, and it leaves out taxes and fees along the way.",
+      "props": {
+        "lines": [
+          "An estimate",
+          "not a promise"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "estimate",
+          "do": "emphasize",
+          "text": "estimate"
+        },
+        {
+          "atWord": "promise",
+          "do": "emphasize",
+          "text": "promise"
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "type": "title",
+      "narration": "Seventy two over the rate. A simple way to picture how time and growth work together, one year at a time.",
+      "props": {
+        "headline": "Divide, then double",
+        "kicker": "RULE OF SEVENTY TWO"
+      },
+      "cues": []
+    }
+  ]
+}

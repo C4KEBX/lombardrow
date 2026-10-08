@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "meta": { "title": "History Demo", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "audio": { "music": null },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "Two empires, one era.",
+      "props": { "headline": "Two Empires, One Era", "kicker": "HISTORY" }
+    },
+    {
+      "id": "east-west",
+      "type": "kinetic-text",
+      "narration": "Rome ruled the west while the Han dynasty ruled the east, half a world away.",
+      "props": { "lines": ["Rome in", "the west", "Han in", "the east"] },
+      "cues": [{ "atWord": "east", "do": "emphasize", "text": "east" }]
+    },
+    {
+      "id": "people",
+      "type": "compare",
+      "narration": "The Han ruled even more people than Rome.",
+      "props": {
+        "title": "People under rule, millions",
+        "suffix": "M",
+        "decimals": 1,
+        "left": { "label": "Rome", "value": 50, "factId": "f-rome" },
+        "right": { "label": "Han China", "value": 57.7, "factId": "f-han" }
+      },
+      "cues": [{ "atWord": "more", "do": "callout", "text": "More people" }]
+    },
+    {
+      "id": "census",
+      "type": "big-number",
+      "narration": "That census counted fifty seven point seven million.",
+      "props": { "value": 57.7, "suffix": "M", "decimals": 1, "label": "recorded in the Han census", "factId": "f-han", "tone": "highlight" }
+    },
+    {
+      "id": "veni",
+      "type": "quote",
+      "narration": "Rome's best known line is Caesar's boast about a quick victory: I came, I saw, I conquered.",
+      "props": { "quote": "I came, I saw, I conquered.", "attribution": "Julius Caesar", "factId": "f-quote" }
+    }
+  ]
+}

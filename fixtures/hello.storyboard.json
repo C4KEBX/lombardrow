@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "meta": { "title": "Hello Big Number", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "audio": { "music": null },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "In two thousand eight, the market broke.",
+      "props": { "headline": "The S&P 500 in 2008", "kicker": "FINANCE" }
+    },
+    {
+      "id": "drop",
+      "type": "big-number",
+      "narration": "It lost more than half of its value.",
+      "props": { "value": 57, "suffix": "%", "label": "peak-to-trough drop", "factId": "f1", "tone": "negative" },
+      "cues": [{ "atWord": "half", "do": "callout", "text": "Half gone" }]
+    }
+  ]
+}

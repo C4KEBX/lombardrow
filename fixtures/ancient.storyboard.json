@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "meta": { "title": "Ancient Demo", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "audio": { "music": null },
+  "scenes": [
+    {
+      "id": "intro",
+      "type": "title",
+      "narration": "Rome, in under a minute.",
+      "props": { "headline": "Rome in Two Minutes", "kicker": "HISTORY" }
+    },
+    {
+      "id": "reach",
+      "type": "map",
+      "narration": "At its height Rome reached from Italy to Spain, France, Greece, Turkey and Egypt, a very large stretch of the world.",
+      "props": {
+        "title": "The Roman world",
+        "regions": ["Italy", "Spain", "France", "Greece", "Turkey", "Egypt"],
+        "focus": [-12, 28, 45, 56],
+        "factId": "f-regions"
+      },
+      "cues": [
+        { "atWord": "Italy", "do": "emphasize", "text": "Italy" },
+        { "atWord": "Spain", "do": "emphasize", "text": "Spain" },
+        { "atWord": "France", "do": "emphasize", "text": "France" },
+        { "atWord": "Greece", "do": "emphasize", "text": "Greece" },
+        { "atWord": "Turkey", "do": "emphasize", "text": "Turkey" },
+        { "atWord": "Egypt", "do": "emphasize", "text": "Egypt" }
+      ]
+    },
+    {
+      "id": "dates",
+      "type": "timeline",
+      "narration": "Rome was founded, legend says, in seven fifty three BC. Caesar was assassinated in forty four BC, and Augustus became emperor soon after. The western empire finally falls in four seventy six.",
+      "props": {
+        "title": "Rome in four dates",
+        "events": [
+          { "year": -753, "label": "Rome is founded" },
+          { "year": -44, "label": "Caesar is assassinated" },
+          { "year": -27, "label": "Augustus becomes emperor" },
+          { "year": 476, "label": "Western empire falls" }
+        ],
+        "factId": "f-dates"
+      },
+      "cues": [
+        { "atWord": "founded", "do": "emphasize", "text": "founded" },
+        { "atWord": "assassinated", "do": "emphasize", "text": "assassinated" },
+        { "atWord": "emperor", "do": "emphasize", "text": "emperor" },
+        { "atWord": "falls", "do": "emphasize", "text": "falls" }
+      ]
+    },
+    {
+      "id": "legacy",
+      "type": "kinetic-text",
+      "narration": "Its roads, its laws and its legions shaped the world that followed.",
+      "props": { "lines": ["Roads, law,", "and legions"] },
+      "cues": [{ "atWord": "legions", "do": "emphasize", "text": "legions" }]
+    }
+  ]
+}
