@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "platform_zones": {
+    "bottom": {"y": 1536, "height": 384},
+    "right": {"x": 918, "width": 162}
+  },
+  "content_area": {"x": 72, "y": 0, "right": 918, "bottom": 1536},
+  "colors": {
+    "ledger_ink": "#1B2A41",
+    "parchment": "#F3EBDD",
+    "bankers_green": "#2F5D50",
+    "brass": "#B8893B",
+    "ticker_red": "#B23A3A",
+    "slate": "#6B7280",
+    "parchment_72": "rgba(243, 235, 221, 0.72)",
+    "parchment_78": "rgba(243, 235, 221, 0.78)"
+  },
+  "fonts": {
+    "display": {"family": "Libre Caslon Text", "weights": [400, 700]},
+    "text": {"family": "Inter", "weights": [400, 500, 600], "features": ["tnum"]}
+  },
+  "devices": {
+    "ledger_line": {
+      "rule": {"x": 72, "y": 1100, "width": 774, "height": 4},
+      "color": {"open": "brass", "axis_on_ledger_ink": "parchment", "axis_on_parchment": "ledger_ink"},
+      "series_label": {"x": 72, "y": 900, "font": "text", "size": 24, "weight": 500, "tracking_em": 0.28, "uppercase": true, "color_on_ledger_ink": "parchment_78"},
+      "door_no": {"x": 72, "y": 952, "font": "display", "size": 88, "prefix": "No. ", "color_on_ledger_ink": "parchment"},
+      "motion": {"rule_draw": {"start_s": 0.2, "duration_s": 0.6, "direction": "left_to_right"}, "text_fade_in": {"start_s": 0.8, "duration_s": 0.3}},
+      "inputs": ["door_no", "series_name"]
+    },
+    "year_counter": {
+      "x": 72, "y": 200,
+      "number": {"font": "display", "size": 120, "color": "brass"},
+      "rule": {"width": 120, "height": 3, "gap": 12, "color": "brass"},
+      "allowed_grounds": ["ledger_ink"],
+      "motion": {"count_duration_s": 1.2, "easing": "ease_out", "fade_s": 0.3},
+      "inputs": ["start_year", "end_year", "in_s", "out_s"]
+    },
+    "source_stamp": {
+      "x": 72, "y": 1478,
+      "font": "text", "size": 24, "weight": 400,
+      "color": {"on_ledger_ink": "parchment_72", "on_parchment": "slate"},
+      "max_chars": 60,
+      "motion": {"fade_s": 0.25, "min_hold_s": 2.0},
+      "inputs": ["text", "in_s", "out_s"]
+    },
+    "captions": {
+      "box": {"x": 72, "width": 846, "top": 1250},
+      "font": "text", "size": 52, "weight": 600, "line_height": 1.25, "align": "center",
+      "max_lines": 2,
+      "color": {"on_ledger_ink": "parchment", "on_parchment": "ledger_ink"}
+    },
+    "door_plate": {
+      "plate": {"x": 240, "y": 520, "width": 600, "height": 420, "border": 4, "radius": 16, "inner_inset": 14, "inner_border": 1.5, "inner_radius": 8, "color": "brass", "inner_opacity": 0.6},
+      "label": {"text": "No.", "font": "text", "size": 32, "weight": 500, "tracking_em": 0.3, "uppercase": true, "color": "parchment", "opacity": 0.8},
+      "number": {"font": "display", "size": 220, "color": "parchment", "digits": 3},
+      "wordmark": {"y": 1040, "center_x": 540, "size": 48, "tracking_em": 0.16, "rule_height": 3, "rule_color": "brass", "signoff": "How money got this way", "signoff_size": 20, "signoff_tracking_em": 0.28},
+      "allowed_grounds": ["ledger_ink"],
+      "motion": {"duration_s": 3.0, "scale_in": {"from": 0.96, "to": 1.0, "duration_s": 0.4}},
+      "inputs": ["door_no"]
+    }
+  }
+}

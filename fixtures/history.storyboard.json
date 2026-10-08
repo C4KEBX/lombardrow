@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "meta": { "title": "History Demo", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "meta": { "title": "History Demo", "theme": "lombard-row", "voice": "en-US-AndrewNeural" },
   "audio": { "music": null },
   "scenes": [
     {

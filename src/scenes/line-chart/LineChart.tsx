@@ -11,19 +11,21 @@ import { TICK_FONT_PX, badgeRect, overlaps, tickLabelRect } from "../../charts/l
 import { CHART_BOX, placeBadge, readoutFontSize } from "../../charts/layout";
 import { scheduleProgress } from "../../charts/schedule";
 import { EXIT_FRAMES, LINE_DRAW, drawPlan } from "../../charts/timing";
-import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
+import { BODY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { formatNumber } from "../../design/layout";
 import { popIn, staggerDelay, sustainDrift } from "../../design/motion";
-import { PALETTE, SAFE, VIDEO } from "../../design/tokens";
+import { useTheme } from "../../design/theme";
+import { CONTENT, SAFE, VIDEO } from "../../design/tokens";
 import type { LineChartProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
-const LINE_WIDTH = 16;
+const LINE_WIDTH = 8;
 
 export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, cues, durationFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const tone = PALETTE[props.tone];
+  const theme = useTheme();
+  const tone = theme.tone[props.tone];
   const { points } = props;
 
   const calloutCues = cues.filter((c) => c.do === "callout" && c.text !== undefined && c.x !== undefined);
@@ -51,8 +53,8 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
   const readoutSize = readoutFontSize(
     points.map((p) => p.y),
     (v) => fmt(v, props.decimals),
-    VIDEO.width - 2 * SAFE.side,
-    220,
+    CONTENT.width,
+    200,
   );
 
   const yTicks = niceTicks(yDomain, 4);
@@ -79,20 +81,20 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
   });
 
   return (
-    <AbsoluteFill style={{ background: PALETTE.ground, opacity: exit }}>
-      <div style={{ position: "absolute", left: SAFE.side, top: SAFE.top, width: VIDEO.width - 2 * SAFE.side }}>
+    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+      <div style={{ position: "absolute", left: CONTENT.left, top: SAFE.top, width: CONTENT.width }}>
         <div
           style={{
-            fontFamily: BODY_FONT, fontSize: 52, color: PALETTE.ink, opacity: 0.85,
-            transform: `scale(${titleIn})`, transformOrigin: "left center",
+            fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: theme.muted,
+            opacity: titleIn,
           }}
         >
           {props.title}
         </div>
         <div
           style={{
-            fontFamily: DISPLAY_FONT, fontSize: readoutSize, lineHeight: 1.05, color: tone,
-            fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", marginTop: 24,
+            fontFamily: NUMBER_FONT, fontWeight: 600, fontSize: readoutSize, lineHeight: 1.05,
+            color: theme.toneText[props.tone], whiteSpace: "nowrap", marginTop: 20, ...TABULAR,
           }}
         >
           {readout}
@@ -113,18 +115,18 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
           return (
             <line
               key={t} x1={CHART_BOX.left} x2={CHART_BOX.right} y1={y} y2={y} opacity={fade}
-              stroke={PALETTE.ink} strokeOpacity={0.14} strokeWidth={3}
+              stroke={theme.axis} strokeOpacity={0.12} strokeWidth={2}
             />
           );
         })}
         <line
           x1={CHART_BOX.left} x2={CHART_BOX.right} y1={CHART_BOX.bottom} y2={CHART_BOX.bottom}
-          stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={4}
+          stroke={theme.axis} strokeWidth={4}
         />
         {xTicks.map((t) => (
           <text
             key={t} x={sx(t)} y={CHART_BOX.bottom + 56} textAnchor="middle"
-            fontFamily={BODY_FONT} fontSize={38} fill={PALETTE.ink} fillOpacity={0.55}
+            fontFamily={BODY_FONT} fontSize={TICK_FONT_PX} fill={theme.muted}
           >
             {xLabel(t)}
           </text>
@@ -133,11 +135,11 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
         {yDomain[0] < 0 && yDomain[1] > 0 && (
           <line
             x1={CHART_BOX.left} x2={CHART_BOX.right} y1={zeroY} y2={zeroY}
-            stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={4}
+            stroke={theme.axis} strokeOpacity={0.5} strokeWidth={3}
           />
         )}
         <g clipPath="url(#line-reveal)">
-          <path d={areaPath} fill={tone} fillOpacity={0.2} />
+          <path d={areaPath} fill={tone} fillOpacity={0.12} />
           <path d={linePath} fill="none" stroke={tone} strokeWidth={LINE_WIDTH} strokeLinecap="round" strokeLinejoin="round" />
         </g>
 
@@ -150,8 +152,8 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
           return (
             <text
               key={t} x={CHART_BOX.left} y={y - 12} opacity={fade}
-              fontFamily={BODY_FONT} fontSize={TICK_FONT_PX} fill={PALETTE.ink} fillOpacity={0.55}
-              stroke={PALETTE.ground} strokeWidth={10} paintOrder="stroke" strokeLinejoin="round"
+              fontFamily={BODY_FONT} fontSize={TICK_FONT_PX} fill={theme.muted}
+              style={TABULAR} stroke={theme.ground} strokeWidth={10} paintOrder="stroke" strokeLinejoin="round"
             >
               {text}
             </text>
@@ -159,9 +161,8 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
         })}
 
         <g transform={`translate(${tip.x} ${tip.y})`} opacity={dotIn}>
-          <circle r={40 + sustainDrift(frame, 8, 30)} fill="none" stroke={tone} strokeWidth={8} strokeOpacity={0.5} />
-          <circle r={24} fill={PALETTE.ink} />
-          <circle r={11} fill={tone} />
+          <circle r={28 + sustainDrift(frame, 6, 30)} fill="none" stroke={tone} strokeWidth={4} strokeOpacity={0.5} />
+          <circle r={12} fill={tone} />
         </g>
 
         {shown.map(({ c, appear, ax, ay, badge }) => (

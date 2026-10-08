@@ -72,7 +72,7 @@ describe("stale verify results and untraced labels", () => {
   it("warns about digits in big-number labels, compare labels and quote attributions", () => {
     const board = parseStoryboard({
       schemaVersion: 1,
-      meta: { title: "t", theme: "bold-flat", voice: "v" },
+      meta: { title: "t", theme: "lombard-row", voice: "v" },
       audio: { music: null },
       scenes: [
         { id: "n", type: "big-number", narration: "x", props: { value: 5, label: "since 1999", factId: "f" } },
@@ -90,7 +90,7 @@ describe("renderReviewHtml", () => {
   it("escapes model-written text everywhere and never emits a script tag or javascript: link", () => {
     const evilSb = parseStoryboard({
       schemaVersion: 1,
-      meta: { title: "<script>alert(1)</script>", theme: "bold-flat", voice: "v" },
+      meta: { title: "<script>alert(1)</script>", theme: "lombard-row", voice: "v" },
       audio: { music: null },
       scenes: [{ id: "s", type: "title", narration: `Hi <img src=x onerror=alert(1)> "quoted"`, props: { headline: "<b>H</b>" } }],
     });

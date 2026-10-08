@@ -1,8 +1,10 @@
 export const COMPARE = {
   baseline: 1130,
   maxBar: 420,
-  barWidth: 300,
-  centers: [300, 780],
+  barWidth: 280,
+  /** Centered on the content area (x 72 to 918), clear of the right-hand action rail. */
+  centers: [283, 707],
+  middle: 495,
   labelY: 1196,
   growStart: 12,
   growFrames: 40,

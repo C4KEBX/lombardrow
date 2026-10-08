@@ -1,3 +1,4 @@
+import type { Ground } from "../design/theme";
 import type { Scene, Storyboard } from "../schema/storyboard";
 import {
   assertValidWords,
@@ -14,6 +15,8 @@ export type ResolvedCue = { frame: number; do: "callout" | "emphasize"; text?: s
 export type ComposedScene = {
   id: string;
   scene: Scene;
+  /** The scene's own ground, else the video's palette lead. */
+  ground: Ground;
   cues: ResolvedCue[];
   durationFrames: number;
   startFrame: number;
@@ -47,7 +50,7 @@ export function composeScenes(
       const audioMs = audioMsByScene[scene.id];
       const durationMs = audioMs === undefined ? wordsMs : Math.max(wordsMs, audioMs + DEFAULT_TAIL_PAD_MS);
       const durationFrames = msToFrame(durationMs, fps);
-      composed.push({ id: scene.id, scene, cues, durationFrames, startFrame, words: [...words] });
+      composed.push({ id: scene.id, scene, ground: scene.ground ?? sb.meta.paletteLead, cues, durationFrames, startFrame, words: [...words] });
       startFrame += durationFrames;
     } catch (error) {
       if (error instanceof CueResolutionError) {

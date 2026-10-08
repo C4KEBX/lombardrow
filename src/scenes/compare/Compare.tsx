@@ -3,20 +3,23 @@ import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remo
 import { CalloutBadge } from "../../charts/CalloutBadge";
 import { CHART_BOX, placeBadge } from "../../charts/layout";
 import { EXIT_FRAMES } from "../../charts/timing";
-import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
+import { BODY_FONT, DISPLAY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { fitFontSize, formatNumber } from "../../design/layout";
 import { countUp, dataProgress, popIn } from "../../design/motion";
-import { PALETTE, SAFE, VIDEO } from "../../design/tokens";
+import { useTheme } from "../../design/theme";
+import { CONTENT, SAFE, VIDEO } from "../../design/tokens";
 import type { CompareProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 import { COMPARE, barHeights } from "./layout";
 
-const COLUMN_ROOM = 440;
-const SIDE_COLORS = [PALETTE.neutral, PALETTE.highlight] as const;
+const COLUMN_ROOM = 360;
 
 export const Compare: React.FC<SceneRenderProps<CompareProps>> = ({ props, cues, durationFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const theme = useTheme();
+  /** The right side carries the accent; the left stays quiet. */
+  const sideColors = [theme.tone.neutral, theme.tone.highlight] as const;
   const sides = [props.left, props.right] as const;
   const heights = barHeights(props.left.value, props.right.value);
   const fmt = (v: number) => `${props.prefix}${formatNumber(v, props.decimals)}${props.suffix}`;
@@ -37,47 +40,46 @@ export const Compare: React.FC<SceneRenderProps<CompareProps>> = ({ props, cues,
     return (
       <CalloutBadge
         badge={placeBadge(ax, ay, callout.text as string, SAFE.top + 160)} text={callout.text as string}
-        anchorX={ax} anchorY={ay} scale={popIn(frame, fps, callout.frame)} color={SIDE_COLORS[leader]}
+        anchorX={ax} anchorY={ay} scale={popIn(frame, fps, callout.frame)} color={sideColors[leader]}
       />
     );
   })();
 
   return (
-    <AbsoluteFill style={{ background: PALETTE.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
       <svg width={VIDEO.width} height={VIDEO.height} style={{ position: "absolute", inset: 0 }}>
         <text
-          x={SAFE.side} y={SAFE.top + 52} fontFamily={BODY_FONT} fontSize={52} fill={PALETTE.ink}
-          fillOpacity={0.85 * titleIn}
+          x={CONTENT.left} y={SAFE.top + 44} fontFamily={BODY_FONT} fontWeight={600} fontSize={44} fill={theme.muted}
+          fillOpacity={titleIn}
         >
           {props.title}
         </text>
         <line
           x1={CHART_BOX.left} x2={CHART_BOX.right} y1={COMPARE.baseline} y2={COMPARE.baseline}
-          stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={4}
+          stroke={theme.axis} strokeWidth={4}
         />
         {sides.map((side, i) => {
           const cx = COMPARE.centers[i];
           const h = heights[i] * grows[i];
           return (
             <g key={side.label}>
-              <rect x={cx - COMPARE.barWidth / 2 + 10} y={COMPARE.baseline - h + 10} width={COMPARE.barWidth} height={h} fill={PALETTE.ink} fillOpacity={0.16} />
-              <rect x={cx - COMPARE.barWidth / 2} y={COMPARE.baseline - h} width={COMPARE.barWidth} height={h} fill={SIDE_COLORS[i]} />
+              <rect x={cx - COMPARE.barWidth / 2} y={COMPARE.baseline - h} width={COMPARE.barWidth} height={h} fill={sideColors[i]} />
               <text
                 x={cx} y={COMPARE.baseline - h - 28} textAnchor="middle"
-                fontFamily={DISPLAY_FONT} fontSize={valueFont} fill={PALETTE.ink}
-                style={{ fontVariantNumeric: "tabular-nums" }}
+                fontFamily={NUMBER_FONT} fontWeight={600} fontSize={valueFont} fill={theme.ink}
+                style={TABULAR}
               >
                 {fmt(countUp(side.value, grows[i], props.decimals))}
               </text>
-              <text x={cx} y={COMPARE.labelY} textAnchor="middle" fontFamily={BODY_FONT} fontSize={44} fill={PALETTE.ink}>
+              <text x={cx} y={COMPARE.labelY} textAnchor="middle" fontFamily={BODY_FONT} fontWeight={600} fontSize={44} fill={theme.ink}>
                 {side.label}
               </text>
             </g>
           );
         })}
-        <g transform={`translate(540 ${COMPARE.baseline - 90}) scale(${Math.min(1, popIn(frame, fps, 24))})`}>
-          <circle r={54} fill={PALETTE.ink} />
-          <text textAnchor="middle" y={16} fontFamily={DISPLAY_FONT} fontSize={48} fill={PALETTE.ground}>VS</text>
+        <g transform={`translate(${COMPARE.middle} ${COMPARE.baseline - 90}) scale(${Math.min(1, popIn(frame, fps, 24))})`}>
+          <circle r={54} fill={theme.ground} stroke={theme.ink} strokeWidth={3} />
+          <text textAnchor="middle" y={14} fontFamily={DISPLAY_FONT} fontStyle="italic" fontSize={44} fill={theme.ink}>vs</text>
         </g>
         {calloutNode}
       </svg>

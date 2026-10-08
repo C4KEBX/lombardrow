@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "meta": { "title": "Hello Big Number", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "meta": { "title": "Hello Big Number", "theme": "lombard-row", "voice": "en-US-AndrewNeural" },
   "audio": { "music": null },
   "scenes": [
     {

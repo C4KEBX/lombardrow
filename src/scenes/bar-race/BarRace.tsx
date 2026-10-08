@@ -4,10 +4,11 @@ import { CalloutBadge } from "../../charts/CalloutBadge";
 import { CHART_BOX, placeBadge } from "../../charts/layout";
 import { raceStateAt } from "../../charts/race";
 import { EXIT_FRAMES, RACE_RUN, raceRunFrames } from "../../charts/timing";
-import { BODY_FONT, DISPLAY_FONT } from "../../design/fonts";
+import { BODY_FONT, DISPLAY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { fitFontSize, formatNumber } from "../../design/layout";
 import { dataProgress, popIn } from "../../design/motion";
-import { CAPTION_LANE, CATEGORICAL, PALETTE, SAFE, VIDEO } from "../../design/tokens";
+import { useTheme } from "../../design/theme";
+import { CAPTION_LANE, CONTENT, SAFE, VIDEO } from "../../design/tokens";
 import type { BarRaceProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
@@ -21,7 +22,7 @@ const MAX_BAR_WIDTH = CHART_BOX.right - CHART_BOX.left - VALUE_ROOM;
 export const BarRace: React.FC<SceneRenderProps<BarRaceProps>> = ({ props, cues, durationFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const tone = PALETTE.highlight;
+  const theme = useTheme();
   const n = props.frames.length;
 
   const progress = dataProgress(frame, RACE_RUN.start, raceRunFrames(durationFrames));
@@ -50,18 +51,17 @@ export const BarRace: React.FC<SceneRenderProps<BarRaceProps>> = ({ props, cues,
     return (
       <CalloutBadge
         badge={placeBadge(ax, ay, callout.text as string, SAFE.top + 160)} text={callout.text as string}
-        anchorX={ax} anchorY={ay} scale={popIn(frame, fps, callout.frame)} color={tone}
+        anchorX={ax} anchorY={ay} scale={popIn(frame, fps, callout.frame)} color={theme.accent}
       />
     );
   })();
 
   return (
-    <AbsoluteFill style={{ background: PALETTE.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
       <div
         style={{
-          position: "absolute", left: SAFE.side, top: SAFE.top,
-          fontFamily: BODY_FONT, fontSize: 52, color: PALETTE.ink, opacity: 0.85,
-          transform: `scale(${titleIn})`, transformOrigin: "left center",
+          position: "absolute", left: CONTENT.left, top: SAFE.top,
+          fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: theme.muted, opacity: titleIn,
         }}
       >
         {props.title}
@@ -70,34 +70,34 @@ export const BarRace: React.FC<SceneRenderProps<BarRaceProps>> = ({ props, cues,
       <svg width={VIDEO.width} height={VIDEO.height} style={{ position: "absolute", inset: 0 }}>
         <text
           x={CHART_BOX.right} y={BARS_TOP + props.topN * pitch - 20} textAnchor="end"
-          fontFamily={DISPLAY_FONT} fontSize={260} fill={PALETTE.ink} fillOpacity={0.1}
+          fontFamily={DISPLAY_FONT} fontSize={260} fill={theme.ink} fillOpacity={0.1} style={TABULAR}
         >
           {state.label}
         </text>
 
         {state.bars.map((bar) => {
           const w = Math.max(0, (bar.value / state.axisMax) * MAX_BAR_WIDTH * grow);
-          const color = CATEGORICAL[bar.colorIndex % CATEGORICAL.length];
+          // Monochrome bars; only the current leader takes the accent, so Brass marks one thing.
+          const color = bar.name === leader?.name ? theme.series.leader : theme.series.rest;
           return (
             <g key={bar.name} opacity={bar.opacity} transform={`translate(${CHART_BOX.left} ${BARS_TOP + bar.rank * pitch})`}>
-              <rect x={8} y={NAME_ROW + 8} width={w} height={barH} fill={PALETTE.ink} fillOpacity={0.16} />
               <rect y={NAME_ROW} width={w} height={barH} fill={color} />
             </g>
           );
         })}
         {state.bars.map((bar) => {
           const w = Math.max(0, (bar.value / state.axisMax) * MAX_BAR_WIDTH * grow);
-          const halo = { stroke: PALETTE.ground, strokeWidth: 10, paintOrder: "stroke", strokeLinejoin: "round" } as const;
+          const halo = { stroke: theme.ground, strokeWidth: 10, paintOrder: "stroke", strokeLinejoin: "round" } as const;
           return (
             <g key={`${bar.name}-label`} opacity={bar.opacity} transform={`translate(${CHART_BOX.left} ${BARS_TOP + bar.rank * pitch})`}>
-              <text y={30} fontFamily={BODY_FONT} fontSize={38} fill={PALETTE.ink} {...halo}>
+              <text y={30} fontFamily={BODY_FONT} fontWeight={600} fontSize={34} fill={theme.ink} {...halo}>
                 {bar.name}
               </text>
               {bar.present >= 0.999 && (
                 <text
                   x={w + 16} y={NAME_ROW + barH * 0.68}
-                  fontFamily={DISPLAY_FONT} fontSize={valueFont} fill={PALETTE.ink} {...halo}
-                  style={{ fontVariantNumeric: "tabular-nums" }}
+                  fontFamily={NUMBER_FONT} fontWeight={600} fontSize={valueFont} fill={theme.ink} {...halo}
+                  style={TABULAR}
                 >
                   {fmt(bar.value)}
                 </text>

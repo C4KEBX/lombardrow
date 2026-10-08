@@ -4,7 +4,7 @@ import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
 
 const base = () => ({
   schemaVersion: 1,
-  meta: { title: "T", theme: "bold-flat", voice: "v" },
+  meta: { title: "T", theme: "lombard-row", voice: "v" },
   audio: { music: null },
   scenes: [
     {

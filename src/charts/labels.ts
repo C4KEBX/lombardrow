@@ -2,15 +2,16 @@ import { BADGE, CHART_BOX, type PlacedBadge } from "./layout";
 
 export type Rect = { x: number; y: number; width: number; height: number };
 
-const SHADOW_PX = 8;
+/** The tag is flat (no shadow, no tilt); the margin keeps tick labels from touching its border. */
+const SHADOW_PX = 0;
 const TILT_MARGIN_PX = 4;
-export const TICK_FONT_PX = 38;
+export const TICK_FONT_PX = 30;
 const TICK_CHAR_EM = 0.6;
 
 export const overlaps = (a: Rect, b: Rect): boolean =>
   a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
 
-/** The badge's body, its hard shadow and a margin for its tilt. */
+/** The tag's body plus a small margin. */
 export const badgeRect = (badge: PlacedBadge): Rect => ({
   x: badge.x - badge.width / 2 - TILT_MARGIN_PX,
   y: badge.y - BADGE.heightPx / 2 - TILT_MARGIN_PX,

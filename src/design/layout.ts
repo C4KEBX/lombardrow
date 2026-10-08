@@ -1,11 +1,16 @@
-/** Approximate advance width of the display face's digits, in em. Measured from a render: digits ~0.65em, "%" ~0.94em; 0.75 is a safe mixed average. */
-export const DISPLAY_CHAR_WIDTH_EM = 0.75;
+/**
+ * Average advance width per character, in em, measured from the bundled woff2 files.
+ * Libre Caslon Text 400: lowercase 0.54, digits 0.56, capitals 0.74; 0.62 covers capital-heavy headlines.
+ * Inter 600: digits 0.61 (tabular), "$" 0.65, "%" 1.00; 0.68 covers a mixed figure like "$1,234%".
+ */
+export const DISPLAY_CHAR_WIDTH_EM = 0.62;
+export const NUMBER_CHAR_WIDTH_EM = 0.68;
 
 export function fitFontSize(
   text: string,
   maxWidthPx: number,
   maxSizePx: number,
-  charWidthEm = DISPLAY_CHAR_WIDTH_EM,
+  charWidthEm = NUMBER_CHAR_WIDTH_EM,
 ): number {
   if (maxWidthPx <= 0 || maxSizePx <= 0) throw new RangeError("maxWidthPx and maxSizePx must be positive");
   const chars = Math.max(1, text.length);

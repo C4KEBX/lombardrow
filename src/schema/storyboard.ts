@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { GROUNDS } from "../design/theme";
 
 export class StoryboardError extends Error {
   constructor(message: string) {
@@ -24,6 +25,8 @@ const sceneBase = {
   id: z.string().regex(/^[a-z0-9-]+$/, "scene id must be lowercase letters, digits, hyphens"),
   narration: z.string().min(1),
   cues: z.array(CueSchema).default([]),
+  /** Overrides the video's palette lead for this scene. */
+  ground: z.enum(GROUNDS).optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -79,7 +82,7 @@ const LineChartSceneSchema = z.strictObject({
     }),
 });
 
-const MAX_RACE_ENTITIES = 8; // matches the CATEGORICAL palette size
+const MAX_RACE_ENTITIES = 8; // more names than this cannot be read at once
 
 const RaceFrameSchema = z
   .strictObject({
@@ -253,7 +256,9 @@ export const StoryboardSchema = z
     schemaVersion: z.literal(1),
     meta: z.strictObject({
       title: z.string().min(1),
-      theme: z.literal("bold-flat"),
+      theme: z.literal("lombard-row"),
+      /** The ground most scenes sit on (variation rule: no more than 2 videos in a row with the same lead). */
+      paletteLead: z.enum(GROUNDS).default("ink"),
       voice: z.string().min(1),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),

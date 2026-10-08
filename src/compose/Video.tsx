@@ -12,7 +12,7 @@ import { MapScene } from "../scenes/map/MapScene";
 import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title } from "../scenes/title/Title";
-import { PALETTE } from "../design/tokens";
+import { THEMES, ThemeProvider } from "../design/theme";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames } from "./wipe";
 
@@ -48,15 +48,17 @@ export const Video: React.FC<{ scenes: ComposedScene[]; captions: CaptionChunk[]
   scenes,
   captions,
 }) => (
-  <AbsoluteFill style={{ background: PALETTE.ground }}>
+  <AbsoluteFill style={{ background: THEMES[scenes[0]?.ground ?? "ink"].ground }}>
     <Series>
       {scenes.map((composed) => (
         <Series.Sequence key={composed.id} durationInFrames={composed.durationFrames}>
-          <SceneSwitch composed={composed} />
+          <ThemeProvider ground={composed.ground}>
+            <SceneSwitch composed={composed} />
+          </ThemeProvider>
         </Series.Sequence>
       ))}
     </Series>
-    <WipeOverlay cuts={cutFrames(scenes)} />
-    <Captions chunks={captions} />
+    <WipeOverlay cuts={cutFrames(scenes)} grounds={scenes.slice(1).map((s) => s.ground)} />
+    <Captions chunks={captions} grounds={scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }))} />
   </AbsoluteFill>
 );

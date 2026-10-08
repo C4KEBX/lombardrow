@@ -1,39 +1,41 @@
+import DEVICES from "../brand/devices.json";
+
+export { DEVICES };
+
 export const VIDEO = { width: 1080, height: 1920, fps: 30 } as const;
 
-/** Pixels kept clear of platform UI: top 8%, bottom 20% of the height; fixed side padding. */
+/**
+ * Pixels kept clear of platform UI. Bottom and right come from the platform zones in
+ * devices.json (bottom 20%, right 15% for the action rail); the left margin is the content
+ * area's x. Top 8% keeps headlines clear of the status bar.
+ */
 export const SAFE = {
   top: Math.ceil(VIDEO.height * 0.08),
-  bottom: Math.ceil(VIDEO.height * 0.2),
-  side: 60,
+  bottom: VIDEO.height - DEVICES.platform_zones.bottom.y,
+  left: DEVICES.content_area.x,
+  right: VIDEO.width - DEVICES.platform_zones.right.x,
 } as const;
 
-/** Bold flat palette. Semantic roles are fixed: gains/losses are never decorative. */
-export const PALETTE = {
-  ground: "#15133b",
-  ink: "#fff7e8",
-  positive: "#2ee59d",
-  negative: "#ff5d5d",
-  neutral: "#7c8cff",
-  highlight: "#ffd23f",
+/** The content area every scene draws inside: x 72 to 918, down to the bottom platform zone. */
+export const CONTENT = {
+  left: SAFE.left,
+  right: VIDEO.width - SAFE.right,
+  width: VIDEO.width - SAFE.left - SAFE.right,
+  bottom: VIDEO.height - SAFE.bottom,
 } as const;
 
-/** Fixed lane for captions: below all scene content, above the platform UI zone. */
-export const CAPTION_LANE = { top: 1340, bottom: VIDEO.height - SAFE.bottom } as const;
+/** Fixed lane for captions (devices.json captions box): below all scene content, above the platform zone. */
+export const CAPTION_LANE = { top: DEVICES.devices.captions.box.top, bottom: CONTENT.bottom } as const;
 
 /** Space for headline text: between the safe top and the caption lane, minus room for the kicker line. */
 export const TITLE_LANE = {
-  width: VIDEO.width - 2 * SAFE.side,
+  width: CONTENT.width,
   height: CAPTION_LANE.top - SAFE.top - 140,
 } as const;
 
-/** Categorical series colors (bar races). Deliberately excludes the semantic gain/loss colors. */
-export const CATEGORICAL = [
-  "#ffd23f", "#7c8cff", "#ff9f5a", "#5ad1ff", "#c78bff", "#9be564", "#ff7ab6", "#8fa3b8",
-] as const;
-
 /** Space for stacked kinetic lines: safe top to the caption lane, minus breathing room. */
 export const KINETIC_LANE = {
-  width: VIDEO.width - 2 * SAFE.side,
+  width: CONTENT.width,
   height: CAPTION_LANE.top - SAFE.top - 120,
   maxFont: 190,
 } as const;
@@ -46,4 +48,4 @@ export const QUOTE_LANE = {
 } as const;
 
 /** The map's drawing area: below the title and footnote, above the caption lane. */
-export const MAP_BOX = { left: SAFE.side, right: VIDEO.width - SAFE.side, top: 300, bottom: 1300 } as const;
+export const MAP_BOX = { left: CONTENT.left, right: CONTENT.right, top: 300, bottom: CAPTION_LANE.top - 40 } as const;

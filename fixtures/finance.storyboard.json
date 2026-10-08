@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "meta": { "title": "Finance Demo", "theme": "bold-flat", "voice": "en-US-AndrewNeural" },
+  "meta": { "title": "Finance Demo", "theme": "lombard-row", "voice": "en-US-AndrewNeural" },
   "audio": { "music": null },
   "scenes": [
     {
