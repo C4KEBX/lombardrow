@@ -3,6 +3,7 @@ import { factIdsOf, type Scene, type Storyboard } from "../schema/storyboard";
 import { adviceLint } from "./adviceLint";
 import { TARGET_SECONDS, countWords, estimateSeconds } from "./estimate";
 import { factTokens } from "./verifyFacts";
+import type { ScriptLine } from "./scriptDoc";
 import type { VerifyResult, VerifyStatus } from "./verifyTypes";
 
 export type ReviewModel = {
@@ -14,6 +15,8 @@ export type ReviewModel = {
   }[];
   warnings: string[];
   stats: { scenes: number; words: number; estimatedSeconds: number };
+  /** Every spoken sentence with its sources (the script document), when the sheet has it. */
+  script?: ScriptLine[];
 };
 
 export const escapeHtml = (text: string): string =>
@@ -138,5 +141,10 @@ export function renderReviewHtml(model: ReviewModel): string {
   const warnings = model.warnings.length
     ? `<h2>Warnings</h2><ul>${model.warnings.map((w) => `<li>${e(w)}</li>`).join("")}</ul>`
     : "<h2>Warnings</h2><p>None.</p>";
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>Review: ${e(model.title)}</title><style>body{font:14px system-ui;margin:24px;max-width:1200px;background:#fafafa;color:#111}.scene{display:inline-block;vertical-align:top;width:290px;margin:0 12px 24px 0}.scene img{border:1px solid #ccc;display:block}.meta,small{color:#666}table{border-collapse:collapse}td{border:1px solid #ddd;padding:4px 8px;vertical-align:top}</style></head><body><h1>${e(model.title)}</h1><p>${model.stats.scenes} scenes, ${model.stats.words} words, about ${model.stats.estimatedSeconds} s</p>${warnings}<h2>Scenes</h2>${scenes}<h2>Facts</h2><table><tr><td>id</td><td>claim</td><td>source</td><td>source check</td></tr>${facts}</table></body></html>`;
+  const script = model.script
+    ? `<h2>Script with sources</h2><table><tr><td>scene</td><td>narration</td><td>sources</td></tr>${model.script
+        .map((l) => `<tr><td>${e(l.sceneId)}</td><td>${e(l.sentence)}</td><td>${l.factIds.length ? l.factIds.map(e).join(", ") : "<b>none named</b>"}${l.basis === "scene" ? " <small>(scene)</small>" : ""}</td></tr>`)
+        .join("")}</table>`
+    : "";
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>Review: ${e(model.title)}</title><style>body{font:14px system-ui;margin:24px;max-width:1200px;background:#fafafa;color:#111}.scene{display:inline-block;vertical-align:top;width:290px;margin:0 12px 24px 0}.scene img{border:1px solid #ccc;display:block}.meta,small{color:#666}table{border-collapse:collapse}td{border:1px solid #ddd;padding:4px 8px;vertical-align:top}</style></head><body><h1>${e(model.title)}</h1><p>${model.stats.scenes} scenes, ${model.stats.words} words, about ${model.stats.estimatedSeconds} s</p>${warnings}${script}<h2>Scenes</h2>${scenes}<h2>Facts</h2><table><tr><td>id</td><td>claim</td><td>source</td><td>source check</td></tr>${facts}</table></body></html>`;
 }

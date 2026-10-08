@@ -105,6 +105,9 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
         totalFrames: built.totalFrames,
         durationMs: totalMs,
         loudness,
+        // Every caption word with its time, for npm run listen-back.
+        captions: built.captions.flatMap((c) => c.words.map((w) => ({ text: w.text, startMs: Math.round(w.startMs), endMs: Math.round(w.endMs) }))),
+        signoff: SIGNOFF,
         scenes: built.scenes.map((s) => ({
           id: s.id, type: s.scene.type, startFrame: s.startFrame, durationFrames: s.durationFrames,
           cues: s.cues, audio: voices[s.id].audioPath,

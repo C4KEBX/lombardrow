@@ -2,13 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import { VIDEO } from "../design/tokens";
-import { imagesFor } from "../pipeline/assets";
+import { findAssets, imagesFor } from "../pipeline/assets";
 import { buildVideo, videoProps } from "../pipeline/buildVideo";
 import { browserExecutable, getServeUrl } from "../pipeline/bundle";
 import { parseFacts } from "../schema/facts";
 import { parseStoryboard } from "../schema/storyboard";
 import { synthWords } from "../voice/synthWords";
 import { buildReviewModel, renderReviewHtml } from "./review";
+import { buildScriptDoc, renderScriptMarkdown } from "./scriptDoc";
 import type { VerifyResult } from "./verifyTypes";
 
 const SETTLE_MARGIN = 10; // frames before the exit fade, as in the snapshot tests
@@ -40,7 +41,11 @@ export async function renderSheet(opts: SheetOptions): Promise<string> {
     images[scene.id] = `data:image/png;base64,${fs.readFileSync(file).toString("base64")}`;
   }
   const verify = opts.verifyPath && fs.existsSync(opts.verifyPath) ? (read(opts.verifyPath) as VerifyResult[]) : undefined;
-  const model = buildReviewModel(parseStoryboard(storyboardJson), parseFacts(factsJson), { images, verify });
+  const storyboard = parseStoryboard(storyboardJson);
+  const facts = parseFacts(factsJson);
+  const doc = buildScriptDoc(storyboard, facts, findAssets(opts.storyboardPath, opts.assetsPath)?.assets);
+  fs.writeFileSync(path.join(opts.outDir, "script.md"), renderScriptMarkdown(doc));
+  const model = { ...buildReviewModel(storyboard, facts, { images, verify }), script: doc.lines };
   const htmlPath = path.join(opts.outDir, "review.html");
   fs.writeFileSync(htmlPath, renderReviewHtml(model));
   return htmlPath;

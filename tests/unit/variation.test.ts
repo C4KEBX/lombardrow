@@ -4,7 +4,7 @@ import sbJson from "../../fixtures/no-004/rule-of-72.storyboard.json";
 import specJson from "../../variation/variation_spec.json";
 import { parseStoryboard } from "../../src/schema/storyboard";
 import {
-  checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, suggest, type HistoryEntry, type Plan,
+  VISUAL_SCENES, checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, suggest, type HistoryEntry, type Plan,
 } from "../../src/variation/index";
 
 const spec = parseSpec(specJson);
@@ -109,7 +109,12 @@ describe("crossCheck", () => {
     expect(text).toMatch(/hook "date" but the first sentence names no year/);
   });
   it("says when the primary visual's scene type is not built yet", () => {
-    expect(crossCheck({ ...plan, primaryVisual: "ledger_page" }, sb, spec).join("\n")).toMatch(/"ledger_page" has no scene type yet/);
+    expect(crossCheck({ ...plan, primaryVisual: "character_scene" }, sb, spec).join("\n")).toMatch(/"character_scene" has no scene type yet/);
+  });
+  it("maps the Phase 5 visuals to their scenes", () => {
+    expect(crossCheck({ ...plan, primaryVisual: "ledger_page" }, sb, spec).join("\n")).toMatch(/needs a ledger-page scene/);
+    expect(VISUAL_SCENES.flow_diagram).toEqual(["flow-diagram"]);
+    expect(VISUAL_SCENES.object_close_up).toEqual(["archival"]);
   });
   it("checks question and surprising-number hooks against the first sentence", () => {
     expect(crossCheck({ ...plan, hookType: "surprising_number" }, sb, spec).join("\n")).toMatch(/says no number/);

@@ -214,9 +214,10 @@ export const VISUAL_SCENES: Record<string, readonly string[]> = {
   map: ["map"],
   scale_comparison: ["compare"],
   split_screen: ["compare"],
-  flow_diagram: [],
-  object_close_up: [],
-  ledger_page: [],
+  flow_diagram: ["flow-diagram"],
+  // An archival scan of a coin, note or page, pushed in close.
+  object_close_up: ["archival"],
+  ledger_page: ["ledger-page"],
   character_scene: [],
 };
 

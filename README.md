@@ -8,6 +8,7 @@ The engine is ported from [motionexplainers](https://github.com/C4KEBX/motionexp
 
 - Node 20+ and `npm install`
 - Python 3 and `npm run setup:tts` (Edge TTS in `tts/.venv`)
+- `npm run setup:whisper` for the listen-back (whisper.cpp via Homebrew, plus the 142 MB English base model in `models/`)
 - System `ffmpeg` (Remotion's bundled one does not run on macOS 12)
 - Where Remotion cannot download its browser, set `REMOTION_BROWSER_EXECUTABLE` to a local Chromium headless shell
 
@@ -16,10 +17,10 @@ The engine is ported from [motionexplainers](https://github.com/C4KEBX/motionexp
 In Claude Code, from this folder:
 
 ```
-/make-explainer <topic>
+/make-lombard <topic>
 ```
 
-The skill (`.claude/skills/make-explainer/`) researches sources, writes `videos/<slug>/facts.json` and `storyboard.json`, checks them, builds a review sheet, and then stops. Open `videos/<slug>/review/review.html`, approve or ask for edits, and it renders `out/<slug>/final.mp4`.
+The skill (`.claude/skills/make-lombard/`) plans the video against recent ones (`variation/`), researches sources, writes `videos/<slug>/facts.json` and `storyboard.json`, checks them, and stops at the **fact-check gate**: open `videos/<slug>/review/review.html` and `script.md` (every spoken sentence with its source), approve or ask for edits. It then renders `out/<slug>/final.mp4`, runs the listen-back and builds the publish package, and stops at the **QA gate**: watch the video once with sound against the script, using `out/<slug>/publish/checklist.md`. The door-number backlog is `docs/brand/BACKLOG.md`.
 
 ## Manual commands
 
@@ -27,11 +28,13 @@ The skill (`.claude/skills/make-explainer/`) researches sources, writes `videos/
 |---|---|
 | `npm run check -- --storyboard S --facts F [--plan P]` | Reports every validation issue, estimated length and advice-phrasing warnings |
 | `npm run verify-facts -- --facts F [--out V] [--no-archive]` | Advisory: do a fact's numbers appear on its source page; quotes the sentence and snapshots the page on the Wayback Machine |
-| `npm run sheet -- --storyboard S --facts F --out DIR [--verify V]` | Self-contained `review.html` with a still per scene |
+| `npm run sheet -- --storyboard S --facts F --out DIR [--verify V]` | Self-contained `review.html` with a still per scene, and `script.md` with every spoken sentence's sources |
 | `npm run variation -- suggest` / `check --plan P [--storyboard S]` / `record ...` | Variation kit: allowed options for the next video, plan checks against recent videos, history after publishing (see `variation/VARIATION.md`) |
 | `npm run assets -- --assets A [--force]` | Downloads each archival image listed in `assets.json` and resizes it to at most 2000 px |
 | `npm run voice -- --storyboard S --facts F` | Voices every scene and the sign-off, prints per-scene and total length, fails outside 65-70 s |
 | `npm run produce -- --storyboard S --facts F --out DIR` | Voice, render, mix, loudness-normalize to -14 LUFS |
+| `npm run listen-back -- --storyboard S --out DIR` | whisper.cpp transcribes `final.mp4`; lists words and numbers that differ from the script and captions more than 300 ms off the voice (`listen-back.md`) |
+| `npm run publish-kit -- --storyboard S --facts F --plan P --out DIR` | Final variation check with the real length, per-platform titles and captions with sources and the standard footer, thumbnails, AI-disclosure call and the pre-publish checklist, in `DIR/publish/` |
 | `npm run catalog` | Regenerate the storyboard JSON Schema the skill reads |
 | `npm test`, `npm run test:cov`, `npm run test:render` | Unit tests, coverage, render snapshot tests (serial) |
 | `npm run studio` | Remotion Studio |

@@ -13,6 +13,7 @@ import storyboardJson from "../fixtures/hello.storyboard.json";
 import words from "../fixtures/hello.words.json";
 import { synthWords } from "./voice/synthWords";
 import { Video } from "./compose/Video";
+import { Thumbnail, type ThumbnailProps } from "./publish/Thumbnail";
 import { VIDEO } from "./design/tokens";
 import { buildVideo, videoProps, type VideoProps } from "./pipeline/buildVideo";
 
@@ -56,8 +57,20 @@ const EMPTY_VIDEO: VideoProps = {
   close: { startFrame: 0, frames: 0, doorNo: 1 },
 };
 
+const THUMBNAIL: ThumbnailProps = { doorNo: 4, title: "The Rule of 72", series: "How it works", width: VIDEO.width, height: VIDEO.height };
+
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="Thumbnail"
+      component={Thumbnail}
+      durationInFrames={1}
+      fps={VIDEO.fps}
+      width={VIDEO.width}
+      height={VIDEO.height}
+      defaultProps={THUMBNAIL}
+      calculateMetadata={({ props }) => ({ width: props.width, height: props.height })}
+    />
     <Composition
       id="HelloBigNumber"
       component={Video}
