@@ -6,7 +6,7 @@ Every video gets a music bed under the narration and quiet sound effects on the 
 
 - Pick a bed with `npm run audio -- list` and set its id as the plan's `musicBed` and the storyboard's `audio.music`. `null` means no music; `"ambient"` is the old generated drone.
 - `produce` loudness-matches the bed, fades it in under the hook and out over the door plate, and ducks it about 4 dB under the voice (`src/audio/graph.ts`: `MUSIC_BED_DB`, `DUCK`, `MUSIC_FADE`).
-- Sound effects are automatic (`src/audio/cues.ts`): a pen under the open's ledger line, a soft whoosh on each wipe, ticks while the year counter rolls, a thud as each source stamp lands, paper for archival and ledger-page scenes, and a low hit under the door plate. Turn them off with `"sfx": { "auto": false }`, or add a cue by hand: `"sfx": { "cues": [{ "scene": "summa", "sound": "coin", "atMs": 1200 }] }`.
+- Sound effects are automatic (`src/audio/cues.ts`): a pen under each title card's rule, a soft whoosh on each wipe, ticks while the year counter rolls, a thud as each source stamp lands, paper for archival and ledger-page scenes, and a low hit under the door plate. Turn them off with `"sfx": { "auto": false }`, or add a cue by hand: `"sfx": { "cues": [{ "scene": "summa", "sound": "coin", "atMs": 1200 }] }`.
 - `publish-kit` adds the bed's credit line to every description when its license asks for one.
 
 ## Adding tracks and sounds

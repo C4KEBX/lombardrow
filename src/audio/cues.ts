@@ -8,8 +8,7 @@ export type SfxCue = { sound: string; atMs: number; gainDb: number };
 
 /** What the cue sheet reads from the built video: the same frames the devices and wipes animate on. */
 export type CueTimeline = {
-  scenes: readonly { id: string; startFrame: number; scene: { type: string } }[];
-  open: { frames: number };
+  scenes: readonly { id: string; startFrame: number; scene: { type: string; props?: unknown } }[];
   close: { startFrame: number };
   years: readonly YearSpan[];
   stamps: readonly { startFrame: number }[];
@@ -26,6 +25,15 @@ const TICK_FADE_DB = -6;
 const ON_SCENE: Record<string, string> = { archival: "paper-slide", "ledger-page": "page-turn" };
 
 const ms = (frame: number, fps: number) => (frame * 1000) / fps;
+
+/**
+ * Frame (from the scene start) where a title card's Brass rule starts drawing under the headline:
+ * after the last word lands. Mirrors HEADLINE_DELAY and WORD_GAP in src/scenes/title/Title.tsx.
+ */
+export function titleRuleFrame(headline: string, opener: boolean): number {
+  const words = headline.split(/\s+/).length;
+  return opener ? -6 + words * 2 : 6 + words * 4;
+}
 
 /** Ticks while the year counter rolls from one year to the next, one per displayed change. */
 export function yearTicks(span: YearSpan, fps: number): SfxCue[] {
@@ -47,14 +55,17 @@ export function yearTicks(span: YearSpan, fps: number): SfxCue[] {
 }
 
 /**
- * The automatic cue sheet: the pen under the open's ledger line, a soft whoosh on each wipe, ticks on
+ * The automatic cue sheet: a pen under each title card's rule, a soft whoosh on each wipe, ticks on
  * the year counter, a thud as each source stamp lands, paper for archival and ledger scenes, and a
  * low hit under the door plate. All quiet: they add texture under the narration, not punctuation.
  */
 export function autoCues(t: CueTimeline, fps: number): SfxCue[] {
   const cues: SfxCue[] = [];
-  const rule = DEVICES.devices.ledger_line.motion.rule_draw;
-  cues.push({ sound: "pen-underline", atMs: rule.start_s * 1000, gainDb: 0 });
+  t.scenes.forEach((s, i) => {
+    const headline = (s.scene.props as { headline?: string } | undefined)?.headline;
+    if (s.scene.type !== "title" || !headline) return;
+    cues.push({ sound: "pen-underline", atMs: Math.max(0, ms(s.startFrame + titleRuleFrame(headline, i === 0), fps)), gainDb: 0 });
+  });
 
   // A wipe covers the frame on each cut after the first scene, and the close follows a wipe too.
   const cuts = [...t.scenes.slice(1).map((s) => s.startFrame), t.close.startFrame];

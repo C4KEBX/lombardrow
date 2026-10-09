@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { autoCues, cueSheet, manualCues, yearTicks, type CueTimeline } from "../../src/audio/cues";
+import { autoCues, cueSheet, manualCues, titleRuleFrame, yearTicks, type CueTimeline } from "../../src/audio/cues";
 import { loadMusicLibrary, loadSfxLibrary } from "../../src/audio/library";
 import { WIPE } from "../../src/compose/wipe";
 import { buildVideo } from "../../src/pipeline/buildVideo";
@@ -10,11 +10,10 @@ import { synthWords } from "../../src/voice/standin";
 const FPS = 30;
 const timeline: CueTimeline = {
   scenes: [
-    { id: "a", startFrame: 60, scene: { type: "title" } },
+    { id: "a", startFrame: 0, scene: { type: "title", props: { headline: "The doubling rule" } } },
     { id: "b", startFrame: 300, scene: { type: "archival" } },
     { id: "c", startFrame: 600, scene: { type: "ledger-page" } },
   ],
-  open: { frames: 60 },
   close: { startFrame: 900 },
   years: [{ from: 1494, to: 1494, startFrame: 60, endFrame: 300, fadeIn: true, fadeOut: false }, { from: 1494, to: 1626, startFrame: 300, endFrame: 600, fadeIn: false, fadeOut: true }],
   stamps: [{ startFrame: 310 }],
@@ -24,7 +23,9 @@ describe("autoCues", () => {
   const cues = autoCues(timeline, FPS);
   const at = (sound: string) => cues.filter((c) => c.sound === sound).map((c) => Math.round(c.atMs));
 
-  it("puts the pen under the open's rule and the low hit under the door plate", () => {
+  it("puts the pen under the title card's rule and the low hit under the door plate", () => {
+    expect(titleRuleFrame("The doubling rule", true)).toBe(0);
+    expect(titleRuleFrame("The doubling rule", false)).toBe(18);
     expect(at("pen-underline")).toEqual([0]);
     expect(at("low-hit")).toEqual([30000]);
   });
@@ -86,9 +87,10 @@ describe("the committed libraries", () => {
     const sb = JSON.parse(fs.readFileSync("videos/no-001-rule-of-72/storyboard.json", "utf-8"));
     const facts = JSON.parse(fs.readFileSync("videos/no-001-rule-of-72/facts.json", "utf-8"));
     const words = (s: { scenes: { id: string; narration: string }[] }) => Object.fromEntries(s.scenes.map((x) => [x.id, synthWords(x.narration)]));
-    const built = buildVideo(sb, facts, words, FPS, undefined, 2000, { "summa-fol-181": { src: "x", credit: "c" } });
+    const built = buildVideo(sb, facts, words, FPS, 2000, { "summa-fol-181": { src: "x", credit: "c" } });
     const cues = cueSheet(built, built.storyboard.audio.sfx, FPS, new Set(sfx.sounds.map((s) => s.id)));
     expect(cues.some((c) => c.sound === "paper-slide")).toBe(true);
+    expect(cues.filter((c) => c.sound === "pen-underline").length).toBeGreaterThanOrEqual(2);
     expect(cues.some((c) => c.sound === "stamp")).toBe(true);
     expect(cues.every((c) => c.atMs >= 0 && c.atMs < (built.totalFrames * 1000) / FPS)).toBe(true);
   });
