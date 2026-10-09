@@ -47,7 +47,7 @@
   "script": {
     "minWords": 145,
     "maxWords": 180,
-    "$wordsComment": "The guidelines say 160 to 180 words; the brand voice (en-GB-RyanNeural) fits about 155 words in 65-70 s, so the floor is 145 and npm run voice decides length.",
+    "$wordsComment": "The guidelines say 160 to 180 words; at the 2026-10-09 pacing the brand voice (en-GB-RyanNeural) fits 155 to 200 words in 55-70 s, so the floor is 145 and npm run voice decides length.",
     "ngram": 3,
     "maxOverlapFraction": 0.15,
     "window": 20

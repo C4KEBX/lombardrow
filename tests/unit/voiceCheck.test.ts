@@ -23,7 +23,7 @@ describe("voiceCheck", () => {
     expect(report.totalMs).toBeCloseTo(sum, 0);
     // A scene holds its last word plus the short tail; the clip's trailing silence plays under the next scene.
     for (const scene of report.scenes) expect(scene.sceneMs).toBeGreaterThanOrEqual(scene.voiceMs - 200 - 34);
-    expect(report.withinGate).toBe(report.totalMs >= 65_000 && report.totalMs <= 70_000);
+    expect(report.withinGate).toBe(report.totalMs >= 55_000 && report.totalMs <= 70_000);
   });
   it("flags a read that runs long", async () => {
     const report = await voiceCheck(SB, FACTS, fakeVoice(1.3));
@@ -40,6 +40,6 @@ describe("voiceCheck", () => {
     const text = formatVoiceReport(report);
     for (const scene of report.scenes) expect(text).toContain(scene.id);
     expect(text).toMatch(/^\(door\)/m);
-    expect(text).toMatch(/Total \d+\.\ds \(gate 65-70s\)/);
+    expect(text).toMatch(/Total \d+\.\ds \(gate 55-70s\)/);
   });
 });

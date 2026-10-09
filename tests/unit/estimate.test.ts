@@ -13,7 +13,7 @@ describe("estimate", () => {
     expect(BOOKEND_SECONDS).toBeCloseTo(4.6);
     expect(estimateSeconds(["one two three"])).toBeCloseTo(4.6 + narrationSeconds(["one two three"]));
   });
-  it("targetWords gives a script length that estimates inside the 65-70 s window, about 175 to 190 words", () => {
+  it("targetWords gives a script length that estimates inside the 55-70 s window, about 175 to 190 words", () => {
     for (const scenes of [6, 8, 10]) {
       const words = targetWords(scenes);
       const even = Array.from({ length: scenes }, () => "w ".repeat(Math.round(words / scenes)).trim());
@@ -21,12 +21,12 @@ describe("estimate", () => {
       expect(s).toBeGreaterThanOrEqual(TARGET_SECONDS.min);
       expect(s).toBeLessThanOrEqual(TARGET_SECONDS.max);
     }
-    expect(WORDS_PER_SECOND).toBe(3.0);
+    expect(WORDS_PER_SECOND).toBe(3.26);
     expect(targetWords(8)).toBeGreaterThanOrEqual(175);
     expect(targetWords(8)).toBeLessThanOrEqual(190);
   });
-  it("matches No. 001's measured speech in en-GB-RyanNeural (51.9 s plus 0.3 s a scene) within 2 percent", () => {
-    const measured = 51.9 + 8 * 0.3;
+  it("matches No. 001's measured narration in en-GB-RyanNeural (50.3 s) within 2 percent", () => {
+    const measured = 50.3;
     expect(Math.abs(narrationSeconds(narrations(no001Sb)) - measured) / measured).toBeLessThan(0.02);
   });
 });

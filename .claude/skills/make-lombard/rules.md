@@ -63,7 +63,7 @@ A ruled Parchment ledger page: 1 to 5 `rows` (`entry` <= 24, `amount` <= 10, opt
 
 ## Narration style
 
-- About 155 words in total is the target for a 65-70 second video in the brand voice (No. 004: 158 words ran 69.2 s); `check` estimates it, open and close included, and `npm run voice` measures it.
+- About 165 to 180 words in total is the target for a 55-70 second video in the brand voice (No. 001: 155 words ran 54.9 s, voiced sentence by sentence with 0.3 s between them); `check` estimates it, the close included, and `npm run voice` measures it.
 - Write numbers as digits in narration ("1494", "8%", "$1,000", "1920s", "19th"); captions show them as written and the voice reads a spelled-out form ("fourteen ninety-four", "eight percent", "one thousand dollars"). A four-digit number from 1000 to 2099 without a comma is read as a year; write "1,500" for a count. Spelled-out numbers still work. Cue words may be digit tokens ("1494").
 - Short sentences. One idea per scene. Scene 1 is a hook, the last scene lands the claim. Narration must contain every cue word.
 

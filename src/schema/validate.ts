@@ -7,7 +7,8 @@ import { deepEqual } from "./deepEqual";
 import { emphasisTarget } from "./emphasis";
 import { StoryboardError, factIdsOf, type Scene, type Storyboard } from "./storyboard";
 
-export const MIN_VIDEO_MS = 65_000;
+/** The length window. 55 s since the 2026-10-09 pacing change: no open, about 0.3 s between sentences and scenes. */
+export const MIN_VIDEO_MS = 55_000;
 export const MAX_VIDEO_MS = 70_000;
 
 export function assertVariety(sb: Storyboard): void {
