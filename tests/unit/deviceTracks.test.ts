@@ -6,10 +6,10 @@ const scene = (id: string, startFrame: number, durationFrames: number, extra: { 
 });
 
 describe("close length", () => {
-  it("is at least a 3 s close", () => {
-    expect(closeFrames(30)).toBe(90);
-    expect(closeFrames(30, 2000)).toBe(90);
-    expect(closeFrames(30, 3200)).toBe(Math.ceil(3.6 * 30)); // a long sign-off is never cut
+  it("ends the close just after the sign-off's last word", () => {
+    expect(closeFrames(30)).toBe(90); // no sign-off: hold the plate 3 s
+    expect(closeFrames(30, 2974)).toBe(Math.ceil(3.124 * 30)); // stops 150 ms after the last word
+    expect(closeFrames(30, 2000)).toBe(Math.ceil(2.15 * 30)); // no minimum hold: the video ends with the voice
   });
 });
 

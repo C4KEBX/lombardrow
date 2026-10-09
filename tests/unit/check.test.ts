@@ -8,19 +8,20 @@ import { checkStoryboard, formatReport } from "../../src/skill/check";
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes the No. 004 reference video with no issues and an estimate inside 55-70 s", () => {
+  it("passes the No. 004 reference video with no issues, warning only that its script now runs short", () => {
+    // Scripted for 65-70 s at the old, slower pacing.
     const report = checkStoryboard(no004Sb, no004Facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
     expect(report.stats?.scenes).toBe(7);
-    expect(report.warnings).toEqual([]);
+    expect(report.warnings).toEqual([expect.stringMatching(/^estimated length [\d.]+ s is outside 62-70 s/)]);
   });
 
   it("holds the older finance demo to the Lombard Row source rules and warns on its length", () => {
     const report = checkStoryboard(storyboard, facts);
     expect(new Set(report.issues.map((i) => i.stage))).toEqual(new Set(["sources", "spoken figures"]));
     expect(report.stats?.scenes).toBe(5);
-    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 55-70 s/);
+    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 62-70 s/);
   });
 
   it("collects every independent issue in one run instead of stopping at the first", () => {

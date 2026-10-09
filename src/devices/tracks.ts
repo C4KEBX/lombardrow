@@ -10,8 +10,15 @@ export const CLOSE_SECONDS = DEVICES.devices.door_plate.motion.duration_s;
  */
 export const SIGNOFF = "Lombard Row. How money got this way.";
 
-export const closeFrames = (fps: number, signoffAudioMs = 0, tailMs = 400): number =>
-  Math.max(fpsFrames(CLOSE_SECONDS, fps), Math.ceil(((signoffAudioMs + tailMs) / 1000) * fps));
+/** After the sign-off's last word the video stops dead, so the loop restarts at once (Justin, 2026-10-09). */
+export const CLOSE_TAIL_MS = 150;
+
+/**
+ * The door-plate close lasts exactly as long as the spoken sign-off: it ends CLOSE_TAIL_MS after the
+ * last word, with no held plate and no trailing silence. Without a sign-off it holds CLOSE_SECONDS.
+ */
+export const closeFrames = (fps: number, signoffEndMs = 0, tailMs = CLOSE_TAIL_MS): number =>
+  signoffEndMs > 0 ? Math.ceil(((signoffEndMs + tailMs) / 1000) * fps) : fpsFrames(CLOSE_SECONDS, fps);
 
 export type YearSpan = {
   /** Year shown when the span starts (counts from here), and the year it settles on. */

@@ -33,7 +33,7 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
     readJson(factsPath),
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    signoff.audioMs,
+    Math.max(...signoff.words.map((w) => w.endMs)),
     imagesFor(storyboardPath),
   );
   const totalMs = framesMs(built.totalFrames);

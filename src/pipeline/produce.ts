@@ -56,7 +56,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     factsJson,
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    signoff.audioMs,
+    Math.max(...signoff.words.map((w) => w.endMs)),
     imagesFor(opts.storyboardPath, opts.assetsPath),
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;

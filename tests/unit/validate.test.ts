@@ -61,7 +61,7 @@ describe("assertDuration", () => {
     expect(() => assertDuration(MAX_VIDEO_MS)).not.toThrow();
   });
   it("rejects shorter and longer videos with the actual length", () => {
-    expect(() => assertDuration(54_999)).toThrow(/55.*70/);
+    expect(() => assertDuration(61_999)).toThrow(/62.*70/);
     expect(() => assertDuration(70_001)).toThrow(/70\.0/);
   });
   it("rejects NaN", () => {
