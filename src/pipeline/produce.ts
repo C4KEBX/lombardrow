@@ -10,6 +10,7 @@ import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import type { VoiceResult } from "../voice/types";
 import { SIGNOFF } from "../devices/tracks";
+import { voiceSignoff } from "../voice/signoff";
 import { imagesFor } from "./assets";
 import { buildVideo, videoProps } from "./buildVideo";
 import { browserExecutable, getServeUrl, renderConcurrency } from "./bundle";
@@ -48,7 +49,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   const voices: Record<string, VoiceResult> = {};
   for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
   // The same sign-off every video; the voice cache keys on text and voice, so this synthesizes once.
-  const signoff = await provider(SIGNOFF, storyboard.meta.voice);
+  const signoff = await voiceSignoff(provider, storyboard.meta.voice);
 
   const built = buildVideo(
     storyboardJson,

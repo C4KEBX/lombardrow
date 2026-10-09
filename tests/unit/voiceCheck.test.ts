@@ -14,11 +14,11 @@ const fakeVoice = (scale: number, calls: string[] = []): VoiceProvider => async 
 };
 
 describe("voiceCheck", () => {
-  it("voices every scene plus the sign-off and reports the laid-out length", async () => {
+  it("voices every scene, reuses the approved sign-off take, and reports the laid-out length", async () => {
     const calls: string[] = [];
     const report = await voiceCheck(SB, FACTS, fakeVoice(0.95, calls));
-    expect(calls).toHaveLength(report.scenes.length + 1);
-    expect(calls[calls.length - 1]).toMatch(/^Lombard\. Row\./);
+    expect(calls).toHaveLength(report.scenes.length); // en-GB-RyanNeural has a fixed take in src/brand/signoff
+    expect(calls.some((c) => c.startsWith("Lombard Row"))).toBe(false);
     const sum = report.scenes.reduce((a, x) => a + x.sceneMs, 0) + report.closeMs;
     expect(report.totalMs).toBeCloseTo(sum, 0);
     // A scene holds its last word plus the short tail; the clip's trailing silence plays under the next scene.

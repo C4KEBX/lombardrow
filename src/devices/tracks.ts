@@ -4,8 +4,11 @@ const fpsFrames = (seconds: number, fps: number) => Math.round(seconds * fps);
 
 /** The door-plate close: at least 3 s (devices.json), longer if the spoken sign-off needs it. */
 export const CLOSE_SECONDS = DEVICES.devices.door_plate.motion.duration_s;
-/** Spoken over the door plate in every video, from one cached voice clip. "Lombard. Row." as two words: the voice runs them together otherwise. */
-export const SIGNOFF = "Lombard. Row. How money got this way.";
+/**
+ * Spoken over the door plate in every video. The brand voice uses an approved, hand-edited take
+ * (src/brand/signoff/) with a short beat between "Lombard" and "Row"; other voices read this text.
+ */
+export const SIGNOFF = "Lombard Row. How money got this way.";
 
 export const closeFrames = (fps: number, signoffAudioMs = 0, tailMs = 400): number =>
   Math.max(fpsFrames(CLOSE_SECONDS, fps), Math.ceil(((signoffAudioMs + tailMs) / 1000) * fps));
