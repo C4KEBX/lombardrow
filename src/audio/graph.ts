@@ -53,8 +53,8 @@ export function assertLoudnessOk(measure: LoudnormMeasure): void {
 
 const FORMAT = "aformat=sample_rates=44100:channel_layouts=stereo";
 
-/** A library bed sits this far below its normalized loudness before ducking: about 10 dB under Edge narration. */
-export const MUSIC_BED_DB = -10;
+/** A library bed sits this far below its normalized loudness before ducking: resting about 8 dB under Edge narration. */
+export const MUSIC_BED_DB = -7;
 /** The generated ambient drone's level (it is not loudness-normalized like the library beds). */
 export const AMBIENT_DB = -9;
 /** Gentle ducking: about 4 dB under speech, back up within half a second of a pause. */
