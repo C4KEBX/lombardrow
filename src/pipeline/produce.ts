@@ -29,6 +29,8 @@ export type ProduceOptions = {
   musicDir?: string;
   sfxDir?: string;
   cacheDir?: string;
+  /** Keep the frames already rendered in outDir and only redo the audio: for trying beds and sound effects. */
+  remix?: boolean;
   /** assets.json for archival scenes; defaults to the one next to the storyboard. */
   assetsPath?: string;
 };
@@ -75,18 +77,21 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   const sounds = new Map(sfxLib.sounds.map((s) => [s.id, s]));
   const cues = cueSheet(built, storyboard.audio.sfx, VIDEO.fps, new Set(sounds.keys()));
 
-  const inputProps = videoProps(built);
-  const serveUrl = await getServeUrl();
-  const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Production", inputProps });
   const framesDir = path.join(opts.outDir, "frames");
-  fs.rmSync(framesDir, { recursive: true, force: true });
-  await renderFrames({
-    composition, serveUrl, browserExecutable: browserExecutable(), inputProps, outputDir: framesDir, imageFormat: "jpeg",
-    concurrency: renderConcurrency(),
-    onStart: () => undefined, onFrameUpdate: () => undefined,
-  });
   const silentPath = path.join(opts.outDir, "silent.mp4");
-  await encodeFrames(framesDir, VIDEO.fps, silentPath);
+  if (opts.remix && !fs.existsSync(silentPath)) throw new Error(`--remix needs a finished render in ${opts.outDir} (no silent.mp4)`);
+  if (!opts.remix) {
+    const inputProps = videoProps(built);
+    const serveUrl = await getServeUrl();
+    const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Production", inputProps });
+    fs.rmSync(framesDir, { recursive: true, force: true });
+    await renderFrames({
+      composition, serveUrl, browserExecutable: browserExecutable(), inputProps, outputDir: framesDir, imageFormat: "jpeg",
+      concurrency: renderConcurrency(),
+      onStart: () => undefined, onFrameUpdate: () => undefined,
+    });
+    await encodeFrames(framesDir, VIDEO.fps, silentPath);
+  }
 
   const audioPath = path.join(opts.outDir, "audio.m4a");
   const clips = [
@@ -103,7 +108,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     musicGainDb: music?.track ? MUSIC_BED_DB + music.gainDb : undefined,
     sfx: cues.map((c) => {
       const sound = sounds.get(c.sound)!;
-      return { path: path.join(sfxLib.dir, sound.file), atMs: c.atMs, gainDb: sound.gainDb + c.gainDb };
+      return { path: path.join(sfxLib.dir, sound.file), atMs: c.atMs - sound.hitMs, gainDb: sound.gainDb + c.gainDb };
     }),
     totalMs,
     outPath: audioPath,

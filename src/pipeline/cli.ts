@@ -6,6 +6,7 @@ export type ProduceCliOptions = {
   outDir: string;
   voice: VoiceMode;
   enforceLength: boolean;
+  remix: boolean;
   musicDir?: string;
   sfxDir?: string;
   cacheDir?: string;
@@ -17,10 +18,13 @@ const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--m
 export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   const values = new Map<string, string>();
   let enforceLength = true;
+  let remix = false;
   for (let i = 0; i < argv.length; i += 1) {
     const flag = argv[i];
     if (flag === "--no-enforce-length") {
       enforceLength = false;
+    } else if (flag === "--remix") {
+      remix = true;
     } else if (VALUE_FLAGS.has(flag)) {
       const value = argv[i + 1];
       if (value === undefined || value.startsWith("--")) throw new Error(`${flag} needs a value`);
@@ -43,6 +47,7 @@ export function parseArgs(argv: readonly string[]): ProduceCliOptions {
     outDir: required("--out"),
     voice,
     enforceLength,
+    remix,
     musicDir: values.get("--music-dir"),
     sfxDir: values.get("--sfx-dir"),
     cacheDir: values.get("--cache-dir"),

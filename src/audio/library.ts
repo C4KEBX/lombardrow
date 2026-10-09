@@ -52,6 +52,8 @@ export const SfxSchema = z.strictObject({
   description: z.string().min(1),
   /** Default level in the mix, in dB relative to the file (files are peak-normalized to -3 dBFS). */
   gainDb: z.number().min(-40).max(0),
+  /** Where the sound's main hit falls, in ms from its start: a cue lands that moment on its time (a riser starts early). */
+  hitMs: z.number().min(0).default(0),
   ...Licensed,
 });
 

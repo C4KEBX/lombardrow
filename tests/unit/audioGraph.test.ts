@@ -40,6 +40,8 @@ describe("buildAudioGraph", () => {
     expect(g).toContain("[s1]volume=-18dB,adelay=900|900[c1]");
     expect(g).toContain("[c0][c1][c2]amix=inputs=3:normalize=0:duration=longest[sfx]");
     expect(g).toContain("[narrB][ducked][sfx]amix=inputs=3");
+    const early = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5, sfx: { files: 1, cues: [{ file: 0, atMs: -650, gainDb: -20 }] } });
+    expect(early).toContain("[s0]atrim=start=0.650,asetpts=PTS-STARTPTS,volume=-20dB,adelay=0|0[c0]");
     const noMusic = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5, sfx: { files: 1, cues: [{ file: 0, atMs: 0, gainDb: -20 }] } });
     expect(noMusic).toContain("[1:a]");
     expect(noMusic).toContain("[c0]anull[sfx]");

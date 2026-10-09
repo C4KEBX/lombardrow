@@ -337,6 +337,8 @@ export const StoryboardSchema = z
       sfx: z
         .strictObject({
           auto: z.boolean().default(true),
+          /** The sound under each title card's headline (an sfx/library.json id); the default suits most videos. */
+          titleHit: z.string().min(1).optional(),
           cues: z
             .array(
               z.strictObject({

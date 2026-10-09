@@ -5,6 +5,7 @@
       "file": "page-turn.mp3",
       "description": "Page turn (davidbain): ledger-page scenes",
       "gainDb": -20,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/136778/",
       "credit": null
@@ -14,6 +15,7 @@
       "file": "paper-slide.mp3",
       "description": "Paper sliding on a desk (eyesonlegs): archival scenes",
       "gainDb": -22,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/464302/",
       "credit": null
@@ -23,6 +25,7 @@
       "file": "pen-underline.mp3",
       "description": "Pen underlining on paper (zembacraftworks): the ledger line drawing in the open",
       "gainDb": -18,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/428338/",
       "credit": null
@@ -32,6 +35,7 @@
       "file": "pen-scribble.mp3",
       "description": "Short pencil scribble (Tomoyo Ichijouji)",
       "gainDb": -22,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/211247/",
       "credit": null
@@ -41,6 +45,7 @@
       "file": "stamp.mp3",
       "description": "Rubber stamp thud (I.fekry): the source stamp",
       "gainDb": -20,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/470710/",
       "credit": null
@@ -50,6 +55,7 @@
       "file": "tick.mp3",
       "description": "Single clock tick (pbimal): the year counter",
       "gainDb": -24,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/534094/",
       "credit": null
@@ -59,6 +65,7 @@
       "file": "type-key.mp3",
       "description": "Typewriter key (yottasounds)",
       "gainDb": -24,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/380137/",
       "credit": null
@@ -66,8 +73,9 @@
     {
       "id": "whoosh-soft",
       "file": "whoosh-soft.mp3",
-      "description": "Soft airy whoosh (ludvique): scene cuts",
+      "description": "Soft airy whoosh (ludvique)",
       "gainDb": -26,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/71852/",
       "credit": null
@@ -75,8 +83,9 @@
     {
       "id": "whoosh",
       "file": "whoosh.mp3",
-      "description": "Short whoosh (qubodup)",
-      "gainDb": -24,
+      "description": "Short whoosh (qubodup): the wipes between scenes",
+      "gainDb": -20,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/60013/",
       "credit": null
@@ -86,6 +95,7 @@
       "file": "coin.mp3",
       "description": "Coin dropped on a table (HoseNoseSounds)",
       "gainDb": -22,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/510735/",
       "credit": null
@@ -95,6 +105,7 @@
       "file": "low-hit.mp3",
       "description": "Very low soft impact (AudioPapkin): the door plate",
       "gainDb": -16,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/541029/",
       "credit": null
@@ -104,8 +115,39 @@
       "file": "knock.mp3",
       "description": "Knock on a door (Philip_Daniels)",
       "gainDb": -20,
+      "hitMs": 0,
       "license": "cc0",
       "sourceUrl": "https://freesound.org/s/244325/",
+      "credit": null
+    },
+    {
+      "id": "low-thump",
+      "file": "low-thump.mp3",
+      "description": "Low thump with a long trail (Sadiquecat): title-card headlines",
+      "gainDb": -16,
+      "hitMs": 0,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/719022/",
+      "credit": null
+    },
+    {
+      "id": "book-close",
+      "file": "book-close.mp3",
+      "description": "A book closing (tcrocker68): a ledger-like title hit",
+      "gainDb": -16,
+      "hitMs": 0,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/235588/",
+      "credit": null
+    },
+    {
+      "id": "riser-hit",
+      "file": "riser-hit.mp3",
+      "description": "Short riser into a hit (AudioPapkin): a bigger title hit",
+      "gainDb": -20,
+      "hitMs": 650,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/754771/",
       "credit": null
     }
   ]

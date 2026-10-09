@@ -76,6 +76,10 @@
               "default": true,
               "type": "boolean"
             },
+            "titleHit": {
+              "type": "string",
+              "minLength": 1
+            },
             "cues": {
               "default": [],
               "type": "array",

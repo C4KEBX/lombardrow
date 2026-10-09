@@ -21,6 +21,10 @@ const MIN_TICK_GAP_MS = 70;
 /** The counter decelerates, so the ticks thin out and get quieter towards the settled year. */
 const TICK_FADE_DB = -6;
 
+/** The sound on the wipes, and the default under each title card's headline. */
+export const WIPE_SOUND = "whoosh";
+export const DEFAULT_TITLE_HIT = "low-thump";
+
 /** Scene types that get a sound as they appear. */
 const ON_SCENE: Record<string, string> = { archival: "paper-slide", "ledger-page": "page-turn" };
 
@@ -55,21 +59,24 @@ export function yearTicks(span: YearSpan, fps: number): SfxCue[] {
 }
 
 /**
- * The automatic cue sheet: a pen under each title card's rule, a soft whoosh on each wipe, ticks on
+ * The automatic cue sheet: a hit as each title card's headline lands and a pen under its rule, a soft whoosh on each wipe, ticks on
  * the year counter, a thud as each source stamp lands, paper for archival and ledger scenes, and a
  * low hit under the door plate. All quiet: they add texture under the narration, not punctuation.
  */
-export function autoCues(t: CueTimeline, fps: number): SfxCue[] {
+export function autoCues(t: CueTimeline, fps: number, titleHit: string = DEFAULT_TITLE_HIT): SfxCue[] {
   const cues: SfxCue[] = [];
   t.scenes.forEach((s, i) => {
     const headline = (s.scene.props as { headline?: string } | undefined)?.headline;
     if (s.scene.type !== "title" || !headline) return;
-    cues.push({ sound: "pen-underline", atMs: Math.max(0, ms(s.startFrame + titleRuleFrame(headline, i === 0), fps)), gainDb: 0 });
+    const rule = Math.max(0, ms(s.startFrame + titleRuleFrame(headline, i === 0), fps));
+    // The opening card is already on screen at frame 0, so its hit is the first thing heard.
+    cues.push({ sound: titleHit, atMs: i === 0 ? 0 : rule, gainDb: 0 });
+    cues.push({ sound: "pen-underline", atMs: rule, gainDb: 0 });
   });
 
   // A wipe covers the frame on each cut after the first scene, and the close follows a wipe too.
   const cuts = [...t.scenes.slice(1).map((s) => s.startFrame), t.close.startFrame];
-  for (const cut of cuts) cues.push({ sound: "whoosh-soft", atMs: Math.max(0, ms(cut - WIPE.frames / 2, fps)), gainDb: 0 });
+  for (const cut of cuts) cues.push({ sound: WIPE_SOUND, atMs: Math.max(0, ms(cut - WIPE.frames / 2, fps)), gainDb: 0 });
 
   for (const s of t.scenes) {
     const sound = ON_SCENE[s.scene.type];
@@ -92,9 +99,9 @@ export function manualCues(t: CueTimeline, cues: readonly ManualCue[], fps: numb
 
 /** Every cue for a video; fails on a sound the library does not have, before anything renders. */
 export function cueSheet(
-  t: CueTimeline, sfx: { auto: boolean; cues: readonly ManualCue[] }, fps: number, known: ReadonlySet<string>,
+  t: CueTimeline, sfx: { auto: boolean; titleHit?: string; cues: readonly ManualCue[] }, fps: number, known: ReadonlySet<string>,
 ): SfxCue[] {
-  const all = [...(sfx.auto ? autoCues(t, fps) : []), ...manualCues(t, sfx.cues, fps)].sort((a, b) => a.atMs - b.atMs);
+  const all = [...(sfx.auto ? autoCues(t, fps, sfx.titleHit) : []), ...manualCues(t, sfx.cues, fps)].sort((a, b) => a.atMs - b.atMs);
   const missing = [...new Set(all.map((c) => c.sound))].filter((s) => !known.has(s));
   if (missing.length) throw new Error(`Sound effect${missing.length > 1 ? "s" : ""} ${missing.map((s) => `"${s}"`).join(", ")} not in sfx/library.json`);
   return all;

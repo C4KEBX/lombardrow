@@ -89,8 +89,10 @@ function sfxParts(sfx: GraphSfx, firstInput: number): string[] {
     parts.push(`[${firstInput + k}:a]${FORMAT},${list.length === 1 ? "anull" : `asplit=${list.length}`}${outs}`);
   });
   sfx.cues.forEach((c, i) => {
+    // A cue that would start before 0 (a riser landing near the start) loses its lead-in instead.
+    const trim = c.atMs < 0 ? `atrim=start=${(-c.atMs / 1000).toFixed(3)},asetpts=PTS-STARTPTS,` : "";
     const delay = Math.max(0, Math.round(c.atMs));
-    parts.push(`[s${i}]volume=${db(c.gainDb)},adelay=${delay}|${delay}[c${i}]`);
+    parts.push(`[s${i}]${trim}volume=${db(c.gainDb)},adelay=${delay}|${delay}[c${i}]`);
   });
   const all = sfx.cues.map((_, i) => `[c${i}]`).join("");
   parts.push(sfx.cues.length === 1 ? `${all}anull[sfx]` : `${all}amix=inputs=${sfx.cues.length}:normalize=0:duration=longest[sfx]`);

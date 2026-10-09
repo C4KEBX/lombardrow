@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { autoCues, cueSheet, manualCues, titleRuleFrame, yearTicks, type CueTimeline } from "../../src/audio/cues";
+import { DEFAULT_TITLE_HIT, WIPE_SOUND, autoCues, cueSheet, manualCues, titleRuleFrame, yearTicks, type CueTimeline } from "../../src/audio/cues";
 import { loadMusicLibrary, loadSfxLibrary } from "../../src/audio/library";
 import { WIPE } from "../../src/compose/wipe";
 import { buildVideo } from "../../src/pipeline/buildVideo";
@@ -29,9 +29,15 @@ describe("autoCues", () => {
     expect(at("pen-underline")).toEqual([0]);
     expect(at("low-hit")).toEqual([30000]);
   });
+  it("lands a hit on each title card: at 0 on the opening card, as the rule starts on later ones", () => {
+    expect(at(DEFAULT_TITLE_HIT)).toEqual([0]);
+    const later: CueTimeline = { ...timeline, scenes: [...timeline.scenes, { id: "d", startFrame: 750, scene: { type: "title", props: { headline: "A rule from Venice" } } }] };
+    const hits = autoCues(later, FPS, "book-close").filter((c) => c.sound === "book-close").map((c) => Math.round(c.atMs));
+    expect(hits).toEqual([0, Math.round(((750 + titleRuleFrame("A rule from Venice", false)) * 1000) / FPS)]);
+  });
   it("whooshes on every wipe, centred on the cut, but not into the first scene", () => {
     const lead = (WIPE.frames / 2) * (1000 / FPS);
-    expect(at("whoosh-soft")).toEqual([10000 - lead, 20000 - lead, 30000 - lead].map(Math.round));
+    expect(at(WIPE_SOUND)).toEqual([10000 - lead, 20000 - lead, 30000 - lead].map(Math.round));
   });
   it("adds paper for archival and ledger scenes and a thud for each stamp", () => {
     expect(at("paper-slide")).toEqual([10000]);
