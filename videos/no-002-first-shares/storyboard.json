@@ -16,7 +16,6 @@
       "id": "hook",
       "type": "title",
       "ground": "ink",
-      "year": 1602,
       "sourceFactId": "f-charter",
       "speaks": [
         "f-charter"
@@ -24,7 +23,7 @@
       "narration": "Amsterdam, August 1602. For one month, a new company let anyone in the Dutch Republic buy a piece of it.",
       "props": {
         "headline": "The first shares anyone could buy",
-        "kicker": "Amsterdam"
+        "kicker": "Amsterdam, 1602"
       }
     },
     {
