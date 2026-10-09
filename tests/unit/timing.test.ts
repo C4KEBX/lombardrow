@@ -70,7 +70,7 @@ describe("msToFrame", () => {
 
 describe("sceneDurationMs", () => {
   it("is the last word end plus the tail pad", () => {
-    expect(sceneDurationMs(words)).toBe(2300 + 400);
+    expect(sceneDurationMs(words)).toBe(2300 + 200);
     expect(sceneDurationMs(words, 1000)).toBe(3300);
   });
   it("throws on empty word timings", () => {

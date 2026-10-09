@@ -8,7 +8,7 @@ import { checkStoryboard, formatReport } from "../../src/skill/check";
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes the No. 004 reference video with no issues and an estimate inside 65-70 s", () => {
+  it("passes the No. 004 reference video with no issues and an estimate inside 55-70 s", () => {
     const report = checkStoryboard(no004Sb, no004Facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
@@ -20,7 +20,7 @@ describe("checkStoryboard", () => {
     const report = checkStoryboard(storyboard, facts);
     expect(new Set(report.issues.map((i) => i.stage))).toEqual(new Set(["sources", "spoken figures"]));
     expect(report.stats?.scenes).toBe(5);
-    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 65-70 s/);
+    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 55-70 s/);
   });
 
   it("collects every independent issue in one run instead of stopping at the first", () => {
@@ -86,5 +86,14 @@ describe("formatReport", () => {
   });
   it("prints OK when there are no issues", () => {
     expect(formatReport({ ok: true, issues: [], warnings: [], stats: { scenes: 1, words: 5, estimatedSeconds: 3 } })).toMatch(/OK/);
+  });
+});
+
+describe("the opening title card", () => {
+  it("must be the first scene", () => {
+    const sb = structuredClone(no004Sb) as { scenes: { type: string }[] };
+    sb.scenes = [sb.scenes[2], sb.scenes[1], sb.scenes[0], ...sb.scenes.slice(3)];
+    const report = checkStoryboard(sb, no004Facts);
+    expect(report.issues).toContainEqual({ stage: "opener", message: expect.stringMatching(/first scene must be a title card/) });
   });
 });

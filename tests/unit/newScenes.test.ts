@@ -14,7 +14,7 @@ import { synthWords } from "../../src/voice/synthWords";
 const IMAGES: Record<string, { src: string; credit: string }> = { "page-standin": { src: "data:image/jpeg;base64,", credit: "Stand-in" } };
 const clone = <T>(x: T): T => JSON.parse(JSON.stringify(x));
 const build = (sb: unknown = sbJson, facts: unknown = factsJson, images = IMAGES) =>
-  buildVideo(sb, facts, (s) => Object.fromEntries(s.scenes.map((x) => [x.id, synthWords(x.narration)])), 30, undefined, undefined, images);
+  buildVideo(sb, facts, (s) => Object.fromEntries(s.scenes.map((x) => [x.id, synthWords(x.narration)])), 30, undefined, images);
 const scene = (sb: any, id: string) => sb.scenes.find((s: any) => s.id === id);
 
 describe("ledger demo (archival, flow-diagram, ledger-page)", () => {

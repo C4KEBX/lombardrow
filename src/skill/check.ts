@@ -57,7 +57,11 @@ export function checkStoryboard(
     for (const scene of sb.scenes) attempt(issues, stage, () => run({ ...sb, scenes: [scene] }));
   };
   perScene("cues", assertCuesSupported);
-  perScene("headlines", assertHeadlinesFit);
+  // Whole storyboard: the opening title card's headline shares its lane with the door-number masthead.
+  attempt(issues, "headlines", () => assertHeadlinesFit(sb));
+  if (sb.scenes[0] && sb.scenes[0].type !== "title") {
+    issues.push({ stage: "opener", message: `Scene "${sb.scenes[0].id}" opens the video as ${sb.scenes[0].type}; the first scene must be a title card, which carries the door number and tells the viewer in the first second what they are watching` });
+  }
   perScene("text scenes", assertTextScenes);
   perScene("map regions", assertMapRegions);
   perScene("year counter", assertYears);

@@ -7,6 +7,7 @@ import { buildPublishPackage } from "../src/publish/package";
 import { renderThumbnails, writePackageTexts } from "../src/publish/writePackage";
 import { parseFacts } from "../src/schema/facts";
 import { parseStoryboard } from "../src/schema/storyboard";
+import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../src/schema/validate";
 import { parseFlags } from "../src/skill/flags";
 import { checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf } from "../src/variation/index";
 
@@ -29,7 +30,7 @@ async function main(): Promise<void> {
   const history = fs.existsSync(historyPath) ? parseHistory(fs.readFileSync(historyPath, "utf-8")) : [];
   const spec = parseSpec(readJson(path.resolve("variation/variation_spec.json")));
   const variation = [...checkPlan(plan, history, spec, scriptOf(sb)).reasons, ...crossCheck(plan, sb, spec)];
-  if (durationSeconds !== undefined && (durationSeconds < 65 || durationSeconds > 70)) variation.push(`length ${durationSeconds.toFixed(1)} s is outside 65-70 s`);
+  if (durationSeconds !== undefined && (durationSeconds < MIN_VIDEO_MS / 1000 || durationSeconds > MAX_VIDEO_MS / 1000)) variation.push(`length ${durationSeconds.toFixed(1)} s is outside ${MIN_VIDEO_MS / 1000}-${MAX_VIDEO_MS / 1000} s`);
   const lbPath = path.join(outDir, "listen-back.json");
   const lb = fs.existsSync(lbPath) ? (readJson(lbPath) as { mismatches: unknown[]; drift: unknown[] }) : undefined;
 

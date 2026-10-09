@@ -10,64 +10,9 @@ import type { StampSpan, YearSpan } from "./tracks";
 
 const D = DEVICES.devices;
 const PARCHMENT_72 = mix(BRAND.parchment, BRAND.ledgerInk, 0.72);
-const PARCHMENT_78 = mix(BRAND.parchment, BRAND.ledgerInk, 0.78);
 const fade = (frame: number, start: number, frames: number) => clamp01((frame - start) / Math.max(1, frames));
 
 const doorLabel = doorLabelText;
-
-/**
- * 0 to 2 s of every video: the Brass ledger line draws left to right, then the series label and door
- * number fade in. When the first scene's axis sits on the same line, the rule recolors to that axis
- * color as the open ends, so the chart grows out of it.
- */
-export const LedgerLineOpen: React.FC<{ doorNo: number; series: string; durationFrames: number; handoffAxis: string | null }> = ({
-  doorNo, series, durationFrames, handoffAxis,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const m = D.ledger_line.motion;
-  const draw = easeOutCubic((frame - m.rule_draw.start_s * fps) / (m.rule_draw.duration_s * fps));
-  const textIn = fade(frame, m.text_fade_in.start_s * fps, m.text_fade_in.duration_s * fps);
-  const outFrames = Math.round(0.3 * fps);
-  const out = fade(frame, durationFrames - outFrames, outFrames);
-  const { rule, series_label: label, door_no: door } = D.ledger_line;
-  const ruleColor = handoffAxis ? interpolateColor(BRAND.brass, handoffAxis, out) : BRAND.brass;
-
-  return (
-    <AbsoluteFill style={{ background: BRAND.ledgerInk }}>
-      <div style={{ position: "absolute", left: label.x, top: label.y, opacity: textIn * (1 - out) }}>
-        <div
-          style={{
-            fontFamily: BODY_FONT, fontWeight: label.weight, fontSize: label.size, lineHeight: 1,
-            letterSpacing: `${label.tracking_em}em`, textTransform: "uppercase", color: PARCHMENT_78,
-          }}
-        >
-          {series}
-        </div>
-      </div>
-      <div
-        style={{
-          position: "absolute", left: door.x, top: door.y, opacity: textIn * (1 - out),
-          fontFamily: DISPLAY_FONT, fontSize: door.size, lineHeight: 1, color: BRAND.parchment, ...TABULAR,
-        }}
-      >
-        {door.prefix}{doorLabel(doorNo)}
-      </div>
-      <div
-        style={{
-          position: "absolute", left: rule.x, top: rule.y, width: rule.width, height: rule.height,
-          background: ruleColor, transform: `scaleX(${draw})`, transformOrigin: "left center",
-          opacity: handoffAxis ? 1 : 1 - out,
-        }}
-      />
-    </AbsoluteFill>
-  );
-};
-
-/** Linear blend between two hex colors. */
-function interpolateColor(a: string, b: string, t: number): string {
-  return mix(b, a, clamp01(t));
-}
 
 /** Top-left Caslon Brass year, counting between scenes, over a short Brass rule. Ledger Ink only. */
 export const YearCounter: React.FC<{ spans: readonly YearSpan[] }> = ({ spans }) => {

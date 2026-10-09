@@ -2,14 +2,11 @@ import { DEVICES } from "../design/tokens";
 
 const fpsFrames = (seconds: number, fps: number) => Math.round(seconds * fps);
 
-/** The ledger-line open: 2 s of every video, before the first narrated scene. */
-export const OPEN_SECONDS = 2;
 /** The door-plate close: at least 3 s (devices.json), longer if the spoken sign-off needs it. */
 export const CLOSE_SECONDS = DEVICES.devices.door_plate.motion.duration_s;
-/** Spoken over the door plate in every video, from one cached voice clip. */
-export const SIGNOFF = "Lombard Row. How money got this way.";
+/** Spoken over the door plate in every video, from one cached voice clip. "Lombard. Row." as two words: the voice runs them together otherwise. */
+export const SIGNOFF = "Lombard. Row. How money got this way.";
 
-export const openFrames = (fps: number): number => fpsFrames(OPEN_SECONDS, fps);
 export const closeFrames = (fps: number, signoffAudioMs = 0, tailMs = 400): number =>
   Math.max(fpsFrames(CLOSE_SECONDS, fps), Math.ceil(((signoffAudioMs + tailMs) / 1000) * fps));
 

@@ -10,7 +10,7 @@ const SETTLE_MARGIN = 10;
 const built = buildVideo(
   storyboard, facts,
   (sb) => Object.fromEntries(sb.scenes.map((s) => [s.id, synthWords(s.narration)])),
-  30, undefined, undefined,
+  30, undefined,
   { "page-standin": { src: "unused", credit: "unused" } },
 );
 const byId = (id: string) => built.scenes.find((s) => s.id === id)!;

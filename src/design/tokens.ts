@@ -55,6 +55,9 @@ const YC = DEVICES.devices.year_counter;
 export const YEAR_CONTENT_TOP = YC.y + YC.number.size + YC.rule.gap + YC.rule.height + 45;
 
 /** Text lanes for a scene, shortened from the top when the year counter is showing. */
+/** Height the door-number masthead takes on the opening title card, gap below included. */
+export const DOOR_HEADER_PX = 190;
+
 export function lanesFor(hasYear: boolean) {
   const top = hasYear ? YEAR_CONTENT_TOP : SAFE.top;
   const cut = top - SAFE.top;
