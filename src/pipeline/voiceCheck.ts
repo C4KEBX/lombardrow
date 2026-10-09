@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { VIDEO } from "../design/tokens";
-import { SIGNOFF } from "../devices/tracks";
+import { voiceSignoff } from "../voice/signoff";
 import { parseStoryboard } from "../schema/storyboard";
 import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
 import type { VoiceProvider, VoiceResult } from "../voice/types";
@@ -26,14 +26,14 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
   const storyboard = parseStoryboard(storyboardJson);
   const voices: Record<string, VoiceResult> = {};
   for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
-  const signoff = await provider(SIGNOFF, storyboard.meta.voice);
+  const signoff = await voiceSignoff(provider, storyboard.meta.voice);
 
   const built = buildVideo(
     storyboardJson,
     readJson(factsPath),
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    signoff.audioMs,
+    Math.max(...signoff.words.map((w) => w.endMs)),
     imagesFor(storyboardPath),
   );
   const totalMs = framesMs(built.totalFrames);

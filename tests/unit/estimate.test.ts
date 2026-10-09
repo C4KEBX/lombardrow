@@ -9,11 +9,11 @@ describe("estimate", () => {
     expect(countWords("  one  two\nthree ")).toBe(3);
     expect(countWords("")).toBe(0);
   });
-  it("adds only the measured 4.6 s door plate to the narration: there is no open", () => {
-    expect(BOOKEND_SECONDS).toBeCloseTo(4.6);
-    expect(estimateSeconds(["one two three"])).toBeCloseTo(4.6 + narrationSeconds(["one two three"]));
+  it("adds only the 3.1 s door plate to the narration: there is no open and no held end", () => {
+    expect(BOOKEND_SECONDS).toBeCloseTo(3.1);
+    expect(estimateSeconds(["one two three"])).toBeCloseTo(3.1 + narrationSeconds(["one two three"]));
   });
-  it("targetWords gives a script length that estimates inside the 55-70 s window, about 175 to 190 words", () => {
+  it("targetWords gives a script length that estimates inside the 62-70 s window, about 195 to 215 words", () => {
     for (const scenes of [6, 8, 10]) {
       const words = targetWords(scenes);
       const even = Array.from({ length: scenes }, () => "w ".repeat(Math.round(words / scenes)).trim());
@@ -22,8 +22,8 @@ describe("estimate", () => {
       expect(s).toBeLessThanOrEqual(TARGET_SECONDS.max);
     }
     expect(WORDS_PER_SECOND).toBe(3.26);
-    expect(targetWords(8)).toBeGreaterThanOrEqual(175);
-    expect(targetWords(8)).toBeLessThanOrEqual(190);
+    expect(targetWords(8)).toBeGreaterThanOrEqual(195);
+    expect(targetWords(8)).toBeLessThanOrEqual(215);
   });
   it("matches No. 001's measured narration in en-GB-RyanNeural (50.3 s) within 2 percent", () => {
     const measured = 50.3;

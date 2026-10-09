@@ -18,7 +18,7 @@ import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
 import { WipeOverlay } from "./WipeOverlay";
-import { cutFrames } from "./wipe";
+import { cutFrames, wipeDirections } from "./wipe";
 
 const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
   const { scene, cues, durationFrames } = composed;
@@ -60,6 +60,7 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
 /** Narrated scenes from the opening title card to the door-plate close, with the overlays on top. */
 export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
+  const cuts = close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
     <AbsoluteFill style={{ background: BRAND.ledgerInk }}>
       {scenes.map((composed, i) => (
@@ -75,8 +76,9 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, yea
         </Sequence>
       )}
       <WipeOverlay
-        cuts={close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes)}
+        cuts={cuts}
         grounds={[...scenes.slice(1).map((s) => s.ground), "ink"]}
+        directions={wipeDirections(cuts.length, door.doorNo)}
       />
       <YearCounter spans={years} />
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />

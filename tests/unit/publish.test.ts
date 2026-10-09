@@ -112,7 +112,7 @@ describe("pre-publish checklist", () => {
   const thumbnails = ["thumb-youtube.png"];
   it("ticks what the pipeline verified and leaves the watch-through to a person", () => {
     const md = renderChecklist(pkg, { durationSeconds: 69.2, variation: [], listenBack: { mismatches: 0, drift: 0 }, thumbnails });
-    expect(md).toContain("- [x] Runs 55 to 70 seconds: 69.2 s");
+    expect(md).toContain("- [x] Runs 62 to 70 seconds: 69.2 s");
     expect(md).toContain("- [x] Variation check passes");
     expect(md).toContain("- [x] Captions checked word for word");
     expect(md).toContain("- [x] Description has the sources and the standard footer");
@@ -121,9 +121,9 @@ describe("pre-publish checklist", () => {
   });
   it("marks failures and checks not yet run", () => {
     const md = renderChecklist(pkg, { durationSeconds: 71.4, variation: ["era repeats"], listenBack: { mismatches: 2, drift: 0 }, thumbnails: [] });
-    expect(md).toContain("- [ ] Runs 55 to 70 seconds **FAILED**: 71.4 s");
+    expect(md).toContain("- [ ] Runs 62 to 70 seconds **FAILED**: 71.4 s");
     expect(md).toContain("**FAILED**: era repeats");
     expect(md).toContain("- [ ] Captions checked word for word: listen closely at the 2 places in listen-back.md (2 words differ, 0 captions out of sync)");
-    expect(renderChecklist(pkg, { thumbnails })).toContain("- [ ] Runs 55 to 70 seconds (not checked yet)");
+    expect(renderChecklist(pkg, { thumbnails })).toContain("- [ ] Runs 62 to 70 seconds (not checked yet)");
   });
 });

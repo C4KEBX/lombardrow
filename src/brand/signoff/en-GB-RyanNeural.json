@@ -1,0 +1,13 @@
+{
+  "$comment": "Take B, chosen 2026-10-09: Edge TTS en-GB-RyanNeural reading 'Lombard Row! How money got this way!', with a 110 ms beat cut in between Lombard and Row and the pause before the tagline cut to 320 ms. Word times are in this file's own clock.",
+  "audioMs": 3848,
+  "words": [
+    { "text": "Lombard", "startMs": 100, "endMs": 662 },
+    { "text": "Row.", "startMs": 772, "endMs": 1172 },
+    { "text": "How", "startMs": 1562, "endMs": 1786 },
+    { "text": "money", "startMs": 1799, "endMs": 2049 },
+    { "text": "got", "startMs": 2062, "endMs": 2299 },
+    { "text": "this", "startMs": 2312, "endMs": 2512 },
+    { "text": "way.", "startMs": 2524, "endMs": 2974 }
+  ]
+}

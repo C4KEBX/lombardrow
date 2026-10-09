@@ -1,4 +1,3 @@
-import { CLOSE_SECONDS } from "../devices/tracks";
 import { DEFAULT_TAIL_PAD_MS } from "../schema/timing";
 import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
 import { PRONUNCIATIONS } from "../voice/pronunciations";
@@ -11,8 +10,8 @@ import { spellNarration } from "../voice/speller";
  */
 export const WORDS_PER_SECOND = 3.26;
 export const TARGET_SECONDS = { min: MIN_VIDEO_MS / 1000, max: MAX_VIDEO_MS / 1000 } as const;
-/** The door plate holds for the spoken sign-off plus a short tail; in en-GB-RyanNeural that measured 4.6 s. */
-export const CLOSE_ESTIMATE_SECONDS = Math.max(CLOSE_SECONDS, 4.6);
+/** The door plate lasts as long as the spoken sign-off, about 3 s in en-GB-RyanNeural, and the video ends on it. */
+export const CLOSE_ESTIMATE_SECONDS = 3.1;
 /** The door-plate close after the narration. The video opens straight on its title card. */
 export const BOOKEND_SECONDS = CLOSE_ESTIMATE_SECONDS;
 const MID_SECONDS = (TARGET_SECONDS.min + TARGET_SECONDS.max) / 2;

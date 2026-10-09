@@ -38,7 +38,8 @@ export function buildVideo(
   factsJson: unknown,
   wordsFor: (sb: Storyboard) => Record<string, readonly WordTiming[]>,
   fps: number,
-  signoffAudioMs?: number,
+  /** When the sign-off's last word ends, in its own clip: the close stops just after it. */
+  signoffEndMs?: number,
   images: VideoProps["images"] = {},
 ): BuiltVideo {
   const storyboard = parseStoryboard(storyboardJson);
@@ -60,7 +61,7 @@ export function buildVideo(
   const scenes = composeScenes(storyboard, wordsFor(storyboard), fps);
   assertSceneTiming(scenes);
   const closeStart = scenes.reduce((end, s) => Math.max(end, s.startFrame + s.durationFrames), 0);
-  const close = closeFrames(fps, signoffAudioMs);
+  const close = closeFrames(fps, signoffEndMs);
 
   const years = yearTrack(scenes.map((s) => ({ startFrame: s.startFrame, durationFrames: s.durationFrames, year: s.scene.year })));
   const stamps = stampTrack(

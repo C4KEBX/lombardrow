@@ -33,8 +33,9 @@ const reasonsWith = (history: HistoryEntry[], over: Partial<Plan> = {}, script?:
   checkPlan({ ...plan, ...over }, history, spec, script).reasons.join("\n");
 
 describe("checkPlan", () => {
-  it("passes No. 004 on an empty history (cold start) and with its own script", () => {
-    expect(checkPlan(plan, [], spec, scriptOf(sb))).toEqual({ ok: true, reasons: [] });
+  it("passes No. 004 on an empty history (cold start); its old-pacing script is now under the word floor", () => {
+    expect(checkPlan(plan, [], spec)).toEqual({ ok: true, reasons: [] });
+    expect(checkPlan(plan, [], spec, scriptOf(sb)).reasons).toEqual(["script is 158 words (175-215)"]);
   });
   it("rejects an option the spec does not list", () => {
     expect(reasonsWith([], { era: "jurassic" })).toMatch(/era "jurassic" is not one of/);
@@ -137,8 +138,9 @@ describe("check with a plan", () => {
   it("adds variation and plan-vs-storyboard issues to the storyboard check", async () => {
     const { checkStoryboard } = await import("../../src/skill/check");
     const facts = (await import("../../fixtures/no-004/rule-of-72.facts.json")).default;
-    expect(checkStoryboard(sbJson, facts, { variation: { plan: planJson, history: [], spec } }).issues).toEqual([]);
+    // No. 004 was scripted for the old pacing, so only its word count trips.
+    expect(checkStoryboard(sbJson, facts, { variation: { plan: planJson, history: [], spec } }).issues.map((i) => i.message)).toEqual(["script is 158 words (175-215)"]);
     const report = checkStoryboard(sbJson, facts, { variation: { plan: { ...planJson, paletteLead: "green" }, history: [past({ storyShape: "then_to_now" })], spec } });
-    expect(report.issues.map((i) => i.stage)).toEqual(["variation", "plan vs storyboard"]);
+    expect(report.issues.map((i) => i.stage)).toEqual(["variation", "variation", "plan vs storyboard"]);
   });
 });

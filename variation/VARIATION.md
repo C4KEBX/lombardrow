@@ -37,7 +37,7 @@ question ("Why is a home loan named after death?"), surprising_number ("Seventy-
 ## Scripting
 
 - The storyboard must render the plan: `meta.doorNo` and `meta.paletteLead` match, `meta.series` is the pillar's series (origins "Why It Exists", mechanics "How It Works", words "Say It Right", hooks "On the Row Today"), the primary visual appears as a scene, and a question, number or date hook shows in the first sentence.
-- The script (the storyboard's narration) runs 145 to 180 words and shares under 15% of its three-word phrases with any of the last 20 scripts.
+- The script (the storyboard's narration) runs 175 to 215 words (enough for the 62 s floor) and shares under 15% of its three-word phrases with any of the last 20 scripts.
 - `npm run check -- --storyboard S --facts F --plan P` runs all of this with the storyboard checks.
 
 ## After publishing

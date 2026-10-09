@@ -14,16 +14,16 @@ const fakeVoice = (scale: number, calls: string[] = []): VoiceProvider => async 
 };
 
 describe("voiceCheck", () => {
-  it("voices every scene plus the sign-off and reports the laid-out length", async () => {
+  it("voices every scene, reuses the approved sign-off take, and reports the laid-out length", async () => {
     const calls: string[] = [];
     const report = await voiceCheck(SB, FACTS, fakeVoice(0.95, calls));
-    expect(calls).toHaveLength(report.scenes.length + 1);
-    expect(calls[calls.length - 1]).toMatch(/^Lombard\. Row\./);
+    expect(calls).toHaveLength(report.scenes.length); // en-GB-RyanNeural has a fixed take in src/brand/signoff
+    expect(calls.some((c) => c.startsWith("Lombard Row"))).toBe(false);
     const sum = report.scenes.reduce((a, x) => a + x.sceneMs, 0) + report.closeMs;
     expect(report.totalMs).toBeCloseTo(sum, 0);
     // A scene holds its last word plus the short tail; the clip's trailing silence plays under the next scene.
     for (const scene of report.scenes) expect(scene.sceneMs).toBeGreaterThanOrEqual(scene.voiceMs - 200 - 34);
-    expect(report.withinGate).toBe(report.totalMs >= 55_000 && report.totalMs <= 70_000);
+    expect(report.withinGate).toBe(report.totalMs >= 62_000 && report.totalMs <= 70_000);
   });
   it("flags a read that runs long", async () => {
     const report = await voiceCheck(SB, FACTS, fakeVoice(1.3));
@@ -40,6 +40,6 @@ describe("voiceCheck", () => {
     const text = formatVoiceReport(report);
     for (const scene of report.scenes) expect(text).toContain(scene.id);
     expect(text).toMatch(/^\(door\)/m);
-    expect(text).toMatch(/Total \d+\.\ds \(gate 55-70s\)/);
+    expect(text).toMatch(/Total \d+\.\ds \(gate 62-70s\)/);
   });
 });

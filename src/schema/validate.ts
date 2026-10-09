@@ -7,8 +7,11 @@ import { deepEqual } from "./deepEqual";
 import { emphasisTarget } from "./emphasis";
 import { StoryboardError, factIdsOf, type Scene, type Storyboard } from "./storyboard";
 
-/** The length window. 55 s since the 2026-10-09 pacing change: no open, about 0.3 s between sentences and scenes. */
-export const MIN_VIDEO_MS = 55_000;
+/**
+ * The length window. At least 62 s, a hard rule: under that a video does not count toward TikTok and
+ * YouTube creator monetization (Justin, 2026-10-09). A short script gets more narration, never padding.
+ */
+export const MIN_VIDEO_MS = 62_000;
 export const MAX_VIDEO_MS = 70_000;
 
 export function assertVariety(sb: Storyboard): void {
