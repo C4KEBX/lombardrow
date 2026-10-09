@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "The first shares anyone could buy",
+    "theme": "lombard-row",
+    "paletteLead": "parchment",
+    "doorNo": 2,
+    "series": "Why It Exists",
+    "voice": "en-GB-RyanNeural"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "title",
+      "ground": "ink",
+      "year": 1602,
+      "sourceFactId": "f-charter",
+      "speaks": [
+        "f-charter"
+      ],
+      "narration": "Amsterdam, August 1602. For one month, a new company let anyone in the Dutch Republic buy a piece of it.",
+      "props": {
+        "headline": "The first shares anyone could buy",
+        "kicker": "Amsterdam"
+      }
+    },
+    {
+      "id": "charter",
+      "type": "kinetic-text",
+      "ground": "ink",
+      "speaks": [
+        "f-charter"
+      ],
+      "sourceFactId": "f-charter",
+      "narration": "It was the Dutch East India Company. Its charter ran 21 years, and your money stayed in for at least ten.",
+      "props": {
+        "lines": [
+          "Built",
+          "to last"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "charter",
+          "do": "emphasize",
+          "text": "last"
+        }
+      ]
+    },
+    {
+      "id": "investors",
+      "type": "big-number",
+      "narration": "In Amsterdam alone, 1,143 investors signed up.",
+      "props": {
+        "value": 1143,
+        "label": "investors in Amsterdam",
+        "factId": "f-amsterdam"
+      }
+    },
+    {
+      "id": "book",
+      "type": "ledger-page",
+      "speaks": [
+        "f-maid",
+        "f-amsterdam"
+      ],
+      "narration": "A maid, Neeltgen Cornelis, put in 100 guilders. Each of the six directors put in 12,000. By the end, Amsterdam's book held about 3.7 million guilders.",
+      "props": {
+        "title": "Amsterdam subscription, 1602",
+        "rows": [
+          {
+            "entry": "Neeltgen Cornelis, maid",
+            "amount": "ƒ100"
+          },
+          {
+            "entry": "Each director",
+            "amount": "ƒ12,000"
+          }
+        ],
+        "total": {
+          "entry": "Amsterdam in all",
+          "amount": "ƒ3,679,915"
+        },
+        "factId": "f-maid"
+      },
+      "cues": [
+        {
+          "atWord": "Neeltgen",
+          "do": "emphasize",
+          "text": "Neeltgen"
+        },
+        {
+          "atWord": "directors",
+          "do": "emphasize",
+          "text": "director"
+        }
+      ]
+    },
+    {
+      "id": "catch",
+      "type": "kinetic-text",
+      "speaks": [
+        "f-transfer"
+      ],
+      "narration": "There was a catch. Once your money went in, there was no way to take it out.",
+      "props": {
+        "lines": [
+          "Money in,",
+          "no way out"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "out",
+          "do": "emphasize",
+          "text": "out"
+        }
+      ]
+    },
+    {
+      "id": "transfer",
+      "type": "flow-diagram",
+      "narration": "So you sold your share. Buyer and seller went to the East India House. Two directors approved, and the bookkeeper moved the share to the buyer's account.",
+      "props": {
+        "title": "Selling a share, 1602",
+        "steps": [
+          {
+            "label": "Buyer meets seller",
+            "note": "at the East India House"
+          },
+          {
+            "label": "Two directors approve"
+          },
+          {
+            "label": "Bookkeeper moves it",
+            "note": "in the capital book"
+          }
+        ],
+        "arrows": [
+          "the deal",
+          "approved"
+        ],
+        "factId": "f-transfer"
+      },
+      "cues": [
+        {
+          "atWord": "Buyer",
+          "do": "emphasize",
+          "text": "Buyer"
+        },
+        {
+          "atWord": "directors",
+          "do": "emphasize",
+          "text": "directors"
+        },
+        {
+          "atWord": "bookkeeper",
+          "do": "emphasize",
+          "text": "Bookkeeper"
+        }
+      ]
+    },
+    {
+      "id": "oldest",
+      "type": "title",
+      "ground": "ink",
+      "year": 1606,
+      "sourceFactId": "f-oldest",
+      "speaks": [
+        "f-oldest"
+      ],
+      "narration": "The oldest share we still have is a receipt from 1606. A city messenger in Enkhuizen paid 150 guilders for it. A student found it in 2010.",
+      "props": {
+        "headline": "The oldest share we have",
+        "kicker": "Enkhuizen"
+      }
+    },
+    {
+      "id": "market",
+      "type": "timeline",
+      "narration": "Trading began as soon as the books closed. Dividends followed from 1609, and in 1611 Amsterdam opened an Exchange building.",
+      "props": {
+        "title": "A market is born",
+        "events": [
+          {
+            "year": 1602,
+            "label": "Trading starts"
+          },
+          {
+            "year": 1609,
+            "label": "First dividends"
+          },
+          {
+            "year": 1611,
+            "label": "Exchange building opens"
+          }
+        ],
+        "factId": "f-timeline"
+      },
+      "cues": [
+        {
+          "atWord": "Trading",
+          "do": "emphasize",
+          "text": "Trading"
+        },
+        {
+          "atWord": "Dividends",
+          "do": "emphasize",
+          "text": "dividends"
+        },
+        {
+          "atWord": "Exchange",
+          "do": "emphasize",
+          "text": "Exchange"
+        }
+      ]
+    },
+    {
+      "id": "today",
+      "type": "kinetic-text",
+      "ground": "ink",
+      "speaks": [
+        "f-transfer"
+      ],
+      "narration": "It is the same deal behind a share today. The company keeps the money. You sell your piece to someone who wants in.",
+      "props": {
+        "lines": [
+          "Company keeps",
+          "the money"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "money",
+          "do": "emphasize",
+          "text": "money"
+        }
+      ]
+    }
+  ]
+}
