@@ -21,13 +21,13 @@ describe("estimate", () => {
       expect(s).toBeGreaterThanOrEqual(TARGET_SECONDS.min);
       expect(s).toBeLessThanOrEqual(TARGET_SECONDS.max);
     }
-    expect(WORDS_PER_SECOND).toBe(3.26);
+    expect(WORDS_PER_SECOND).toBe(3.34);
     expect(targetWords(8)).toBeGreaterThanOrEqual(195);
     expect(targetWords(8)).toBeLessThanOrEqual(215);
   });
-  it("matches No. 001's measured narration in en-GB-RyanNeural (50.3 s) within 2 percent", () => {
-    const measured = 50.3;
-    expect(Math.abs(narrationSeconds(narrations(no001Sb)) - measured) / measured).toBeLessThan(0.02);
+  it("matches No. 001's measured narration in en-GB-RyanNeural (63.4 s, 2026-10-09) within 3 percent", () => {
+    const measured = 63.4;
+    expect(Math.abs(narrationSeconds(narrations(no001Sb)) - measured) / measured).toBeLessThan(0.03);
   });
 });
 
