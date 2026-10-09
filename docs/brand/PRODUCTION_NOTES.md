@@ -19,7 +19,7 @@ Justin's standing notes from reviewing videos. Every video follows them, and eve
 ## Voice
 
 - **British voice,** en-GB-RyanNeural by default (2026-10-08).
-- **The sign-off says "Lombard Row" as two words**: not run together as "LombardRow", but not split apart by full stops either. It should sound natural, with some swing on "How money got this way." The approved take lives in `src/brand/signoff/` (2026-10-09; the take is still being chosen).
+- **The sign-off is "Lombard Row, how money got this way!" in one natural breath.** "Lombard Row" is two words, but it is never run together, spliced or split by full stops. Justin picked the take, which lives in `src/brand/signoff/`, and every video reuses it (2026-10-09).
 
 ## Music
 
