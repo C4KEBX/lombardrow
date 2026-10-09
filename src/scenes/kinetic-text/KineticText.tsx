@@ -40,12 +40,16 @@ export const KineticText: React.FC<SceneRenderProps<KineticTextProps>> = ({ prop
       <div style={{ transform: `translateY(${sustainDrift(frame, 6, 90)}px)` }}>
         {props.lines.map((line, li) => {
           const rise = Math.min(1, popIn(frame, fps, KINETIC.firstDelay + li * KINETIC.lineGap));
+          // The mask reaches below the line box so descenders (y, g, p) are not clipped; the negative
+          // margin keeps the line spacing as it was.
+          const descent = size * KINETIC.descender;
+          const maskHeight = size * KINETIC.lineHeight + descent;
           return (
-            <div key={`${line}-${li}`} style={{ overflow: "hidden", height: size * KINETIC.lineHeight }}>
+            <div key={`${line}-${li}`} style={{ overflow: "hidden", height: maskHeight, marginBottom: -descent }}>
               <div
                 style={{
                   display: "flex", whiteSpace: "nowrap", gap: `0 ${size * 0.18}px`,
-                  transform: `translateY(${(1 - rise) * 105}%)`,
+                  transform: `translateY(${(1 - rise) * maskHeight * 1.05}px)`,
                 }}
               >
                 {line.split(/\s+/).filter(Boolean).map((word, wi) => {

@@ -1,7 +1,7 @@
 import { DISPLAY_CHAR_WIDTH_EM, fitFontSize } from "../../design/layout";
 import { KINETIC_LANE } from "../../design/tokens";
 
-export const KINETIC = { firstDelay: 4, lineGap: 8, settle: 18, lineHeight: 1.08 } as const;
+export const KINETIC = { firstDelay: 4, lineGap: 8, settle: 18, lineHeight: 1.08, descender: 0.3 } as const;
 
 /** Frames until the last line has settled. */
 export const kineticRevealFrames = (lineCount: number): number =>
