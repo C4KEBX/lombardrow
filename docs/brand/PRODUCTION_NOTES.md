@@ -25,6 +25,10 @@ Justin's standing notes from reviewing videos. Every video follows them, and eve
 
 - **TikTok:** add a track in the app. **YouTube and Instagram:** a quiet bed from Pixabay Music under the voice, ducked while the voice speaks. The music thread owns this work (2026-10-09).
 
+## Files
+
+- **One folder per video.** Everything made for a video lives in `renders/no-XXX/`: `factcheck/`, `final/`, `drafts/`, `audio/`, `research/`. Once a video passes QA it gets a posting folder, `posting/no-XXX/`, with the final file, thumbnails, keywords, descriptions and anything else needed to post (2026-10-09). `produce`, `sheet`, `listen-back` and `publish-kit` write there by default (`src/pipeline/renderDir.ts`).
+
 ## Earlier decisions
 
 - When captions and the source stamp would overlap, the stamp moves (2026-10-08).

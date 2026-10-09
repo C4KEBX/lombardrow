@@ -31,9 +31,9 @@ export function renderChecklist(pkg: PublishPackage, auto: AutoChecks): string {
   return [
     `# Pre-publish checklist: ${pkg.door}, ${pkg.title}`,
     "",
-    "Ticked items were verified by the pipeline. The rest are for the QA watch-through: watch the whole video once, with sound, against `review/script.md`. A failure goes back to the script, not to a re-render.",
+    "Ticked items were verified by the pipeline. The rest are for the QA watch-through: watch the whole video once, with sound, against `factcheck/script.md`. A failure goes back to the script, not to a re-render.",
     "",
-    human("Every date, number and name matches a source in the script document", "ticked at the fact-check gate in `review/script.md`"),
+    human("Every date, number and name matches a source in the script document", "ticked at the fact-check gate in `factcheck/script.md`"),
     human("No advice, no tickers, no named host or expert persona", "`check` lints for these; confirm by ear"),
     box(auto.variation === undefined ? undefined : auto.variation.length === 0, "Variation check passes on the final plan, script and length included", auto.variation?.join("; ")),
     box(lengthOk, `Runs ${MIN_S} to ${MAX_S} seconds`, d === undefined ? "" : `${d.toFixed(1)} s`),
