@@ -11,7 +11,7 @@ const USAGE = `Usage:
   npm run audio -- add-music --src F --id ID --title T --artist A --moods m1,m2 --use "what it suits"
                              --license L --source-url URL [--credit "line"] [--bpm N] [--start SECONDS] [--gain DB]
   npm run audio -- add-sfx --src F --id ID --description D --gain DB --license L --source-url URL [--credit "line"]
-Licenses: cc0, public-domain, cc-by-4.0, licensed (a paid library you subscribe to), original.`;
+Licenses: cc0, public-domain, pixabay (Pixabay Content License), cc-by-4.0, licensed (a paid library you subscribe to), original.`;
 
 const MUSIC_DIR = path.resolve("music");
 const SFX_DIR = path.resolve("sfx");

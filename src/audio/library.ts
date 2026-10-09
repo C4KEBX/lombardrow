@@ -6,7 +6,7 @@ import { z } from "zod";
  * Licenses a track or effect may carry. "licensed" is a paid library (Epidemic Sound, Artlist): the
  * subscription covers it, so `sourceUrl` points at the track page and `credit` is usually null.
  */
-export const AUDIO_LICENSES = ["cc0", "public-domain", "cc-by-4.0", "licensed", "original"] as const;
+export const AUDIO_LICENSES = ["cc0", "public-domain", "pixabay", "cc-by-4.0", "licensed", "original"] as const;
 
 /** Licenses that need the credit line printed in every description that uses the track. */
 const NEEDS_CREDIT = new Set(["cc-by-4.0"]);

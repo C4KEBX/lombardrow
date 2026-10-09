@@ -13,7 +13,7 @@ Every video gets a music bed under the narration and quiet sound effects on the 
 
 `npm run audio -- add-music` cuts a bed to 90 s, normalizes it to the library loudness (-20 LUFS) and records it in `music/library.json`; `npm run audio -- add-sfx` trims and peak-normalizes a sound into `sfx/`. Run either without flags for the full usage. Only add audio whose license you have read on its own page:
 
-- `cc0`, `public-domain`, `original`: no credit needed.
+- `cc0`, `public-domain`, `pixabay` (the Pixabay Content License), `original`: no credit needed. Pixabay blocks automated downloads, so download Pixabay tracks in a browser and add them with `--license pixabay --source-url <the track page>`.
 - `cc-by-4.0`: give `--credit`; it is printed in every description that uses the track.
 - `licensed`: a paid library you subscribe to (Epidemic Sound, Artlist). Download while subscribed; the track page is the `--source-url`.
 
