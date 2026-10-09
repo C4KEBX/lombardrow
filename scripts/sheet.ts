@@ -1,4 +1,5 @@
 import path from "node:path";
+import { renderDir, storyboardDoor } from "../src/pipeline/renderDir";
 import { parseFlags } from "../src/skill/flags";
 import { renderSheet } from "../src/skill/sheetRender";
 
@@ -11,10 +12,12 @@ const need = (flag: string): string => {
   }
   return path.resolve(v);
 };
+const storyboardPath = need("--storyboard");
 renderSheet({
-  storyboardPath: need("--storyboard"),
+  storyboardPath,
   factsPath: need("--facts"),
-  outDir: need("--out"),
+  // The Gate 1 review goes to renders/no-XXX/factcheck unless --out says otherwise.
+  outDir: values.get("--out") ? path.resolve(values.get("--out") as string) : renderDir(storyboardDoor(storyboardPath), "factcheck"),
   verifyPath: values.get("--verify") ? path.resolve(values.get("--verify") as string) : undefined,
 })
   .then((file) => console.log(`Review sheet: ${file}`))

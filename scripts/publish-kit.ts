@@ -8,16 +8,18 @@ import { renderThumbnails, writePackageTexts } from "../src/publish/writePackage
 import { parseFacts } from "../src/schema/facts";
 import { parseStoryboard } from "../src/schema/storyboard";
 import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../src/schema/validate";
+import { outDirFor } from "../src/pipeline/renderDir";
 import { parseFlags } from "../src/skill/flags";
 import { checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf } from "../src/variation/index";
 
-const USAGE = "Usage: npm run publish-kit -- --storyboard S --facts F --plan P --out out/<slug> [--history H]   (after produce)";
+const USAGE = "Usage: npm run publish-kit -- --storyboard S --facts F --plan P [--out DIR] [--history H]   (after produce; DIR defaults to renders/no-XXX/final)";
 const readJson = (file: string): unknown => JSON.parse(fs.readFileSync(file, "utf-8"));
 
 async function main(): Promise<void> {
   const { values } = parseFlags(process.argv.slice(2), { values: ["--storyboard", "--facts", "--plan", "--out", "--history", "--assets"] });
-  const [sbPath, factsPath, planPath, outDir] = ["--storyboard", "--facts", "--plan", "--out"].map((f) => values.get(f));
-  if (!sbPath || !factsPath || !planPath || !outDir) throw new Error(USAGE);
+  const [sbPath, factsPath, planPath] = ["--storyboard", "--facts", "--plan"].map((f) => values.get(f));
+  if (!sbPath || !factsPath || !planPath) throw new Error(USAGE);
+  const outDir = outDirFor(sbPath, values.get("--out"));
   const sb = parseStoryboard(readJson(sbPath));
   const plan = parsePlan(readJson(planPath));
   const music = sb.audio.music === null ? undefined : findTrack(loadMusicLibrary(path.resolve("music")), sb.audio.music);

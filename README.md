@@ -20,7 +20,7 @@ In Claude Code, from this folder:
 /make-lombard <topic>
 ```
 
-The skill (`.claude/skills/make-lombard/`) plans the video against recent ones (`variation/`), researches sources, writes `videos/<slug>/facts.json` and `storyboard.json`, checks them, and stops at the **fact-check gate**: open `videos/<slug>/review/review.html` and `script.md` (every spoken sentence with its source), approve or ask for edits. It then renders `out/<slug>/final.mp4`, runs the listen-back and builds the publish package, and stops at the **QA gate**: watch the video once with sound against the script, using `out/<slug>/publish/checklist.md`. The door-number backlog is `docs/brand/BACKLOG.md`.
+The skill (`.claude/skills/make-lombard/`) plans the video against recent ones (`variation/`), researches sources, writes `videos/<slug>/facts.json` and `storyboard.json`, checks them, and stops at the **fact-check gate**: open `renders/no-XXX/factcheck/review.html` and `script.md` (every spoken sentence with its source), approve or ask for edits. It then renders `renders/no-XXX/final/final.mp4`, runs the listen-back and builds the publish package, and stops at the **QA gate**: watch the video once with sound against the script, using `final/publish/checklist.md`. The door-number backlog is `docs/brand/BACKLOG.md`.
 
 ## Manual commands
 
@@ -42,7 +42,8 @@ The skill (`.claude/skills/make-lombard/`) plans the video against recent ones (
 ## Layout
 
 - `videos/<slug>/`: facts, storyboard, verify results, review sheet (per video)
-- `out/<slug>/`: renders (git-ignored)
+- `renders/no-XXX/`: everything made for one video (git-ignored): `factcheck/`, `final/` (with `publish/`), `drafts/`, `audio/`, `research/`. Set `LOMBARD_RENDERS_DIR` to write them to the shared Lombard Row folder instead.
+- `out/`: voice cache and scratch output (git-ignored)
 - `fixtures/`: demo storyboards and facts used by tests
 - `src/`: design tokens, scenes, charts, map, schema, voice, audio, skill tooling
 - `docs/engine/`: engine handoff, spec and plans (`superpowers/`), spike measurements (`SPIKE-RESULTS.md`)

@@ -1,8 +1,10 @@
 import type { VoiceMode } from "../voice/index";
+import { outDirFor } from "./renderDir";
 
 export type ProduceCliOptions = {
   storyboardPath: string;
   factsPath: string;
+  /** Defaults to renders/no-XXX/final for the storyboard's door number. */
   outDir: string;
   voice: VoiceMode;
   enforceLength: boolean;
@@ -41,10 +43,11 @@ export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   };
   const voice = values.get("--voice") ?? "edge";
   if (voice !== "edge" && voice !== "standin") throw new Error(`--voice must be "edge" or "standin", got "${voice}"`);
+  const storyboardPath = required("--storyboard");
   return {
-    storyboardPath: required("--storyboard"),
+    storyboardPath,
     factsPath: required("--facts"),
-    outDir: required("--out"),
+    outDir: outDirFor(storyboardPath, values.get("--out")),
     voice,
     enforceLength,
     remix,
