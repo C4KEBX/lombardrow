@@ -1,8 +1,9 @@
 /**
- * loudnorm targets. TP is set below the -1.5 dBTP ceiling because resampling to 44.1 kHz and the
- * AAC encode add about 0.1 dB of true-peak overshoot after loudnorm has limited the signal.
+ * loudnorm targets. TP is set well below the -1.5 dBTP ceiling because resampling to 44.1 kHz and the
+ * AAC encode overshoot after loudnorm has limited the signal: about 0.1 dB on voice, but 0.8 dB on a
+ * harpsichord bed (No. 002 under sinfonia-5 came out at -1.23 dBTP with TP -2).
  */
-export const TARGET = { I: -14, TP: -2, LRA: 11 } as const;
+export const TARGET = { I: -14, TP: -3, LRA: 11 } as const;
 
 /** What the finished file must satisfy. */
 export const LOUDNESS_LIMITS = { toleranceLu: 1, maxTruePeak: -1.5 } as const;
