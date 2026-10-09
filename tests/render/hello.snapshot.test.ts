@@ -10,7 +10,7 @@ const GOLDEN_DIR = path.resolve("tests/render/golden");
 const TMP_DIR = path.resolve("tests/render/_tmp");
 const MAX_DIFF = 0.002; // 0.2% of pixels
 // ledger-line open; title settled; number mid count-up; number settled with callout and source stamp; door plate
-const FRAMES = [50, 100, 160, 210, 280];
+const FRAMES = [10, 50, 100, 160, 210];
 
 describe("HelloBigNumber visual snapshots", () => {
   for (const frame of FRAMES) {

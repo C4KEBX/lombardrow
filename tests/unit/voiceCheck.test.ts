@@ -18,11 +18,11 @@ describe("voiceCheck", () => {
     const calls: string[] = [];
     const report = await voiceCheck(SB, FACTS, fakeVoice(0.95, calls));
     expect(calls).toHaveLength(report.scenes.length + 1);
-    expect(calls[calls.length - 1]).toMatch(/^Lombard Row\./);
-    expect(report.openMs).toBe(2000);
-    const sum = report.openMs + report.scenes.reduce((a, x) => a + x.sceneMs, 0) + report.closeMs;
+    expect(calls[calls.length - 1]).toMatch(/^Lombard\. Row\./);
+    const sum = report.scenes.reduce((a, x) => a + x.sceneMs, 0) + report.closeMs;
     expect(report.totalMs).toBeCloseTo(sum, 0);
-    for (const scene of report.scenes) expect(scene.sceneMs).toBeGreaterThanOrEqual(scene.voiceMs - 34);
+    // A scene holds its last word plus the short tail; the clip's trailing silence plays under the next scene.
+    for (const scene of report.scenes) expect(scene.sceneMs).toBeGreaterThanOrEqual(scene.voiceMs - 200 - 34);
     expect(report.withinGate).toBe(report.totalMs >= 65_000 && report.totalMs <= 70_000);
   });
   it("flags a read that runs long", async () => {
@@ -39,7 +39,6 @@ describe("voiceCheck", () => {
     const report = await voiceCheck(SB, FACTS, fakeVoice(0.95));
     const text = formatVoiceReport(report);
     for (const scene of report.scenes) expect(text).toContain(scene.id);
-    expect(text).toMatch(/^\(open\)/m);
     expect(text).toMatch(/^\(door\)/m);
     expect(text).toMatch(/Total \d+\.\ds \(gate 65-70s\)/);
   });

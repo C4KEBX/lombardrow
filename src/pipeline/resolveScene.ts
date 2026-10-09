@@ -3,7 +3,6 @@ import type { Scene, Storyboard } from "../schema/storyboard";
 import {
   assertValidWords,
   CueResolutionError,
-  DEFAULT_TAIL_PAD_MS,
   msToFrame,
   resolveCue,
   sceneDurationMs,
@@ -24,19 +23,16 @@ export type ComposedScene = {
 };
 
 /**
- * Scene length follows the narration: at least the word timings plus a tail, and never shorter
- * than the audio itself (so a trailing breath is never cut off).
+ * Scene length follows the narration: the last word plus a short tail. The voice clip's own trailing
+ * silence is not waited out; the clip keeps playing under the next scene, so nothing is cut off.
  */
 export function composeScenes(
   sb: Storyboard,
   wordsByScene: Record<string, readonly WordTiming[]>,
   fps: number,
-  audioMsByScene: Record<string, number> = {},
-  /** Frames before the first scene (the ledger-line open). */
-  startOffset = 0,
 ): ComposedScene[] {
   const composed: ComposedScene[] = [];
-  let startFrame = startOffset;
+  let startFrame = 0;
   for (const scene of sb.scenes) {
     const words = wordsByScene[scene.id];
     if (!words) throw new CueResolutionError(`No word timings for scene "${scene.id}"`);
@@ -48,10 +44,7 @@ export function composeScenes(
         text: cue.text,
         x: cue.x,
       }));
-      const wordsMs = sceneDurationMs(words);
-      const audioMs = audioMsByScene[scene.id];
-      const durationMs = audioMs === undefined ? wordsMs : Math.max(wordsMs, audioMs + DEFAULT_TAIL_PAD_MS);
-      const durationFrames = msToFrame(durationMs, fps);
+      const durationFrames = msToFrame(sceneDurationMs(words), fps);
       composed.push({ id: scene.id, scene, ground: scene.ground ?? sb.meta.paletteLead, cues, durationFrames, startFrame, words: [...words] });
       startFrame += durationFrames;
     } catch (error) {

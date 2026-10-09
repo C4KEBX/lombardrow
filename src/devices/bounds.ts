@@ -1,6 +1,5 @@
 import { formatYear } from "../design/layout";
 import { DEVICES, VIDEO } from "../design/tokens";
-import { doorLabelText } from "./label";
 import type { StampSpan, YearSpan } from "./tracks";
 
 export type Box = { name: string; x: number; y: number; width: number; height: number };
@@ -23,17 +22,7 @@ const INTER_EM = 0.56;
  * measured font metrics plus tracking, so the check errs on the side of failing.
  */
 export function deviceBoxes(input: { doorNo: number; series: string; years: readonly YearSpan[]; stamps: readonly StampSpan[] }): Box[] {
-  const { series_label: label, door_no: door, rule } = D.ledger_line;
   const boxes: Box[] = [
-    { name: "ledger line", x: rule.x, y: rule.y, width: rule.width, height: rule.height },
-    {
-      name: "series label", x: label.x, y: label.y,
-      width: input.series.length * label.size * (INTER_EM + label.tracking_em), height: label.size * 1.2,
-    },
-    {
-      name: "door number", x: door.x, y: door.y,
-      width: (door.prefix + doorLabelText(input.doorNo)).length * door.size * CASLON_EM, height: door.size,
-    },
     { name: "door plate", x: D.door_plate.plate.x, y: D.door_plate.plate.y, width: D.door_plate.plate.width, height: D.door_plate.plate.height },
   ];
   const wm = D.door_plate.wordmark;

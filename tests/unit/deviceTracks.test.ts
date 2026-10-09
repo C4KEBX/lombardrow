@@ -1,13 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { StampError, closeFrames, openFrames, stampTrack, yearTrack } from "../../src/devices/tracks";
+import { StampError, closeFrames, stampTrack, yearTrack } from "../../src/devices/tracks";
 
 const scene = (id: string, startFrame: number, durationFrames: number, extra: { year?: number; stamp?: string } = {}) => ({
   id, startFrame, durationFrames, ...extra,
 });
 
-describe("open and close lengths", () => {
-  it("is a 2 s open and at least a 3 s close", () => {
-    expect(openFrames(30)).toBe(60);
+describe("close length", () => {
+  it("is at least a 3 s close", () => {
     expect(closeFrames(30)).toBe(90);
     expect(closeFrames(30, 2000)).toBe(90);
     expect(closeFrames(30, 3200)).toBe(Math.ceil(3.6 * 30)); // a long sign-off is never cut

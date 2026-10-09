@@ -46,14 +46,13 @@ const ledger = buildVideo(
   (sb) => Object.fromEntries(sb.scenes.map((s) => [s.id, synthWords(s.narration)])),
   VIDEO.fps,
   undefined,
-  undefined,
   { "page-standin": { src: staticFile("demo/page-standin.jpg"), credit: "Generated stand-in image. Not archival." } },
 );
 
 /** Placeholder props for the Production composition; real props arrive as inputProps. */
 const EMPTY_VIDEO: VideoProps = {
   scenes: [], captions: [], totalFrames: 1, years: [], stamps: [], images: {},
-  open: { frames: 0, doorNo: 1, series: "", handoffAxis: null },
+  door: { doorNo: 1, series: "" },
   close: { startFrame: 0, frames: 0, doorNo: 1 },
 };
 

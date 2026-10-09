@@ -7,7 +7,8 @@ export class CueResolutionError extends Error {
   }
 }
 
-export const DEFAULT_TAIL_PAD_MS = 400;
+/** Silence after a scene's last word before the cut. Kept short: the next voice clip adds its own ~0.1 s lead. */
+export const DEFAULT_TAIL_PAD_MS = 200;
 
 /** Lowercase letters/digits; a '.' survives only between two digits ("1.5" != "15"). */
 export const normalizeWord = (word: string): string =>

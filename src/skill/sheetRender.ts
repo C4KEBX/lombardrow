@@ -26,7 +26,6 @@ export async function renderSheet(opts: SheetOptions): Promise<string> {
     (sb) => Object.fromEntries(sb.scenes.map((s) => [s.id, synthWords(s.narration)])),
     VIDEO.fps,
     undefined,
-    undefined,
     imagesFor(opts.storyboardPath, opts.assetsPath),
   );
   fs.mkdirSync(opts.outDir, { recursive: true });

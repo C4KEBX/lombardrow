@@ -1,7 +1,6 @@
 import { buildCaptions, type CaptionChunk } from "../captions/chunk";
-import { THEMES } from "../design/theme";
 import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
-import { closeFrames, openFrames, stampTrack, yearTrack, type StampSpan, type YearSpan } from "../devices/tracks";
+import { closeFrames, stampTrack, yearTrack, type StampSpan, type YearSpan } from "../devices/tracks";
 import { parseFacts } from "../schema/facts";
 import { StoryboardError, parseStoryboard, type Storyboard } from "../schema/storyboard";
 import type { WordTiming } from "../schema/timing";
@@ -18,14 +17,12 @@ import {
 import { assertSceneTiming } from "./assertSceneTiming";
 import { composeScenes, type ComposedScene } from "./resolveScene";
 
-/** Scene types whose axis sits on the ledger line, so the open's rule can hand off to it. */
-const AXIS_ON_LEDGER_LINE = new Set(["line-chart", "compare"]);
-
 export type VideoProps = {
   scenes: ComposedScene[];
   captions: CaptionChunk[];
   totalFrames: number;
-  open: { frames: number; doorNo: number; series: string; handoffAxis: string | null };
+  /** The door number and series, shown on the first scene: the video opens straight on its title card. */
+  door: { doorNo: number; series: string };
   close: { startFrame: number; frames: number; doorNo: number };
   years: YearSpan[];
   stamps: StampSpan[];
@@ -41,7 +38,6 @@ export function buildVideo(
   factsJson: unknown,
   wordsFor: (sb: Storyboard) => Record<string, readonly WordTiming[]>,
   fps: number,
-  audioMsByScene?: Record<string, number>,
   signoffAudioMs?: number,
   images: VideoProps["images"] = {},
 ): BuiltVideo {
@@ -61,10 +57,9 @@ export function buildVideo(
     }
   }
 
-  const open = openFrames(fps);
-  const scenes = composeScenes(storyboard, wordsFor(storyboard), fps, audioMsByScene, open);
+  const scenes = composeScenes(storyboard, wordsFor(storyboard), fps);
   assertSceneTiming(scenes);
-  const closeStart = scenes.reduce((end, s) => Math.max(end, s.startFrame + s.durationFrames), open);
+  const closeStart = scenes.reduce((end, s) => Math.max(end, s.startFrame + s.durationFrames), 0);
   const close = closeFrames(fps, signoffAudioMs);
 
   const years = yearTrack(scenes.map((s) => ({ startFrame: s.startFrame, durationFrames: s.durationFrames, year: s.scene.year })));
@@ -75,14 +70,12 @@ export function buildVideo(
   const { doorNo, series } = storyboard.meta;
   assertDevicesInBounds(deviceBoxes({ doorNo, series, years, stamps }));
 
-  const first = scenes[0];
-  const handoffAxis = first && AXIS_ON_LEDGER_LINE.has(first.scene.type) ? THEMES[first.ground].axis : null;
   return {
     storyboard,
     scenes,
     captions: buildCaptions(scenes, fps),
     totalFrames: closeStart + close,
-    open: { frames: open, doorNo, series, handoffAxis },
+    door: { doorNo, series },
     close: { startFrame: closeStart, frames: close, doorNo },
     years,
     stamps,

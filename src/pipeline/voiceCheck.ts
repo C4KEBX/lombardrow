@@ -9,7 +9,6 @@ import { buildVideo } from "./buildVideo";
 
 export type VoiceReport = {
   scenes: { id: string; voiceMs: number; sceneMs: number }[];
-  openMs: number;
   closeMs: number;
   totalMs: number;
   withinGate: boolean;
@@ -34,14 +33,12 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
     readJson(factsPath),
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
     signoff.audioMs,
     imagesFor(storyboardPath),
   );
   const totalMs = framesMs(built.totalFrames);
   return {
     scenes: built.scenes.map((s) => ({ id: s.id, voiceMs: voices[s.id].audioMs, sceneMs: framesMs(s.durationFrames) })),
-    openMs: framesMs(built.open.frames),
     closeMs: framesMs(built.close.frames),
     totalMs,
     withinGate: totalMs >= MIN_VIDEO_MS && totalMs <= MAX_VIDEO_MS,
@@ -54,7 +51,6 @@ export function formatVoiceReport(report: VoiceReport): string {
   const width = Math.max(6, ...report.scenes.map((x) => x.id.length));
   const lines = [
     `${"scene".padEnd(width)}  voice   on screen`,
-    `${"(open)".padEnd(width)}      -   ${s(report.openMs)}`,
     ...report.scenes.map((x) => `${x.id.padEnd(width)}  ${s(x.voiceMs).padStart(5)}   ${s(x.sceneMs)}`),
     `${"(door)".padEnd(width)}      -   ${s(report.closeMs)}`,
     "",

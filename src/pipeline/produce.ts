@@ -55,7 +55,6 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     factsJson,
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
     signoff.audioMs,
     imagesFor(opts.storyboardPath, opts.assetsPath),
   );

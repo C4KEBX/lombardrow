@@ -8,12 +8,13 @@ import { checkStoryboard, formatReport } from "../../src/skill/check";
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes the No. 004 reference video with no issues and an estimate inside 65-70 s", () => {
+  it("passes the No. 004 reference video with no issues, warning only that its script now runs short", () => {
+    // Scripted for the old pacing (a 2 s open and about 1.3 s of air at every cut).
     const report = checkStoryboard(no004Sb, no004Facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
     expect(report.stats?.scenes).toBe(7);
-    expect(report.warnings).toEqual([]);
+    expect(report.warnings).toEqual([expect.stringMatching(/^estimated length \d+\.\d s is outside 65-70 s/)]);
   });
 
   it("holds the older finance demo to the Lombard Row source rules and warns on its length", () => {
@@ -86,5 +87,14 @@ describe("formatReport", () => {
   });
   it("prints OK when there are no issues", () => {
     expect(formatReport({ ok: true, issues: [], warnings: [], stats: { scenes: 1, words: 5, estimatedSeconds: 3 } })).toMatch(/OK/);
+  });
+});
+
+describe("the opening title card", () => {
+  it("must be the first scene", () => {
+    const sb = structuredClone(no004Sb) as { scenes: { type: string }[] };
+    sb.scenes = [sb.scenes[2], sb.scenes[1], sb.scenes[0], ...sb.scenes.slice(3)];
+    const report = checkStoryboard(sb, no004Facts);
+    expect(report.issues).toContainEqual({ stage: "opener", message: expect.stringMatching(/first scene must be a title card/) });
   });
 });

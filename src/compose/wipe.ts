@@ -2,7 +2,7 @@ import { easeInOutCubic } from "../design/motion";
 import { VIDEO } from "../design/tokens";
 
 /** frames: total sweep length; slant: horizontal lean of the band edges in px; lag: the second band's delay. */
-export const WIPE = { frames: 14, slant: 280, lag: 3 } as const;
+export const WIPE = { frames: 10, slant: 280, lag: 2 } as const;
 
 export type Band = { trail: number; lead: number };
 

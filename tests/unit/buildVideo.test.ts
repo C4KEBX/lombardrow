@@ -10,10 +10,10 @@ describe("buildVideo", () => {
   it("parses, validates and composes the hello fixtures", () => {
     const built = buildVideo(storyboard, facts, () => words, 30);
     expect(built.scenes.map((s) => s.id)).toEqual(["intro", "drop"]);
-    // 60-frame open + 159 narrated frames + 90-frame door plate
-    expect(built.scenes[0].startFrame).toBe(60);
-    expect(built.close).toEqual({ startFrame: 219, frames: 90, doorNo: 4 });
-    expect(built.totalFrames).toBe(309);
+    // no open: the first scene starts at frame 0, then the 90-frame door plate
+    expect(built.scenes[0].startFrame).toBe(0);
+    expect(built.close).toEqual({ startFrame: 147, frames: 90, doorNo: 4 });
+    expect(built.totalFrames).toBe(237);
   });
 
   it("runs the validation rules (facts mismatch is rejected)", () => {

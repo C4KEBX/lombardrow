@@ -1,5 +1,5 @@
 import { QUOTE_WORD_GAP_EM, fitTitleFontSize, formatNumber } from "../design/layout";
-import { lanesFor } from "../design/tokens";
+import { DOOR_HEADER_PX, lanesFor } from "../design/tokens";
 import type { Facts, SourceTier } from "./facts";
 import { figureMatches, figuresIn } from "./figures";
 import { COUNTRY_NAMES, regionTouchesBbox, suggestCountries } from "../map/atlas";
@@ -301,18 +301,19 @@ export function assertCuesSupported(sb: Storyboard): void {
 export const TITLE_MAX_FONT_PX = 190;
 
 export function assertHeadlinesFit(sb: Storyboard): void {
-  for (const scene of sb.scenes) {
-    if (scene.type !== "title") continue;
+  sb.scenes.forEach((scene, i) => {
+    if (scene.type !== "title") return;
     try {
       const { title } = lanesFor(scene.year !== undefined);
-      fitTitleFontSize(scene.props.headline, title.width, title.height, TITLE_MAX_FONT_PX);
+      // The opening title card also carries the door-number masthead.
+      fitTitleFontSize(scene.props.headline, title.width, title.height - (i === 0 ? DOOR_HEADER_PX : 0), TITLE_MAX_FONT_PX);
     } catch (error) {
       if (error instanceof RangeError) {
         throw new StoryboardError(`Scene "${scene.id}" headline does not fit: ${error.message}`);
       }
       throw error;
     }
-  }
+  });
 }
 
 /** Content rules for text scenes. Numbers must reach the screen through facts, so lines carry none. */

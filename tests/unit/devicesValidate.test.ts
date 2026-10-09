@@ -45,9 +45,10 @@ describe("source stamps", () => {
 });
 
 describe("the No. 004 test video", () => {
-  it("opens, narrates, and closes on the door plate inside 65 to 70 s at a real speaking pace", () => {
+  it("opens on its title card, narrates, and closes on the door plate", () => {
     const built = buildVideo(storyboard, facts, words, 30);
-    expect(built.open).toMatchObject({ frames: 60, doorNo: 4, series: "How it works", handoffAxis: null });
+    expect(built.door).toEqual({ doorNo: 4, series: "How it works" });
+    expect(built.scenes[0]).toMatchObject({ startFrame: 0, scene: expect.objectContaining({ type: "title" }) });
     expect(built.close.frames).toBe(90);
     expect(built.totalFrames).toBe(built.close.startFrame + 90);
     expect(built.years).toEqual([expect.objectContaining({ from: 1494, to: 1494, fadeIn: true, fadeOut: true })]);
