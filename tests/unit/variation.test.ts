@@ -108,6 +108,9 @@ describe("crossCheck", () => {
     expect(text).toMatch(/needs a map scene/);
     expect(text).toMatch(/hook "date" but the first sentence names no year/);
   });
+  it("catches a music bed that differs from the storyboard's", () => {
+    expect(crossCheck({ ...plan, musicBed: "almost-new" }, sb, spec).join("\n")).toMatch(/plan music bed "almost-new" but storyboard audio.music is null/);
+  });
   it("says when the primary visual's scene type is not built yet", () => {
     expect(crossCheck({ ...plan, primaryVisual: "character_scene" }, sb, spec).join("\n")).toMatch(/"character_scene" has no scene type yet/);
   });

@@ -19,14 +19,29 @@ export async function runFfmpeg(args: string[]): Promise<string> {
 export type MixInput = {
   clips: { path: string; startMs: number }[];
   musicPath?: string;
+  /** Level of the bed before ducking; defaults to the ambient drone's. */
+  musicGainDb?: number;
+  /** Sound effects: each cue's file, time and total gain (library gain plus cue gain). */
+  sfx?: { path: string; atMs: number; gainDb: number }[];
   totalMs: number;
   outPath: string;
 };
 
+/** Distinct sound files in first-use order, and each cue pointing at its file's index. */
+function sfxInputs(input: MixInput): { files: string[]; cues: { file: number; atMs: number; gainDb: number }[] } {
+  const files: string[] = [];
+  const cues = (input.sfx ?? []).map((c) => {
+    if (!files.includes(c.path)) files.push(c.path);
+    return { file: files.indexOf(c.path), atMs: c.atMs, gainDb: c.gainDb };
+  });
+  return { files, cues };
+}
+
 function inputArgs(input: MixInput): string[] {
   const clips = input.clips.flatMap((clip) => ["-i", clip.path]);
   const music = input.musicPath ? ["-stream_loop", "-1", "-i", input.musicPath] : [];
-  return [...clips, ...music];
+  const sfx = sfxInputs(input).files.flatMap((file) => ["-i", file]);
+  return [...clips, ...music, ...sfx];
 }
 
 /** Two-pass: measure the mix, then apply a linear loudnorm with the measured values. */
@@ -35,6 +50,8 @@ export async function mixAudio(input: MixInput): Promise<LoudnormMeasure> {
   const graphOptions = {
     clipStartsMs: input.clips.map((c) => c.startMs),
     hasMusic: input.musicPath !== undefined,
+    musicGainDb: input.musicGainDb,
+    sfx: (({ files, cues }) => ({ files: files.length, cues }))(sfxInputs(input)),
     totalSeconds,
   };
   const measureStderr = await runFfmpeg([

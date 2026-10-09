@@ -7,11 +7,12 @@ export type ProduceCliOptions = {
   voice: VoiceMode;
   enforceLength: boolean;
   musicDir?: string;
+  sfxDir?: string;
   cacheDir?: string;
   assetsPath?: string;
 };
 
-const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir", "--assets"]);
+const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--sfx-dir", "--cache-dir", "--assets"]);
 
 export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   const values = new Map<string, string>();
@@ -43,6 +44,7 @@ export function parseArgs(argv: readonly string[]): ProduceCliOptions {
     voice,
     enforceLength,
     musicDir: values.get("--music-dir"),
+    sfxDir: values.get("--sfx-dir"),
     cacheDir: values.get("--cache-dir"),
     assetsPath: values.get("--assets"),
   };

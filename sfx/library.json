@@ -1,0 +1,112 @@
+{
+  "sounds": [
+    {
+      "id": "page-turn",
+      "file": "page-turn.mp3",
+      "description": "Page turn (davidbain): ledger-page scenes",
+      "gainDb": -20,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/136778/",
+      "credit": null
+    },
+    {
+      "id": "paper-slide",
+      "file": "paper-slide.mp3",
+      "description": "Paper sliding on a desk (eyesonlegs): archival scenes",
+      "gainDb": -22,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/464302/",
+      "credit": null
+    },
+    {
+      "id": "pen-underline",
+      "file": "pen-underline.mp3",
+      "description": "Pen underlining on paper (zembacraftworks): the ledger line drawing in the open",
+      "gainDb": -18,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/428338/",
+      "credit": null
+    },
+    {
+      "id": "pen-scribble",
+      "file": "pen-scribble.mp3",
+      "description": "Short pencil scribble (Tomoyo Ichijouji)",
+      "gainDb": -22,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/211247/",
+      "credit": null
+    },
+    {
+      "id": "stamp",
+      "file": "stamp.mp3",
+      "description": "Rubber stamp thud (I.fekry): the source stamp",
+      "gainDb": -20,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/470710/",
+      "credit": null
+    },
+    {
+      "id": "tick",
+      "file": "tick.mp3",
+      "description": "Single clock tick (pbimal): the year counter",
+      "gainDb": -24,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/534094/",
+      "credit": null
+    },
+    {
+      "id": "type-key",
+      "file": "type-key.mp3",
+      "description": "Typewriter key (yottasounds)",
+      "gainDb": -24,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/380137/",
+      "credit": null
+    },
+    {
+      "id": "whoosh-soft",
+      "file": "whoosh-soft.mp3",
+      "description": "Soft airy whoosh (ludvique): scene cuts",
+      "gainDb": -26,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/71852/",
+      "credit": null
+    },
+    {
+      "id": "whoosh",
+      "file": "whoosh.mp3",
+      "description": "Short whoosh (qubodup)",
+      "gainDb": -24,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/60013/",
+      "credit": null
+    },
+    {
+      "id": "coin",
+      "file": "coin.mp3",
+      "description": "Coin dropped on a table (HoseNoseSounds)",
+      "gainDb": -22,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/510735/",
+      "credit": null
+    },
+    {
+      "id": "low-hit",
+      "file": "low-hit.mp3",
+      "description": "Very low soft impact (AudioPapkin): the door plate",
+      "gainDb": -16,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/541029/",
+      "credit": null
+    },
+    {
+      "id": "knock",
+      "file": "knock.mp3",
+      "description": "Knock on a door (Philip_Daniels)",
+      "gainDb": -20,
+      "license": "cc0",
+      "sourceUrl": "https://freesound.org/s/244325/",
+      "credit": null
+    }
+  ]
+}

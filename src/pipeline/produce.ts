@@ -3,7 +3,10 @@ import path from "node:path";
 import { renderFrames, selectComposition } from "@remotion/renderer";
 import { assertLoudnessOk, type LoudnormMeasure } from "../audio/graph";
 import { measureLoudness, mixAudio } from "../audio/mix";
+import { cueSheet } from "../audio/cues";
+import { loadSfxLibrary } from "../audio/library";
 import { resolveMusic } from "../audio/music";
+import { MUSIC_BED_DB } from "../audio/graph";
 import { VIDEO } from "../design/tokens";
 import { parseStoryboard } from "../schema/storyboard";
 import { assertDuration } from "../schema/validate";
@@ -23,6 +26,7 @@ export type ProduceOptions = {
   voice: VoiceMode;
   enforceLength: boolean;
   musicDir?: string;
+  sfxDir?: string;
   cacheDir?: string;
   /** assets.json for archival scenes; defaults to the one next to the storyboard. */
   assetsPath?: string;
@@ -64,9 +68,12 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
 
   fs.mkdirSync(opts.outDir, { recursive: true });
   // Resolve music before rendering so an unsafe or missing name fails fast.
-  const musicPath = await resolveMusic(
+  const music = await resolveMusic(
     storyboard.audio.music, totalMs / 1000, opts.musicDir ?? path.resolve("music"), opts.outDir,
   );
+  const sfxLib = loadSfxLibrary(opts.sfxDir ?? path.resolve("sfx"));
+  const sounds = new Map(sfxLib.sounds.map((s) => [s.id, s]));
+  const cues = cueSheet(built, storyboard.audio.sfx, VIDEO.fps, new Set(sounds.keys()));
 
   const inputProps = videoProps(built);
   const serveUrl = await getServeUrl();
@@ -89,7 +96,18 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     })),
     { path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps },
   ];
-  await mixAudio({ clips, musicPath, totalMs, outPath: audioPath });
+  await mixAudio({
+    clips,
+    musicPath: music?.path,
+    // Library beds share one loudness; the ambient drone keeps its own level.
+    musicGainDb: music?.track ? MUSIC_BED_DB + music.gainDb : undefined,
+    sfx: cues.map((c) => {
+      const sound = sounds.get(c.sound)!;
+      return { path: path.join(sfxLib.dir, sound.file), atMs: c.atMs, gainDb: sound.gainDb + c.gainDb };
+    }),
+    totalMs,
+    outPath: audioPath,
+  });
 
   const videoPath = path.join(opts.outDir, "final.mp4");
   await muxVideoAudio(silentPath, audioPath, videoPath);
@@ -105,6 +123,9 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
         totalFrames: built.totalFrames,
         durationMs: totalMs,
         loudness,
+        music: storyboard.audio.music,
+        musicCredit: music?.track?.credit ?? null,
+        sfx: cues.map((c) => ({ sound: c.sound, atMs: Math.round(c.atMs), gainDb: Number(c.gainDb.toFixed(2)) })),
         // Every caption word with its time, for npm run listen-back.
         captions: built.captions.flatMap((c) => c.words.map((w) => ({ text: w.text, startMs: Math.round(w.startMs), endMs: Math.round(w.endMs) }))),
         signoff: SIGNOFF,

@@ -64,10 +64,61 @@
               "type": "null"
             }
           ]
+        },
+        "sfx": {
+          "default": {
+            "auto": true,
+            "cues": []
+          },
+          "type": "object",
+          "properties": {
+            "auto": {
+              "default": true,
+              "type": "boolean"
+            },
+            "cues": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "scene": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sound": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "atMs": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "gainDb": {
+                    "type": "number",
+                    "minimum": -40,
+                    "maximum": 6
+                  }
+                },
+                "required": [
+                  "scene",
+                  "sound",
+                  "atMs"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "auto",
+            "cues"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
-        "music"
+        "music",
+        "sfx"
       ],
       "additionalProperties": false
     },

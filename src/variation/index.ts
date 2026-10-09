@@ -227,6 +227,7 @@ const firstSentence = (text: string): string => text.split(/(?<=[.!?])\s+/)[0] ?
 export function crossCheck(plan: Plan, sb: Storyboard, spec: Spec): string[] {
   const reasons: string[] = [];
   if (plan.doorNo !== sb.meta.doorNo) reasons.push(`plan door No. ${plan.doorNo} but storyboard meta.doorNo is ${sb.meta.doorNo}`);
+  if (plan.musicBed !== sb.audio.music) reasons.push(`plan music bed ${JSON.stringify(plan.musicBed)} but storyboard audio.music is ${JSON.stringify(sb.audio.music)}`);
   if (plan.paletteLead !== sb.meta.paletteLead) reasons.push(`plan palette lead "${plan.paletteLead}" but storyboard meta.paletteLead is "${sb.meta.paletteLead}"`);
   const series = spec.series[plan.pillar];
   if (series && series.toLowerCase() !== sb.meta.series.toLowerCase()) {
