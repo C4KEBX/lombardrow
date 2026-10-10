@@ -174,7 +174,7 @@ function firstLineIssues(sceneId: string, narration: string, open: string): stri
 }
 
 /** Longest title the bleed open's corner tag shows in two lines. */
-export const CORNER_TAG_TITLE_CHARS = 60;
+export const CORNER_TAG_TITLE_CHARS = 38;
 
 /**
  * A bleed open fills frame one with an image and nothing over it: the first scene is a bleed archival scene,

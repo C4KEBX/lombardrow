@@ -10,7 +10,7 @@ import { doorLabelText } from "../devices/label";
  * A bleed open keeps frame one clear: the door number and title come in at 2 s as a small tag in the top-right
  * corner (the year counter owns the top left), hold, then leave. The full title lives on the cover and in the caption.
  */
-export const CORNER_TAG = { inFrame: 60, enterFrames: 8, holdFrames: 120, exitFrames: 8, maxWidth: 560 } as const;
+export const CORNER_TAG = { inFrame: 60, enterFrames: 8, holdFrames: 120, exitFrames: 8, maxWidth: 420 } as const;
 export const cornerTagFrames = (): number => CORNER_TAG.inFrame + CORNER_TAG.holdFrames + CORNER_TAG.exitFrames;
 
 export const CornerTag: React.FC<{ doorNo: number; title: string }> = ({ doorNo, title }) => {
@@ -27,7 +27,7 @@ export const CornerTag: React.FC<{ doorNo: number; title: string }> = ({ doorNo,
         top: SAFE.top,
         right: SAFE.right,
         maxWidth: Math.min(CORNER_TAG.maxWidth, CONTENT.width),
-        padding: "12px 18px 14px",
+        padding: "14px 22px 16px",
         background: `${BRAND.ledgerInk}d9`,
         borderLeft: `4px solid ${BRAND.brass}`,
         borderRadius: 6,
@@ -36,8 +36,8 @@ export const CornerTag: React.FC<{ doorNo: number; title: string }> = ({ doorNo,
         textAlign: "left",
       }}
     >
-      <div style={{ fontFamily: DISPLAY_FONT, fontSize: 30, lineHeight: 1.1, color: BRAND.brass, ...TABULAR }}>No. {doorLabelText(doorNo)}</div>
-      <div style={{ fontFamily: BODY_FONT, fontWeight: 600, fontSize: 28, lineHeight: 1.2, color: BRAND.parchment, marginTop: 4 }}>{title}</div>
+      <div style={{ fontFamily: DISPLAY_FONT, fontSize: 40, lineHeight: 1.1, color: BRAND.brass, ...TABULAR }}>No. {doorLabelText(doorNo)}</div>
+      <div style={{ fontFamily: BODY_FONT, fontWeight: 600, fontSize: 36, lineHeight: 1.2, color: BRAND.parchment, marginTop: 4 }}>{title}</div>
     </div>
   );
 };

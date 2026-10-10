@@ -3,7 +3,7 @@ import { AbsoluteFill, Img, useCurrentFrame } from "remotion";
 import { BODY_FONT } from "../../design/fonts";
 import { clamp01, easeOutCubic } from "../../design/motion";
 import { BRAND } from "../../design/theme";
-import { CONTENT, VIDEO } from "../../design/tokens";
+import { CONTENT, SAFE, VIDEO } from "../../design/tokens";
 import type { ArchivalProps, ArchivalShot } from "../../schema/storyboard";
 
 /** Where a shot's centre sits on the frame: above the middle, so the bold captions below sit on the image, not on the crop's focus. */
@@ -89,11 +89,12 @@ export const BleedArchival: React.FC<{
           background: `linear-gradient(180deg, ${BRAND.ledgerInk}99 0px, ${BRAND.ledgerInk}00 320px, ${BRAND.ledgerInk}00 1080px, ${BRAND.ledgerInk}cc 1560px)`,
         }}
       />
+      {/* The image credit sits top left, clear of the source stamp at the bottom and the corner tag at the top right. */}
       {credit ? (
         <div
           style={{
-            position: "absolute", right: VIDEO.width - CONTENT.right, top: 1436, maxWidth: CONTENT.width,
-            fontFamily: BODY_FONT, fontSize: 22, color: BRAND.parchment, opacity: 0.75, textAlign: "right",
+            position: "absolute", left: CONTENT.left, top: SAFE.top, maxWidth: 400,
+            fontFamily: BODY_FONT, fontSize: 22, lineHeight: 1.3, color: BRAND.parchment, opacity: 0.75,
           }}
         >
           {credit}
