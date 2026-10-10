@@ -89,6 +89,17 @@ describe("publish package", () => {
     const p = buildPublishPackage(parseStoryboard(ledgerSb), parseFacts(ledgerFacts), { assets });
     expect(p.youtube.description).toContain("Images:\n- Pacioli, 1494. Public domain. https://commons.wikimedia.org/wiki/File:A.jpg");
   });
+  it("credits a bed whose license asks for it, and adds nothing for one that does not", () => {
+    const track = {
+      id: "almost-new", file: "almost-new.mp3", title: "Almost New", artist: "Kevin MacLeod", moods: ["curious" as const], bpm: 80, use: "x", gainDb: 0,
+      license: "cc-by-4.0" as const, sourceUrl: "https://incompetech.com/", credit: "\"Almost New\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0",
+    };
+    const p = buildPublishPackage(sb, facts, { plan, music: track });
+    expect(p.musicCredit).toBe(track.credit);
+    for (const text of [p.youtube.description, p.tiktok.caption, p.instagram.caption]) expect(text).toContain(`Music: ${track.credit}`);
+    expect(buildPublishPackage(sb, facts, { plan, music: { ...track, license: "licensed", credit: null } }).youtube.description).not.toContain("Music:");
+    expect(pkg.musicCredit).toBeNull();
+  });
   it("steps the thumbnail title down as it gets longer", () => {
     const sizes = [14, 30, 60].map((n) => thumbnailTitleSize("x".repeat(n)));
     expect(sizes[0]).toBeGreaterThan(sizes[1]);

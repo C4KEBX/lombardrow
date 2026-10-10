@@ -1,3 +1,4 @@
+import type { MusicTrack } from "../audio/library";
 import { doorLabelText } from "../devices/label";
 import type { Assets } from "../schema/assets";
 import type { Facts } from "../schema/facts";
@@ -28,6 +29,8 @@ export type PublishPackage = {
   hook: string;
   sources: { name: string; url: string }[];
   images: { credit: string; url: string }[];
+  /** Credit line the bed's license asks for in every description, or null. */
+  musicCredit: string | null;
   aiDisclosure: { required: boolean; scenes: string[]; reason: string };
   youtube: { title: string; description: string };
   tiktok: { caption: string };
@@ -47,19 +50,21 @@ function sourcesOf(facts: Facts): { name: string; url: string }[] {
 }
 
 /** Titles, descriptions and captions for each platform, with the sources, the footer and the same door number everywhere. */
-export function buildPublishPackage(sb: Storyboard, facts: Facts, opts: { plan?: Plan; assets?: Assets } = {}): PublishPackage {
+export function buildPublishPackage(sb: Storyboard, facts: Facts, opts: { plan?: Plan; assets?: Assets; music?: MusicTrack } = {}): PublishPackage {
   const title = opts.plan?.title ?? sb.meta.title;
   const door = doorLabel(sb.meta.doorNo);
   const hook = sentencesOf(sb.scenes[0].narration)[0] ?? "";
   const sources = sourcesOf(facts);
   const used = new Set(sb.scenes.flatMap((s) => (s.type === "archival" ? [s.props.assetId] : [])));
   const images = (opts.assets?.assets ?? []).filter((a) => used.has(a.id)).map((a) => ({ credit: a.credit, url: a.sourceUrl }));
+  const musicCredit = opts.music?.credit ?? null;
   const photoreal = sb.scenes.filter((s) => PHOTOREAL_SCENE_TYPES.includes(s.type)).map((s) => s.id);
 
   const sourceBlock = [
     "Sources:",
     ...sources.map((s) => `- ${s.name}: ${s.url}`),
     ...(images.length ? ["", "Images:", ...images.map((i) => `- ${i.credit} ${i.url}`)] : []),
+    ...(musicCredit ? ["", `Music: ${musicCredit}`] : []),
   ].join("\n");
   const tags = HASHTAGS.join(" ");
   const ytSuffix = ` | Lombard Row ${door}`;
@@ -73,6 +78,7 @@ export function buildPublishPackage(sb: Storyboard, facts: Facts, opts: { plan?:
     hook,
     sources,
     images,
+    musicCredit,
     aiDisclosure: photoreal.length
       ? { required: true, scenes: photoreal, reason: "photorealistic scenes: set YouTube's \"AI use\" disclosure and TikTok's AI label" }
       : { required: false, scenes: [], reason: "stylized motion graphics and public-domain scans only; no photorealistic AI scene" },

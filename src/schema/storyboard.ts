@@ -335,7 +335,29 @@ export const StoryboardSchema = z
        */
       open: z.enum(["title-card", "cold"]).default("title-card"),
     }),
-    audio: z.strictObject({ music: z.string().min(1).nullable() }),
+    audio: z.strictObject({
+      /** A music/library.json id, "ambient", a file in music/, or null for no music. */
+      music: z.string().min(1).nullable(),
+      /** Sound effects: the automatic cues on the devices and cuts, plus any placed by hand. */
+      sfx: z
+        .strictObject({
+          auto: z.boolean().default(true),
+          /** The sound under each title card's headline (an sfx/library.json id); the default suits most videos. */
+          titleHit: z.string().min(1).optional(),
+          cues: z
+            .array(
+              z.strictObject({
+                scene: z.string().min(1),
+                sound: z.string().min(1),
+                /** From the start of the scene. */
+                atMs: z.number().min(0),
+                gainDb: z.number().min(-40).max(6).optional(),
+              }),
+            )
+            .default([]),
+        })
+        .default({ auto: true, cues: [] }),
+    }),
     scenes: z.array(SceneSchema).min(1),
   })
   .superRefine((sb, ctx) => {

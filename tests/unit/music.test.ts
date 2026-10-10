@@ -38,12 +38,25 @@ describe("generateAmbient and resolveMusic", () => {
   it("returns undefined for null, generates for 'ambient'", async () => {
     expect(await resolveMusic(null, 8, dir, dir)).toBeUndefined();
     const generated = await resolveMusic("ambient", 8, dir, dir);
-    expect(generated && fs.existsSync(generated)).toBe(true);
+    expect(generated && fs.existsSync(generated.path)).toBe(true);
+    expect(generated?.track).toBeUndefined();
   });
   it("resolves a named file inside the music dir and rejects unsafe or missing names", async () => {
     fs.writeFileSync(path.join(dir, "mine.wav"), "x");
-    expect(await resolveMusic("mine.wav", 8, dir, dir)).toBe(path.join(dir, "mine.wav"));
+    expect(await resolveMusic("mine.wav", 8, dir, dir)).toEqual({ path: path.join(dir, "mine.wav"), gainDb: 0 });
     await expect(resolveMusic("../mine.wav", 8, dir, dir)).rejects.toThrow(/unsafe/);
-    await expect(resolveMusic("missing.wav", 8, dir, dir)).rejects.toThrow(/not found/);
+    await expect(resolveMusic("missing.wav", 8, dir, dir)).rejects.toThrow(/neither a library id nor a file/);
+  });
+  it("resolves a library id to its bed and gain, and fails clearly when the bed's file is missing", async () => {
+    const lib = fs.mkdtempSync(path.join(os.tmpdir(), "lib-"));
+    const track = {
+      id: "calm-one", file: "calm-one.mp3", title: "Calm One", artist: "Someone", moods: ["warm"], bpm: null, use: "tests",
+      gainDb: -2, license: "cc0", sourceUrl: "https://example.org/calm", credit: null,
+    };
+    fs.writeFileSync(path.join(lib, "library.json"), JSON.stringify({ loudnessLufs: -20, tracks: [track] }));
+    await expect(resolveMusic("calm-one", 8, lib, dir)).rejects.toThrow(/calm-one.mp3 is missing/);
+    fs.writeFileSync(path.join(lib, "calm-one.mp3"), "x");
+    const resolved = await resolveMusic("calm-one", 8, lib, dir);
+    expect(resolved).toMatchObject({ path: path.join(lib, "calm-one.mp3"), gainDb: -2, track: { title: "Calm One" } });
   });
 });

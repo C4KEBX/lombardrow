@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { findTrack, loadMusicLibrary } from "../src/audio/library";
 import { findAssets } from "../src/pipeline/assets";
 import { renderChecklist } from "../src/publish/checklist";
 import { buildPublishPackage } from "../src/publish/package";
@@ -21,7 +22,8 @@ async function main(): Promise<void> {
   const outDir = outDirFor(sbPath, values.get("--out"));
   const sb = parseStoryboard(readJson(sbPath));
   const plan = parsePlan(readJson(planPath));
-  const pkg = buildPublishPackage(sb, parseFacts(readJson(factsPath)), { plan, assets: findAssets(sbPath, values.get("--assets"))?.assets });
+  const music = sb.audio.music === null ? undefined : findTrack(loadMusicLibrary(path.resolve("music")), sb.audio.music);
+  const pkg = buildPublishPackage(sb, parseFacts(readJson(factsPath)), { plan, assets: findAssets(sbPath, values.get("--assets"))?.assets, music });
 
   const manifestPath = path.join(outDir, "manifest.json");
   const durationSeconds = fs.existsSync(manifestPath) ? (readJson(manifestPath) as { durationMs: number }).durationMs / 1000 : undefined;
