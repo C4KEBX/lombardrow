@@ -45,7 +45,16 @@
           "type": "string",
           "enum": [
             "title-card",
-            "cold"
+            "cold",
+            "bleed"
+          ]
+        },
+        "format": {
+          "default": "classic",
+          "type": "string",
+          "enum": [
+            "classic",
+            "fast"
           ]
         }
       },
@@ -56,7 +65,8 @@
         "doorNo",
         "series",
         "voice",
-        "open"
+        "open",
+        "format"
       ],
       "additionalProperties": false
     },
@@ -155,6 +165,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -264,6 +284,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -407,6 +437,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -586,6 +626,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -772,6 +822,16 @@
                   "minLength": 1
                 }
               },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "kinetic-text"
@@ -886,6 +946,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -1065,6 +1135,16 @@
                   "minLength": 1
                 }
               },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "quote"
@@ -1174,6 +1254,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -1320,6 +1410,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -1486,6 +1586,16 @@
                   "minLength": 1
                 }
               },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "archival"
@@ -1563,13 +1673,95 @@
                       "zoom"
                     ],
                     "additionalProperties": false
+                  },
+                  "layout": {
+                    "default": "framed",
+                    "type": "string",
+                    "enum": [
+                      "framed",
+                      "bleed"
+                    ]
+                  },
+                  "shots": {
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "atWord": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "occurrence": {
+                          "default": 1,
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "x": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "w": {
+                          "type": "number",
+                          "minimum": 0.05,
+                          "maximum": 1
+                        },
+                        "mark": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y",
+                            "w",
+                            "h"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "occurrence",
+                        "x",
+                        "y",
+                        "w"
+                      ],
+                      "additionalProperties": false
+                    }
                   }
                 },
                 "required": [
                   "title",
                   "assetId",
                   "from",
-                  "to"
+                  "to",
+                  "layout"
                 ],
                 "additionalProperties": false
               }
@@ -1653,6 +1845,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",
@@ -1805,6 +2007,16 @@
               },
               "speaks": {
                 "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
                 "type": "array",
                 "items": {
                   "type": "string",

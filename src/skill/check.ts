@@ -15,6 +15,7 @@ import { adviceLint, tickerHits } from "./adviceLint";
 import { assertAssets, parseAssets, type Asset } from "../schema/assets";
 import { checkPlan, crossCheck, parsePlan, scriptOf, type HistoryEntry, type Spec } from "../variation/index";
 import { TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
+import { estimatedWords, pacingIssues } from "./pacing";
 
 export type Issue = { stage: string; message: string };
 export type CheckReport = {
@@ -96,6 +97,12 @@ export function checkStoryboard(
     assertSceneTiming(composeScenes(single, words, VIDEO.fps));
   });
 
+  // The fast format's pacing, on estimated timings; `produce` re-checks against the real voice.
+  attempt(issues, "pacing", () => {
+    const composed = composeScenes(sb, Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)])), VIDEO.fps);
+    for (const message of pacingIssues(sb, composed, VIDEO.fps)) issues.push({ stage: "pacing", message });
+  });
+
   const narrations = sb.scenes.map((s) => s.narration);
   const estimatedSeconds = Math.round(estimateSeconds(narrations) * 10) / 10;
   const words = narrations.reduce((n, t) => n + countWords(t), 0);
@@ -134,6 +141,7 @@ const DATE_LEAD = new RegExp(`^(?:[Ii]n\\s+)?(?:(?:${MONTHS})\\b|\\d{3,4}\\b|[A-
 export function openerIssues(sb: Storyboard): string[] {
   const first = sb.scenes[0];
   if (!first) return [];
+  if (sb.meta.open === "bleed") return bleedOpenIssues(sb);
   if (sb.meta.open !== "cold") {
     return first.type === "title" ? [] : [`Scene "${first.id}" opens the video as ${first.type}; a title-card open needs a title scene first, which carries the door number. For a moving open, set meta.open to "cold"`];
   }
@@ -141,9 +149,7 @@ export function openerIssues(sb: Storyboard): string[] {
   if (!COLD_OPEN_TYPES.includes(first.type)) {
     issues.push(`Scene "${first.id}" opens a cold open as ${first.type}; a cold open starts on something moving that shows a thing: ${COLD_OPEN_TYPES.join(", ")}`);
   }
-  const line = firstSentence(first.narration);
-  if (line.endsWith("?")) issues.push(`Scene "${first.id}" opens on a question ("${line}"); a cold open's first line states a surprising claim`);
-  if (DATE_LEAD.test(line)) issues.push(`Scene "${first.id}" opens on a date ("${line}"); a cold open's first line states a surprising claim, and the date can come later`);
+  issues.push(...firstLineIssues(first.id, first.narration, "a cold open"));
   try {
     fitTitleFontSize(sb.meta.title, CONTENT.width, COLD_OPEN_HEADLINE.boxPx, COLD_OPEN_HEADLINE.maxPx);
   } catch (error) {
@@ -156,4 +162,34 @@ export function openerIssues(sb: Storyboard): string[] {
 function firstSentence(text: string): string {
   const match = /^.*?[.!?](?=\s|$)/.exec(text.trim());
   return (match ? match[0] : text).trim();
+}
+
+/** The opening line states a claim: not a question, not a date. */
+function firstLineIssues(sceneId: string, narration: string, open: string): string[] {
+  const line = firstSentence(narration);
+  const issues: string[] = [];
+  if (line.endsWith("?")) issues.push(`Scene "${sceneId}" opens on a question ("${line}"); ${open}'s first line states a surprising claim`);
+  if (DATE_LEAD.test(line)) issues.push(`Scene "${sceneId}" opens on a date ("${line}"); ${open}'s first line states a surprising claim, and the date can come later`);
+  return issues;
+}
+
+/** Longest title the bleed open's corner tag shows in two lines. */
+export const CORNER_TAG_TITLE_CHARS = 60;
+
+/**
+ * A bleed open fills frame one with an image and nothing over it: the first scene is a bleed archival scene,
+ * with no year counter (the corner tag arrives at 2 s), and its first line is a claim.
+ */
+function bleedOpenIssues(sb: Storyboard): string[] {
+  const first = sb.scenes[0];
+  const issues: string[] = [];
+  if (first.type !== "archival" || first.props.layout !== "bleed") {
+    issues.push(`Scene "${first.id}" opens a bleed open as ${first.type === "archival" ? "a framed archival scene" : first.type}; frame one is a full-frame image: an archival scene with "layout": "bleed"`);
+  }
+  if (first.year !== undefined) issues.push(`Scene "${first.id}" shows the year counter on frame one; a bleed open keeps frame one clear, so give the year from the second scene on`);
+  issues.push(...firstLineIssues(first.id, first.narration, "a bleed open"));
+  if (sb.meta.title.length > CORNER_TAG_TITLE_CHARS) {
+    issues.push(`The title "${sb.meta.title}" is ${sb.meta.title.length} characters; the corner tag fits ${CORNER_TAG_TITLE_CHARS}`);
+  }
+  return issues;
 }

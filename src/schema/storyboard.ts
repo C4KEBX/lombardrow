@@ -33,6 +33,10 @@ const sceneBase = {
   sourceFactId: z.string().min(1).optional(),
   /** Facts behind the figures the narration speaks. Every number or year said aloud must match a fact the scene names. */
   speaks: z.array(z.string().min(1)).min(1).optional(),
+  /** Voice this scene about 10% faster (the fast format's opening seconds). */
+  brisk: z.boolean().optional(),
+  /** Lines in this scene's narration that re-hook the viewer ("But that's not the first reason."), quoted exactly. */
+  microhooks: z.array(z.string().min(1)).optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -244,6 +248,28 @@ const MapSceneSchema = z.strictObject({
 });
 
 /** A public-domain scan or painting from assets.json, with a slow pan and zoom. */
+/** A rectangle on an image, as fractions of its width and height (0 to 1). */
+const ImageRectSchema = z.strictObject({
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().gt(0).max(1),
+  h: z.number().gt(0).max(1),
+});
+
+/**
+ * One crop of a bleed archival image. The crop is centred on (x, y), fractions of the image, and is `w` of the
+ * image's width across the frame: 0.6 shows a line of type at about phone-reading size on a full page scan.
+ */
+const ShotSchema = z.strictObject({
+  atWord: z.string().min(1).optional(),
+  occurrence: z.number().int().min(1).default(1),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().min(0.05).max(1),
+  /** A highlighter swept across these words, as they are spoken. */
+  mark: ImageRectSchema.optional(),
+});
+
 const ArchivalSceneSchema = z.strictObject({
   ...sceneBase,
   type: z.literal("archival"),
@@ -254,6 +280,17 @@ const ArchivalSceneSchema = z.strictObject({
     /** Where the camera starts and ends, as fractions of the image (0 to 1), and the zoom at each end. */
     from: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1 }),
     to: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1.15 }),
+    /** "framed": the image in a Brass frame under its title. "bleed": the image fills the whole 9:16 frame, shot by shot. */
+    layout: z.enum(["framed", "bleed"]).default("framed"),
+    /** For a bleed layout: the crops the scene cuts between, each pushing in slowly, the first from frame 0. */
+    shots: z.array(ShotSchema).max(8).optional(),
+  }).superRefine((props, ctx) => {
+    if (props.layout === "bleed" && !props.shots?.length) ctx.addIssue({ code: "custom", path: ["shots"], message: "a bleed archival scene needs at least one shot" });
+    if (props.layout === "framed" && props.shots) ctx.addIssue({ code: "custom", path: ["shots"], message: "shots are for the bleed layout; a framed scene pans with from and to" });
+    props.shots?.forEach((shot, i) => {
+      if (i === 0 && shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", 0, "atWord"], message: "the first shot starts the scene; leave out its atWord" });
+      if (i > 0 && !shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", i, "atWord"], message: "every shot after the first cuts in on a spoken word: give its atWord" });
+    });
   }),
 });
 
@@ -331,9 +368,15 @@ export const StoryboardSchema = z
       voice: z.string().min(1),
       /**
        * How the video opens. "title-card": a title scene with the door masthead. "cold": a moving visual from
-       * frame 0 with the door number and title laid over it for 1.5 s at most.
+       * frame 0 with the door number and title laid over it for 1.5 s at most. "bleed": a full-frame image from frame 0
+       * with nothing over it; the door number and title come in at 2 s as a small corner tag.
        */
-      open: z.enum(["title-card", "cold"]).default("title-card"),
+      open: z.enum(["title-card", "cold", "bleed"]).default("title-card"),
+      /**
+       * "classic": the layout of No. 001 to 003. "fast" (No. 004 on): a bleed open with a corner tag, bold captions in
+       * the middle of the frame one to three words at a time, and the pacing rules in `pacingIssues` (src/skill/pacing.ts).
+       */
+      format: z.enum(["classic", "fast"]).default("classic"),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),
     scenes: z.array(SceneSchema).min(1),
@@ -349,7 +392,15 @@ export const StoryboardSchema = z
         });
       }
       seen.add(scene.id);
+      scene.microhooks?.forEach((hook, i) => {
+        if (!scene.narration.includes(hook)) {
+          ctx.addIssue({ code: "custom", path: ["scenes", index, "microhooks", i], message: `microhook "${hook}" is not in scene "${scene.id}"'s narration word for word` });
+        }
+      });
     });
+    if (sb.meta.format === "fast" && sb.meta.open !== "bleed") {
+      ctx.addIssue({ code: "custom", path: ["meta", "open"], message: 'the fast format opens full-bleed: set meta.open to "bleed"' });
+    }
   });
 
 export type Storyboard = z.output<typeof StoryboardSchema>;
@@ -364,6 +415,7 @@ export type TimelineProps = Extract<Scene, { type: "timeline" }>["props"];
 export type MapProps = Extract<Scene, { type: "map" }>["props"];
 export type BarRaceProps = Extract<Scene, { type: "bar-race" }>["props"];
 export type ArchivalProps = Extract<Scene, { type: "archival" }>["props"];
+export type ArchivalShot = NonNullable<ArchivalProps["shots"]>[number];
 export type FlowDiagramProps = Extract<Scene, { type: "flow-diagram" }>["props"];
 export type LedgerPageProps = Extract<Scene, { type: "ledger-page" }>["props"];
 

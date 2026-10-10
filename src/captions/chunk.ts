@@ -5,12 +5,20 @@ export type CaptionChunk = { startMs: number; endMs: number; words: CaptionWord[
 
 export const CAPTION_MAX_CHARS = 24;
 export const CAPTION_MAX_WORDS = 4;
+
+/** "lane": the classic captions, up to four words under the scene. "bold": the fast format's, one to three big words. */
+export type CaptionStyle = "lane" | "bold";
+export const CAPTION_LIMITS: Record<CaptionStyle, { chars: number; words: number }> = {
+  lane: { chars: CAPTION_MAX_CHARS, words: CAPTION_MAX_WORDS },
+  bold: { chars: 16, words: 3 },
+};
 export const CAPTION_HOLD_MS = 250;
 export const CAPTION_GAP_BREAK_MS = 500;
 
 const SENTENCE_END = /[.!?]["')\]]*$/;
 
-export function chunkWords(words: readonly CaptionWord[]): CaptionChunk[] {
+export function chunkWords(words: readonly CaptionWord[], style: CaptionStyle = "lane"): CaptionChunk[] {
+  const limits = CAPTION_LIMITS[style];
   const groups: CaptionWord[][] = [];
   let current: CaptionWord[] = [];
   for (const word of words) {
@@ -18,8 +26,8 @@ export function chunkWords(words: readonly CaptionWord[]): CaptionChunk[] {
     if (previous) {
       const joined = [...current, word].map((x) => x.text).join(" ");
       const mustBreak =
-        joined.length > CAPTION_MAX_CHARS ||
-        current.length >= CAPTION_MAX_WORDS ||
+        joined.length > limits.chars ||
+        current.length >= limits.words ||
         word.startMs - previous.endMs > CAPTION_GAP_BREAK_MS ||
         SENTENCE_END.test(previous.text);
       if (mustBreak) {
@@ -57,6 +65,7 @@ export function activeWordIndex(chunk: CaptionChunk, ms: number): number {
 export function buildCaptions(
   scenes: readonly { startFrame: number; words: readonly WordTiming[] }[],
   fps: number,
+  style: CaptionStyle = "lane",
 ): CaptionChunk[] {
   const global = scenes.flatMap((scene) => {
     const offset = (scene.startFrame * 1000) / fps;
@@ -66,5 +75,5 @@ export function buildCaptions(
       endMs: word.endMs + offset,
     }));
   });
-  return chunkWords(global);
+  return chunkWords(global, style);
 }

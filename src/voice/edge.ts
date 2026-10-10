@@ -22,9 +22,16 @@ const EventsSchema = z.array(
 export const voiceCacheKey = (voice: string, narration: string): string =>
   createHash("sha256").update(`${voice}\n${narration}`).digest("hex").slice(0, 16);
 
-export const ttsArgs = (voice: string, textFile: string, outMp3: string, outJson: string): string[] => [
-  TTS_SCRIPT, "--voice", voice, "--text-file", textFile, "--out-mp3", outMp3, "--out-json", outJson,
-];
+/** A voice can carry a speaking rate after "@" ("en-GB-RyanNeural@+10%"): see `voiceFor`. */
+export function splitVoice(voice: string): { name: string; rate?: string } {
+  const at = voice.indexOf("@");
+  return at < 0 ? { name: voice } : { name: voice.slice(0, at), rate: voice.slice(at + 1) };
+}
+
+export const ttsArgs = (voice: string, textFile: string, outMp3: string, outJson: string): string[] => {
+  const { name, rate } = splitVoice(voice);
+  return [TTS_SCRIPT, "--voice", name, "--text-file", textFile, "--out-mp3", outMp3, "--out-json", outJson, ...(rate ? ["--rate", rate] : [])];
+};
 
 export function parseEvents(raw: string): RawEvent[] {
   let json: unknown;

@@ -12,17 +12,19 @@ import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title, type DoorHeader } from "../scenes/title/Title";
 import { Archival } from "../scenes/archival/Archival";
+import { BleedArchival } from "../scenes/archival/BleedArchival";
 import { FlowDiagram } from "../scenes/flow-diagram/FlowDiagram";
 import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
 import { ColdOpenCamera, ColdOpenMasthead, COLD_OPEN_MASTHEAD_FRAMES, COLD_OPEN_PREROLL_FRAMES } from "./ColdOpenMasthead";
+import { CornerTag, cornerTagFrames } from "./CornerTag";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
 
 const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
-  const { scene, cues, durationFrames } = composed;
+  const { scene, cues, durationFrames, shotFrames } = composed;
   const year = scene.year;
   switch (scene.type) {
     case "title":
@@ -45,6 +47,10 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
       return <MapScene props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
     case "archival": {
       const image = images[scene.props.assetId];
+      if (scene.props.layout === "bleed") {
+        const size = image?.width && image.height ? { width: image.width, height: image.height } : undefined;
+        return <BleedArchival props={scene.props} shotFrames={shotFrames} durationFrames={durationFrames} src={image?.src} credit={image?.credit} size={size} />;
+      }
       return <Archival props={scene.props} cues={cues} durationFrames={durationFrames} year={year} src={image?.src} credit={image?.credit} />;
     }
     case "flow-diagram":
@@ -58,8 +64,8 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
   }
 };
 
-/** Narrated scenes from the open (a title card, or a cold open with its masthead overlay) to the door-plate close, with the overlays on top. */
-export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, close, years, stamps, images = {} }) => {
+/** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the door-plate close, with the overlays on top. */
+export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, bleedOpen, captionStyle = "lane", close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
   const cuts = close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
@@ -77,7 +83,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
                 )}
               </ColdOpenCamera>
             ) : (
-              <SceneSwitch composed={composed} images={images} door={i === 0 ? door : undefined} />
+              <SceneSwitch composed={composed} images={images} door={i === 0 && !bleedOpen ? door : undefined} />
             )}
           </ThemeProvider>
         </Sequence>
@@ -98,8 +104,13 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
           <ColdOpenMasthead doorNo={door.doorNo} series={door.series} headline={coldOpen.headline} />
         </Sequence>
       )}
+      {bleedOpen && (
+        <Sequence from={0} durationInFrames={cornerTagFrames()} name="Corner tag">
+          <CornerTag doorNo={door.doorNo} title={bleedOpen.title} />
+        </Sequence>
+      )}
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />
-      <Captions chunks={captions} grounds={grounds} />
+      <Captions chunks={captions} grounds={grounds} style={captionStyle} />
     </AbsoluteFill>
   );
 };

@@ -1,4 +1,4 @@
-import { buildCaptions, type CaptionChunk } from "../captions/chunk";
+import { buildCaptions, type CaptionChunk, type CaptionStyle } from "../captions/chunk";
 import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
 import { closeFrames, stampTrack, yearTrack, type StampSpan, type YearSpan } from "../devices/tracks";
 import { parseFacts } from "../schema/facts";
@@ -25,11 +25,15 @@ export type VideoProps = {
   door: { doorNo: number; series: string };
   /** Set for a cold open: the title laid over the moving first scene, instead of a title card. */
   coldOpen?: { headline: string };
+  /** Set for a bleed open: nothing over frame one, then the title in a small corner tag from 2 s. */
+  bleedOpen?: { title: string };
+  /** "lane": captions in their lane under the scene (classic). "bold": big, one to three words, over the frame (fast). */
+  captionStyle?: CaptionStyle;
   close: { startFrame: number; frames: number; doorNo: number };
   years: YearSpan[];
   stamps: StampSpan[];
   /** Archival images by asset id (data URIs or static URLs) with their on-image credit. */
-  images: Record<string, { src: string; credit: string }>;
+  images: Record<string, { src: string; credit: string; width?: number; height?: number }>;
 };
 
 export type BuiltVideo = VideoProps & { storyboard: Storyboard };
@@ -58,6 +62,9 @@ export function buildVideo(
     if (scene.type === "archival" && !images[scene.props.assetId]) {
       throw new StoryboardError(`Scene "${scene.id}" uses asset "${scene.props.assetId}", but no image was loaded for it; check assets.json and run npm run assets`);
     }
+    if (scene.type === "archival" && scene.props.layout === "bleed" && !images[scene.props.assetId]?.width) {
+      throw new StoryboardError(`Scene "${scene.id}" crops asset "${scene.props.assetId}" in shots, but its pixel size could not be read; use a JPEG, PNG or WebP`);
+    }
   }
 
   const scenes = composeScenes(storyboard, wordsFor(storyboard), fps);
@@ -71,15 +78,18 @@ export function buildVideo(
     fps,
   ).map((span) => ({ ...span, endFrame: Math.min(span.endFrame, closeStart) }));
   const { doorNo, series } = storyboard.meta;
+  const captionStyle: CaptionStyle = storyboard.meta.format === "fast" ? "bold" : "lane";
   assertDevicesInBounds(deviceBoxes({ doorNo, series, years, stamps }));
 
   return {
     storyboard,
     scenes,
-    captions: buildCaptions(scenes, fps),
+    captions: buildCaptions(scenes, fps, captionStyle),
     totalFrames: closeStart + close,
     door: { doorNo, series },
     coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,
+    bleedOpen: storyboard.meta.open === "bleed" ? { title: storyboard.meta.title } : undefined,
+    captionStyle,
     close: { startFrame: closeStart, frames: close, doorNo },
     years,
     stamps,
