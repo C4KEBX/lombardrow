@@ -43,6 +43,10 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 
 - **One folder per video.** Everything made for a video lives in `renders/no-XXX/`: `factcheck/`, `final/`, `drafts/`, `audio/`, `research/`. Once a video passes QA it gets a posting folder, `posting/no-XXX/`, with the final file, thumbnails, keywords, descriptions and anything else needed to post (2026-10-09). `produce`, `sheet`, `listen-back` and `publish-kit` write there by default (`src/pipeline/renderDir.ts`).
 
+## Finishing
+
+- **A viral score before Gate 2 (2026-10-10).** Before a video is finalized, a reviewer agent who is an expert in social content scores its potential to go viral and drive engagement, out of 100. The score covers the hook at 0 to 3 s (30 points), retention and pacing (20), sound-off clarity (15), payoff and shareability (15), engagement drivers (10), and the loop and ending (10). The reviewer also names the three fixes worth the most points. It sees only the finished video, through a review pack of frames, a transcript and measurements, and never the brand rules, so it judges like a fresh viewer. It checks current TikTok, Shorts and Reels trends on the web each run. The score and fixes go to Justin with the QA watch. `npm run review-pack` builds the pack (`src/qa/reviewPack.ts`) and `.claude/agents/viral-reviewer.md` is the reviewer.
+
 ## Accuracy on screen
 
 - **One date per source (2026-10-10).** No. 003 called Littleton's book "1600" (the edition we showed), then put "Littleton's Tenures" at 1481 (when it was written) on the timeline. A viewer sees a contradiction. When a work has two dates, say both ("written 1481, printed 1600") or use one throughout. This is a script rule in the make-lombard skill.

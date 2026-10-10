@@ -23,7 +23,8 @@
     "check": "tsx scripts/check.ts",
     "catalog": "tsx scripts/catalog.ts",
     "sheet": "tsx scripts/sheet.ts",
-    "verify-facts": "tsx scripts/verify-facts.ts"
+    "verify-facts": "tsx scripts/verify-facts.ts",
+    "review-pack": "tsx scripts/review-pack.ts"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.533",
