@@ -59,38 +59,20 @@
       ]
     },
     {
-      "id": "f-littleton",
-      "claim": "Thomas Littleton died on August 23, 1481, according to the inscription on his tomb in Worcester Cathedral. His Tenures, written in law French, first appeared in print in 1481 or 1482.",
-      "value": 1481,
-      "source": {
-        "name": "Wikipedia, Thomas de Littleton",
-        "stamp": "Wikipedia",
-        "url": "https://en.wikipedia.org/wiki/Thomas_de_Littleton",
-        "tier": "secondary"
-      },
-      "corroboration": [
-        {
-          "name": "The American Heritage Dictionary, mortgage (Word History: Littleton's Treatise on Tenures, 1481)",
-          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
-          "tier": "scholarly"
-        }
-      ]
-    },
-    {
       "id": "f-glanville",
-      "claim": "Glanville's treatise on the laws of England, written in 1189, says: a pledge is designated by the term mortgage when the fruits and rents which are received in the interval in no measure tend to reduce the demand for which the pledge has been given.",
+      "claim": "In his Tractatus de legibus et consuetudinibus regni Angliae (1189), Ranulf de Glanville explains that a pledge in which the fruits of the property were taken by the creditor without reduction in the debt was known as a mort gage, Old French for dead pledge. Beames's translation (Book 10, chapter 6) reads: a pledge is designated by the term mortgage when the fruits and rents which are received in the interval in no measure tend to reduce the demand for which the pledge has been given.",
       "value": 1189,
       "source": {
-        "name": "A Translation of Glanville, by John Beames (Book 10, chapter 6)",
-        "stamp": "Glanville, trans. Beames",
-        "url": "https://archive.org/details/translationofgla00glanuoft",
-        "tier": "primary"
+        "name": "The American Heritage Dictionary of the English Language, mortgage (Word History)",
+        "stamp": "Am. Heritage Dictionary",
+        "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+        "tier": "scholarly"
       },
       "corroboration": [
         {
-          "name": "The American Heritage Dictionary, mortgage (Word History: Glanville, 1189)",
-          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
-          "tier": "scholarly"
+          "name": "A Translation of Glanville, by John Beames (Book 10, chapter 6)",
+          "url": "https://archive.org/details/translationofgla00glanuoft",
+          "tier": "primary"
         }
       ]
     },
@@ -117,7 +99,7 @@
     },
     {
       "id": "f-timeline",
-      "claim": "Glanville's treatise names the dead pledge in 1189; Littleton's Tenures dates from 1481; Sir Edward Coke's commentary on Littleton, the First Part of the Institutes, was first printed in London in 1628.",
+      "claim": "Glanville's Tractatus (1189) names the mort gage, dead pledge; by Thomas Littleton's Treatise on Tenures (1481) the mortgage had its modern form, and Littleton and followers such as Sir Edward Coke explained mort as the permanent loss of the property on default.",
       "dataset": [
         {
           "year": 1189,
@@ -126,30 +108,14 @@
         {
           "year": 1481,
           "label": "Littleton's Tenures"
-        },
-        {
-          "year": 1628,
-          "label": "Coke's commentary"
         }
       ],
       "source": {
-        "name": "Wikipedia, Institutes of the Lawes of England",
-        "stamp": "Wikipedia",
-        "url": "https://en.wikipedia.org/wiki/Institutes_of_the_Lawes_of_England",
-        "tier": "secondary"
-      },
-      "corroboration": [
-        {
-          "name": "The American Heritage Dictionary, mortgage (Word History: 1189, 1481)",
-          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
-          "tier": "scholarly"
-        },
-        {
-          "name": "Wikimedia Commons, Coke, First Part of the Institutes (1st ed, 1628), title page",
-          "url": "https://commons.wikimedia.org/wiki/File:Edward_Coke,_The_First_Part_of_the_Institvtes_of_the_Lawes_of_England_(1st_ed,_1628,_title_page)_-_20131124.jpg",
-          "tier": "secondary"
-        }
-      ]
+        "name": "The American Heritage Dictionary of the English Language, mortgage (Word History)",
+        "stamp": "Am. Heritage Dictionary",
+        "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+        "tier": "scholarly"
+      }
     }
   ]
 }

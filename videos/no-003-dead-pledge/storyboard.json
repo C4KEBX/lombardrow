@@ -199,9 +199,10 @@
       "id": "timeline",
       "type": "timeline",
       "speaks": [
-        "f-shift"
+        "f-shift",
+        "f-glanville"
       ],
-      "narration": "Glanville named the dead pledge in 1189. By Littleton's Tenures, in 1481, the borrower kept the land while paying. In 1628, Coke's commentary followed Littleton.",
+      "narration": "Glanville named the dead pledge in 1189. By Littleton's Tenures, in 1481, the borrower kept the land, so Littleton gave a new reason. Coke followed it.",
       "props": {
         "title": "How dead changed",
         "events": [
@@ -212,10 +213,6 @@
           {
             "year": 1481,
             "label": "Littleton's Tenures"
-          },
-          {
-            "year": 1628,
-            "label": "Coke's commentary"
           }
         ],
         "factId": "f-timeline"
@@ -230,11 +227,6 @@
           "atWord": "Tenures",
           "do": "emphasize",
           "text": "Tenures"
-        },
-        {
-          "atWord": "commentary",
-          "do": "emphasize",
-          "text": "commentary"
         }
       ]
     },
