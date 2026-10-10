@@ -329,6 +329,11 @@ export const StoryboardSchema = z
       /** Series label above the door number on the open, e.g. "How it works". */
       series: z.string().min(1).max(28),
       voice: z.string().min(1),
+      /**
+       * How the video opens. "title-card": a title scene with the door masthead. "cold": a moving visual from
+       * frame 0 with the door number and title laid over it for 1.5 s at most.
+       */
+      open: z.enum(["title-card", "cold"]).default("title-card"),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),
     scenes: z.array(SceneSchema).min(1),

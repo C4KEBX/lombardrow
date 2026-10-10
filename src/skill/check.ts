@@ -1,8 +1,9 @@
-import { VIDEO } from "../design/tokens";
+import { fitTitleFontSize } from "../design/layout";
+import { COLD_OPEN_HEADLINE, CONTENT, VIDEO } from "../design/tokens";
 import { assertSceneTiming } from "../pipeline/assertSceneTiming";
 import { composeScenes } from "../pipeline/resolveScene";
 import { parseFacts, type Facts } from "../schema/facts";
-import { parseStoryboard, type Storyboard } from "../schema/storyboard";
+import { parseStoryboard, type Scene, type Storyboard } from "../schema/storyboard";
 import {
   assertCuesSupported, assertDisputedHedged, assertFactsTraceable, assertHeadlinesFit, assertMapRegions, assertSources,
   assertSpokenFigures, assertTextScenes, assertVariety, assertYears, sceneStamps,
@@ -59,9 +60,7 @@ export function checkStoryboard(
   perScene("cues", assertCuesSupported);
   // Whole storyboard: the opening title card's headline shares its lane with the door-number masthead.
   attempt(issues, "headlines", () => assertHeadlinesFit(sb));
-  if (sb.scenes[0] && sb.scenes[0].type !== "title") {
-    issues.push({ stage: "opener", message: `Scene "${sb.scenes[0].id}" opens the video as ${sb.scenes[0].type}; the first scene must be a title card, which carries the door number and tells the viewer in the first second what they are watching` });
-  }
+  for (const message of openerIssues(sb)) issues.push({ stage: "opener", message });
   perScene("text scenes", assertTextScenes);
   perScene("map regions", assertMapRegions);
   perScene("year counter", assertYears);
@@ -120,4 +119,41 @@ export function formatReport(report: CheckReport): string {
   }
   lines.push(report.ok ? "OK" : `FAIL: ${report.issues.length} issue${report.issues.length === 1 ? "" : "s"}`);
   return lines.join("\n");
+}
+
+/** Scene types that move from frame 0 and show a thing (a document, chart, map), so they can carry a cold open. */
+export const COLD_OPEN_TYPES: readonly Scene["type"][] = ["ledger-page", "line-chart", "bar-race", "map", "archival", "flow-diagram", "timeline", "compare", "big-number"];
+
+const MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December";
+const DATE_LEAD = new RegExp(`^(?:[Ii]n\\s+)?(?:(?:${MONTHS})\\b|\\d{3,4}\\b|[A-Z][a-z]+,\\s+(?:(?:${MONTHS})\\s+)?\\d{3,4}\\b)`);
+
+/**
+ * How the video opens. A title-card open puts a title scene first. A cold open puts a moving visual first,
+ * with the masthead laid over it, and its first line states a claim: not a question, not a date.
+ */
+export function openerIssues(sb: Storyboard): string[] {
+  const first = sb.scenes[0];
+  if (!first) return [];
+  if (sb.meta.open !== "cold") {
+    return first.type === "title" ? [] : [`Scene "${first.id}" opens the video as ${first.type}; a title-card open needs a title scene first, which carries the door number. For a moving open, set meta.open to "cold"`];
+  }
+  const issues: string[] = [];
+  if (!COLD_OPEN_TYPES.includes(first.type)) {
+    issues.push(`Scene "${first.id}" opens a cold open as ${first.type}; a cold open starts on something moving that shows a thing: ${COLD_OPEN_TYPES.join(", ")}`);
+  }
+  const line = firstSentence(first.narration);
+  if (line.endsWith("?")) issues.push(`Scene "${first.id}" opens on a question ("${line}"); a cold open's first line states a surprising claim`);
+  if (DATE_LEAD.test(line)) issues.push(`Scene "${first.id}" opens on a date ("${line}"); a cold open's first line states a surprising claim, and the date can come later`);
+  try {
+    fitTitleFontSize(sb.meta.title, CONTENT.width, COLD_OPEN_HEADLINE.boxPx, COLD_OPEN_HEADLINE.maxPx);
+  } catch (error) {
+    if (!(error instanceof RangeError)) throw error;
+    issues.push(`The title "${sb.meta.title}" does not fit the cold-open masthead: ${error.message}`);
+  }
+  return issues;
+}
+
+function firstSentence(text: string): string {
+  const match = /^.*?[.!?](?=\s|$)/.exec(text.trim());
+  return (match ? match[0] : text).trim();
 }

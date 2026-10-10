@@ -23,6 +23,8 @@ export type VideoProps = {
   totalFrames: number;
   /** The door number and series, shown on the first scene: the video opens straight on its title card. */
   door: { doorNo: number; series: string };
+  /** Set for a cold open: the title laid over the moving first scene, instead of a title card. */
+  coldOpen?: { headline: string };
   close: { startFrame: number; frames: number; doorNo: number };
   years: YearSpan[];
   stamps: StampSpan[];
@@ -77,6 +79,7 @@ export function buildVideo(
     captions: buildCaptions(scenes, fps),
     totalFrames: closeStart + close,
     door: { doorNo, series },
+    coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,
     close: { startFrame: closeStart, frames: close, doorNo },
     years,
     stamps,

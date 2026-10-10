@@ -58,6 +58,12 @@ export const YEAR_CONTENT_TOP = YC.y + YC.number.size + YC.rule.gap + YC.rule.he
 /** Height the door-number masthead takes on the opening title card, gap below included. */
 export const DOOR_HEADER_PX = 190;
 
+/**
+ * The cold-open masthead's headline: at most this size, inside this box under the door number. Kept small so the
+ * masthead's band ends above the first scene's first row of content.
+ */
+export const COLD_OPEN_HEADLINE = { maxPx: 64, boxPx: 140 } as const;
+
 export function lanesFor(hasYear: boolean) {
   const top = hasYear ? YEAR_CONTENT_TOP : SAFE.top;
   const cut = top - SAFE.top;

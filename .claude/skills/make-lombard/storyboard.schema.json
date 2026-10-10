@@ -39,6 +39,14 @@
         "voice": {
           "type": "string",
           "minLength": 1
+        },
+        "open": {
+          "default": "title-card",
+          "type": "string",
+          "enum": [
+            "title-card",
+            "cold"
+          ]
         }
       },
       "required": [
@@ -47,7 +55,8 @@
         "paletteLead",
         "doorNo",
         "series",
-        "voice"
+        "voice",
+        "open"
       ],
       "additionalProperties": false
     },

@@ -17,6 +17,7 @@ import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
+import { ColdOpenCamera, ColdOpenMasthead, COLD_OPEN_MASTHEAD_FRAMES, COLD_OPEN_PREROLL_FRAMES } from "./ColdOpenMasthead";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
 
@@ -57,8 +58,8 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
   }
 };
 
-/** Narrated scenes from the opening title card to the door-plate close, with the overlays on top. */
-export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, years, stamps, images = {} }) => {
+/** Narrated scenes from the open (a title card, or a cold open with its masthead overlay) to the door-plate close, with the overlays on top. */
+export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
   const cuts = close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
@@ -66,7 +67,18 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, yea
       {scenes.map((composed, i) => (
         <Sequence key={composed.id} from={composed.startFrame} durationInFrames={composed.durationFrames} name={composed.id}>
           <ThemeProvider ground={composed.ground}>
-            <SceneSwitch composed={composed} images={images} door={i === 0 ? door : undefined} />
+            {i === 0 && coldOpen ? (
+              <ColdOpenCamera durationFrames={composed.durationFrames}>
+                {(frames) => (
+                  <SceneSwitch
+                    composed={{ ...composed, durationFrames: frames, cues: composed.cues.map((c) => ({ ...c, frame: c.frame + COLD_OPEN_PREROLL_FRAMES })) }}
+                    images={images}
+                  />
+                )}
+              </ColdOpenCamera>
+            ) : (
+              <SceneSwitch composed={composed} images={images} door={i === 0 ? door : undefined} />
+            )}
           </ThemeProvider>
         </Sequence>
       ))}
@@ -81,6 +93,11 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, yea
         directions={wipeDirections(cuts.length, door.doorNo)}
       />
       <YearCounter spans={years} />
+      {coldOpen && (
+        <Sequence from={0} durationInFrames={COLD_OPEN_MASTHEAD_FRAMES} name="Cold-open masthead">
+          <ColdOpenMasthead doorNo={door.doorNo} series={door.series} headline={coldOpen.headline} />
+        </Sequence>
+      )}
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />
       <Captions chunks={captions} grounds={grounds} />
     </AbsoluteFill>
