@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "Why a mortgage is a dead pledge",
+    "theme": "lombard-row",
+    "paletteLead": "green",
+    "doorNo": 3,
+    "series": "Say It Right",
+    "voice": "en-GB-RyanNeural",
+    "open": "cold"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "page",
+      "type": "archival",
+      "sourceFactId": "f-dead-pledge",
+      "speaks": [
+        "f-dead-pledge"
+      ],
+      "narration": "Every mortgage is named after a dead pledge. This law book from 1600 says so. In Latin, mortuum vadium. In English, a dead pledge.",
+      "props": {
+        "title": "Littleton's Tenures, 1600",
+        "assetId": "littleton-1600-dead-pledge",
+        "from": {
+          "x": 0.5,
+          "y": 0.5,
+          "zoom": 1.2
+        },
+        "to": {
+          "x": 0.45,
+          "y": 0.66,
+          "zoom": 1.9
+        }
+      }
+    },
+    {
+      "id": "word",
+      "type": "kinetic-text",
+      "sourceFactId": "f-word",
+      "speaks": [
+        "f-word"
+      ],
+      "narration": "Mort is Old French for dead. Gage means pledge. So why would a loan be dead?",
+      "props": {
+        "lines": [
+          "Mort, dead",
+          "Gage, pledge"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "dead",
+          "do": "emphasize",
+          "text": "dead"
+        },
+        {
+          "atWord": "pledge",
+          "do": "emphasize",
+          "text": "pledge"
+        }
+      ]
+    },
+    {
+      "id": "reason",
+      "type": "quote",
+      "speaks": [
+        "f-reason"
+      ],
+      "narration": "The page gives a reason. If the borrower failed to pay on the day, the land was gone from him for ever.",
+      "props": {
+        "quote": "the land that is put in pledge upon condition for the payment of the money is gone from him for ever",
+        "attribution": "Littleton's Tenures, 1600",
+        "factId": "f-reason"
+      }
+    },
+    {
+      "id": "deal",
+      "type": "flow-diagram",
+      "speaks": [
+        "f-reason"
+      ],
+      "narration": "In its example, the borrower pledges land and must repay 20 pounds by a set day. Pay, and it comes back. Miss it, and the land is lost.",
+      "props": {
+        "title": "A pledge on condition",
+        "steps": [
+          {
+            "label": "Land handed over",
+            "note": "on condition"
+          },
+          {
+            "label": "Pay on the day",
+            "note": "the land comes back"
+          },
+          {
+            "label": "Miss the day",
+            "note": "the land is lost"
+          }
+        ],
+        "arrows": [
+          "£20 owed",
+          "the deadline"
+        ],
+        "factId": "f-reason"
+      },
+      "cues": [
+        {
+          "atWord": "land",
+          "do": "emphasize",
+          "text": "Land"
+        },
+        {
+          "atWord": "Pay",
+          "do": "emphasize",
+          "text": "Pay"
+        },
+        {
+          "atWord": "Miss",
+          "do": "emphasize",
+          "text": "Miss"
+        }
+      ]
+    },
+    {
+      "id": "older",
+      "type": "title",
+      "ground": "ink",
+      "year": 1189,
+      "sourceFactId": "f-glanville",
+      "speaks": [
+        "f-glanville"
+      ],
+      "narration": "But that reason came later. In 1189, Glanville's law book used the name for a different deal.",
+      "props": {
+        "headline": "The older meaning",
+        "kicker": "Glanville's law book"
+      }
+    },
+    {
+      "id": "pledges",
+      "type": "ledger-page",
+      "speaks": [
+        "f-glanville",
+        "f-living"
+      ],
+      "narration": "The lender held the land and took its rents, but the rents never cut the debt. That was a dead pledge. When the rents paid the debt down, it was a living pledge, working for the borrower.",
+      "props": {
+        "title": "Two kinds of pledge",
+        "rows": [
+          {
+            "entry": "Dead pledge",
+            "amount": "Debt stays"
+          },
+          {
+            "entry": "Living pledge",
+            "amount": "Debt falls"
+          }
+        ],
+        "factId": "f-living"
+      },
+      "cues": [
+        {
+          "atWord": "dead",
+          "do": "emphasize",
+          "text": "Dead"
+        },
+        {
+          "atWord": "living",
+          "do": "emphasize",
+          "text": "Living"
+        }
+      ]
+    },
+    {
+      "id": "usury",
+      "type": "kinetic-text",
+      "sourceFactId": "f-living",
+      "speaks": [
+        "f-living"
+      ],
+      "narration": "Under Christian bans on profit from lending, a dead pledge counted as a kind of usury.",
+      "props": {
+        "lines": [
+          "A kind",
+          "of usury"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "usury",
+          "do": "emphasize",
+          "text": "usury"
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "type": "timeline",
+      "speaks": [
+        "f-shift"
+      ],
+      "narration": "Glanville named the dead pledge in 1189. By Littleton's Tenures, in 1481, the borrower kept the land while paying. Coke's commentary of 1628 followed Littleton's reason.",
+      "props": {
+        "title": "How dead changed",
+        "events": [
+          {
+            "year": 1189,
+            "label": "Glanville's dead pledge"
+          },
+          {
+            "year": 1481,
+            "label": "Littleton's Tenures"
+          },
+          {
+            "year": 1628,
+            "label": "Coke's commentary"
+          }
+        ],
+        "factId": "f-timeline"
+      },
+      "cues": [
+        {
+          "atWord": "dead",
+          "do": "emphasize",
+          "text": "dead"
+        },
+        {
+          "atWord": "Tenures",
+          "do": "emphasize",
+          "text": "Tenures"
+        },
+        {
+          "atWord": "commentary",
+          "do": "emphasize",
+          "text": "commentary"
+        }
+      ]
+    },
+    {
+      "id": "today",
+      "type": "kinetic-text",
+      "ground": "ink",
+      "speaks": [
+        "f-glanville",
+        "f-shift"
+      ],
+      "sourceFactId": "f-shift",
+      "narration": "So dead first meant rents that never cut the debt. Later it meant the land a borrower loses.",
+      "props": {
+        "lines": [
+          "Dead rents",
+          "came first"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "rents",
+          "do": "emphasize",
+          "text": "rents"
+        }
+      ]
+    }
+  ]
+}

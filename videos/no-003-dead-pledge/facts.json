@@ -1,0 +1,155 @@
+{
+  "facts": [
+    {
+      "id": "f-dead-pledge",
+      "claim": "Littletons Tenures in English (London: Thomas Wight, 1600), in the chapter on estates upon condition, says that where land is granted on condition that the grantor may re-enter if he pays twenty pound of money on a certain day, the grantee is called tenant in Mortgage, which is as much to say in French as Morgage, and in Latin Mortuum vadium, and in English a dead pledge.",
+      "value": 1600,
+      "source": {
+        "name": "Littletons Tenures in English (London: Thomas Wight, 1600), Internet Archive scan of John Adams's copy, Boston Public Library",
+        "stamp": "Littleton's Tenures, 1600",
+        "url": "https://archive.org/details/littletonstenure00litt",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "Wikimedia Commons, Littletons Tenures in English (1600), public domain",
+          "url": "https://commons.wikimedia.org/wiki/File:Littletons_Tenures_in_English_-_lately_perused_and_amended_(IA_littletonstenure00litt).pdf",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-word",
+      "claim": "Mortgage comes through Middle English morgage from Old French mort, dead (from Latin mortuus), plus gage, pledge.",
+      "source": {
+        "name": "The American Heritage Dictionary of the English Language, mortgage",
+        "stamp": "Am. Heritage Dictionary",
+        "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Merriam-Webster, mortgage",
+          "url": "https://www.merriam-webster.com/dictionary/mortgage",
+          "tier": "scholarly"
+        },
+        {
+          "name": "Online Etymology Dictionary, mortgage",
+          "url": "https://www.etymonline.com/word/mortgage",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-reason",
+      "claim": "Littletons Tenures in English (1600) gives the reason it is called mortgage: it stands in doubt whether the grantor will pay the sum on the day limited, and if he pay not, then the land that is put in pledge upon condition for the payment of the money is gone from him for ever, and so dead. Twenty pound of money is the sum in its example.",
+      "value": 20,
+      "source": {
+        "name": "Littletons Tenures in English (London: Thomas Wight, 1600), Internet Archive",
+        "stamp": "Littleton's Tenures, 1600",
+        "url": "https://archive.org/details/littletonstenure00litt",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "Online Etymology Dictionary, mortgage (quoting Coke upon Littleton)",
+          "url": "https://www.etymonline.com/word/mortgage",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-littleton",
+      "claim": "Thomas Littleton died on August 23, 1481, according to the inscription on his tomb in Worcester Cathedral. His Tenures, written in law French, first appeared in print in 1481 or 1482.",
+      "value": 1481,
+      "source": {
+        "name": "Wikipedia, Thomas de Littleton",
+        "stamp": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Thomas_de_Littleton",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "The American Heritage Dictionary, mortgage (Word History: Littleton's Treatise on Tenures, 1481)",
+          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-glanville",
+      "claim": "Glanville's treatise on the laws of England, written in 1189, says: a pledge is designated by the term mortgage when the fruits and rents which are received in the interval in no measure tend to reduce the demand for which the pledge has been given.",
+      "value": 1189,
+      "source": {
+        "name": "A Translation of Glanville, by John Beames (Book 10, chapter 6)",
+        "stamp": "Glanville, trans. Beames",
+        "url": "https://archive.org/details/translationofgla00glanuoft",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "The American Heritage Dictionary, mortgage (Word History: Glanville, 1189)",
+          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-living",
+      "claim": "In early Anglo-Norman law the creditor held the pledged property until the debt was repaid. Where the creditor took its profits without reducing the debt, the pledge was a mort gage, dead pledge, and because of Christian prohibitions on profiting from money lending it was considered a species of usury. The preferred pledge, whose profits went to paying off the debt, was a vif gage, living pledge.",
+      "source": {
+        "name": "The American Heritage Dictionary of the English Language, mortgage (Word History)",
+        "stamp": "Am. Heritage Dictionary",
+        "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-shift",
+      "claim": "By the time of Littleton's Treatise on Tenures (1481) the mortgage had taken its modern form, with the property and its profits staying with the debtor during repayment. This led Littleton and followers such as Sir Edward Coke (1552-1634) to explain the mort in mortgage as the permanent loss of the property if the borrower fails to repay, rather than the loss of its profits during the loan.",
+      "value": 1481,
+      "source": {
+        "name": "The American Heritage Dictionary of the English Language, mortgage (Word History)",
+        "stamp": "Am. Heritage Dictionary",
+        "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-timeline",
+      "claim": "Glanville's treatise names the dead pledge in 1189; Littleton's Tenures dates from 1481; Sir Edward Coke's commentary on Littleton, the First Part of the Institutes, was first printed in London in 1628.",
+      "dataset": [
+        {
+          "year": 1189,
+          "label": "Glanville's dead pledge"
+        },
+        {
+          "year": 1481,
+          "label": "Littleton's Tenures"
+        },
+        {
+          "year": 1628,
+          "label": "Coke's commentary"
+        }
+      ],
+      "source": {
+        "name": "Wikipedia, Institutes of the Lawes of England",
+        "stamp": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Institutes_of_the_Lawes_of_England",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "The American Heritage Dictionary, mortgage (Word History: 1189, 1481)",
+          "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+          "tier": "scholarly"
+        },
+        {
+          "name": "Wikimedia Commons, Coke, First Part of the Institutes (1st ed, 1628), title page",
+          "url": "https://commons.wikimedia.org/wiki/File:Edward_Coke,_The_First_Part_of_the_Institvtes_of_the_Lawes_of_England_(1st_ed,_1628,_title_page)_-_20131124.jpg",
+          "tier": "secondary"
+        }
+      ]
+    }
+  ]
+}
