@@ -3,7 +3,7 @@ import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { BODY_FONT, DISPLAY_FONT, TABULAR } from "../design/fonts";
 import { fitTitleFontSize } from "../design/layout";
 import { easeInOutCubic } from "../design/motion";
-import { BRAND } from "../design/theme";
+import { BRAND, useTheme } from "../design/theme";
 import { COLD_OPEN_HEADLINE, CONTENT, SAFE } from "../design/tokens";
 import { doorLabelText } from "../devices/label";
 
@@ -15,10 +15,12 @@ const BAND_PX = 430;
 /** The first scene starts this far into its own entrance, so frame 0 already shows the thing on screen. */
 export const COLD_OPEN_PREROLL_FRAMES = 12;
 /**
- * Under the masthead the first scene sits lower by the band's depth, drifting in from a slight close-up;
- * as the masthead lifts away the scene rises into its own place, so the two read as one move.
+ * Under the masthead the first scene is shown smaller, fitted between the masthead's band and the caption lane,
+ * so captions never sit on top of it; as the masthead lifts away the scene grows into its own place, so the two
+ * read as one move. With origin at the top centre, scene y maps to shiftPx + y * fromScale: the content area's
+ * top (about 154 px) lands below the band and its bottom (about 1200 px) above the captions.
  */
-const CAMERA = { fromScale: 1.05, scaleFrames: 75, shiftPx: 290, riseFrom: COLD_OPEN_MASTHEAD_FRAMES - 16, riseFrames: 16 } as const;
+const CAMERA = { fromScale: 0.76, shiftPx: 313, riseFrom: COLD_OPEN_MASTHEAD_FRAMES - 16, riseFrames: 16 } as const;
 
 /**
  * Door number, series and title laid over the first scene, which is already moving underneath.
@@ -62,21 +64,24 @@ export const ColdOpenMasthead: React.FC<{ doorNo: number; series: string; headli
 };
 
 /**
- * Wraps the cold open's first scene: starts it partway into its entrance, holds it below the masthead,
- * then lifts it into place. The scene is drawn with its duration lengthened by the pre-roll, so its exit still
+ * Wraps the cold open's first scene: starts it partway into its entrance, holds it smaller below the
+ * masthead, then grows it into place. The scene is drawn with its duration lengthened by the pre-roll, so its exit still
  * lands on the cut.
  */
 export const ColdOpenCamera: React.FC<{ children: (prerolledFrames: number) => React.ReactNode; durationFrames: number }> = ({ children, durationFrames }) => {
   const frame = useCurrentFrame();
   const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
-  const zoom = easeInOutCubic(interpolate(frame, [0, CAMERA.scaleFrames], [0, 1], clamp));
   const rise = easeInOutCubic(interpolate(frame, [CAMERA.riseFrom, CAMERA.riseFrom + CAMERA.riseFrames], [0, 1], clamp));
-  const scale = CAMERA.fromScale + (1 - CAMERA.fromScale) * zoom;
+  const scale = CAMERA.fromScale + (1 - CAMERA.fromScale) * rise;
+  const theme = useTheme();
+  // The scene's own ground fills the frame around it while it is drawn smaller.
   return (
-    <AbsoluteFill style={{ transform: `translateY(${(1 - rise) * CAMERA.shiftPx}px) scale(${scale})`, transformOrigin: "50% 0%" }}>
-      <Sequence from={-COLD_OPEN_PREROLL_FRAMES} durationInFrames={durationFrames + COLD_OPEN_PREROLL_FRAMES} layout="none">
-        {children(durationFrames + COLD_OPEN_PREROLL_FRAMES)}
-      </Sequence>
+    <AbsoluteFill style={{ background: theme.ground }}>
+      <AbsoluteFill style={{ transform: `translateY(${(1 - rise) * CAMERA.shiftPx}px) scale(${scale})`, transformOrigin: "50% 0%" }}>
+        <Sequence from={-COLD_OPEN_PREROLL_FRAMES} durationInFrames={durationFrames + COLD_OPEN_PREROLL_FRAMES} layout="none">
+          {children(durationFrames + COLD_OPEN_PREROLL_FRAMES)}
+        </Sequence>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
