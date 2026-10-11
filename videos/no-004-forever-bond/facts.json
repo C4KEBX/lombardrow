@@ -1,0 +1,247 @@
+{
+  "facts": [
+    {
+      "id": "f-issued",
+      "claim": "The bond was issued on May 15, 1648, by the Hoogheemraadschap Lekdijk Bovendams, a water board, to Niclaes de Meijer for the sum of 1,000 Carolus Guilders, and it is written on goatskin.",
+      "value": 1648,
+      "source": {
+        "name": "Yale News, Yale's 367-year-old water bond still pays interest (2015)",
+        "stamp": "Yale News 2015",
+        "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Beinecke Library, Infinity has a price",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-oath",
+      "claim": "The final act of the Peace of Munster was the swearing of the oath of confirmation in the town hall on 15 May 1648, by which Spain formally renounced its claim on sovereignty over the Dutch Republic.",
+      "value": 15,
+      "source": {
+        "name": "The National Gallery, Gerard ter Borch, The Ratification of the Treaty of Munster",
+        "stamp": "National Gallery",
+        "url": "https://www.nationalgallery.org.uk/paintings/gerard-ter-borch-the-ratification-of-the-treaty-of-munster",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Rijksmuseum, Ratification of the Peace of Munster, 15 May 1648, SK-A-405",
+          "url": "https://www.rijksmuseum.nl/en/collection/SK-A-405",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-age",
+      "claim": "In January 2026 Yale described its 1648 water-authority bond as 378 years old, and said it continues to collect interest every year.",
+      "value": 378,
+      "source": {
+        "name": "Yale School of Management, Prof. Rouwenhorst discusses Yale's 378 year-old perpetual bond (2026)",
+        "stamp": "Yale SOM 2026",
+        "url": "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Beinecke Library, Infinity has a price",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-terms",
+      "claim": "The bond promises Niclaes de Meijer 50 guilders per year in perpetuity in exchange for his 1,000-guilder capital contribution, a 5 percent yield.",
+      "value": 5,
+      "source": {
+        "name": "Beinecke Rare Book and Manuscript Library, Infinity has a price",
+        "stamp": "Beinecke, Yale",
+        "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Yale News (2015)",
+          "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-purpose",
+      "claim": "The money paid workers building a cribbinge, a series of piers that regulated the flow of the Lek river and prevented erosion; the Beinecke places the work near the town of Honswijk, part of a five-mile stretch of dike just outside the city of Utrecht.",
+      "source": {
+        "name": "Yale News (2015)",
+        "stamp": "Yale News 2015",
+        "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Accountant.nl, Schap betaalt rente op obligatie uit 1648 (2015)",
+          "url": "https://www.accountant.nl/nieuws/2015/9/schap-betaalt-rente-op-obligatie-uit-1648/",
+          "tier": "secondary"
+        },
+        {
+          "name": "Beinecke Library, Infinity has a price",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-rate",
+      "claim": "The bond originally paid 5% interest; in the 17th century the rate was lowered to 3.5% and then to 2.5%, half the original rate, which on 1,000 guilders is 25 guilders a year.",
+      "value": 2.5,
+      "source": {
+        "name": "Yale News (2015)",
+        "stamp": "Yale News 2015",
+        "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Beinecke Library, Infinity has a price (a seventeenth-century reduction in the interest rate by half)",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-margins",
+      "claim": "Interest payments were recorded in the margins and on the back of the bond itself; by 1944 there was no room left on the vellum, and a paper addendum, an allonge, was added to record further payments.",
+      "value": 1944,
+      "source": {
+        "name": "Yale News (2015)",
+        "stamp": "Yale News 2015",
+        "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Beinecke Library, Infinity has a price",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-timeline",
+      "claim": "Yale's bond was issued in 1648; the water board kept paying even in 1810, when the Netherlands defaulted on its sovereign obligations after the annexation by France; Yale acquired the document in 2003 at auction.",
+      "dataset": [
+        {
+          "year": 1648,
+          "label": "Bond issued"
+        },
+        {
+          "year": 1810,
+          "label": "Dutch state defaults"
+        },
+        {
+          "year": 2003,
+          "label": "Yale buys it"
+        }
+      ],
+      "source": {
+        "name": "Beinecke Rare Book and Manuscript Library, Infinity has a price",
+        "stamp": "Beinecke, Yale",
+        "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Yale News (2015)",
+          "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-in-person",
+      "claim": "When Yale acquired the document in 2003 at auction, it learned that payments had to be collected in person; finance professor Geert Rouwenhorst picked up the bond and collected the unpaid interest due from 1977 to 2003, 26 years of back interest.",
+      "value": 26,
+      "source": {
+        "name": "Beinecke Rare Book and Manuscript Library, Infinity has a price",
+        "stamp": "Beinecke, Yale",
+        "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Yale News (2015)",
+          "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-today",
+      "claim": "Yale receives 11.35 euros a year in interest on the goatskin bond (Yale ontvangt 11,35 euro per jaar aan rente), about 13 dollars.",
+      "value": 11.35,
+      "source": {
+        "name": "Accountant.nl, Schap betaalt rente op obligatie uit 1648 (2015)",
+        "stamp": "Accountant.nl 2015",
+        "url": "https://www.accountant.nl/nieuws/2015/9/schap-betaalt-rente-op-obligatie-uit-1648/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Yale School of Management (2026), Rouwenhorst: the equivalent of eleven euros and thirty-five cents, about thirteen dollars",
+          "url": "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-inflation",
+      "claim": "Inflation since 1648 had taken its toll on the bond's interest, as did a seventeenth-century reduction in the interest rate by half.",
+      "source": {
+        "name": "Beinecke Rare Book and Manuscript Library, Infinity has a price",
+        "stamp": "Beinecke, Yale",
+        "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Yale News (2015)",
+          "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-2015",
+      "claim": "In 2015 Beinecke curator Timothy Young collected 12 years of interest on the bond, 136.20 euros, about $153.",
+      "value": 153,
+      "source": {
+        "name": "Yale News (2015)",
+        "stamp": "Yale News 2015",
+        "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Beinecke Library, Infinity has a price (the equivalent of $153)",
+          "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-quote",
+      "claim": "Yale professor Geert Rouwenhorst told the BBC of the bond: This could live for another thousand years, no problem. (another 1,000 years)",
+      "value": 1000,
+      "source": {
+        "name": "Yale School of Management, transcript of Prof. Rouwenhorst's BBC interview (2026)",
+        "stamp": "Yale SOM 2026",
+        "url": "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+        "tier": "primary"
+      }
+    }
+  ]
+}

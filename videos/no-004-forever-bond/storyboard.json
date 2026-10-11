@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "The loan that will never be repaid",
+    "theme": "lombard-row",
+    "paletteLead": "parchment",
+    "doorNo": 4,
+    "series": "How It Works",
+    "voice": "en-GB-RyanNeural",
+    "open": "bleed",
+    "format": "fast",
+    "ending": {
+      "prompt": "Who won: the lender or the borrower?",
+      "atWord": "borrower"
+    }
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "archival",
+      "brisk": true,
+      "sourceFactId": "f-issued",
+      "speaks": [
+        "f-age",
+        "f-oath"
+      ],
+      "narration": "This loan will never be paid back. Yet its interest is still paid, 378 years on. It was signed on 15 May 1648, the day Spain and the Dutch swore peace.",
+      "microhooks": [
+        "Yet its interest is still paid, 378 years on."
+      ],
+      "props": {
+        "title": "Munster, 15 May 1648",
+        "assetId": "munster-oath-1648",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.47,
+            "y": 0.56,
+            "w": 0.5
+          },
+          {
+            "atWord": "Yet",
+            "x": 0.55,
+            "y": 0.58,
+            "w": 0.3
+          },
+          {
+            "atWord": "378",
+            "x": 0.62,
+            "y": 0.45,
+            "w": 0.3
+          },
+          {
+            "atWord": "signed",
+            "x": 0.52,
+            "y": 0.6,
+            "w": 0.22
+          },
+          {
+            "atWord": "May",
+            "x": 0.6,
+            "y": 0.64,
+            "w": 0.24
+          },
+          {
+            "atWord": "swore",
+            "x": 0.36,
+            "y": 0.5,
+            "w": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "borrower",
+      "type": "archival",
+      "sourceFactId": "f-issued",
+      "speaks": [
+        "f-purpose"
+      ],
+      "narration": "The borrower wasn't a king. It was a water board near Utrecht, borrowing 1,000 guilders to build piers in the river Lek.",
+      "props": {
+        "title": "The borrower's arms, 1706",
+        "assetId": "lekdijk-cushion-1706",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.75
+          },
+          {
+            "atWord": "water",
+            "x": 0.47,
+            "y": 0.805,
+            "w": 0.62,
+            "mark": {
+              "x": 0.17,
+              "y": 0.768,
+              "w": 0.61,
+              "h": 0.075
+            }
+          },
+          {
+            "atWord": "guilders",
+            "x": 0.42,
+            "y": 0.48,
+            "w": 0.36
+          },
+          {
+            "atWord": "borrowing",
+            "x": 0.62,
+            "y": 0.56,
+            "w": 0.3
+          },
+          {
+            "atWord": "piers",
+            "x": 0.24,
+            "y": 0.55,
+            "w": 0.3
+          }
+        ]
+      },
+      "microhooks": [
+        "The borrower wasn't a king."
+      ]
+    },
+    {
+      "id": "forever",
+      "type": "kinetic-text",
+      "narration": "The bond has no end date. Here's the catch: it pays 5% a year, forever.",
+      "microhooks": [
+        "Here's the catch:"
+      ],
+      "props": {
+        "lines": [
+          "No end date.",
+          "Forever."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "forever",
+          "do": "emphasize",
+          "text": "Forever."
+        }
+      ],
+      "speaks": [
+        "f-terms"
+      ]
+    },
+    {
+      "id": "margins",
+      "type": "ledger-page",
+      "speaks": [
+        "f-issued",
+        "f-rate",
+        "f-margins"
+      ],
+      "narration": "Every payment was written on the goatskin. Later the rate was cut in half. Then it ran out of room, so in 1944 a paper sheet was added.",
+      "props": {
+        "title": "The bond's margins",
+        "rows": [
+          {
+            "entry": "Payment at 5%",
+            "amount": "50 gld",
+            "date": "From 1648"
+          },
+          {
+            "entry": "Rate cut to 2.5%",
+            "amount": "25 gld"
+          },
+          {
+            "entry": "Margins full",
+            "amount": "new sheet",
+            "date": "1944"
+          }
+        ],
+        "factId": "f-terms"
+      },
+      "cues": [
+        {
+          "atWord": "payment",
+          "do": "emphasize",
+          "text": "Payment"
+        },
+        {
+          "atWord": "cut",
+          "do": "emphasize",
+          "text": "cut"
+        },
+        {
+          "atWord": "ran",
+          "do": "emphasize",
+          "text": "full"
+        }
+      ],
+      "microhooks": [
+        "Then it ran out of room"
+      ]
+    },
+    {
+      "id": "default",
+      "type": "timeline",
+      "speaks": [
+        "f-issued"
+      ],
+      "narration": "But here's the twist. From 1648 it kept paying, even in 1810, when the Netherlands defaulted. In 2003, Yale bought it.",
+      "microhooks": [
+        "But here's the twist."
+      ],
+      "props": {
+        "title": "Still paying",
+        "events": [
+          {
+            "year": 1648,
+            "label": "Bond issued"
+          },
+          {
+            "year": 1810,
+            "label": "Dutch state defaults"
+          },
+          {
+            "year": 2003,
+            "label": "Yale buys it"
+          }
+        ],
+        "factId": "f-timeline"
+      },
+      "cues": [
+        {
+          "atWord": "1648",
+          "do": "emphasize",
+          "text": "issued"
+        },
+        {
+          "atWord": "defaulted",
+          "do": "emphasize",
+          "text": "defaults"
+        },
+        {
+          "atWord": "Yale",
+          "do": "emphasize",
+          "text": "Yale"
+        }
+      ]
+    },
+    {
+      "id": "in-person",
+      "type": "archival",
+      "sourceFactId": "f-in-person",
+      "narration": "There was one problem. Interest had to be collected in person. So a Yale professor presented the bond and collected 26 years at once.",
+      "microhooks": [
+        "There was one problem."
+      ],
+      "props": {
+        "title": "De Rentebrief, 1711",
+        "assetId": "rentebrief-1711",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.66,
+            "y": 0.57,
+            "w": 0.5
+          },
+          {
+            "atWord": "person",
+            "x": 0.61,
+            "y": 0.54,
+            "w": 0.28
+          },
+          {
+            "atWord": "presented",
+            "x": 0.67,
+            "y": 0.63,
+            "w": 0.26
+          },
+          {
+            "atWord": "26",
+            "x": 0.72,
+            "y": 0.45,
+            "w": 0.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "type": "big-number",
+      "speaks": [
+        "f-inflation"
+      ],
+      "narration": "Inflation took its toll. Today it pays just 11.35 euros a year.",
+      "microhooks": [
+        "Inflation took its toll."
+      ],
+      "props": {
+        "value": 11.35,
+        "prefix": "€",
+        "decimals": 2,
+        "label": "a year in interest today",
+        "factId": "f-today"
+      }
+    },
+    {
+      "id": "reveal",
+      "type": "kinetic-text",
+      "speaks": [
+        "f-quote"
+      ],
+      "narration": "Here's the kicker: Yale says it could pay for another 1,000 years. So who won, the lender or the borrower?",
+      "microhooks": [
+        "Here's the kicker:",
+        "So who won, the lender or the borrower?"
+      ],
+      "props": {
+        "lines": [
+          "The lender?",
+          "The borrower?"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "lender",
+          "do": "emphasize",
+          "text": "lender?"
+        },
+        {
+          "atWord": "borrower",
+          "do": "emphasize",
+          "text": "borrower?"
+        }
+      ]
+    }
+  ]
+}

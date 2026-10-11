@@ -1,0 +1,98 @@
+[
+  {
+    "factId": "f-issued",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-oath",
+    "url": "https://www.nationalgallery.org.uk/paintings/gerard-ter-borch-the-ratification-of-the-treaty-of-munster",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.nationalgallery.org.uk"
+  },
+  {
+    "factId": "f-age",
+    "url": "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND som.yale.edu"
+  },
+  {
+    "factId": "f-terms",
+    "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND beinecke.library.yale.edu"
+  },
+  {
+    "factId": "f-purpose",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-rate",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-margins",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-timeline",
+    "url": "https://beinecke.library.yale.edu/article/infinity-has-price",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND beinecke.library.yale.edu"
+  },
+  {
+    "factId": "f-in-person",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-today",
+    "url": "https://www.accountant.nl/nieuws/2015/9/schap-betaalt-rente-op-obligatie-uit-1648/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.accountant.nl"
+  },
+  {
+    "factId": "f-2015",
+    "url": "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND news.yale.edu"
+  },
+  {
+    "factId": "f-quote",
+    "url": "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND som.yale.edu"
+  }
+]

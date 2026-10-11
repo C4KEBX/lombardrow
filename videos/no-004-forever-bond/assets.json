@@ -1,0 +1,31 @@
+{
+  "assets": [
+    {
+      "id": "munster-oath-1648",
+      "file": "assets/munster-oath-1648.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:De_be%C3%ABdiging_van_het_vredesverdrag_tussen_Spanje_en_de_Verenigde_Nederlanden_in_het_Raadhuis_van_Munster,_15_mei_1648,_SK-A-405.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/62/De_be%C3%ABdiging_van_het_vredesverdrag_tussen_Spanje_en_de_Verenigde_Nederlanden_in_het_Raadhuis_van_Munster%2C_15_mei_1648%2C_SK-A-405.jpg",
+      "license": "cc0",
+      "credit": "After Gerard ter Borch, Munster 1648. Rijksmuseum. CC0.",
+      "depicts": "A copy (about 1675 to 1700) of Gerard ter Borch's painting of the oath ratifying the Peace of Munster between Spain and the Dutch Republic in the town hall of Munster on 15 May 1648; the Dutch delegates raise two fingers, the Spanish lay their hands on the Bible. Rijksmuseum SK-A-405, CC0 on Commons."
+    },
+    {
+      "id": "lekdijk-cushion-1706",
+      "file": "assets/lekdijk-cushion-1706.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kussen_met_het_wapen_van_het_waterschap_Lekdijk_Bovendams_(van_de_rivier_de_Lek_boven_de_dam),_BK-NM-10887.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/Kussen_met_het_wapen_van_het_waterschap_Lekdijk_Bovendams_%28van_de_rivier_de_Lek_boven_de_dam%29%2C_BK-NM-10887.jpg",
+      "license": "cc0",
+      "credit": "Lekdijk Bovendams cushion, 1706. Rijksmuseum. CC0.",
+      "depicts": "A magistrate's cushion embroidered with the arms of the Lekdijk Bovendams water board, dated 1706, Rijksmuseum BK-NM-10887, CC0 on Commons. It shows the borrower's arms, not the bond."
+    },
+    {
+      "id": "rentebrief-1711",
+      "file": "assets/rentebrief-1711.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:In_een_vertrek_houden_enkele_mannen_zich_met_geld_bezig_De_Rentebrief,_RP-P-OB-45.621.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/In_een_vertrek_houden_enkele_mannen_zich_met_geld_bezig_De_Rentebrief%2C_RP-P-OB-45.621.jpg",
+      "license": "cc0",
+      "credit": "De Rentebrief (The Bond), print, 1711. Rijksmuseum. CC0.",
+      "depicts": "A 1711 Dutch book illustration titled De Rentebrief (the bond or annuity letter): men in a room busy with money. Rijksmuseum RP-P-OB-45.621, CC0 on Commons. A period scene of Dutch lending, not Yale's bond."
+    }
+  ]
+}
