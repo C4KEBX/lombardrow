@@ -142,6 +142,7 @@ export function openerIssues(sb: Storyboard): string[] {
   const first = sb.scenes[0];
   if (!first) return [];
   if (sb.meta.open === "bleed") return bleedOpenIssues(sb);
+  if (sb.meta.hookLine !== undefined) return ["meta.hookLine is the bleed open's frame-0 line; set meta.open to \"bleed\" or drop it"];
   if (sb.meta.open !== "cold") {
     return first.type === "title" ? [] : [`Scene "${first.id}" opens the video as ${first.type}; a title-card open needs a title scene first, which carries the door number. For a moving open, set meta.open to "cold"`];
   }

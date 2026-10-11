@@ -21,6 +21,7 @@ import type { VideoProps } from "../pipeline/buildVideo";
 import { ColdOpenCamera, ColdOpenMasthead, COLD_OPEN_MASTHEAD_FRAMES, COLD_OPEN_PREROLL_FRAMES } from "./ColdOpenMasthead";
 import { CommentPrompt } from "./CommentPrompt";
 import { CornerTag, cornerTagFrames } from "./CornerTag";
+import { HOOK_LINE, HookLine } from "./HookLine";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
 
@@ -109,6 +110,11 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
       {bleedOpen && (
         <Sequence from={0} durationInFrames={cornerTagFrames()} name="Corner tag">
           <CornerTag doorNo={door.doorNo} title={bleedOpen.title} />
+        </Sequence>
+      )}
+      {bleedOpen?.hookLine && (
+        <Sequence from={0} durationInFrames={HOOK_LINE.endFrame} name="Hook line">
+          <HookLine text={bleedOpen.hookLine} />
         </Sequence>
       )}
       {close.ending && (

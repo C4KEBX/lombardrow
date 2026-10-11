@@ -10,7 +10,7 @@ import { imageSize } from "../../src/pipeline/imageSize";
 import { composeScenes } from "../../src/pipeline/resolveScene";
 import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
 import { checkStoryboard, openerIssues } from "../../src/skill/check";
-import { estimatedWords, microhookFrames, pacingIssues, visualChangeFrames } from "../../src/skill/pacing";
+import { endingFrames, estimatedWords, microhookFrames, pacingIssues, visualChangeFrames } from "../../src/skill/pacing";
 import { splitVoice, ttsArgs } from "../../src/voice/edge";
 import { voiceFor } from "../../src/voice/types";
 
@@ -179,5 +179,35 @@ describe("the reveal ending", () => {
   it("rejects a prompt that is not a question or a word not spoken", () => {
     expect(() => parseStoryboard(withEnding({ prompt: "Comment below", atWord: "lose" }))).toThrow(/end it with \?/);
     expect(() => buildVideo(withEnding({ prompt: "Which one?", atWord: "zebra" }), facts, words, 30, 2500, images)).toThrow(/not spoken in the last scene/);
+  });
+});
+
+describe("the bleed open's hook line", () => {
+  const withMeta = (extra: Record<string, unknown>) => parseStoryboard({ ...clone(storyboard), meta: { ...clone(storyboard).meta, ...extra } });
+  const images = Object.fromEntries(assets.assets.map((a) => [a.id, { src: "x", credit: a.credit, width: 2000, height: 3000 }]));
+  const words = (sb: { scenes: { id: string; narration: string; brisk?: boolean }[] }) =>
+    Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)]));
+
+  it("reaches the composition on a bleed open", () => {
+    const built = buildVideo(withMeta({ hookLine: "Signed in 1648. Still paying." }), facts, words, 30, 2500, images);
+    expect(built.bleedOpen?.hookLine).toBe("Signed in 1648. Still paying.");
+  });
+
+  it("is refused on another open and capped in length", () => {
+    expect(openerIssues(withMeta({ open: "cold", format: "classic", hookLine: "Short line." }))).toContainEqual(expect.stringMatching(/meta.hookLine/));
+    expect(() => withMeta({ hookLine: "x".repeat(45) })).toThrow();
+  });
+});
+
+describe("the comment question as a picture change", () => {
+  it("counts its pop on its word in the last scene", () => {
+    const sb = parseStoryboard(clone(storyboard));
+    const scenes = composeScenes(sb, Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)])), 30);
+    const last = scenes[scenes.length - 1];
+    const word = last.words[2].text.replace(/[^\w]/g, "");
+    expect(endingFrames(sb, last, 30)).toEqual([]);
+    const [frame] = endingFrames({ ...sb, meta: { ...sb.meta, ending: { prompt: "Which one?", atWord: word, occurrence: 1 } } }, last, 30);
+    expect(frame).toBeGreaterThan(last.startFrame);
+    expect(frame).toBeLessThan(last.startFrame + last.durationFrames);
   });
 });

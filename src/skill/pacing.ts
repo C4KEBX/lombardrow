@@ -1,6 +1,6 @@
 import type { ComposedScene } from "../pipeline/resolveScene";
 import type { Storyboard } from "../schema/storyboard";
-import type { WordTiming } from "../schema/timing";
+import { msToFrame, resolveCue, type WordTiming } from "../schema/timing";
 import { SENTENCE_GAP_MS, splitSentences } from "../voice/sentences";
 import { synthWords } from "../voice/synthWords";
 import { spokenWordCount, WORDS_PER_SECOND } from "./estimate";
@@ -40,6 +40,17 @@ export function visualChangeFrames(scenes: readonly ComposedScene[]): number[] {
   return [...frames].sort((a, b) => a - b);
 }
 
+/** The reveal ending's comment question popping in is a change of picture too. Unresolvable words are buildVideo's error to report. */
+export function endingFrames(sb: Storyboard, last: ComposedScene, fps: number): number[] {
+  const ending = sb.meta.ending;
+  if (!ending) return [];
+  try {
+    return [last.startFrame + msToFrame(resolveCue(last.words, ending.atWord, ending.occurrence), fps)];
+  } catch {
+    return [];
+  }
+}
+
 /** Where each microhook starts, in absolute frames: the start of its first word. */
 export function microhookFrames(scenes: readonly ComposedScene[], fps: number): number[] {
   const out: number[] = [];
@@ -63,7 +74,7 @@ export function pacingIssues(sb: Storyboard, scenes: readonly ComposedScene[], f
   const endFrame = last.startFrame + last.durationFrames;
   const end = sec(endFrame, fps);
 
-  const changes = visualChangeFrames(scenes).map((f) => sec(f, fps));
+  const changes = [...visualChangeFrames(scenes), ...endingFrames(sb, last, fps)].sort((a, b) => a - b).map((f) => sec(f, fps));
   const stops = [0, ...changes, end];
   for (let i = 1; i < stops.length; i += 1) {
     const from = stops[i - 1];

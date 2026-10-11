@@ -3,7 +3,7 @@ import { interpolate, useCurrentFrame } from "remotion";
 import { BODY_FONT, DISPLAY_FONT, TABULAR } from "../design/fonts";
 import { easeOutCubic } from "../design/motion";
 import { BRAND } from "../design/theme";
-import { CONTENT, SAFE } from "../design/tokens";
+import { CONTENT, OVERLAY_TOP, SAFE } from "../design/tokens";
 import { doorLabelText } from "../devices/label";
 
 /**
@@ -24,7 +24,7 @@ export const CornerTag: React.FC<{ doorNo: number; title: string }> = ({ doorNo,
     <div
       style={{
         position: "absolute",
-        top: SAFE.top,
+        top: OVERLAY_TOP,
         right: SAFE.right,
         maxWidth: Math.min(CORNER_TAG.maxWidth, CONTENT.width),
         padding: "14px 22px 16px",

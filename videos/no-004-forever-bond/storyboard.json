@@ -11,8 +11,9 @@
     "format": "fast",
     "ending": {
       "prompt": "Who won: the lender or the borrower?",
-      "atWord": "borrower"
-    }
+      "atWord": "itself"
+    },
+    "hookLine": "Signed in 1648. Still paying interest."
   },
   "audio": {
     "music": null
@@ -27,9 +28,9 @@
         "f-age",
         "f-oath"
       ],
-      "narration": "This loan will never be paid back. Yet its interest is still paid, 378 years on. It was signed on 15 May 1648, the day Spain and the Dutch swore peace.",
+      "narration": "This IOU is 378 years old, and it still pays interest. It was signed on 15 May 1648, the day Spain and the Dutch swore peace.",
       "microhooks": [
-        "Yet its interest is still paid, 378 years on."
+        "and it still pays interest."
       ],
       "props": {
         "title": "Munster, 15 May 1648",
@@ -42,7 +43,7 @@
             "w": 0.5
           },
           {
-            "atWord": "Yet",
+            "atWord": "still",
             "x": 0.55,
             "y": 0.58,
             "w": 0.3
@@ -125,15 +126,16 @@
         ]
       },
       "microhooks": [
-        "The borrower wasn't a king."
+        "The borrower wasn't a king.",
+        "It was a water board"
       ]
     },
     {
       "id": "forever",
       "type": "kinetic-text",
-      "narration": "The bond has no end date. Here's the catch: it promised 5% a year, forever.",
+      "narration": "The bond has no end date. It promised 5% a year, every year, forever.",
       "microhooks": [
-        "Here's the catch:"
+        "every year, forever."
       ],
       "props": {
         "lines": [
@@ -160,7 +162,7 @@
         "f-rate",
         "f-margins"
       ],
-      "narration": "Every payment was written on the goatskin. Later the rate was cut in half. Then it ran out of room, so in 1944 a paper sheet was added.",
+      "narration": "Every payment was written on the goatskin itself. Later the rate was cut in half. Then the goatskin ran out of room, so in 1944 a paper sheet was added.",
       "props": {
         "title": "The bond's margins",
         "rows": [
@@ -199,7 +201,7 @@
         }
       ],
       "microhooks": [
-        "Then it ran out of room"
+        "Then the goatskin ran out of room"
       ]
     },
     {
@@ -208,9 +210,9 @@
       "speaks": [
         "f-issued"
       ],
-      "narration": "But here's the twist. From 1648 it kept paying, even in 1810, when the Netherlands defaulted. In 2003, Yale bought it.",
+      "narration": "Even its own country defaulted on its debts. In 1810 the Dutch state stopped paying, but the water board kept paying. In 2003, Yale bought the bond.",
       "microhooks": [
-        "But here's the twist."
+        "Even its own country defaulted on its debts."
       ],
       "props": {
         "title": "Still paying",
@@ -232,12 +234,12 @@
       },
       "cues": [
         {
-          "atWord": "1648",
+          "atWord": "Even",
           "do": "emphasize",
           "text": "issued"
         },
         {
-          "atWord": "defaulted",
+          "atWord": "1810",
           "do": "emphasize",
           "text": "defaults"
         },
@@ -252,9 +254,10 @@
       "id": "in-person",
       "type": "archival",
       "sourceFactId": "f-in-person",
-      "narration": "There was one problem. Interest had to be collected in person. So a Yale professor took the bond over and collected 26 years at once.",
+      "narration": "There was one problem. Interest had to be collected in person. So a Yale professor took the bond over and collected 26 years at once. In 2015 a curator collected 12 more.",
       "microhooks": [
-        "There was one problem."
+        "There was one problem.",
+        "So a Yale professor took the bond over"
       ],
       "props": {
         "title": "De Rentebrief, 1711",
@@ -283,19 +286,30 @@
             "x": 0.72,
             "y": 0.45,
             "w": 0.42
+          },
+          {
+            "atWord": "2015",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.6
           }
         ]
-      }
+      },
+      "speaks": [
+        "f-2015"
+      ]
     },
     {
       "id": "today",
       "type": "big-number",
       "speaks": [
-        "f-inflation"
+        "f-inflation",
+        "f-terms"
       ],
-      "narration": "Inflation took its toll. Today it pays just 11.35 euros a year.",
+      "narration": "Inflation took its toll. Today it pays just 11.35 euros a year. And the loan itself? It will never be paid back.",
       "microhooks": [
-        "Inflation took its toll."
+        "Inflation took its toll.",
+        "And the loan itself?"
       ],
       "props": {
         "value": 11.35,
@@ -303,35 +317,12 @@
         "decimals": 2,
         "label": "a year in interest today",
         "factId": "f-today"
-      }
-    },
-    {
-      "id": "reveal",
-      "type": "kinetic-text",
-      "speaks": [
-        "f-quote"
-      ],
-      "narration": "Here's the kicker: a Yale professor says it could live another 1,000 years. So who won, the lender or the borrower?",
-      "microhooks": [
-        "Here's the kicker:",
-        "So who won, the lender or the borrower?"
-      ],
-      "props": {
-        "lines": [
-          "The lender?",
-          "The borrower?"
-        ]
       },
       "cues": [
         {
-          "atWord": "lender",
-          "do": "emphasize",
-          "text": "lender?"
-        },
-        {
-          "atWord": "borrower",
-          "do": "emphasize",
-          "text": "borrower?"
+          "atWord": "euros",
+          "do": "callout",
+          "text": "Once 50 guilders"
         }
       ]
     }

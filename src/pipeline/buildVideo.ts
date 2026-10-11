@@ -26,7 +26,7 @@ export type VideoProps = {
   /** Set for a cold open: the title laid over the moving first scene, instead of a title card. */
   coldOpen?: { headline: string };
   /** Set for a bleed open: nothing over frame one, then the title in a small corner tag from 2 s. */
-  bleedOpen?: { title: string };
+  bleedOpen?: { title: string; hookLine?: string };
   /** "lane": captions in their lane under the scene (classic). "bold": big, one to three words, over the frame (fast). */
   captionStyle?: CaptionStyle;
   /**
@@ -110,7 +110,7 @@ export function buildVideo(
     totalFrames: closeStart + close,
     door: { doorNo, series },
     coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,
-    bleedOpen: storyboard.meta.open === "bleed" ? { title: storyboard.meta.title } : undefined,
+    bleedOpen: storyboard.meta.open === "bleed" ? { title: storyboard.meta.title, hookLine: storyboard.meta.hookLine } : undefined,
     captionStyle,
     close: { startFrame: closeStart, frames: close, doorNo, ending },
     years,

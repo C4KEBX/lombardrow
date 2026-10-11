@@ -3,7 +3,7 @@ import { useCurrentFrame } from "remotion";
 import { BODY_FONT } from "../design/fonts";
 import { easeOutCubic } from "../design/motion";
 import { BRAND } from "../design/theme";
-import { CONTENT, SAFE } from "../design/tokens";
+import { CONTENT, OVERLAY_TOP } from "../design/tokens";
 
 /**
  * The reveal ending's comment question: it pops in at the top of the frame on its spoken word and stays to the last
@@ -18,7 +18,7 @@ export const CommentPrompt: React.FC<{ prompt: string }> = ({ prompt }) => {
     <div
       style={{
         position: "absolute",
-        top: SAFE.top,
+        top: OVERLAY_TOP,
         left: CONTENT.left,
         width: CONTENT.width,
         boxSizing: "border-box",

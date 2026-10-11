@@ -16,6 +16,12 @@ export const SAFE = {
   right: VIDEO.width - DEVICES.platform_zones.right.x,
 } as const;
 
+/**
+ * Top of the overlays laid over a fast-format video (frame-0 hook line, corner tag, comment question). Instagram's
+ * top bar covers about the first 210 px of a Reel, so they start below it (viral review of No. 004, 2026-10-11).
+ */
+export const OVERLAY_TOP = 230;
+
 /** The content area every scene draws inside: x 72 to 918, down to the bottom platform zone. */
 export const CONTENT = {
   left: SAFE.left,

@@ -57,6 +57,11 @@
             "fast"
           ]
         },
+        "hookLine": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 44
+        },
         "ending": {
           "type": "object",
           "properties": {

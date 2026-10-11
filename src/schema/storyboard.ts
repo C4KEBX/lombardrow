@@ -378,6 +378,11 @@ export const StoryboardSchema = z
        */
       format: z.enum(["classic", "fast"]).default("classic"),
       /**
+       * A bleed open's frame-0 line: the claim burned in over the first image for the first 2 s, until the corner tag
+       * comes in, so a viewer with the sound off reads the stakes at once. Two short lines at most.
+       */
+      hookLine: z.string().min(1).max(44).optional(),
+      /**
        * How the video ends. Without it, on the door plate. With it (Justin, 2026-10-11, from the viral review), on the
        * last scene's reveal: the comment question pops up on its spoken word and the sign-off plays over the reveal.
        */
