@@ -50,8 +50,7 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
     case "archival": {
       const image = images[scene.props.assetId];
       if (scene.props.layout === "bleed") {
-        const size = image?.width && image.height ? { width: image.width, height: image.height } : undefined;
-        return <BleedArchival props={scene.props} shotFrames={shotFrames} durationFrames={durationFrames} src={image?.src} credit={image?.credit} size={size} />;
+        return <BleedArchival props={scene.props} shotFrames={shotFrames} durationFrames={durationFrames} images={images} />;
       }
       return <Archival props={scene.props} cues={cues} durationFrames={durationFrames} year={year} src={image?.src} credit={image?.credit} />;
     }

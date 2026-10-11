@@ -1,7 +1,7 @@
 import type { Assets } from "../schema/assets";
 import type { Facts } from "../schema/facts";
 import { figureMatches, figuresIn } from "../schema/figures";
-import { factIdsOf, type Storyboard } from "../schema/storyboard";
+import { factIdsOf, sceneAssetIds, type Storyboard } from "../schema/storyboard";
 import { factNumbers } from "../schema/validate";
 
 type Fact = Facts["facts"][number];
@@ -40,7 +40,7 @@ export function buildScriptDoc(sb: Storyboard, facts: Facts, assets?: Assets): S
       return { sceneId: scene.id, sentence, factIds: [], basis: "none" };
     });
   });
-  const usedImages = new Set(sb.scenes.flatMap((s) => (s.type === "archival" ? [s.props.assetId] : [])));
+  const usedImages = new Set(sb.scenes.flatMap((s) => sceneAssetIds(s)));
   return {
     title: sb.meta.title,
     doorNo: sb.meta.doorNo,

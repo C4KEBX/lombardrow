@@ -1776,6 +1776,10 @@
                             "h"
                           ],
                           "additionalProperties": false
+                        },
+                        "assetId": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [

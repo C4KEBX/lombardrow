@@ -9,7 +9,7 @@ import { valueIn } from "../../src/scenes/compare/Compare";
 import { buildVideo, ENDING_HOLD_FRAMES } from "../../src/pipeline/buildVideo";
 import { imageSize } from "../../src/pipeline/imageSize";
 import { composeScenes } from "../../src/pipeline/resolveScene";
-import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
+import { parseStoryboard, sceneAssetIds, StoryboardError } from "../../src/schema/storyboard";
 import { checkStoryboard, openerIssues } from "../../src/skill/check";
 import { endingFrames, estimatedWords, microhookFrames, pacingIssues, visualChangeFrames } from "../../src/skill/pacing";
 import { splitVoice, ttsArgs } from "../../src/voice/edge";
@@ -233,5 +233,24 @@ describe("captions on the reveal ending", () => {
   it("draws bold captions solid on a light ground", () => {
     expect(boldColors("parchment").WebkitTextStroke).toBeUndefined();
     expect(boldColors("ink").WebkitTextStroke).toBeDefined();
+  });
+});
+
+describe("shots that cut to another image", () => {
+  it("lists every image a scene shows, its own first", () => {
+    const sb = parseStoryboard(clone(storyboard));
+    const bleed = sb.scenes.find((s) => s.type === "archival" && s.props.layout === "bleed");
+    if (!bleed || bleed.type !== "archival" || !bleed.props.shots) throw new Error("fixture has no bleed scene");
+    const withCut = { ...bleed, props: { ...bleed.props, shots: [...bleed.props.shots, { atWord: "x", occurrence: 1, x: 0.5, y: 0.5, w: 0.3, assetId: "other" }] } };
+    expect(sceneAssetIds(withCut)).toEqual([bleed.props.assetId, "other"]);
+  });
+
+  it("refuses to build when a shot's image was not loaded", () => {
+    const sb = clone(storyboard);
+    const scene = sb.scenes.find((s) => s.type === "archival") as { props: { shots: { assetId?: string }[] } };
+    scene.props.shots[0].assetId = "missing-image";
+    const images = Object.fromEntries(assets.assets.map((a) => [a.id, { src: "x", credit: a.credit, width: 2000, height: 3000 }]));
+    const words = (s: { scenes: { id: string; narration: string; brisk?: boolean }[] }) => Object.fromEntries(s.scenes.map((x) => [x.id, estimatedWords(x)]));
+    expect(() => buildVideo(sb, facts, words, 30, 1000, images)).toThrow(/missing-image/);
   });
 });

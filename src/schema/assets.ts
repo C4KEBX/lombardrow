@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { StoryboardError, type Storyboard } from "./storyboard";
+import { StoryboardError, sceneAssetIds, type Storyboard } from "./storyboard";
 
 /** Only images anyone may reuse without permission: public domain or CC0. */
 export const ASSET_LICENSES = ["public-domain", "cc0"] as const;
@@ -42,10 +42,12 @@ export function assertAssets(sb: Storyboard, assets: Assets | undefined, fileExi
   for (const scene of sb.scenes) {
     if (scene.type !== "archival") continue;
     if (!assets) throw new StoryboardError(`Scene "${scene.id}" (archival) needs assets.json; pass --assets`);
-    const asset = assets.assets.find((a) => a.id === scene.props.assetId);
-    if (!asset) throw new StoryboardError(`Scene "${scene.id}" uses asset "${scene.props.assetId}", which is not in assets.json`);
-    if (!fileExists(asset)) {
-      throw new StoryboardError(`Scene "${scene.id}": asset "${asset.id}" file ${asset.file} is missing; run npm run assets -- --assets <assets.json>`);
+    for (const id of sceneAssetIds(scene)) {
+      const asset = assets.assets.find((a) => a.id === id);
+      if (!asset) throw new StoryboardError(`Scene "${scene.id}" uses asset "${id}", which is not in assets.json`);
+      if (!fileExists(asset)) {
+        throw new StoryboardError(`Scene "${scene.id}": asset "${asset.id}" file ${asset.file} is missing; run npm run assets -- --assets <assets.json>`);
+      }
     }
   }
 }

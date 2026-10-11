@@ -268,6 +268,11 @@ const ShotSchema = z.strictObject({
   w: z.number().min(0.05).max(1),
   /** A highlighter swept across these words, as they are spoken. */
   mark: ImageRectSchema.optional(),
+  /**
+   * Cut to another image from assets.json for this shot (default: the scene's own). Shots need not show the literal
+   * thing said: an image that illustrates it in the same period style is fine (Justin, 2026-10-11).
+   */
+  assetId: z.string().min(1).optional(),
 });
 
 const ArchivalSceneSchema = z.strictObject({
@@ -454,4 +459,10 @@ export function parseStoryboard(input: unknown): Storyboard {
   const result = StoryboardSchema.safeParse(input);
   if (!result.success) throw new StoryboardError(z.prettifyError(result.error));
   return result.data;
+}
+
+/** Every image an archival scene shows: its own asset, then any its shots cut to. */
+export function sceneAssetIds(scene: Scene): string[] {
+  if (scene.type !== "archival") return [];
+  return [...new Set([scene.props.assetId, ...(scene.props.shots ?? []).flatMap((shot) => (shot.assetId ? [shot.assetId] : []))])];
 }

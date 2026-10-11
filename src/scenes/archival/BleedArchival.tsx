@@ -48,14 +48,17 @@ export const BleedArchival: React.FC<{
   props: ArchivalProps;
   shotFrames: readonly number[];
   durationFrames: number;
-  src?: string;
-  credit?: string;
-  size?: { width: number; height: number };
-}> = ({ props, shotFrames, durationFrames, src, credit, size }) => {
+  /** Images by asset id: the scene's own, and any its shots cut to. */
+  images: Record<string, { src: string; credit: string; width?: number; height?: number }>;
+}> = ({ props, shotFrames, durationFrames, images }) => {
   const frame = useCurrentFrame();
   const shots = props.shots ?? [];
   const index = shotAt(shotFrames, frame);
   const shot = shots[index];
+  const image = shot ? images[shot.assetId ?? props.assetId] : undefined;
+  const src = image?.src;
+  const credit = image?.credit;
+  const size = image?.width && image.height ? { width: image.width, height: image.height } : undefined;
   if (!shot || !src || !size) return <AbsoluteFill style={{ background: BRAND.ledgerInk }} />;
   const start = shotFrames[index] ?? 0;
   const end = shotFrames[index + 1] ?? durationFrames;
