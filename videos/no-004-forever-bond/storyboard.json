@@ -131,7 +131,7 @@
     {
       "id": "forever",
       "type": "kinetic-text",
-      "narration": "The bond has no end date. Here's the catch: it pays 5% a year, forever.",
+      "narration": "The bond has no end date. Here's the catch: it promised 5% a year, forever.",
       "microhooks": [
         "Here's the catch:"
       ],
@@ -252,7 +252,7 @@
       "id": "in-person",
       "type": "archival",
       "sourceFactId": "f-in-person",
-      "narration": "There was one problem. Interest had to be collected in person. So a Yale professor presented the bond and collected 26 years at once.",
+      "narration": "There was one problem. Interest had to be collected in person. So a Yale professor took the bond over and collected 26 years at once.",
       "microhooks": [
         "There was one problem."
       ],
@@ -273,7 +273,7 @@
             "w": 0.28
           },
           {
-            "atWord": "presented",
+            "atWord": "took",
             "x": 0.67,
             "y": 0.63,
             "w": 0.26
@@ -311,7 +311,7 @@
       "speaks": [
         "f-quote"
       ],
-      "narration": "Here's the kicker: Yale says it could pay for another 1,000 years. So who won, the lender or the borrower?",
+      "narration": "Here's the kicker: a Yale professor says it could live another 1,000 years. So who won, the lender or the borrower?",
       "microhooks": [
         "Here's the kicker:",
         "So who won, the lender or the borrower?"
