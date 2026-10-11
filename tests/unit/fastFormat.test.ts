@@ -5,6 +5,7 @@ import storyboard from "../../fixtures/fast/mortgage.storyboard.json";
 import { chunkWords } from "../../src/captions/chunk";
 import { shotAt, shotTransform, BLEED_ANCHOR } from "../../src/scenes/archival/BleedArchival";
 import { valueIn } from "../../src/scenes/compare/Compare";
+import { buildVideo } from "../../src/pipeline/buildVideo";
 import { imageSize } from "../../src/pipeline/imageSize";
 import { composeScenes } from "../../src/pipeline/resolveScene";
 import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
@@ -151,5 +152,32 @@ describe("compare values", () => {
     expect(valueIn(0.5)).toBe(0);
     expect(valueIn(0.8)).toBeCloseTo(0.5);
     expect(valueIn(1)).toBe(1);
+  });
+});
+
+describe("the reveal ending", () => {
+  const images = Object.fromEntries(assets.assets.map((a) => [a.id, { src: "x", credit: a.credit, width: 2000, height: 3000 }]));
+  const words = (sb: { scenes: { id: string; narration: string; brisk?: boolean }[] }) =>
+    Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)]));
+  const withEnding = (ending: unknown) => ({ ...clone(storyboard), meta: { ...clone(storyboard).meta, ending } });
+
+  it("keeps the door plate when no ending is set", () => {
+    const built = buildVideo(storyboard, facts, words, 30, 2500, images);
+    expect(built.close.ending).toBeUndefined();
+  });
+
+  it("runs the last scene through the sign-off and shows the question on its word", () => {
+    const plain = buildVideo(storyboard, facts, words, 30, 2500, images);
+    const built = buildVideo(withEnding({ prompt: "Which death is in yours?", atWord: "lose" }), facts, words, 30, 2500, images);
+    const last = built.scenes[built.scenes.length - 1];
+    expect(built.totalFrames).toBe(plain.totalFrames);
+    expect(last.startFrame + last.durationFrames).toBe(built.totalFrames);
+    expect(built.close.ending?.promptFrame).toBeGreaterThan(last.startFrame);
+    expect(built.close.ending?.promptFrame).toBeLessThan(built.close.startFrame);
+  });
+
+  it("rejects a prompt that is not a question or a word not spoken", () => {
+    expect(() => parseStoryboard(withEnding({ prompt: "Comment below", atWord: "lose" }))).toThrow(/end it with \?/);
+    expect(() => buildVideo(withEnding({ prompt: "Which one?", atWord: "zebra" }), facts, words, 30, 2500, images)).toThrow(/not spoken in the last scene/);
   });
 });

@@ -28,6 +28,7 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 ## Length and ending
 
 - **At least 62 seconds and at most 70.** 62 s is the floor for TikTok and YouTube creator monetization. A short script gets more sourced narration, never padding or slower pacing. Enforced by `produce`, `npm run voice`, `check` and the publish checklist (`MIN_VIDEO_MS` in `src/schema/validate.ts`) (2026-10-09).
+- **End on the reveal and a comment question, not the door plate (2026-10-11, trial from No. 004).** The viral review of the fast-format prototype marked the static door-plate end card down and suggested ending on a crisp reveal plus a question viewers want to answer. Justin: "Let's try it with the suggested ending instead of the door plate." With `meta.ending` the last scene keeps running through the spoken sign-off, and the question pops up at the top of the frame on its spoken word and stays to the last frame. The sign-off itself is unchanged. Drawn by `src/compose/CommentPrompt.tsx`, built in `buildVideo` (`src/pipeline/buildVideo.ts`). Without `meta.ending` a video still ends on the door plate.
 - **End abruptly.** The video stops 0.15 s after the sign-off's last word, with no held end card, so the loop restarts at once and can count a second view (`closeFrames` in `src/devices/tracks.ts`) (2026-10-09).
 
 ## Voice

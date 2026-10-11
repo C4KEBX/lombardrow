@@ -377,6 +377,19 @@ export const StoryboardSchema = z
        * the middle of the frame one to three words at a time, and the pacing rules in `pacingIssues` (src/skill/pacing.ts).
        */
       format: z.enum(["classic", "fast"]).default("classic"),
+      /**
+       * How the video ends. Without it, on the door plate. With it (Justin, 2026-10-11, from the viral review), on the
+       * last scene's reveal: the comment question pops up on its spoken word and the sign-off plays over the reveal.
+       */
+      ending: z
+        .strictObject({
+          /** The question on screen, quoted in the last scene's narration or close to it. */
+          prompt: z.string().min(1).max(56).regex(/\?$/, "the comment prompt is a question: end it with ?"),
+          /** The word in the last scene's narration where the question appears. */
+          atWord: z.string().min(1),
+          occurrence: z.number().int().min(1).default(1),
+        })
+        .optional(),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),
     scenes: z.array(SceneSchema).min(1),

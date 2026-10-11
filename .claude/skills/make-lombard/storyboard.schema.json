@@ -56,6 +56,33 @@
             "classic",
             "fast"
           ]
+        },
+        "ending": {
+          "type": "object",
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 56,
+              "pattern": "\\?$"
+            },
+            "atWord": {
+              "type": "string",
+              "minLength": 1
+            },
+            "occurrence": {
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "prompt",
+            "atWord",
+            "occurrence"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

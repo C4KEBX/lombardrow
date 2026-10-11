@@ -19,6 +19,7 @@ import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
 import { ColdOpenCamera, ColdOpenMasthead, COLD_OPEN_MASTHEAD_FRAMES, COLD_OPEN_PREROLL_FRAMES } from "./ColdOpenMasthead";
+import { CommentPrompt } from "./CommentPrompt";
 import { CornerTag, cornerTagFrames } from "./CornerTag";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
@@ -64,10 +65,11 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
   }
 };
 
-/** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the door-plate close, with the overlays on top. */
+/** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the close (the door plate, or the reveal ending's comment question), with the overlays on top. */
 export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, bleedOpen, captionStyle = "lane", close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
-  const cuts = close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
+  const plate = close.frames > 0 && !close.ending;
+  const cuts = plate ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
     <AbsoluteFill style={{ background: BRAND.ledgerInk }}>
       {scenes.map((composed, i) => (
@@ -88,7 +90,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
           </ThemeProvider>
         </Sequence>
       ))}
-      {close.frames > 0 && (
+      {plate && (
         <Sequence from={close.startFrame} durationInFrames={close.frames} name="Door plate">
           <DoorPlate doorNo={close.doorNo} />
         </Sequence>
@@ -107,6 +109,11 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
       {bleedOpen && (
         <Sequence from={0} durationInFrames={cornerTagFrames()} name="Corner tag">
           <CornerTag doorNo={door.doorNo} title={bleedOpen.title} />
+        </Sequence>
+      )}
+      {close.ending && (
+        <Sequence from={close.ending.promptFrame} name="Comment prompt">
+          <CommentPrompt prompt={close.ending.prompt} />
         </Sequence>
       )}
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />

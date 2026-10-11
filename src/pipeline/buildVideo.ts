@@ -3,7 +3,7 @@ import { assertDevicesInBounds, deviceBoxes } from "../devices/bounds";
 import { closeFrames, stampTrack, yearTrack, type StampSpan, type YearSpan } from "../devices/tracks";
 import { parseFacts } from "../schema/facts";
 import { StoryboardError, parseStoryboard, type Storyboard } from "../schema/storyboard";
-import type { WordTiming } from "../schema/timing";
+import { CueResolutionError, msToFrame, resolveCue, type WordTiming } from "../schema/timing";
 import {
   assertCuesSupported,
   assertFactsTraceable,
@@ -29,7 +29,11 @@ export type VideoProps = {
   bleedOpen?: { title: string };
   /** "lane": captions in their lane under the scene (classic). "bold": big, one to three words, over the frame (fast). */
   captionStyle?: CaptionStyle;
-  close: { startFrame: number; frames: number; doorNo: number };
+  /**
+   * The sign-off, after the narration. On the door plate by default; with `ending`, over the last scene instead
+   * (that scene runs on through it) with the comment question shown from `promptFrame` to the end.
+   */
+  close: { startFrame: number; frames: number; doorNo: number; ending?: { prompt: string; promptFrame: number } };
   years: YearSpan[];
   stamps: StampSpan[];
   /** Archival images by asset id (data URIs or static URLs) with their on-image credit. */
@@ -37,6 +41,19 @@ export type VideoProps = {
 };
 
 export type BuiltVideo = VideoProps & { storyboard: Storyboard };
+
+/** Where the comment question appears: its word in the last scene, as a frame of the whole video. */
+function revealEnding(ending: NonNullable<Storyboard["meta"]["ending"]>, scenes: readonly ComposedScene[], fps: number): { prompt: string; promptFrame: number } {
+  const last = scenes[scenes.length - 1];
+  try {
+    return { prompt: ending.prompt, promptFrame: last.startFrame + msToFrame(resolveCue(last.words, ending.atWord, ending.occurrence), fps) };
+  } catch (error) {
+    if (error instanceof CueResolutionError) {
+      throw new StoryboardError(`meta.ending.atWord "${ending.atWord}" is not spoken in the last scene "${last.id}": ${error.message}`);
+    }
+    throw error;
+  }
+}
 
 /** The single path from raw JSON to renderable scenes: parse, validate, compose, place the devices. */
 export function buildVideo(
@@ -71,6 +88,11 @@ export function buildVideo(
   assertSceneTiming(scenes);
   const closeStart = scenes.reduce((end, s) => Math.max(end, s.startFrame + s.durationFrames), 0);
   const close = closeFrames(fps, signoffEndMs);
+  const ending = storyboard.meta.ending && revealEnding(storyboard.meta.ending, scenes, fps);
+  if (ending) {
+    const last = scenes[scenes.length - 1];
+    scenes[scenes.length - 1] = { ...last, durationFrames: last.durationFrames + close };
+  }
 
   const years = yearTrack(scenes.map((s) => ({ startFrame: s.startFrame, durationFrames: s.durationFrames, year: s.scene.year })));
   const stamps = stampTrack(
@@ -90,7 +112,7 @@ export function buildVideo(
     coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,
     bleedOpen: storyboard.meta.open === "bleed" ? { title: storyboard.meta.title } : undefined,
     captionStyle,
-    close: { startFrame: closeStart, frames: close, doorNo },
+    close: { startFrame: closeStart, frames: close, doorNo, ending },
     years,
     stamps,
     images: Object.fromEntries(
