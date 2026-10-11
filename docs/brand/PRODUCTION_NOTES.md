@@ -51,7 +51,7 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 ## Accuracy on screen
 
 - **One date per source (2026-10-10).** No. 003 called Littleton's book "1600" (the edition we showed), then put "Littleton's Tenures" at 1481 (when it was written) on the timeline. A viewer sees a contradiction. When a work has two dates, say both ("written 1481, printed 1600") or use one throughout. This is a script rule in the make-lombard skill.
-- **No made-up figures mid-animation (2026-10-10).** No. 001's compare bars counted up from zero, so a paused frame showed "0.658 yrs vs 0.000 yrs". Compare values now fade in at their true figure as each bar finishes (`valueIn` in `src/scenes/compare/Compare.tsx`).
+- **No made-up figures mid-animation (2026-10-10).** No. 001's compare bars counted up from zero, so a paused frame showed "0.658 yrs vs 0.000 yrs". Compare values now fade in at their true figure as each bar finishes (`valueIn` in `src/scenes/compare/Compare.tsx`). Big numbers had the same fault (No. 004's draft showed "€6.87" on the way to €11.35), so from 2026-10-11 they pop in at their true value with no count-up (`src/scenes/big-number/BigNumber.tsx`).
 
 ## Earlier decisions
 
