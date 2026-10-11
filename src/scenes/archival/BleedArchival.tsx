@@ -19,8 +19,8 @@ export const BLEED_MOTION = { push: 0.12, settle: 0.18, settleFrames: 10, driftP
  * 2026-10-11: the dimmed open "reads as a dark, busy crowd with no single subject").
  */
 export const BLEED_GRADE = "brightness(1.12) contrast(1.06) saturate(1.05)";
-/** How much ink covers a backdrop, so the graphic over it reads first. */
-export const BACKDROP_SCRIM = 0.6;
+/** How much ink covers a backdrop, and how soft it goes, so the text over it reads first even over a printed page. */
+export const BACKDROP = { scrim: 0.62, blurPx: 5 } as const;
 /** The highlighter starts a few frames after the cut and sweeps across the marked words. */
 export const BLEED_MARK = { delayFrames: 4, sweepFrames: 14, opacity: 0.5 } as const;
 
@@ -61,13 +61,13 @@ export function shotTransform(shot: ArchivalShot, size: { width: number; height:
 export const BleedArchival: React.FC<{
   /** The scene's image and its crops: an archival scene's props, or a graphic scene's backdrop. */
   props: { assetId: string; shots?: readonly ArchivalShot[] };
-  /** Ink over the whole image (0 to 1): set for a backdrop, so the graphic in front reads first. */
-  scrim?: number;
+  /** Set for a backdrop: ink over the whole image and a slight blur, so the graphic in front reads first; the credit moves top right. */
+  backdrop?: boolean;
   shotFrames: readonly number[];
   durationFrames: number;
   /** Images by asset id: the scene's own, and any its shots cut to. */
   images: Record<string, { src: string; credit: string; width?: number; height?: number }>;
-}> = ({ props, scrim, shotFrames, durationFrames, images }) => {
+}> = ({ props, backdrop, shotFrames, durationFrames, images }) => {
   const frame = useCurrentFrame();
   const shots = props.shots ?? [];
   const index = shotAt(shotFrames, frame);
@@ -86,7 +86,7 @@ export const BleedArchival: React.FC<{
   return (
     <AbsoluteFill style={{ background: BRAND.ledgerInk, overflow: "hidden" }}>
       <div style={{ position: "absolute", left, top, width: size.width * scale, height: size.height * scale }}>
-        <Img src={src} style={{ width: "100%", height: "100%", display: "block", filter: BLEED_GRADE }} />
+        <Img src={src} style={{ width: "100%", height: "100%", display: "block", filter: backdrop ? `${BLEED_GRADE} blur(${BACKDROP.blurPx}px)` : BLEED_GRADE }} />
         {shot.mark && sweep > 0 ? (
           <div
             style={{
@@ -109,12 +109,14 @@ export const BleedArchival: React.FC<{
           background: `linear-gradient(180deg, ${BRAND.ledgerInk}99 0px, ${BRAND.ledgerInk}00 320px, ${BRAND.ledgerInk}00 1080px, ${BRAND.ledgerInk}cc 1560px)`,
         }}
       />
-      {scrim ? <AbsoluteFill style={{ background: BRAND.ledgerInk, opacity: scrim }} /> : null}
+      {backdrop ? <AbsoluteFill style={{ background: BRAND.ledgerInk, opacity: BACKDROP.scrim }} /> : null}
       {/* The image credit sits top left, clear of the source stamp at the bottom and the corner tag at the top right. */}
       {credit ? (
         <div
           style={{
-            position: "absolute", left: CONTENT.left, top: SAFE.top, maxWidth: 400,
+            position: "absolute", top: SAFE.top, maxWidth: 400,
+            // A graphic scene's title sits top left, so a backdrop's credit goes top right.
+            ...(backdrop ? { right: VIDEO.width - CONTENT.right, textAlign: "right" as const } : { left: CONTENT.left }),
             fontFamily: BODY_FONT, fontSize: 22, lineHeight: 1.3, color: BRAND.parchment, opacity: 0.75,
           }}
         >

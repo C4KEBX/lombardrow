@@ -510,22 +510,23 @@
         "assetId": "new-bonnet",
         "shots": [
           {
-            "x": 0.12,
+            "x": 0.5,
+            "y": 0.3,
+            "w": 0.3
+          },
+          {
+            "atWord": "racial",
+            "assetId": "census-1854",
+            "x": 0.56,
             "y": 0.5,
             "w": 0.24
           },
           {
-            "atWord": "racial",
-            "assetId": "all-talk-1855",
-            "x": 0.65,
-            "y": 0.4,
-            "w": 0.3
-          },
-          {
             "atWord": "gender",
-            "x": 0.37,
-            "y": 0.33,
-            "w": 0.24
+            "assetId": "speculator-1852",
+            "x": 0.9,
+            "y": 0.5,
+            "w": 0.22
           },
           {
             "atWord": "which",

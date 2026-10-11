@@ -24,7 +24,9 @@ export const LedgerPage: React.FC<SceneRenderProps<LedgerPageProps>> = ({ props,
   const totalY = ledgerRowY(rows.length);
   const pageIn = Math.min(1, popIn(frame, fps, 0));
   const exit = interpolate(frame, [durationFrames - EXIT_FRAMES, durationFrames], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const rules = Array.from({ length: Math.floor((L.pageBottom - L.pageTop - 60) / L.pitch) + 1 }, (_, i) => ledgerRowY(i) + 34);
+  // Over a backdrop the page is cut to its rows, so the images show below it instead of a tall, mostly empty page.
+  const pageBottom = theme.fill === "transparent" ? (total ? totalY : ledgerRowY(rows.length - 1)) + 90 : L.pageBottom;
+  const rules = Array.from({ length: Math.floor((pageBottom - L.pageTop - 60) / L.pitch) + 1 }, (_, i) => ledgerRowY(i) + 34);
   const onParchment = theme.name === "parchment";
 
   const Line: React.FC<{ y: number; start: number; entry: string; amount: string; date?: string; bold?: boolean }> = ({ y, start, entry, amount, date, bold }) => {
@@ -54,7 +56,7 @@ export const LedgerPage: React.FC<SceneRenderProps<LedgerPageProps>> = ({ props,
       </div>
       <div
         style={{
-          position: "absolute", left: L.pageLeft, top: L.pageTop, width: L.pageRight - L.pageLeft, height: L.pageBottom - L.pageTop,
+          position: "absolute", left: L.pageLeft, top: L.pageTop, width: L.pageRight - L.pageLeft, height: pageBottom - L.pageTop,
           background: onParchment ? mix(BRAND.parchment, BRAND.ledgerInk, 0.96) : BRAND.parchment,
           border: onParchment ? `2px solid ${mix(BRAND.ledgerInk, BRAND.parchment, 0.35)}` : "none",
           opacity: pageIn, transform: `translateY(${(1 - pageIn) * 30}px)`,

@@ -12,7 +12,7 @@ import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title, type DoorHeader } from "../scenes/title/Title";
 import { Archival } from "../scenes/archival/Archival";
-import { BACKDROP_SCRIM, BleedArchival } from "../scenes/archival/BleedArchival";
+import { BleedArchival } from "../scenes/archival/BleedArchival";
 import { FlowDiagram } from "../scenes/flow-diagram/FlowDiagram";
 import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
@@ -31,7 +31,7 @@ const SceneWithBackdrop: React.FC<{ composed: ComposedScene; images: VideoProps[
   if (!backdrop || composed.scene.type === "archival") return <SceneSwitch composed={composed} images={images} door={door} />;
   return (
     <AbsoluteFill>
-      <BleedArchival props={backdrop} scrim={BACKDROP_SCRIM} shotFrames={composed.shotFrames} durationFrames={composed.durationFrames} images={images} />
+      <BleedArchival props={backdrop} backdrop shotFrames={composed.shotFrames} durationFrames={composed.durationFrames} images={images} />
       <ThemeProvider ground="ink" clear>
         <SceneSwitch composed={composed} images={images} door={door} />
       </ThemeProvider>

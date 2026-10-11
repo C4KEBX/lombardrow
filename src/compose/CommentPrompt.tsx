@@ -17,7 +17,7 @@ export const CommentPrompt: React.FC<{ prompt: string }> = ({ prompt }) => {
   const frame = useCurrentFrame();
   const pop = easeOutCubic(frame / COMMENT_PROMPT.popFrames);
   return (
-    <AbsoluteFill style={{ background: BRAND.ledgerInk, justifyContent: "center", alignItems: "center" }}>
+    <AbsoluteFill style={{ background: `${BRAND.ledgerInk}e0`, justifyContent: "center", alignItems: "center" }}>
       <div
         style={{
           width: CONTENT.width,
