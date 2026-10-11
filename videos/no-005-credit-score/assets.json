@@ -1,0 +1,49 @@
+{
+  "assets": [
+    {
+      "id": "census-1854",
+      "file": "assets/census-1854.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Francis_William_Edmonds_-_Taking_the_Census.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Francis_William_Edmonds_-_Taking_the_Census.jpg",
+      "license": "public-domain",
+      "credit": "F. W. Edmonds, Taking the Census, 1854. Public domain.",
+      "depicts": "Illustrative: an 1854 American genre painting of a census taker writing in a book while a family answers and children listen; stands in for the credit correspondents who wrote down what locals said."
+    },
+    {
+      "id": "speculator-1852",
+      "file": "assets/speculator-1852.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Francis_William_Edmonds_-_The_Speculator_-_Google_Art_Project.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Francis_William_Edmonds_-_The_Speculator_-_Google_Art_Project.jpg/3840px-Francis_William_Edmonds_-_The_Speculator_-_Google_Art_Project.jpg",
+      "license": "public-domain",
+      "credit": "F. W. Edmonds, The Speculator, 1852. Public domain.",
+      "depicts": "Illustrative: an 1852 genre painting of a man in a frock coat reading a paper to a farm couple; not Lewis Tappan."
+    },
+    {
+      "id": "all-talk-1855",
+      "file": "assets/all-talk-1855.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Francis_William_Edmonds_-_All_Talk_and_No_Work_-_Google_Art_Project.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Francis_William_Edmonds_-_All_Talk_and_No_Work_-_Google_Art_Project.jpg/3840px-Francis_William_Edmonds_-_All_Talk_and_No_Work_-_Google_Art_Project.jpg",
+      "license": "public-domain",
+      "credit": "F. W. Edmonds, All Talk and No Work, 1855. Public domain.",
+      "depicts": "Illustrative: two men talking in a barn doorway, 1855-56; stands in for local talk about a neighbor."
+    },
+    {
+      "id": "country-store",
+      "file": "assets/country-store.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Edward_Lamson_Henry_-_The_Country_Store_-_1979.5.5_-_Smithsonian_American_Art_Museum.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/Edward_Lamson_Henry_-_The_Country_Store_-_1979.5.5_-_Smithsonian_American_Art_Museum.jpg",
+      "license": "public-domain",
+      "credit": "E. L. Henry, The Country Store, 1885. SAAM. Public domain.",
+      "depicts": "Illustrative: an 1885 painting of shoppers in an American country store; not the Retail Credit Company."
+    },
+    {
+      "id": "new-bonnet",
+      "file": "assets/new-bonnet.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Francis_William_Edmonds_-_The_New_Bonnet.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Francis_William_Edmonds_-_The_New_Bonnet.jpg",
+      "license": "public-domain",
+      "credit": "F. W. Edmonds, The New Bonnet, 1858. Public domain.",
+      "depicts": "Illustrative: an 1858 painting of a family inspecting a newly bought bonnet; stands in for shoppers' private lives."
+    }
+  ]
+}
