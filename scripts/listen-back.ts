@@ -21,7 +21,8 @@ async function main(): Promise<void> {
   if (!manifest.captions) throw new Error("manifest.json has no captions; produce the video again with this version");
   const sb = parseStoryboard(JSON.parse(fs.readFileSync(sbPath, "utf-8")));
   const heard = await transcribe(video, outDir, { model: values.get("--model"), prompt: namePrompt(sb.scenes.map((s) => s.narration)) });
-  const report = listenBack(expectedWords(sb.scenes, manifest.captions, SIGNOFF), heard);
+  // A reveal ending has no spoken sign-off (Justin, 2026-10-11), so none is expected.
+  const report = listenBack(expectedWords(sb.scenes, manifest.captions, sb.meta.ending ? "" : SIGNOFF), heard);
   fs.writeFileSync(path.join(outDir, "listen-back.json"), `${JSON.stringify(report, null, 2)}\n`);
   fs.writeFileSync(path.join(outDir, "listen-back.md"), renderListenBack(report));
   const numbers = report.mismatches.filter((m) => m.number).length;
