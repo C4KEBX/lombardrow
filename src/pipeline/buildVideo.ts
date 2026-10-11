@@ -64,6 +64,8 @@ export function buildVideo(
   /** When the sign-off's last word ends, in its own clip: the close stops just after it. */
   signoffEndMs?: number,
   images: VideoProps["images"] = {},
+  /** The sign-off's word timings in its own clip, captioned when it plays over a reveal ending in bold captions. */
+  signoffWords: readonly WordTiming[] = [],
 ): BuiltVideo {
   const storyboard = parseStoryboard(storyboardJson);
   const facts = parseFacts(factsJson);
@@ -106,7 +108,8 @@ export function buildVideo(
   return {
     storyboard,
     scenes,
-    captions: buildCaptions(scenes, fps, captionStyle),
+    // Over a reveal ending the sign-off plays on the last scene, so it gets captions like the narration (viral review, No. 004 v2).
+    captions: buildCaptions(ending && captionStyle === "bold" ? [...scenes, { startFrame: closeStart, words: signoffWords }] : scenes, fps, captionStyle),
     totalFrames: closeStart + close,
     door: { doorNo, series },
     coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,

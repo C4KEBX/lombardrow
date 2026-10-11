@@ -15,6 +15,15 @@ const SPEC = DEVICES.devices.captions;
  */
 export const BOLD_CAPTIONS = { size: 88, weight: 800, lineHeight: 1.08, centerY: 1300, boxHeight: 220, stroke: 12, popFrames: 4 } as const;
 
+/**
+ * Parchment with an ink outline over images and the ink ground. On a light ground that outline read as hollow
+ * letters on a phone (viral review of No. 004 v2), so there the words are solid ink with no outline.
+ */
+export function boldColors(ground: Ground): React.CSSProperties {
+  if (ground === "ink") return { color: BRAND.parchment, WebkitTextStroke: `${BOLD_CAPTIONS.stroke}px ${BRAND.ledgerInk}`, paintOrder: "stroke fill" };
+  return { color: THEMES[ground].ink };
+}
+
 /** Ground under the captions at `frame`: the last scene that has started. */
 export function groundAt(grounds: readonly { startFrame: number; ground: Ground }[], frame: number): Ground {
   let ground: Ground = grounds[0]?.ground ?? "ink";
@@ -47,7 +56,7 @@ export const Captions: React.FC<{
           top: BOLD_CAPTIONS.centerY - BOLD_CAPTIONS.boxHeight / 2, height: BOLD_CAPTIONS.boxHeight,
           display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center",
           fontFamily: BODY_FONT, fontWeight: BOLD_CAPTIONS.weight, fontSize: BOLD_CAPTIONS.size, lineHeight: BOLD_CAPTIONS.lineHeight,
-          color: BRAND.parchment, WebkitTextStroke: `${BOLD_CAPTIONS.stroke}px ${BRAND.ledgerInk}`, paintOrder: "stroke fill",
+          ...boldColors(groundAt(grounds, frame)),
           transform: `scale(${pop})`, ...TABULAR,
         }}
       >

@@ -59,6 +59,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     VIDEO.fps,
     Math.max(...signoff.words.map((w) => w.endMs)),
     imagesFor(opts.storyboardPath, opts.assetsPath),
+    signoff.words,
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);

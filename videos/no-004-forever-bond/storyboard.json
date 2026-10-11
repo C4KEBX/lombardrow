@@ -172,8 +172,12 @@
             "date": "From 1648"
           },
           {
-            "entry": "Rate cut to 2.5%",
-            "amount": "25 gld"
+            "entry": "First cut",
+            "amount": "3.5%"
+          },
+          {
+            "entry": "Second cut",
+            "amount": "2.5%"
           },
           {
             "entry": "Margins full",
@@ -190,14 +194,19 @@
           "text": "Payment"
         },
         {
-          "atWord": "cut",
+          "atWord": "rate",
           "do": "emphasize",
-          "text": "cut"
+          "text": "First"
+        },
+        {
+          "atWord": "half",
+          "do": "emphasize",
+          "text": "Second"
         },
         {
           "atWord": "ran",
           "do": "emphasize",
-          "text": "full"
+          "text": "Margins"
         }
       ],
       "microhooks": [
@@ -270,6 +279,12 @@
             "w": 0.5
           },
           {
+            "atWord": "Interest",
+            "x": 0.4,
+            "y": 0.6,
+            "w": 0.3
+          },
+          {
             "atWord": "person",
             "x": 0.61,
             "y": 0.54,
@@ -292,6 +307,12 @@
             "x": 0.5,
             "y": 0.5,
             "w": 0.6
+          },
+          {
+            "atWord": "curator",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.32
           }
         ]
       },

@@ -69,6 +69,11 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
 /** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the close (the door plate, or the reveal ending's comment question), with the overlays on top. */
 export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, bleedOpen, captionStyle = "lane", close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
+  // A bleed image is dark whatever the palette lead, so captions over it are drawn as on ink.
+  const captionGrounds = scenes.map((s) => ({
+    startFrame: s.startFrame,
+    ground: s.scene.type === "archival" && s.scene.props.layout === "bleed" ? ("ink" as const) : s.ground,
+  }));
   const plate = close.frames > 0 && !close.ending;
   const cuts = plate ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
@@ -109,7 +114,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
       )}
       {bleedOpen && (
         <Sequence from={0} durationInFrames={cornerTagFrames()} name="Corner tag">
-          <CornerTag doorNo={door.doorNo} title={bleedOpen.title} />
+          <CornerTag doorNo={door.doorNo} series={door.series} />
         </Sequence>
       )}
       {bleedOpen?.hookLine && (
@@ -123,7 +128,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
         </Sequence>
       )}
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />
-      <Captions chunks={captions} grounds={grounds} style={captionStyle} />
+      <Captions chunks={captions} grounds={captionGrounds} style={captionStyle} />
     </AbsoluteFill>
   );
 };

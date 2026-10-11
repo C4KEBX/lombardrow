@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import assets from "../../fixtures/fast/mortgage.assets.json";
 import facts from "../../fixtures/fast/mortgage.facts.json";
 import storyboard from "../../fixtures/fast/mortgage.storyboard.json";
+import { boldColors } from "../../src/captions/Captions";
 import { chunkWords } from "../../src/captions/chunk";
 import { shotAt, shotTransform, BLEED_ANCHOR } from "../../src/scenes/archival/BleedArchival";
 import { valueIn } from "../../src/scenes/compare/Compare";
@@ -209,5 +210,35 @@ describe("the comment question as a picture change", () => {
     const [frame] = endingFrames({ ...sb, meta: { ...sb.meta, ending: { prompt: "Which one?", atWord: word, occurrence: 1 } } }, last, 30);
     expect(frame).toBeGreaterThan(last.startFrame);
     expect(frame).toBeLessThan(last.startFrame + last.durationFrames);
+  });
+});
+
+describe("captions on the reveal ending", () => {
+  const images = Object.fromEntries(assets.assets.map((a) => [a.id, { src: "x", credit: a.credit, width: 2000, height: 3000 }]));
+  const words = (sb: { scenes: { id: string; narration: string; brisk?: boolean }[] }) =>
+    Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)]));
+  const signoff = [
+    { text: "Lombard", startMs: 100, endMs: 700 },
+    { text: "Row,", startMs: 712, endMs: 988 },
+  ];
+
+  it("captions the sign-off when it plays over the last scene", () => {
+    const sb = clone(storyboard);
+    const atWord = estimatedWords(sb.scenes[sb.scenes.length - 1])[0].text.replace(/[^\w]/g, "");
+    const withEnding = { ...sb, meta: { ...sb.meta, ending: { prompt: "Which one?", atWord } } };
+    const built = buildVideo(withEnding, facts, words, 30, 1000, images, signoff);
+    const lastWord = built.captions.flatMap((c) => c.words).slice(-1)[0];
+    expect(lastWord.text).toBe("Row,");
+    expect(lastWord.startMs).toBeGreaterThanOrEqual((built.close.startFrame * 1000) / 30);
+  });
+
+  it("leaves the sign-off uncaptioned on the door plate", () => {
+    const built = buildVideo(storyboard, facts, words, 30, 1000, images, signoff);
+    expect(built.captions.flatMap((c) => c.words).some((w) => w.text === "Lombard")).toBe(false);
+  });
+
+  it("draws bold captions solid on a light ground", () => {
+    expect(boldColors("parchment").WebkitTextStroke).toBeUndefined();
+    expect(boldColors("ink").WebkitTextStroke).toBeDefined();
   });
 });

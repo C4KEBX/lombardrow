@@ -174,12 +174,9 @@ function firstLineIssues(sceneId: string, narration: string, open: string): stri
   return issues;
 }
 
-/** Longest title the bleed open's corner tag shows in two lines. */
-export const CORNER_TAG_TITLE_CHARS = 38;
-
 /**
  * A bleed open fills frame one with an image and nothing over it: the first scene is a bleed archival scene,
- * with no year counter (the corner tag arrives at 2 s), and its first line is a claim.
+ * with no year counter (the corner tag, door number and series, arrives at 2 s), and its first line is a claim.
  */
 function bleedOpenIssues(sb: Storyboard): string[] {
   const first = sb.scenes[0];
@@ -189,8 +186,5 @@ function bleedOpenIssues(sb: Storyboard): string[] {
   }
   if (first.year !== undefined) issues.push(`Scene "${first.id}" shows the year counter on frame one; a bleed open keeps frame one clear, so give the year from the second scene on`);
   issues.push(...firstLineIssues(first.id, first.narration, "a bleed open"));
-  if (sb.meta.title.length > CORNER_TAG_TITLE_CHARS) {
-    issues.push(`The title "${sb.meta.title}" is ${sb.meta.title.length} characters; the corner tag fits ${CORNER_TAG_TITLE_CHARS}`);
-  }
   return issues;
 }
