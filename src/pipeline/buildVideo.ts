@@ -42,6 +42,15 @@ export type VideoProps = {
 
 export type BuiltVideo = VideoProps & { storyboard: Storyboard };
 
+/** How long the reveal ending's question card holds after the last spoken word, before the cut back to frame 0. */
+export const ENDING_HOLD_FRAMES = 24;
+
+function captionsBefore(chunks: CaptionChunk[], ms: number): CaptionChunk[] {
+  return chunks
+    .map((c) => ({ ...c, words: c.words.filter((w) => w.startMs < ms), endMs: Math.min(c.endMs, ms) }))
+    .filter((c) => c.words.length > 0 && c.startMs < ms);
+}
+
 /** Where the comment question appears: its word in the last scene, as a frame of the whole video. */
 function revealEnding(ending: NonNullable<Storyboard["meta"]["ending"]>, scenes: readonly ComposedScene[], fps: number): { prompt: string; promptFrame: number } {
   const last = scenes[scenes.length - 1];
@@ -64,8 +73,6 @@ export function buildVideo(
   /** When the sign-off's last word ends, in its own clip: the close stops just after it. */
   signoffEndMs?: number,
   images: VideoProps["images"] = {},
-  /** The sign-off's word timings in its own clip, captioned when it plays over a reveal ending in bold captions. */
-  signoffWords: readonly WordTiming[] = [],
 ): BuiltVideo {
   const storyboard = parseStoryboard(storyboardJson);
   const facts = parseFacts(factsJson);
@@ -89,18 +96,20 @@ export function buildVideo(
   const scenes = composeScenes(storyboard, wordsFor(storyboard), fps);
   assertSceneTiming(scenes);
   const closeStart = scenes.reduce((end, s) => Math.max(end, s.startFrame + s.durationFrames), 0);
-  const close = closeFrames(fps, signoffEndMs);
   const ending = storyboard.meta.ending && revealEnding(storyboard.meta.ending, scenes, fps);
+  // A reveal ending has no spoken sign-off: the narration asks the question, the card holds a beat, and the video cuts.
+  const close = ending ? 0 : closeFrames(fps, signoffEndMs);
   if (ending) {
     const last = scenes[scenes.length - 1];
-    scenes[scenes.length - 1] = { ...last, durationFrames: last.durationFrames + close };
+    scenes[scenes.length - 1] = { ...last, durationFrames: last.durationFrames + ENDING_HOLD_FRAMES };
   }
+  const endFrame = closeStart + (ending ? ENDING_HOLD_FRAMES : close);
 
   const years = yearTrack(scenes.map((s) => ({ startFrame: s.startFrame, durationFrames: s.durationFrames, year: s.scene.year })));
   const stamps = stampTrack(
     scenes.map((s) => ({ id: s.id, startFrame: s.startFrame, durationFrames: s.durationFrames, stamp: stampBySceneId[s.id] })),
     fps,
-  ).map((span) => ({ ...span, endFrame: Math.min(span.endFrame, closeStart) }));
+  ).map((span) => ({ ...span, endFrame: Math.min(span.endFrame, ending ? ending.promptFrame : closeStart) }));
   const { doorNo, series } = storyboard.meta;
   const captionStyle: CaptionStyle = storyboard.meta.format === "fast" ? "bold" : "lane";
   assertDevicesInBounds(deviceBoxes({ doorNo, series, years, stamps }));
@@ -108,9 +117,9 @@ export function buildVideo(
   return {
     storyboard,
     scenes,
-    // Over a reveal ending the sign-off plays on the last scene, so it gets captions like the narration (viral review, No. 004 v2).
-    captions: buildCaptions(ending && captionStyle === "bold" ? [...scenes, { startFrame: closeStart, words: signoffWords }] : scenes, fps, captionStyle),
-    totalFrames: closeStart + close,
+    // The question card carries its own words, so captions stop where it comes in.
+    captions: ending ? captionsBefore(buildCaptions(scenes, fps, captionStyle), (ending.promptFrame * 1000) / fps) : buildCaptions(scenes, fps, captionStyle),
+    totalFrames: endFrame,
     door: { doorNo, series },
     coldOpen: storyboard.meta.open === "cold" ? { headline: storyboard.meta.title } : undefined,
     bleedOpen: storyboard.meta.open === "bleed" ? { title: storyboard.meta.title, hookLine: storyboard.meta.hookLine } : undefined,

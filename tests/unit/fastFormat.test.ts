@@ -6,7 +6,7 @@ import { boldColors } from "../../src/captions/Captions";
 import { chunkWords } from "../../src/captions/chunk";
 import { shotAt, shotTransform, BLEED_ANCHOR } from "../../src/scenes/archival/BleedArchival";
 import { valueIn } from "../../src/scenes/compare/Compare";
-import { buildVideo } from "../../src/pipeline/buildVideo";
+import { buildVideo, ENDING_HOLD_FRAMES } from "../../src/pipeline/buildVideo";
 import { imageSize } from "../../src/pipeline/imageSize";
 import { composeScenes } from "../../src/pipeline/resolveScene";
 import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
@@ -167,11 +167,12 @@ describe("the reveal ending", () => {
     expect(built.close.ending).toBeUndefined();
   });
 
-  it("runs the last scene through the sign-off and shows the question on its word", () => {
+  it("drops the spoken sign-off, holds the question card briefly and shows it on its word", () => {
     const plain = buildVideo(storyboard, facts, words, 30, 2500, images);
     const built = buildVideo(withEnding({ prompt: "Which death is in yours?", atWord: "lose" }), facts, words, 30, 2500, images);
     const last = built.scenes[built.scenes.length - 1];
-    expect(built.totalFrames).toBe(plain.totalFrames);
+    expect(built.close.frames).toBe(0);
+    expect(built.totalFrames).toBe(plain.close.startFrame + ENDING_HOLD_FRAMES);
     expect(last.startFrame + last.durationFrames).toBe(built.totalFrames);
     expect(built.close.ending?.promptFrame).toBeGreaterThan(last.startFrame);
     expect(built.close.ending?.promptFrame).toBeLessThan(built.close.startFrame);
@@ -217,24 +218,16 @@ describe("captions on the reveal ending", () => {
   const images = Object.fromEntries(assets.assets.map((a) => [a.id, { src: "x", credit: a.credit, width: 2000, height: 3000 }]));
   const words = (sb: { scenes: { id: string; narration: string; brisk?: boolean }[] }) =>
     Object.fromEntries(sb.scenes.map((s) => [s.id, estimatedWords(s)]));
-  const signoff = [
-    { text: "Lombard", startMs: 100, endMs: 700 },
-    { text: "Row,", startMs: 712, endMs: 988 },
-  ];
 
-  it("captions the sign-off when it plays over the last scene", () => {
+  it("stops the captions where the question card comes in", () => {
     const sb = clone(storyboard);
-    const atWord = estimatedWords(sb.scenes[sb.scenes.length - 1])[0].text.replace(/[^\w]/g, "");
-    const withEnding = { ...sb, meta: { ...sb.meta, ending: { prompt: "Which one?", atWord } } };
-    const built = buildVideo(withEnding, facts, words, 30, 1000, images, signoff);
-    const lastWord = built.captions.flatMap((c) => c.words).slice(-1)[0];
-    expect(lastWord.text).toBe("Row,");
-    expect(lastWord.startMs).toBeGreaterThanOrEqual((built.close.startFrame * 1000) / 30);
-  });
-
-  it("leaves the sign-off uncaptioned on the door plate", () => {
-    const built = buildVideo(storyboard, facts, words, 30, 1000, images, signoff);
-    expect(built.captions.flatMap((c) => c.words).some((w) => w.text === "Lombard")).toBe(false);
+    const lastWords = estimatedWords(sb.scenes[sb.scenes.length - 1]);
+    const atWord = lastWords[1].text.replace(/[^\w]/g, "");
+    const built = buildVideo({ ...sb, meta: { ...sb.meta, ending: { prompt: "Which one?", atWord } } }, facts, words, 30, 1000, images);
+    const promptMs = ((built.close.ending?.promptFrame ?? 0) * 1000) / 30;
+    const captioned = built.captions.flatMap((c) => c.words);
+    expect(captioned.every((w) => w.startMs < promptMs)).toBe(true);
+    expect(built.captions.every((c) => c.endMs <= promptMs)).toBe(true);
   });
 
   it("draws bold captions solid on a light ground", () => {

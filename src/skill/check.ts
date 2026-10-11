@@ -14,7 +14,7 @@ import { synthWords } from "../voice/synthWords";
 import { adviceLint, tickerHits } from "./adviceLint";
 import { assertAssets, parseAssets, type Asset } from "../schema/assets";
 import { checkPlan, crossCheck, parsePlan, scriptOf, type HistoryEntry, type Spec } from "../variation/index";
-import { TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
+import { REVEAL_CLOSE_SECONDS, TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
 import { estimatedWords, pacingIssues } from "./pacing";
 
 export type Issue = { stage: string; message: string };
@@ -104,7 +104,7 @@ export function checkStoryboard(
   });
 
   const narrations = sb.scenes.map((s) => s.narration);
-  const estimatedSeconds = Math.round(estimateSeconds(narrations) * 10) / 10;
+  const estimatedSeconds = Math.round(estimateSeconds(narrations, sb.meta.ending ? REVEAL_CLOSE_SECONDS : undefined) * 10) / 10;
   const words = narrations.reduce((n, t) => n + countWords(t), 0);
   if (estimatedSeconds < TARGET_SECONDS.min || estimatedSeconds > TARGET_SECONDS.max) {
     warnings.push(

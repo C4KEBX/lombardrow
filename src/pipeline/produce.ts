@@ -59,7 +59,6 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     VIDEO.fps,
     Math.max(...signoff.words.map((w) => w.endMs)),
     imagesFor(opts.storyboardPath, opts.assetsPath),
-    signoff.words,
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);
@@ -91,7 +90,8 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
       path: voices[scene.id].audioPath,
       startMs: (scene.startFrame * 1000) / VIDEO.fps,
     })),
-    { path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps },
+    // A reveal ending has no spoken sign-off (Justin, 2026-10-11): close.frames is 0 then.
+    ...(built.close.frames > 0 ? [{ path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps }] : []),
   ];
   await mixAudio({ clips, musicPath, totalMs, outPath: audioPath });
 
