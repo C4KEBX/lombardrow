@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { findAssets } from "../src/pipeline/assets";
+import { findAssets, loadSceneImages } from "../src/pipeline/assets";
+import type { CoverArt } from "../src/publish/Thumbnail";
+import type { Storyboard } from "../src/schema/storyboard";
 import { renderChecklist } from "../src/publish/checklist";
 import { buildPublishPackage } from "../src/publish/package";
 import { renderThumbnails, writePackageTexts } from "../src/publish/writePackage";
@@ -21,7 +23,8 @@ async function main(): Promise<void> {
   const outDir = outDirFor(sbPath, values.get("--out"));
   const sb = parseStoryboard(readJson(sbPath));
   const plan = parsePlan(readJson(planPath));
-  const pkg = buildPublishPackage(sb, parseFacts(readJson(factsPath)), { plan, assets: findAssets(sbPath, values.get("--assets"))?.assets });
+  const found = findAssets(sbPath, values.get("--assets"));
+  const pkg = buildPublishPackage(sb, parseFacts(readJson(factsPath)), { plan, assets: found?.assets });
 
   const manifestPath = path.join(outDir, "manifest.json");
   const durationSeconds = fs.existsSync(manifestPath) ? (readJson(manifestPath) as { durationMs: number }).durationMs / 1000 : undefined;
@@ -36,7 +39,7 @@ async function main(): Promise<void> {
 
   const dir = path.join(outDir, "publish");
   const texts = writePackageTexts(pkg, dir);
-  const thumbnails = await renderThumbnails(pkg, dir);
+  const thumbnails = await renderThumbnails(pkg, dir, coverArt(sb, found));
   fs.writeFileSync(
     path.join(dir, "checklist.md"),
     renderChecklist(pkg, { durationSeconds, variation, listenBack: lb && { mismatches: lb.mismatches.length, drift: lb.drift.length }, thumbnails }),
@@ -44,6 +47,16 @@ async function main(): Promise<void> {
   console.log(`Publish package in ${dir}: ${[...texts, ...thumbnails, "checklist.md"].join(", ")}`);
   if (variation.length) console.log(`Variation check FAILED:\n  ${variation.join("\n  ")}`);
   if (pkg.aiDisclosure.required) console.log(`AI disclosure REQUIRED: ${pkg.aiDisclosure.reason}`);
+}
+
+/** The image cover's art with its image inlined, or undefined for the door cover. */
+function coverArt(sb: Storyboard, found: ReturnType<typeof findAssets>): CoverArt | undefined {
+  const cover = sb.meta.cover;
+  if (!cover) return undefined;
+  if (!found) throw new Error("meta.cover needs assets.json next to the storyboard (or --assets)");
+  const image = loadSceneImages(found.file, found.assets)[cover.assetId];
+  if (!image?.width || !image.height) throw new Error(`cover image "${cover.assetId}" is missing or its size can't be read; run npm run assets`);
+  return { line: cover.line, mark: cover.mark, src: image.src, width: image.width, height: image.height, x: cover.x, y: cover.y, w: cover.w };
 }
 
 main().catch((error: Error) => {

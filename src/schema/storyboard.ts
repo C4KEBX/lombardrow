@@ -21,6 +21,55 @@ export const CueSchema = z.strictObject({
   path: ["text"],
 });
 
+/** A rectangle on an image, as fractions of its width and height (0 to 1). */
+const ImageRectSchema = z.strictObject({
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().gt(0).max(1),
+  h: z.number().gt(0).max(1),
+});
+
+/**
+ * One crop of a bleed archival image. The crop is centred on (x, y), fractions of the image, and is `w` of the
+ * image's width across the frame: 0.6 shows a line of type at about phone-reading size on a full page scan.
+ */
+const ShotSchema = z.strictObject({
+  atWord: z.string().min(1).optional(),
+  occurrence: z.number().int().min(1).default(1),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().min(0.05).max(1),
+  /** A highlighter swept across these words, as they are spoken. */
+  mark: ImageRectSchema.optional(),
+  /**
+   * Cut to another image from assets.json for this shot (default: the scene's own). Shots need not show the literal
+   * thing said: an image that illustrates it in the same period style is fine (Justin, 2026-10-11).
+   */
+  assetId: z.string().min(1).optional(),
+});
+
+
+/**
+ * Every shot after the first cuts in on a spoken word; the first starts the scene. Shared by bleed archival scenes
+ * and backdrops.
+ */
+function checkShots(shots: readonly { atWord?: string }[] | undefined, ctx: z.RefinementCtx): void {
+  shots?.forEach((shot, i) => {
+    if (i === 0 && shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", 0, "atWord"], message: "the first shot starts the scene; leave out its atWord" });
+    if (i > 0 && !shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", i, "atWord"], message: "every shot after the first cuts in on a spoken word: give its atWord" });
+  });
+}
+
+/**
+ * Period images moving behind a graphic scene (a number, a ledger, kinetic text), cutting on spoken words under a
+ * dark scrim, so data never sits on a plain ground. Justin, 2026-10-11, after No. 004 lost viewers through 25 s of
+ * plain parchment graphics: "weave in images ... or make the information presented in a much more dynamic way."
+ */
+const BackdropSchema = z.strictObject({
+  assetId: z.string().min(1),
+  shots: z.array(ShotSchema).min(1).max(8),
+}).superRefine((backdrop, ctx) => checkShots(backdrop.shots, ctx));
+
 const sceneBase = {
   id: z.string().regex(/^[a-z0-9-]+$/, "scene id must be lowercase letters, digits, hyphens"),
   narration: z.string().min(1),
@@ -37,6 +86,8 @@ const sceneBase = {
   brisk: z.boolean().optional(),
   /** Lines in this scene's narration that re-hook the viewer ("But that's not the first reason."), quoted exactly. */
   microhooks: z.array(z.string().min(1)).optional(),
+  /** Images behind a graphic scene; the scene then draws on ink over them. Not for archival scenes, which are images already. */
+  backdrop: BackdropSchema.optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -248,32 +299,6 @@ const MapSceneSchema = z.strictObject({
 });
 
 /** A public-domain scan or painting from assets.json, with a slow pan and zoom. */
-/** A rectangle on an image, as fractions of its width and height (0 to 1). */
-const ImageRectSchema = z.strictObject({
-  x: z.number().min(0).max(1),
-  y: z.number().min(0).max(1),
-  w: z.number().gt(0).max(1),
-  h: z.number().gt(0).max(1),
-});
-
-/**
- * One crop of a bleed archival image. The crop is centred on (x, y), fractions of the image, and is `w` of the
- * image's width across the frame: 0.6 shows a line of type at about phone-reading size on a full page scan.
- */
-const ShotSchema = z.strictObject({
-  atWord: z.string().min(1).optional(),
-  occurrence: z.number().int().min(1).default(1),
-  x: z.number().min(0).max(1),
-  y: z.number().min(0).max(1),
-  w: z.number().min(0.05).max(1),
-  /** A highlighter swept across these words, as they are spoken. */
-  mark: ImageRectSchema.optional(),
-  /**
-   * Cut to another image from assets.json for this shot (default: the scene's own). Shots need not show the literal
-   * thing said: an image that illustrates it in the same period style is fine (Justin, 2026-10-11).
-   */
-  assetId: z.string().min(1).optional(),
-});
 
 const ArchivalSceneSchema = z.strictObject({
   ...sceneBase,
@@ -292,10 +317,7 @@ const ArchivalSceneSchema = z.strictObject({
   }).superRefine((props, ctx) => {
     if (props.layout === "bleed" && !props.shots?.length) ctx.addIssue({ code: "custom", path: ["shots"], message: "a bleed archival scene needs at least one shot" });
     if (props.layout === "framed" && props.shots) ctx.addIssue({ code: "custom", path: ["shots"], message: "shots are for the bleed layout; a framed scene pans with from and to" });
-    props.shots?.forEach((shot, i) => {
-      if (i === 0 && shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", 0, "atWord"], message: "the first shot starts the scene; leave out its atWord" });
-      if (i > 0 && !shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", i, "atWord"], message: "every shot after the first cuts in on a spoken word: give its atWord" });
-    });
+    checkShots(props.shots, ctx);
   }),
 });
 
@@ -393,6 +415,27 @@ export const StoryboardSchema = z
        */
       hookLine: z.string().min(1).max(44).optional(),
       /**
+       * The cover (thumbnail): a close, bright crop of one image with a short line that makes a scroller want the
+       * answer, instead of the plain door-number card (Justin, 2026-10-11: covers "should intrigue a potential
+       * viewer, not just be a generic placeholder"). YouTube Shorts and X show a frame of the video instead, so open
+       * on the same crop with the same line as the hook line.
+       */
+      cover: z
+        .strictObject({
+          line: z.string().min(1).max(44),
+          /** One word of the line, highlighted in Brass. */
+          mark: z.string().min(1).optional(),
+          assetId: z.string().min(1),
+          x: z.number().min(0).max(1),
+          y: z.number().min(0).max(1),
+          w: z.number().min(0.05).max(1),
+        })
+        .refine((c) => c.mark === undefined || c.line.split(/\s+/).some((word) => word.replace(/[^\p{L}\p{N}'$-]/gu, "") === c.mark), {
+          message: "cover.mark must be one word of cover.line, without its punctuation",
+          path: ["mark"],
+        })
+        .optional(),
+      /**
        * How the video ends. Without it, on the door plate. With it (Justin, 2026-10-11, from the viral review), on the
        * last scene's reveal: the comment question pops up on its spoken word and the sign-off plays over the reveal.
        */
@@ -420,6 +463,12 @@ export const StoryboardSchema = z
         });
       }
       seen.add(scene.id);
+      if (scene.backdrop && scene.type === "archival") {
+        ctx.addIssue({ code: "custom", path: ["scenes", index, "backdrop"], message: "an archival scene is already an image: use its shots, not a backdrop" });
+      }
+      if (scene.backdrop && scene.ground && scene.ground !== "ink") {
+        ctx.addIssue({ code: "custom", path: ["scenes", index, "ground"], message: "a scene with a backdrop draws on ink over the image: leave out ground" });
+      }
       scene.microhooks?.forEach((hook, i) => {
         if (!scene.narration.includes(hook)) {
           ctx.addIssue({ code: "custom", path: ["scenes", index, "microhooks", i], message: `microhook "${hook}" is not in scene "${scene.id}"'s narration word for word` });
@@ -444,6 +493,7 @@ export type MapProps = Extract<Scene, { type: "map" }>["props"];
 export type BarRaceProps = Extract<Scene, { type: "bar-race" }>["props"];
 export type ArchivalProps = Extract<Scene, { type: "archival" }>["props"];
 export type ArchivalShot = NonNullable<ArchivalProps["shots"]>[number];
+export type Backdrop = NonNullable<Scene["backdrop"]>;
 export type FlowDiagramProps = Extract<Scene, { type: "flow-diagram" }>["props"];
 export type LedgerPageProps = Extract<Scene, { type: "ledger-page" }>["props"];
 
@@ -466,8 +516,18 @@ export function parseStoryboard(input: unknown): Storyboard {
   return result.data;
 }
 
-/** Every image an archival scene shows: its own asset, then any its shots cut to. */
+/** Every image a scene shows: an archival scene's own asset and any its shots cut to, then its backdrop's. */
+/** Every image the video uses: each scene's, then the cover's. */
+export function storyboardAssetIds(sb: Storyboard): string[] {
+  return [...new Set([...sb.scenes.flatMap((s) => sceneAssetIds(s)), ...(sb.meta.cover ? [sb.meta.cover.assetId] : [])])];
+}
+
 export function sceneAssetIds(scene: Scene): string[] {
-  if (scene.type !== "archival") return [];
-  return [...new Set([scene.props.assetId, ...(scene.props.shots ?? []).flatMap((shot) => (shot.assetId ? [shot.assetId] : []))])];
+  const own = scene.type === "archival" ? [scene.props.assetId, ...shotAssets(scene.props.shots)] : [];
+  const backdrop = scene.backdrop ? [scene.backdrop.assetId, ...shotAssets(scene.backdrop.shots)] : [];
+  return [...new Set([...own, ...backdrop])];
+}
+
+function shotAssets(shots: readonly { assetId?: string }[] | undefined): string[] {
+  return (shots ?? []).flatMap((shot) => (shot.assetId ? [shot.assetId] : []));
 }

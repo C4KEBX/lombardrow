@@ -49,7 +49,7 @@ export const Title: React.FC<SceneRenderProps<TitleProps> & { door?: DoorHeader 
   return (
     <AbsoluteFill
       style={{
-        background: theme.ground,
+        background: theme.fill,
         opacity: exit,
         justifyContent: "center",
         padding: `${lanes.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,

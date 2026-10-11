@@ -37,16 +37,20 @@ export function parseAssets(input: unknown): Assets {
   return result.data;
 }
 
-/** Every archival scene names an asset in assets.json whose file has been downloaded. */
+/** Every image a scene or the cover shows is in assets.json, and its file has been downloaded. */
 export function assertAssets(sb: Storyboard, assets: Assets | undefined, fileExists: (asset: Asset) => boolean): void {
-  for (const scene of sb.scenes) {
-    if (scene.type !== "archival") continue;
-    if (!assets) throw new StoryboardError(`Scene "${scene.id}" (archival) needs assets.json; pass --assets`);
-    for (const id of sceneAssetIds(scene)) {
+  const users: [string, string[]][] = [
+    ...sb.scenes.map((scene): [string, string[]] => [`Scene "${scene.id}" (${scene.backdrop ? "backdrop" : scene.type})`, sceneAssetIds(scene)]),
+    ...(sb.meta.cover ? [["The cover", [sb.meta.cover.assetId]] as [string, string[]]] : []),
+  ];
+  for (const [who, ids] of users) {
+    if (ids.length === 0) continue;
+    if (!assets) throw new StoryboardError(`${who} needs assets.json; pass --assets`);
+    for (const id of ids) {
       const asset = assets.assets.find((a) => a.id === id);
-      if (!asset) throw new StoryboardError(`Scene "${scene.id}" uses asset "${id}", which is not in assets.json`);
+      if (!asset) throw new StoryboardError(`${who} uses asset "${id}", which is not in assets.json`);
       if (!fileExists(asset)) {
-        throw new StoryboardError(`Scene "${scene.id}": asset "${asset.id}" file ${asset.file} is missing; run npm run assets -- --assets <assets.json>`);
+        throw new StoryboardError(`${who}: asset "${asset.id}" file ${asset.file} is missing; run npm run assets -- --assets <assets.json>`);
       }
     }
   }

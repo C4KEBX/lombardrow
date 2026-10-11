@@ -33,7 +33,7 @@ export const KineticText: React.FC<SceneRenderProps<KineticTextProps>> = ({ prop
   return (
     <AbsoluteFill
       style={{
-        background: theme.ground, opacity: exit, justifyContent: "center",
+        background: theme.fill, opacity: exit, justifyContent: "center",
         padding: `${lanes.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >

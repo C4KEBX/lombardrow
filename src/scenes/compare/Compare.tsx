@@ -52,7 +52,7 @@ export const Compare: React.FC<SceneRenderProps<CompareProps>> = ({ props, cues,
   })();
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <svg width={VIDEO.width} height={VIDEO.height} style={{ position: "absolute", inset: 0 }}>
         <text
           x={CONTENT.left} y={SAFE.top + 44} fontFamily={BODY_FONT} fontWeight={600} fontSize={44} fill={theme.muted}

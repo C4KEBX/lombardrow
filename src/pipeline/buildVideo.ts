@@ -87,7 +87,7 @@ export function buildVideo(
   for (const scene of storyboard.scenes) {
     for (const id of sceneAssetIds(scene)) {
       if (!images[id]) throw new StoryboardError(`Scene "${scene.id}" uses asset "${id}", but no image was loaded for it; check assets.json and run npm run assets`);
-      if (scene.type === "archival" && scene.props.layout === "bleed" && !images[id]?.width) {
+      if (((scene.type === "archival" && scene.props.layout === "bleed") || scene.backdrop) && !images[id]?.width) {
         throw new StoryboardError(`Scene "${scene.id}" crops asset "${id}" in shots, but its pixel size could not be read; use a JPEG, PNG or WebP`);
       }
     }

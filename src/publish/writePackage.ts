@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderStill, selectComposition } from "@remotion/renderer";
 import { browserExecutable, getServeUrl } from "../pipeline/bundle";
-import type { ThumbnailProps } from "./Thumbnail";
+import type { CoverArt, ThumbnailProps } from "./Thumbnail";
 import type { PublishPackage } from "./package";
 
 /** Covers per platform: 9:16 for YouTube Shorts, TikTok and Reels, and Instagram's 3:4 profile-grid crop. */
@@ -13,7 +13,8 @@ export const THUMBNAILS = [
   { file: "thumb-instagram-grid.png", width: 1080, height: 1440 },
 ] as const;
 
-export async function renderThumbnails(pkg: PublishPackage, outDir: string): Promise<string[]> {
+/** `cover`: the image cover from `meta.cover`; without it, the door cover. */
+export async function renderThumbnails(pkg: PublishPackage, outDir: string, cover?: CoverArt): Promise<string[]> {
   const serveUrl = await getServeUrl();
   const rendered = new Map<string, string>();
   const files: string[] = [];
@@ -24,7 +25,7 @@ export async function renderThumbnails(pkg: PublishPackage, outDir: string): Pro
     if (done) {
       fs.copyFileSync(done, out);
     } else {
-      const inputProps: ThumbnailProps = { doorNo: pkg.doorNo, title: pkg.title, series: pkg.series, width: t.width, height: t.height };
+      const inputProps: ThumbnailProps = { doorNo: pkg.doorNo, title: pkg.title, series: pkg.series, width: t.width, height: t.height, cover };
       const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Thumbnail", inputProps });
       await renderStill({ composition, serveUrl, browserExecutable: browserExecutable(), output: out, frame: 0, inputProps });
       rendered.set(key, out);

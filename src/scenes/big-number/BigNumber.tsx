@@ -41,7 +41,7 @@ export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, c
   return (
     <AbsoluteFill
       style={{
-        background: theme.ground,
+        background: theme.fill,
         opacity: exit,
         justifyContent: "center",
         alignItems: "center",

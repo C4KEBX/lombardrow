@@ -14,10 +14,10 @@ export type ResolvedCue = { frame: number; do: "callout" | "emphasize"; text?: s
 export type ComposedScene = {
   id: string;
   scene: Scene;
-  /** The scene's own ground, else the video's palette lead. */
+  /** The scene's own ground, else the video's palette lead; ink over a backdrop. */
   ground: Ground;
   cues: ResolvedCue[];
-  /** A bleed archival scene's shot starts, in scene frames (the first is 0); empty for every other scene. */
+  /** Shot starts of a bleed archival scene or a backdrop, in scene frames (the first is 0); empty for every other scene. */
   shotFrames: number[];
   durationFrames: number;
   startFrame: number;
@@ -46,11 +46,10 @@ export function composeScenes(
         text: cue.text,
         x: cue.x,
       }));
-      const shotFrames = scene.type === "archival" && scene.props.shots
-        ? scene.props.shots.map((shot) => (shot.atWord ? msToFrame(resolveCue(words, shot.atWord, shot.occurrence), fps) : 0))
-        : [];
+      const shots = scene.type === "archival" ? scene.props.shots : scene.backdrop?.shots;
+      const shotFrames = (shots ?? []).map((shot) => (shot.atWord ? msToFrame(resolveCue(words, shot.atWord, shot.occurrence), fps) : 0));
       const durationFrames = msToFrame(sceneDurationMs(words), fps);
-      composed.push({ id: scene.id, scene, ground: scene.ground ?? sb.meta.paletteLead, cues, shotFrames, durationFrames, startFrame, words: [...words] });
+      composed.push({ id: scene.id, scene, ground: scene.backdrop ? "ink" : scene.ground ?? sb.meta.paletteLead, cues, shotFrames, durationFrames, startFrame, words: [...words] });
       startFrame += durationFrames;
     } catch (error) {
       if (error instanceof CueResolutionError) {

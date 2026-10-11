@@ -8,7 +8,7 @@ import { spokenWordCount, WORDS_PER_SECOND } from "./estimate";
 /**
  * The fast format's pacing rules (TikTok teardown, 2026-10-10): the picture changes every 2 to 3 s for the first
  * 15 s and no shot runs much past 5 s after that, 20 or more changes a minute; a microhook at least every 10 s;
- * the first 5 s voiced brisk. Times are in seconds.
+ * the first 5 s voiced brisk. From No. 005 no graphic sits on a plain ground: it gets a backdrop. Times are in seconds.
  */
 export const PACING = {
   openWindowS: 15,
@@ -19,6 +19,8 @@ export const PACING = {
   /** The ending may run a little longer after the last microhook: it answers the loop the open planted. */
   lastHookToEndS: 12,
   briskWindowS: 5,
+  /** From this door on, every graphic scene sits over a backdrop of moving images (Justin, 2026-10-11). */
+  backdropFromDoor: 5,
 } as const;
 
 /** How much faster a brisk scene is voiced; matches BRISK_RATE in src/voice/types.ts. */
@@ -99,6 +101,14 @@ export function pacingIssues(sb: Storyboard, scenes: readonly ComposedScene[], f
   const lastHook = hookStops[hookStops.length - 1];
   if (hooks.length > 0 && end - lastHook > PACING.lastHookToEndS) {
     issues.push(`${(end - lastHook).toFixed(1)} s pass from the last microhook (${lastHook.toFixed(1)} s) to the end; add one every 8 to 10 s (list it in the scene's "microhooks")`);
+  }
+
+  if (sb.meta.doorNo >= PACING.backdropFromDoor) {
+    for (const s of scenes) {
+      if (s.scene.type !== "archival" && !s.scene.backdrop) {
+        issues.push(`Scene "${s.id}" puts its ${s.scene.type} on a plain ground; give it a "backdrop" of period images cutting every 2 to 3 s (viewers drained through No. 004's plain graphics)`);
+      }
+    }
   }
 
   for (const s of scenes) {

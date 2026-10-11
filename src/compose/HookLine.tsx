@@ -2,15 +2,16 @@ import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";
 import { DISPLAY_FONT } from "../design/fonts";
 import { BRAND } from "../design/theme";
-import { CONTENT, OVERLAY_TOP } from "../design/tokens";
+import { CONTENT } from "../design/tokens";
 import { CORNER_TAG } from "./CornerTag";
 
 /**
  * The bleed open's frame-0 line: the claim burned in over the first image, so a viewer scrolling with the sound off
  * reads the stakes before anything moves (viral review of No. 004, 2026-10-11). It is on screen at frame 0 with no
- * entrance, and leaves just before the corner tag comes in.
+ * entrance, and leaves just before the corner tag comes in. Big and above the middle of the frame, not tucked at the
+ * top (analytics on No. 004, 2026-10-11: half the viewers left by 3 s; put the hook text "big and mid-frame").
  */
-export const HOOK_LINE = { size: 74, exitFrames: 8, endFrame: CORNER_TAG.inFrame } as const;
+export const HOOK_LINE = { size: 96, top: 480, exitFrames: 8, endFrame: CORNER_TAG.inFrame } as const;
 
 export const HookLine: React.FC<{ text: string }> = ({ text }) => {
   const frame = useCurrentFrame();
@@ -23,7 +24,7 @@ export const HookLine: React.FC<{ text: string }> = ({ text }) => {
     <div
       style={{
         position: "absolute",
-        top: OVERLAY_TOP,
+        top: HOOK_LINE.top,
         left: CONTENT.left,
         width: CONTENT.width,
         boxSizing: "border-box",

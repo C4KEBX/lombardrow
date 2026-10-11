@@ -12,7 +12,7 @@ import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title, type DoorHeader } from "../scenes/title/Title";
 import { Archival } from "../scenes/archival/Archival";
-import { BleedArchival } from "../scenes/archival/BleedArchival";
+import { BACKDROP_SCRIM, BleedArchival } from "../scenes/archival/BleedArchival";
 import { FlowDiagram } from "../scenes/flow-diagram/FlowDiagram";
 import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
@@ -24,6 +24,20 @@ import { CornerTag, cornerTagFrames } from "./CornerTag";
 import { HOOK_LINE, HookLine } from "./HookLine";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
+
+/** A graphic scene over its backdrop: the images moving under a scrim, the scene drawn on top without its ground. */
+const SceneWithBackdrop: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
+  const { backdrop } = composed.scene;
+  if (!backdrop || composed.scene.type === "archival") return <SceneSwitch composed={composed} images={images} door={door} />;
+  return (
+    <AbsoluteFill>
+      <BleedArchival props={backdrop} scrim={BACKDROP_SCRIM} shotFrames={composed.shotFrames} durationFrames={composed.durationFrames} images={images} />
+      <ThemeProvider ground="ink" clear>
+        <SceneSwitch composed={composed} images={images} door={door} />
+      </ThemeProvider>
+    </AbsoluteFill>
+  );
+};
 
 const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
   const { scene, cues, durationFrames, shotFrames } = composed;
@@ -68,7 +82,7 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
 /** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the close (the door plate, or the reveal ending's comment question), with the overlays on top. */
 export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, bleedOpen, captionStyle = "lane", close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
-  // A bleed image is dark whatever the palette lead, so captions over it are drawn as on ink.
+  // A bleed image is dark whatever the palette lead, so captions over it are drawn as on ink (a backdrop scene's ground is ink already).
   const captionGrounds = scenes.map((s) => ({
     startFrame: s.startFrame,
     ground: s.scene.type === "archival" && s.scene.props.layout === "bleed" ? ("ink" as const) : s.ground,
@@ -90,7 +104,7 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, 
                 )}
               </ColdOpenCamera>
             ) : (
-              <SceneSwitch composed={composed} images={images} door={i === 0 && !bleedOpen ? door : undefined} />
+              <SceneWithBackdrop composed={composed} images={images} door={i === 0 && !bleedOpen ? door : undefined} />
             )}
           </ThemeProvider>
         </Sequence>

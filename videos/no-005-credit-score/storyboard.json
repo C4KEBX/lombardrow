@@ -13,7 +13,15 @@
       "prompt": "A number or your neighbors?",
       "atWord": "which"
     },
-    "hookLine": "Your neighbors were your credit score."
+    "hookLine": "Your neighbors were your credit score.",
+    "cover": {
+      "line": "Your neighbors were your credit score.",
+      "mark": "neighbors",
+      "assetId": "census-1854",
+      "x": 0.47,
+      "y": 0.42,
+      "w": 0.42
+    }
   },
   "audio": {
     "music": null
@@ -29,9 +37,9 @@
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.5,
-            "y": 0.5,
-            "w": 0.7
+            "x": 0.47,
+            "y": 0.42,
+            "w": 0.42
           },
           {
             "atWord": "loan",
@@ -81,9 +89,10 @@
           },
           {
             "atWord": "Tappan",
-            "x": 0.88,
-            "y": 0.55,
-            "w": 0.3
+            "assetId": "tappan-1873",
+            "x": 0.56,
+            "y": 0.45,
+            "w": 0.42
           },
           {
             "atWord": "ruined",
@@ -131,7 +140,30 @@
           "do": "emphasize",
           "text": "habits?"
         }
-      ]
+      ],
+      "backdrop": {
+        "assetId": "correspondents-page",
+        "shots": [
+          {
+            "x": 0.45,
+            "y": 0.28,
+            "w": 0.6
+          },
+          {
+            "atWord": "character",
+            "x": 0.7,
+            "y": 0.55,
+            "w": 0.45
+          },
+          {
+            "atWord": "habits",
+            "assetId": "census-1854",
+            "x": 0.56,
+            "y": 0.48,
+            "w": 0.24
+          }
+        ]
+      }
     },
     {
       "id": "quotes",
@@ -162,7 +194,30 @@
           "do": "emphasize",
           "text": "ready."
         }
-      ]
+      ],
+      "backdrop": {
+        "assetId": "all-talk-1855",
+        "shots": [
+          {
+            "x": 0.42,
+            "y": 0.33,
+            "w": 0.3
+          },
+          {
+            "atWord": "world",
+            "assetId": "speculator-1852",
+            "x": 0.6,
+            "y": 0.35,
+            "w": 0.22
+          },
+          {
+            "atWord": "Another",
+            "x": 0.63,
+            "y": 0.4,
+            "w": 0.3
+          }
+        ]
+      }
     },
     {
       "id": "ratings",
@@ -201,7 +256,29 @@
       ],
       "microhooks": [
         "Every name got a grade."
-      ]
+      ],
+      "backdrop": {
+        "assetId": "census-1854",
+        "shots": [
+          {
+            "x": 0.56,
+            "y": 0.5,
+            "w": 0.26
+          },
+          {
+            "atWord": "plus",
+            "x": 0.47,
+            "y": 0.35,
+            "w": 0.22
+          },
+          {
+            "atWord": "K",
+            "x": 0.22,
+            "y": 0.6,
+            "w": 0.28
+          }
+        ]
+      }
     },
     {
       "id": "volumes",
@@ -217,7 +294,23 @@
       },
       "microhooks": [
         "Harvard still holds"
-      ]
+      ],
+      "backdrop": {
+        "assetId": "correspondents-page",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.08,
+            "w": 0.85
+          },
+          {
+            "atWord": "volumes",
+            "x": 0.3,
+            "y": 0.6,
+            "w": 0.5
+          }
+        ]
+      }
     },
     {
       "id": "retail",
@@ -310,10 +403,46 @@
     },
     {
       "id": "law",
-      "type": "big-number",
-      "narration": "In 1970, Congress passed a credit reporting law. Then in 1989 came FICO: one number, 300 to 850.",
+      "type": "kinetic-text",
+      "narration": "In 1970, Congress passed a credit reporting law.",
       "speaks": [
-        "f-fcra",
+        "f-fcra"
+      ],
+      "props": {
+        "lines": [
+          "A credit",
+          "reporting law."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "law",
+          "do": "emphasize",
+          "text": "law."
+        }
+      ],
+      "backdrop": {
+        "assetId": "capitol",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.45
+          },
+          {
+            "atWord": "credit",
+            "x": 0.5,
+            "y": 0.35,
+            "w": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "fico",
+      "type": "big-number",
+      "narration": "Then in 1989 came FICO: one number, 300 to 850.",
+      "speaks": [
         "f-fico",
         "f-range"
       ],
@@ -331,7 +460,23 @@
           "do": "callout",
           "text": "FICO, 1989"
         }
-      ]
+      ],
+      "backdrop": {
+        "assetId": "office-1987",
+        "shots": [
+          {
+            "x": 0.33,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "number",
+            "x": 0.6,
+            "y": 0.4,
+            "w": 0.3
+          }
+        ]
+      }
     },
     {
       "id": "today",
@@ -360,7 +505,37 @@
           "do": "emphasize",
           "text": "Gender."
         }
-      ]
+      ],
+      "backdrop": {
+        "assetId": "new-bonnet",
+        "shots": [
+          {
+            "x": 0.12,
+            "y": 0.5,
+            "w": 0.24
+          },
+          {
+            "atWord": "racial",
+            "assetId": "all-talk-1855",
+            "x": 0.65,
+            "y": 0.4,
+            "w": 0.3
+          },
+          {
+            "atWord": "gender",
+            "x": 0.37,
+            "y": 0.33,
+            "w": 0.24
+          },
+          {
+            "atWord": "which",
+            "assetId": "census-1854",
+            "x": 0.47,
+            "y": 0.42,
+            "w": 0.42
+          }
+        ]
+      }
     }
   ]
 }

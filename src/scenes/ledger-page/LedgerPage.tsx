@@ -48,7 +48,7 @@ export const LedgerPage: React.FC<SceneRenderProps<LedgerPageProps>> = ({ props,
   };
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <div style={{ position: "absolute", left: CONTENT.left, top: SAFE.top + 4, fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: theme.muted, opacity: pageIn }}>
         {props.title}
       </div>

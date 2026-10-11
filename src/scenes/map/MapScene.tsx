@@ -32,7 +32,7 @@ export const MapScene: React.FC<SceneRenderProps<MapProps>> = ({ props, cues, du
   });
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <svg width={VIDEO.width} height={VIDEO.height} style={{ position: "absolute", inset: 0 }}>
         <defs>
           <clipPath id="map-box">
