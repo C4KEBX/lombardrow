@@ -1,5 +1,5 @@
 import React from "react";
-import { useCurrentFrame, useVideoConfig } from "remotion";
+import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { BODY_FONT, TABULAR } from "../design/fonts";
 import { easeOutCubic } from "../design/motion";
 import { BRAND, THEMES, type Ground } from "../design/theme";
@@ -14,6 +14,24 @@ const SPEC = DEVICES.devices.captions;
  * with a small pop.
  */
 export const BOLD_CAPTIONS = { size: 88, weight: 800, lineHeight: 1.08, centerY: 1300, boxHeight: 220, stroke: 12, popFrames: 4 } as const;
+
+/**
+ * Word-by-word captions: one word at a time, larger than the bold chunks, each landing with a bounce (it springs
+ * up from 55% and overshoots a little before settling). A long word shrinks to fit the content width.
+ */
+export const WORD_CAPTIONS = { size: 112, minSize: 72, charWidth: 0.62, from: 0.55, rise: 28, spring: { damping: 9, stiffness: 260, mass: 0.6 } } as const;
+
+/** The font size that fits `text` on one line across the content width, between WORD_CAPTIONS.minSize and size. */
+export function wordCaptionSize(text: string): number {
+  const fit = Math.floor(CONTENT.width / (Math.max(1, text.length) * WORD_CAPTIONS.charWidth));
+  return Math.max(WORD_CAPTIONS.minSize, Math.min(WORD_CAPTIONS.size, fit));
+}
+
+/** Scale and lift of a word `sinceStart` frames after it lands: springs past 1 and settles there. */
+export function wordBounce(sinceStart: number, fps: number): { scale: number; y: number } {
+  const s = spring({ frame: Math.max(0, sinceStart), fps, config: WORD_CAPTIONS.spring });
+  return { scale: WORD_CAPTIONS.from + (1 - WORD_CAPTIONS.from) * s, y: WORD_CAPTIONS.rise * (1 - s) };
+}
 
 /**
  * Parchment with an ink outline over images and the ink ground. On a light ground that outline read as hollow
@@ -46,6 +64,24 @@ export const Captions: React.FC<{
   const chunk = chunkAt(chunks, ms);
   if (!chunk) return null;
   const active = activeWordIndex(chunk, ms);
+  if (style === "word") {
+    const text = chunk.words.map((w) => w.text).join(" ");
+    const { scale, y } = wordBounce(frame - (chunk.startMs / 1000) * fps, fps);
+    return (
+      <div
+        style={{
+          position: "absolute", left: CONTENT.left, width: CONTENT.width,
+          top: BOLD_CAPTIONS.centerY - BOLD_CAPTIONS.boxHeight / 2, height: BOLD_CAPTIONS.boxHeight,
+          display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", whiteSpace: "nowrap",
+          fontFamily: BODY_FONT, fontWeight: BOLD_CAPTIONS.weight, fontSize: wordCaptionSize(text), lineHeight: BOLD_CAPTIONS.lineHeight,
+          ...boldColors(groundAt(grounds, frame)),
+          transform: `translateY(${y}px) scale(${scale})`, ...TABULAR,
+        }}
+      >
+        {text}
+      </div>
+    );
+  }
   if (style === "bold") {
     const sinceStart = frame - (chunk.startMs / 1000) * fps;
     const pop = 0.9 + 0.1 * easeOutCubic(sinceStart / BOLD_CAPTIONS.popFrames);

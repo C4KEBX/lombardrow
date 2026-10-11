@@ -111,7 +111,7 @@ export function buildVideo(
     fps,
   ).map((span) => ({ ...span, endFrame: Math.min(span.endFrame, ending ? ending.promptFrame : closeStart) }));
   const { doorNo, series } = storyboard.meta;
-  const captionStyle: CaptionStyle = storyboard.meta.format === "fast" ? "bold" : "lane";
+  const captionStyle: CaptionStyle = storyboard.meta.format === "fast" ? storyboard.meta.captions ?? "word" : "lane";
   assertDevicesInBounds(deviceBoxes({ doorNo, series, years, stamps }));
 
   return {

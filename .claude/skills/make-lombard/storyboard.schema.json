@@ -57,6 +57,13 @@
             "fast"
           ]
         },
+        "captions": {
+          "type": "string",
+          "enum": [
+            "word",
+            "bold"
+          ]
+        },
         "hookLine": {
           "type": "string",
           "minLength": 1,

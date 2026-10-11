@@ -6,11 +6,15 @@ export type CaptionChunk = { startMs: number; endMs: number; words: CaptionWord[
 export const CAPTION_MAX_CHARS = 24;
 export const CAPTION_MAX_WORDS = 4;
 
-/** "lane": the classic captions, up to four words under the scene. "bold": the fast format's, one to three big words. */
-export type CaptionStyle = "lane" | "bold";
+/**
+ * "lane": the classic captions, up to four words under the scene. "bold": one to three big words (No. 004).
+ * "word": one big word at a time, each bouncing in on its own spoken word (Justin, 2026-10-11, from No. 005).
+ */
+export type CaptionStyle = "lane" | "bold" | "word";
 export const CAPTION_LIMITS: Record<CaptionStyle, { chars: number; words: number }> = {
   lane: { chars: CAPTION_MAX_CHARS, words: CAPTION_MAX_WORDS },
   bold: { chars: 16, words: 3 },
+  word: { chars: Infinity, words: 1 },
 };
 export const CAPTION_HOLD_MS = 250;
 export const CAPTION_GAP_BREAK_MS = 500;

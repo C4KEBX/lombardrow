@@ -383,6 +383,11 @@ export const StoryboardSchema = z
        */
       format: z.enum(["classic", "fast"]).default("classic"),
       /**
+       * The fast format's captions. "word" (the default from No. 005, Justin 2026-10-11): one word at a time, each
+       * bouncing in. "bold": one to three words with a small pop, as No. 004 shipped.
+       */
+      captions: z.enum(["word", "bold"]).optional(),
+      /**
        * A bleed open's frame-0 line: the claim burned in over the first image for the first 2 s, until the corner tag
        * comes in, so a viewer with the sound off reads the stakes at once. Two short lines at most.
        */

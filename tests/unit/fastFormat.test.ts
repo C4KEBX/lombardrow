@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import assets from "../../fixtures/fast/mortgage.assets.json";
 import facts from "../../fixtures/fast/mortgage.facts.json";
 import storyboard from "../../fixtures/fast/mortgage.storyboard.json";
-import { boldColors } from "../../src/captions/Captions";
+import { boldColors, WORD_CAPTIONS, wordBounce, wordCaptionSize } from "../../src/captions/Captions";
 import { chunkWords } from "../../src/captions/chunk";
 import { shotAt, shotTransform, BLEED_ANCHOR } from "../../src/scenes/archival/BleedArchival";
 import { valueIn } from "../../src/scenes/compare/Compare";
@@ -125,6 +126,27 @@ describe("bold captions", () => {
     expect(Math.max(...chunks.map((c) => c.words.length))).toBeLessThanOrEqual(3);
     expect(chunks.every((c) => c.words.map((w) => w.text).join(" ").length <= 16 || c.words.length === 1)).toBe(true);
     expect(chunkWords(words).length).toBeLessThan(chunks.length);
+  });
+});
+
+describe("word-by-word captions", () => {
+  it("show one word at a time and bounce it in", () => {
+    const words = "It still pays 11.35 euros a year".split(" ").map((text, i) => ({ text, startMs: i * 300, endMs: i * 300 + 250 }));
+    const chunks = chunkWords(words, "word");
+    expect(chunks).toHaveLength(words.length);
+    expect(chunks.every((c) => c.words.length === 1)).toBe(true);
+    const start = wordBounce(0, 30);
+    const peak = Math.max(...Array.from({ length: 12 }, (_, f) => wordBounce(f, 30).scale));
+    expect(start.scale).toBeCloseTo(WORD_CAPTIONS.from);
+    expect(peak).toBeGreaterThan(1);
+    expect(wordBounce(60, 30).scale).toBeCloseTo(1, 2);
+    expect(wordCaptionSize("a")).toBe(WORD_CAPTIONS.size);
+    expect(wordCaptionSize("intergenerational")).toBeLessThan(WORD_CAPTIONS.size);
+  });
+
+  it("are the fast format's default, with bold kept for No. 004", () => {
+    const sb = JSON.parse(readFileSync("videos/no-004-forever-bond/storyboard.json", "utf8"));
+    expect(sb.meta.captions).toBe("bold");
   });
 });
 

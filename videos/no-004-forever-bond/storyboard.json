@@ -9,6 +9,7 @@
     "voice": "en-GB-RyanNeural",
     "open": "bleed",
     "format": "fast",
+    "captions": "bold",
     "ending": {
       "prompt": "Who won: the lender or the borrower?",
       "atWord": "who"
