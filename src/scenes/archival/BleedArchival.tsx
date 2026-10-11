@@ -28,15 +28,22 @@ export function shotAt(shotFrames: readonly number[], frame: number): number {
 
 /**
  * Where the image sits for a shot, `t` frames in, lasting `length` frames: its scale and the top-left offset that
- * puts the shot's centre on the anchor.
+ * puts the shot's centre on the anchor, held inside the image's edges so the frame is always covered.
  */
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
 export function shotTransform(shot: ArchivalShot, size: { width: number; height: number }, t: number, length: number) {
   const base = VIDEO.width / (shot.w * size.width);
   const push = 1 + BLEED_MOTION.push * clamp01(t / Math.max(1, length));
   const settle = 1 + BLEED_MOTION.settle * (1 - easeOutCubic(t / BLEED_MOTION.settleFrames));
-  const scale = base * push * settle;
+  // Never smaller than the frame, and never slid off an edge: a bleed shows image edge to edge, no ground around it.
+  const scale = Math.max(base * push * settle, VIDEO.width / size.width, VIDEO.height / size.height);
   const drift = BLEED_MOTION.driftPx * (clamp01(t / Math.max(1, length)) - 0.5);
-  return { scale, left: BLEED_ANCHOR.x - shot.x * size.width * scale + drift, top: BLEED_ANCHOR.y - shot.y * size.height * scale };
+  const left = clamp(BLEED_ANCHOR.x - shot.x * size.width * scale + drift, VIDEO.width - size.width * scale, 0);
+  const top = clamp(BLEED_ANCHOR.y - shot.y * size.height * scale, VIDEO.height - size.height * scale, 0);
+  return { scale, left, top };
 }
 
 /**

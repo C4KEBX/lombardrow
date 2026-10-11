@@ -98,6 +98,19 @@ describe("bleed shots", () => {
     expect(shotTransform(shot, size, 0, 100).scale).toBeGreaterThan(shotTransform(shot, size, 8, 100).scale);
   });
 
+  it("keeps a wide crop of a landscape image covering the whole frame", () => {
+    const size = { width: 2000, height: 1600 };
+    for (const shot of [{ x: 0.74, y: 0.66, w: 0.34, occurrence: 1 }, { x: 0.05, y: 0.05, w: 0.9, occurrence: 1 }]) {
+      for (const t of [0, 10, 100]) {
+        const { scale, left, top } = shotTransform(shot, size, t, 100);
+        expect(left).toBeLessThanOrEqual(0);
+        expect(top).toBeLessThanOrEqual(0);
+        expect(left + size.width * scale).toBeGreaterThanOrEqual(1080 - 1e-6);
+        expect(top + size.height * scale).toBeGreaterThanOrEqual(1920 - 1e-6);
+      }
+    }
+  });
+
   it("shows the last shot that has started", () => {
     expect(shotAt([0, 40, 90], 0)).toBe(0);
     expect(shotAt([0, 40, 90], 40)).toBe(1);
