@@ -120,15 +120,20 @@
     },
     {
       "id": "f-fcra",
-      "claim": "Congress passed the Fair Credit Reporting Act in 1970, after hearings on what credit bureaus collected.",
+      "claim": "The Fair Credit Reporting Act, passed by Congress, was enacted in 1970.",
       "value": 1970,
       "source": {
-        "name": "UNH Today, Creditworthy: a history of credit bureaus in America (2017)",
-        "stamp": "UNH Today 2017",
-        "url": "https://www.unh.edu/unhtoday/2017/11/creditworthy",
+        "name": "EPIC, The Fair Credit Reporting Act (FCRA)",
+        "stamp": "EPIC",
+        "url": "https://epic.org/the-fair-credit-reporting-act-fcra-and-the-privacy-of-your-credit-report/",
         "tier": "secondary"
       },
       "corroboration": [
+        {
+          "name": "UNH Today, Creditworthy: a history of credit bureaus in America (2017)",
+          "url": "https://www.unh.edu/unhtoday/2017/11/creditworthy",
+          "tier": "secondary"
+        },
         {
           "name": "Fast Company, Equifax has a super shady history (2017)",
           "url": "https://www.fastcompany.com/40464730/equifax-has-a-super-shady-history-that-might-explain-its-shady-present",

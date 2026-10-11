@@ -68,7 +68,7 @@
     {
       "id": "tappan",
       "type": "archival",
-      "narration": "In 1841, a ruined merchant named Lewis Tappan founded the Mercantile Agency.",
+      "narration": "In 1841, Lewis Tappan, a merchant ruined in the panic of 1837, founded the Mercantile Agency.",
       "props": {
         "title": "Illustration, 1852",
         "assetId": "speculator-1852",
@@ -107,12 +107,12 @@
     {
       "id": "correspondents",
       "type": "kinetic-text",
-      "narration": "Locals reported on their neighbors. Was he of fair character? Good business habits?",
+      "narration": "Locals reported on their neighbors: was he of fair character, with good business habits?",
       "speaks": [
         "f-correspondents"
       ],
       "microhooks": [
-        "Locals reported on their neighbors."
+        "Locals reported on their neighbors:"
       ],
       "props": {
         "lines": [
@@ -222,7 +222,7 @@
     {
       "id": "retail",
       "type": "archival",
-      "narration": "In 1899, the Woolford brothers started Atlanta's Retail Credit Company, selling notes on shoppers for $25 a book. Today it's called Equifax.",
+      "narration": "In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. Today it's called Equifax.",
       "props": {
         "title": "Illustration, c. 1880",
         "assetId": "country-store",
@@ -231,19 +231,26 @@
           {
             "x": 0.5,
             "y": 0.5,
-            "w": 0.6
+            "w": 0.8
           },
           {
             "atWord": "Woolford",
-            "x": 0.3,
+            "x": 0.35,
             "y": 0.55,
-            "w": 0.3
+            "w": 0.6
           },
           {
-            "atWord": "shoppers",
+            "atWord": "Atlanta",
             "x": 0.62,
-            "y": 0.55,
-            "w": 0.3
+            "y": 0.5,
+            "w": 0.6
+          },
+          {
+            "atWord": "shoppers'",
+            "assetId": "new-bonnet",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.4
           },
           {
             "atWord": "Today",
@@ -304,14 +311,14 @@
     {
       "id": "law",
       "type": "big-number",
-      "narration": "In 1970, Congress passed the Fair Credit Reporting Act. In 1989 came the FICO score: one number, 300 to 850.",
+      "narration": "In 1970, Congress passed a credit reporting law. Then in 1989 came FICO: one number, 300 to 850.",
       "speaks": [
         "f-fcra",
         "f-fico",
         "f-range"
       ],
       "microhooks": [
-        "In 1989 came the FICO score"
+        "Then in 1989 came FICO"
       ],
       "props": {
         "value": 850,
@@ -328,26 +335,30 @@
     },
     {
       "id": "today",
-      "type": "big-number",
-      "narration": "Even FICO says the old reports were full of racial, class and gender biases. Today 90% of top lenders use its score. So which would you trust: a number or your neighbors?",
+      "type": "kinetic-text",
+      "narration": "Even FICO says the old reports were full of racial, class and gender biases. So which would you trust: a number or your neighbors?",
       "speaks": [
-        "f-bias",
-        "f-lenders"
+        "f-bias"
       ],
       "microhooks": [
         "Even FICO says"
       ],
       "props": {
-        "value": 90,
-        "suffix": "%",
-        "label": "of top lenders use FICO scores",
-        "factId": "f-lenders"
+        "lines": [
+          "Racial.",
+          "Class. Gender."
+        ]
       },
       "cues": [
         {
-          "atWord": "biases",
-          "do": "callout",
-          "text": "In FICO's own words"
+          "atWord": "racial",
+          "do": "emphasize",
+          "text": "Racial."
+        },
+        {
+          "atWord": "gender",
+          "do": "emphasize",
+          "text": "Gender."
         }
       ]
     }
