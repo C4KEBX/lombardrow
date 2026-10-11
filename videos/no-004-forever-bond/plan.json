@@ -1,0 +1,21 @@
+{
+  "doorNo": 4,
+  "pillar": "mechanics",
+  "storyShape": "then_to_now",
+  "hookType": "contrast_then_now",
+  "era": "early_modern",
+  "region": "western_europe",
+  "primaryVisual": "timeline",
+  "visualMetaphor": "a goatskin IOU whose margins fill with 295 years of interest receipts until a paper sheet has to carry the rest",
+  "paletteLead": "parchment",
+  "musicBed": null,
+  "title": "The loan that will never be repaid",
+  "angle": "Everyone repeats that a 1648 bond still pays Yale; the twist is that it was signed the day the Dutch swore peace with Spain, kept paying through the Netherlands' own default in 1810, and today pays about 11 euros a year that someone must collect in person.",
+  "sources": [
+    "https://news.yale.edu/2015/09/22/living-artifact-dutch-golden-age-yale-s-367-year-old-water-bond-still-pays-interest",
+    "https://beinecke.library.yale.edu/article/infinity-has-price",
+    "https://www.accountant.nl/nieuws/2015/9/schap-betaalt-rente-op-obligatie-uit-1648/",
+    "https://som.yale.edu/story/2026/prof-rouwenhorst-discusses-yales-378-year-old-perpetual-bond-bbc",
+    "https://www.nationalgallery.org.uk/paintings/gerard-ter-borch-the-ratification-of-the-treaty-of-munster"
+  ]
+}

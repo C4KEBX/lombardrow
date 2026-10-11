@@ -1,0 +1,50 @@
+[
+  {
+    "factId": "f-charter",
+    "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  },
+  {
+    "factId": "f-amsterdam",
+    "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  },
+  {
+    "factId": "f-maid",
+    "url": "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  },
+  {
+    "factId": "f-transfer",
+    "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  },
+  {
+    "factId": "f-oldest",
+    "url": "https://westfriesarchief.nl/historie/thema-s/geld-en-handel/the-oldest-share",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  },
+  {
+    "factId": "f-timeline",
+    "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403"
+  }
+]

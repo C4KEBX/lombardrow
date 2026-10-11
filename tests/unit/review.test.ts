@@ -72,7 +72,7 @@ describe("stale verify results and untraced labels", () => {
   it("warns about digits in big-number labels, compare labels and quote attributions", () => {
     const board = parseStoryboard({
       schemaVersion: 1,
-      meta: { title: "t", theme: "lombard-row", voice: "v" },
+      meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
       audio: { music: null },
       scenes: [
         { id: "n", type: "big-number", narration: "x", props: { value: 5, label: "since 1999", factId: "f" } },
@@ -90,7 +90,7 @@ describe("renderReviewHtml", () => {
   it("escapes model-written text everywhere and never emits a script tag or javascript: link", () => {
     const evilSb = parseStoryboard({
       schemaVersion: 1,
-      meta: { title: "<script>alert(1)</script>", theme: "lombard-row", voice: "v" },
+      meta: { title: "<script>alert(1)</script>", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
       audio: { music: null },
       scenes: [{ id: "s", type: "title", narration: `Hi <img src=x onerror=alert(1)> "quoted"`, props: { headline: "<b>H</b>" } }],
     });
@@ -116,5 +116,26 @@ describe("renderReviewHtml", () => {
   it("refuses an image that is not a PNG data URI", () => {
     const bad = buildReviewModel(sb, fx, { images: { ...images, intro: "https://evil.test/x.png" } });
     expect(() => renderReviewHtml(bad)).toThrow(/data URI/);
+  });
+});
+
+describe("review sheet evidence", () => {
+  it("shows each source's tier, snapshot link and the sentence where each number was found", () => {
+    const verify = [{
+      factId: "f-cpi", url: fx.facts.find((f) => f.id === "f-cpi")!.source.url, status: "supported" as const,
+      found: factTokens(fx.facts.find((f) => f.id === "f-cpi")!).filter((t) => !t.includes(",") && !/^\d{1,2}$/.test(t)),
+      missing: [], unverifiable: factTokens(fx.facts.find((f) => f.id === "f-cpi")!).filter((t) => /^\d{1,2}$/.test(t)),
+      evidence: [{ token: "3.2", sentence: "Prices <rose> 3.2 percent." }],
+      archiveUrl: "https://web.archive.org/web/20261008000000/https://www.bls.gov/cpi/",
+    }];
+    const withTier = parseFacts({ facts: fx.facts.map((f) => (f.id === "f-cpi" ? { ...f, source: { ...f.source, tier: "primary" } } : f)) });
+    const model = buildReviewModel(sb, withTier, { images, verify });
+    const cpi = model.facts.find((f) => f.id === "f-cpi")!;
+    expect(cpi.verify).toBe("supported");
+    expect(cpi.tier).toBe("primary");
+    const html = renderReviewHtml(model);
+    expect(html).toContain("3.2: &quot;Prices &lt;rose&gt; 3.2 percent.&quot;");
+    expect(html).toContain('href="https://web.archive.org/web/20261008000000/https://www.bls.gov/cpi/"');
+    expect(html).toContain("<small>primary</small>");
   });
 });

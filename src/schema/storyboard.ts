@@ -27,6 +27,16 @@ const sceneBase = {
   cues: z.array(CueSchema).default([]),
   /** Overrides the video's palette lead for this scene. */
   ground: z.enum(GROUNDS).optional(),
+  /** The year the story is in during this scene (negative is BC). Drives the year counter; omit for the present. */
+  year: z.number().int().min(-5000).max(2100).optional(),
+  /** A fact whose source stamps this scene when the scene has no factId of its own (e.g. a title naming a year). */
+  sourceFactId: z.string().min(1).optional(),
+  /** Facts behind the figures the narration speaks. Every number or year said aloud must match a fact the scene names. */
+  speaks: z.array(z.string().min(1)).min(1).optional(),
+  /** Voice this scene about 10% faster (the fast format's opening seconds). */
+  brisk: z.boolean().optional(),
+  /** Lines in this scene's narration that re-hook the viewer ("But that's not the first reason."), quoted exactly. */
+  microhooks: z.array(z.string().min(1)).optional(),
 };
 
 const TitleSceneSchema = z.strictObject({
@@ -237,6 +247,95 @@ const MapSceneSchema = z.strictObject({
     }),
 });
 
+/** A public-domain scan or painting from assets.json, with a slow pan and zoom. */
+/** A rectangle on an image, as fractions of its width and height (0 to 1). */
+const ImageRectSchema = z.strictObject({
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().gt(0).max(1),
+  h: z.number().gt(0).max(1),
+});
+
+/**
+ * One crop of a bleed archival image. The crop is centred on (x, y), fractions of the image, and is `w` of the
+ * image's width across the frame: 0.6 shows a line of type at about phone-reading size on a full page scan.
+ */
+const ShotSchema = z.strictObject({
+  atWord: z.string().min(1).optional(),
+  occurrence: z.number().int().min(1).default(1),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().min(0.05).max(1),
+  /** A highlighter swept across these words, as they are spoken. */
+  mark: ImageRectSchema.optional(),
+});
+
+const ArchivalSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("archival"),
+  props: z.strictObject({
+    /** What the image shows, as a short header ("Pacioli's Summa, Venice"). */
+    title: z.string().min(1).max(32),
+    assetId: z.string().min(1),
+    /** Where the camera starts and ends, as fractions of the image (0 to 1), and the zoom at each end. */
+    from: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1 }),
+    to: z.strictObject({ x: z.number().min(0).max(1), y: z.number().min(0).max(1), zoom: z.number().min(1).max(2.5) }).default({ x: 0.5, y: 0.5, zoom: 1.15 }),
+    /** "framed": the image in a Brass frame under its title. "bleed": the image fills the whole 9:16 frame, shot by shot. */
+    layout: z.enum(["framed", "bleed"]).default("framed"),
+    /** For a bleed layout: the crops the scene cuts between, each pushing in slowly, the first from frame 0. */
+    shots: z.array(ShotSchema).max(8).optional(),
+  }).superRefine((props, ctx) => {
+    if (props.layout === "bleed" && !props.shots?.length) ctx.addIssue({ code: "custom", path: ["shots"], message: "a bleed archival scene needs at least one shot" });
+    if (props.layout === "framed" && props.shots) ctx.addIssue({ code: "custom", path: ["shots"], message: "shots are for the bleed layout; a framed scene pans with from and to" });
+    props.shots?.forEach((shot, i) => {
+      if (i === 0 && shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", 0, "atWord"], message: "the first shot starts the scene; leave out its atWord" });
+      if (i > 0 && !shot.atWord) ctx.addIssue({ code: "custom", path: ["shots", i, "atWord"], message: "every shot after the first cuts in on a spoken word: give its atWord" });
+    });
+  }),
+});
+
+/** One sum of money traced step by step: boxes top to bottom, a token travelling down as each step is spoken. */
+const FlowStepSchema = z.strictObject({
+  label: z.string().min(1).max(22),
+  note: z.string().min(1).max(28).optional(),
+});
+const FlowDiagramSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("flow-diagram"),
+  props: z
+    .strictObject({
+      title: z.string().min(1).max(32),
+      steps: z.array(FlowStepSchema).min(2).max(5),
+      /** Text on each arrow between steps (one fewer than steps), e.g. the amount that moves. */
+      arrows: z.array(z.string().min(1).max(16)).optional(),
+      tone: z.enum(TONES).default("highlight"),
+      factId: z.string().min(1).optional(),
+    })
+    .superRefine((props, ctx) => {
+      if (props.arrows && props.arrows.length !== props.steps.length - 1) {
+        ctx.addIssue({ code: "custom", path: ["arrows"], message: `arrows needs one label per gap between steps (${props.steps.length - 1})` });
+      }
+    }),
+});
+
+/** A ledger page whose entries are written in one by one, with an optional ruled-off total. */
+const LedgerRowSchema = z.strictObject({
+  entry: z.string().min(1).max(24),
+  amount: z.string().min(1).max(10),
+  /** A small line above the entry ("Venice, 1494"). */
+  date: z.string().min(1).max(20).optional(),
+});
+const LedgerPageSceneSchema = z.strictObject({
+  ...sceneBase,
+  type: z.literal("ledger-page"),
+  props: z.strictObject({
+    title: z.string().min(1).max(32),
+    rows: z.array(LedgerRowSchema).min(1).max(5),
+    total: z.strictObject({ entry: z.string().min(1).max(24), amount: z.string().min(1).max(10) }).optional(),
+    factId: z.string().min(1).optional(),
+  }),
+});
+
 const SceneSchema = z.discriminatedUnion("type", [
   TitleSceneSchema,
   BigNumberSceneSchema,
@@ -247,6 +346,9 @@ const SceneSchema = z.discriminatedUnion("type", [
   QuoteSceneSchema,
   TimelineSceneSchema,
   MapSceneSchema,
+  ArchivalSceneSchema,
+  FlowDiagramSceneSchema,
+  LedgerPageSceneSchema,
 ]);
 
 export const SCENE_TYPES: readonly Scene["type"][] = SceneSchema.options.map((option) => option.shape.type.value);
@@ -259,7 +361,40 @@ export const StoryboardSchema = z
       theme: z.literal("lombard-row"),
       /** The ground most scenes sit on (variation rule: no more than 2 videos in a row with the same lead). */
       paletteLead: z.enum(GROUNDS).default("ink"),
+      /** The door number on the open and the end card: this video's place on the Row. */
+      doorNo: z.number().int().min(1).max(999),
+      /** Series label above the door number on the open, e.g. "How it works". */
+      series: z.string().min(1).max(28),
       voice: z.string().min(1),
+      /**
+       * How the video opens. "title-card": a title scene with the door masthead. "cold": a moving visual from
+       * frame 0 with the door number and title laid over it for 1.5 s at most. "bleed": a full-frame image from frame 0
+       * with nothing over it; the door number and title come in at 2 s as a small corner tag.
+       */
+      open: z.enum(["title-card", "cold", "bleed"]).default("title-card"),
+      /**
+       * "classic": the layout of No. 001 to 003. "fast" (No. 004 on): a bleed open with a corner tag, bold captions in
+       * the middle of the frame one to three words at a time, and the pacing rules in `pacingIssues` (src/skill/pacing.ts).
+       */
+      format: z.enum(["classic", "fast"]).default("classic"),
+      /**
+       * A bleed open's frame-0 line: the claim burned in over the first image for the first 2 s, until the corner tag
+       * comes in, so a viewer with the sound off reads the stakes at once. Two short lines at most.
+       */
+      hookLine: z.string().min(1).max(44).optional(),
+      /**
+       * How the video ends. Without it, on the door plate. With it (Justin, 2026-10-11, from the viral review), on the
+       * last scene's reveal: the comment question pops up on its spoken word and the sign-off plays over the reveal.
+       */
+      ending: z
+        .strictObject({
+          /** The question on screen, quoted in the last scene's narration or close to it. */
+          prompt: z.string().min(1).max(56).regex(/\?$/, "the comment prompt is a question: end it with ?"),
+          /** The word in the last scene's narration where the question appears. */
+          atWord: z.string().min(1),
+          occurrence: z.number().int().min(1).default(1),
+        })
+        .optional(),
     }),
     audio: z.strictObject({ music: z.string().min(1).nullable() }),
     scenes: z.array(SceneSchema).min(1),
@@ -275,7 +410,15 @@ export const StoryboardSchema = z
         });
       }
       seen.add(scene.id);
+      scene.microhooks?.forEach((hook, i) => {
+        if (!scene.narration.includes(hook)) {
+          ctx.addIssue({ code: "custom", path: ["scenes", index, "microhooks", i], message: `microhook "${hook}" is not in scene "${scene.id}"'s narration word for word` });
+        }
+      });
     });
+    if (sb.meta.format === "fast" && sb.meta.open !== "bleed") {
+      ctx.addIssue({ code: "custom", path: ["meta", "open"], message: 'the fast format opens full-bleed: set meta.open to "bleed"' });
+    }
   });
 
 export type Storyboard = z.output<typeof StoryboardSchema>;
@@ -289,6 +432,23 @@ export type QuoteProps = Extract<Scene, { type: "quote" }>["props"];
 export type TimelineProps = Extract<Scene, { type: "timeline" }>["props"];
 export type MapProps = Extract<Scene, { type: "map" }>["props"];
 export type BarRaceProps = Extract<Scene, { type: "bar-race" }>["props"];
+export type ArchivalProps = Extract<Scene, { type: "archival" }>["props"];
+export type ArchivalShot = NonNullable<ArchivalProps["shots"]>[number];
+export type FlowDiagramProps = Extract<Scene, { type: "flow-diagram" }>["props"];
+export type LedgerPageProps = Extract<Scene, { type: "ledger-page" }>["props"];
+
+/** Every fact a scene draws on: its own data facts, plus `sourceFactId` when it names one. */
+export function factIdsOf(scene: Scene): string[] {
+  const own = (() => {
+    switch (scene.type) {
+      case "compare": return [scene.props.left.factId, scene.props.right.factId];
+      case "title": case "kinetic-text": case "archival": return [];
+      case "flow-diagram": case "ledger-page": return scene.props.factId ? [scene.props.factId] : [];
+      default: return [scene.props.factId];
+    }
+  })();
+  return [...new Set([...own, ...(scene.sourceFactId ? [scene.sourceFactId] : []), ...(scene.speaks ?? [])])];
+}
 
 export function parseStoryboard(input: unknown): Storyboard {
   const result = StoryboardSchema.safeParse(input);

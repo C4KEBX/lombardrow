@@ -26,7 +26,7 @@
       "color": {"open": "brass", "axis_on_ledger_ink": "parchment", "axis_on_parchment": "ledger_ink"},
       "series_label": {"x": 72, "y": 900, "font": "text", "size": 24, "weight": 500, "tracking_em": 0.28, "uppercase": true, "color_on_ledger_ink": "parchment_78"},
       "door_no": {"x": 72, "y": 952, "font": "display", "size": 88, "prefix": "No. ", "color_on_ledger_ink": "parchment"},
-      "motion": {"rule_draw": {"start_s": 0.2, "duration_s": 0.6, "direction": "left_to_right"}, "text_fade_in": {"start_s": 0.8, "duration_s": 0.3}},
+      "motion": {"rule_draw": {"start_s": 0.0, "duration_s": 0.5, "direction": "left_to_right"}, "text_fade_in": {"start_s": 0.3, "duration_s": 0.25}},
       "inputs": ["door_no", "series_name"]
     },
     "year_counter": {

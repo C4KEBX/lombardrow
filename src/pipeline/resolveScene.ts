@@ -3,7 +3,6 @@ import type { Scene, Storyboard } from "../schema/storyboard";
 import {
   assertValidWords,
   CueResolutionError,
-  DEFAULT_TAIL_PAD_MS,
   msToFrame,
   resolveCue,
   sceneDurationMs,
@@ -18,20 +17,21 @@ export type ComposedScene = {
   /** The scene's own ground, else the video's palette lead. */
   ground: Ground;
   cues: ResolvedCue[];
+  /** A bleed archival scene's shot starts, in scene frames (the first is 0); empty for every other scene. */
+  shotFrames: number[];
   durationFrames: number;
   startFrame: number;
   words: WordTiming[];
 };
 
 /**
- * Scene length follows the narration: at least the word timings plus a tail, and never shorter
- * than the audio itself (so a trailing breath is never cut off).
+ * Scene length follows the narration: the last word plus a short tail. The voice clip's own trailing
+ * silence is not waited out; the clip keeps playing under the next scene, so nothing is cut off.
  */
 export function composeScenes(
   sb: Storyboard,
   wordsByScene: Record<string, readonly WordTiming[]>,
   fps: number,
-  audioMsByScene: Record<string, number> = {},
 ): ComposedScene[] {
   const composed: ComposedScene[] = [];
   let startFrame = 0;
@@ -46,11 +46,11 @@ export function composeScenes(
         text: cue.text,
         x: cue.x,
       }));
-      const wordsMs = sceneDurationMs(words);
-      const audioMs = audioMsByScene[scene.id];
-      const durationMs = audioMs === undefined ? wordsMs : Math.max(wordsMs, audioMs + DEFAULT_TAIL_PAD_MS);
-      const durationFrames = msToFrame(durationMs, fps);
-      composed.push({ id: scene.id, scene, ground: scene.ground ?? sb.meta.paletteLead, cues, durationFrames, startFrame, words: [...words] });
+      const shotFrames = scene.type === "archival" && scene.props.shots
+        ? scene.props.shots.map((shot) => (shot.atWord ? msToFrame(resolveCue(words, shot.atWord, shot.occurrence), fps) : 0))
+        : [];
+      const durationFrames = msToFrame(sceneDurationMs(words), fps);
+      composed.push({ id: scene.id, scene, ground: scene.ground ?? sb.meta.paletteLead, cues, shotFrames, durationFrames, startFrame, words: [...words] });
       startFrame += durationFrames;
     } catch (error) {
       if (error instanceof CueResolutionError) {

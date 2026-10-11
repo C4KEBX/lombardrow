@@ -16,6 +16,12 @@ export const SAFE = {
   right: VIDEO.width - DEVICES.platform_zones.right.x,
 } as const;
 
+/**
+ * Top of the overlays laid over a fast-format video (frame-0 hook line, corner tag, comment question). Instagram's
+ * top bar covers about the first 210 px of a Reel, so they start below it (viral review of No. 004, 2026-10-11).
+ */
+export const OVERLAY_TOP = 230;
+
 /** The content area every scene draws inside: x 72 to 918, down to the bottom platform zone. */
 export const CONTENT = {
   left: SAFE.left,
@@ -49,3 +55,28 @@ export const QUOTE_LANE = {
 
 /** The map's drawing area: below the title and footnote, above the caption lane. */
 export const MAP_BOX = { left: CONTENT.left, right: CONTENT.right, top: 300, bottom: CAPTION_LANE.top - 40 } as const;
+
+const YC = DEVICES.devices.year_counter;
+/** Where content may start under the year counter: its number, gap and rule, plus breathing room. */
+export const YEAR_CONTENT_TOP = YC.y + YC.number.size + YC.rule.gap + YC.rule.height + 45;
+
+/** Text lanes for a scene, shortened from the top when the year counter is showing. */
+/** Height the door-number masthead takes on the opening title card, gap below included. */
+export const DOOR_HEADER_PX = 190;
+
+/**
+ * The cold-open masthead's headline: at most this size, inside this box under the door number. Kept small so the
+ * masthead's band ends above the first scene's first row of content.
+ */
+export const COLD_OPEN_HEADLINE = { maxPx: 64, boxPx: 140 } as const;
+
+export function lanesFor(hasYear: boolean) {
+  const top = hasYear ? YEAR_CONTENT_TOP : SAFE.top;
+  const cut = top - SAFE.top;
+  return {
+    top,
+    title: { ...TITLE_LANE, height: TITLE_LANE.height - cut },
+    kinetic: { ...KINETIC_LANE, height: KINETIC_LANE.height - cut },
+    quote: { ...QUOTE_LANE, height: QUOTE_LANE.height - cut },
+  };
+}

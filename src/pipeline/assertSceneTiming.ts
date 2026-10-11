@@ -4,6 +4,7 @@ import { compareRevealFrames } from "../scenes/compare/layout";
 import { MAP, regionCueFrames } from "../scenes/map/timing";
 import { TIMELINE, eventCueFramesFor, timelinePlan } from "../scenes/timeline/timing";
 import { quoteRevealFrames } from "../scenes/quote/timing";
+import { ledgerDoneFrame, stepCueFrames, stepPlan, stepsDoneFrame } from "../scenes/steps/timing";
 import { StoryboardError } from "../schema/storyboard";
 import type { ComposedScene } from "./resolveScene";
 
@@ -66,6 +67,23 @@ export function assertSceneTiming(scenes: readonly ComposedScene[]): void {
       if (done > limit) {
         throw new StoryboardError(
           `Scene "${scene.id}" is too short (${composed.durationFrames} frames): the timeline cannot reach its last event before the scene exits; lengthen the narration`,
+        );
+      }
+    }
+    if (scene.type === "flow-diagram" || scene.type === "ledger-page") {
+      const items = scene.type === "flow-diagram" ? scene.props.steps.map((s) => s.label) : scene.props.rows.map((r) => r.entry);
+      const noun = scene.type === "flow-diagram" ? "step" : "row";
+      let done: number;
+      try {
+        const plan = stepPlan(stepCueFrames(items, composed.cues), composed.durationFrames, noun);
+        done = scene.type === "ledger-page" ? ledgerDoneFrame(plan, scene.props.total !== undefined) : stepsDoneFrame(plan);
+      } catch (error) {
+        if (error instanceof RangeError) throw new StoryboardError(`Scene "${scene.id}": ${error.message}`);
+        throw error;
+      }
+      if (done > limit) {
+        throw new StoryboardError(
+          `Scene "${scene.id}" is too short (${composed.durationFrames} frames): the ${scene.type} cannot reach its last ${noun} before the scene exits; lengthen the narration`,
         );
       }
     }

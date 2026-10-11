@@ -4,12 +4,12 @@ import { describe, expect, it } from "vitest";
 import { SCENE_TYPES } from "../../src/schema/storyboard";
 import { buildCatalog } from "../../src/skill/catalog";
 
-const SCHEMA_FILE = path.resolve(".claude/skills/make-explainer/storyboard.schema.json");
+const SCHEMA_FILE = path.resolve(".claude/skills/make-lombard/storyboard.schema.json");
 
 describe("SCENE_TYPES", () => {
   it("lists every scene type the renderer supports", () => {
     expect([...SCENE_TYPES].sort()).toEqual(
-      ["bar-race", "big-number", "compare", "kinetic-text", "line-chart", "map", "quote", "timeline", "title"],
+      ["archival", "bar-race", "big-number", "compare", "flow-diagram", "kinetic-text", "ledger-page", "line-chart", "map", "quote", "timeline", "title"],
     );
   });
 });

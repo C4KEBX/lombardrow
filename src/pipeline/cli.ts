@@ -1,16 +1,19 @@
 import type { VoiceMode } from "../voice/index";
+import { outDirFor } from "./renderDir";
 
 export type ProduceCliOptions = {
   storyboardPath: string;
   factsPath: string;
+  /** Defaults to renders/no-XXX/final for the storyboard's door number. */
   outDir: string;
   voice: VoiceMode;
   enforceLength: boolean;
   musicDir?: string;
   cacheDir?: string;
+  assetsPath?: string;
 };
 
-const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir"]);
+const VALUE_FLAGS = new Set(["--storyboard", "--facts", "--out", "--voice", "--music-dir", "--cache-dir", "--assets"]);
 
 export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   const values = new Map<string, string>();
@@ -35,13 +38,15 @@ export function parseArgs(argv: readonly string[]): ProduceCliOptions {
   };
   const voice = values.get("--voice") ?? "edge";
   if (voice !== "edge" && voice !== "standin") throw new Error(`--voice must be "edge" or "standin", got "${voice}"`);
+  const storyboardPath = required("--storyboard");
   return {
-    storyboardPath: required("--storyboard"),
+    storyboardPath,
     factsPath: required("--facts"),
-    outDir: required("--out"),
+    outDir: outDirFor(storyboardPath, values.get("--out")),
     voice,
     enforceLength,
     musicDir: values.get("--music-dir"),
     cacheDir: values.get("--cache-dir"),
+    assetsPath: values.get("--assets"),
   };
 }

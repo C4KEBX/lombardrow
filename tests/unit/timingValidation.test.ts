@@ -27,6 +27,6 @@ describe("assertValidWords", () => {
 
 describe("sceneDurationMs uses the latest end, not the last word's end", () => {
   it("does not cut narration off when a later word ends earlier", () => {
-    expect(sceneDurationMs([w("a", 0, 5000), w("b", 100, 300)])).toBe(5000 + 400);
+    expect(sceneDurationMs([w("a", 0, 5000), w("b", 100, 300)])).toBe(5000 + 200);
   });
 });

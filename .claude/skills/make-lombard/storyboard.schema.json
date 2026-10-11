@@ -26,16 +26,79 @@
             "green"
           ]
         },
+        "doorNo": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "series": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 28
+        },
         "voice": {
           "type": "string",
           "minLength": 1
+        },
+        "open": {
+          "default": "title-card",
+          "type": "string",
+          "enum": [
+            "title-card",
+            "cold",
+            "bleed"
+          ]
+        },
+        "format": {
+          "default": "classic",
+          "type": "string",
+          "enum": [
+            "classic",
+            "fast"
+          ]
+        },
+        "hookLine": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 44
+        },
+        "ending": {
+          "type": "object",
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 56,
+              "pattern": "\\?$"
+            },
+            "atWord": {
+              "type": "string",
+              "minLength": 1
+            },
+            "occurrence": {
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "prompt",
+            "atWord",
+            "occurrence"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "title",
         "theme",
         "paletteLead",
-        "voice"
+        "doorNo",
+        "series",
+        "voice",
+        "open",
+        "format"
       ],
       "additionalProperties": false
     },
@@ -122,6 +185,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -214,6 +304,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -340,6 +457,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -502,6 +646,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -666,6 +837,33 @@
                   "green"
                 ]
               },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "kinetic-text"
@@ -768,6 +966,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -925,6 +1150,33 @@
                   "green"
                 ]
               },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "quote"
@@ -1022,6 +1274,33 @@
                   "parchment",
                   "green"
                 ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "type": {
                 "type": "string",
@@ -1152,6 +1431,33 @@
                   "green"
                 ]
               },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "type": {
                 "type": "string",
                 "const": "map"
@@ -1223,6 +1529,602 @@
                   "focus",
                   "tone",
                   "factId"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "narration",
+              "cues",
+              "type",
+              "props"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "narration": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cues": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "atWord": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "occurrence": {
+                      "default": 1,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "do": {
+                      "type": "string",
+                      "enum": [
+                        "callout",
+                        "emphasize"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 24
+                    },
+                    "x": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "atWord",
+                    "occurrence",
+                    "do"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "type": {
+                "type": "string",
+                "const": "archival"
+              },
+              "props": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  },
+                  "assetId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "from": {
+                    "default": {
+                      "x": 0.5,
+                      "y": 0.5,
+                      "zoom": 1
+                    },
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "zoom": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 2.5
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "zoom"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "to": {
+                    "default": {
+                      "x": 0.5,
+                      "y": 0.5,
+                      "zoom": 1.15
+                    },
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "zoom": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 2.5
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "zoom"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "default": "framed",
+                    "type": "string",
+                    "enum": [
+                      "framed",
+                      "bleed"
+                    ]
+                  },
+                  "shots": {
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "atWord": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "occurrence": {
+                          "default": 1,
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "x": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "w": {
+                          "type": "number",
+                          "minimum": 0.05,
+                          "maximum": 1
+                        },
+                        "mark": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y",
+                            "w",
+                            "h"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "occurrence",
+                        "x",
+                        "y",
+                        "w"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "title",
+                  "assetId",
+                  "from",
+                  "to",
+                  "layout"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "narration",
+              "cues",
+              "type",
+              "props"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "narration": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cues": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "atWord": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "occurrence": {
+                      "default": 1,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "do": {
+                      "type": "string",
+                      "enum": [
+                        "callout",
+                        "emphasize"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 24
+                    },
+                    "x": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "atWord",
+                    "occurrence",
+                    "do"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "type": {
+                "type": "string",
+                "const": "flow-diagram"
+              },
+              "props": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  },
+                  "steps": {
+                    "minItems": 2,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 22
+                        },
+                        "note": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 28
+                        }
+                      },
+                      "required": [
+                        "label"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "arrows": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 16
+                    }
+                  },
+                  "tone": {
+                    "default": "highlight",
+                    "type": "string",
+                    "enum": [
+                      "positive",
+                      "negative",
+                      "neutral",
+                      "highlight"
+                    ]
+                  },
+                  "factId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "title",
+                  "steps",
+                  "tone"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "narration",
+              "cues",
+              "type",
+              "props"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "narration": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cues": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "atWord": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "occurrence": {
+                      "default": 1,
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "do": {
+                      "type": "string",
+                      "enum": [
+                        "callout",
+                        "emphasize"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 24
+                    },
+                    "x": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "atWord",
+                    "occurrence",
+                    "do"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "ground": {
+                "type": "string",
+                "enum": [
+                  "ink",
+                  "parchment",
+                  "green"
+                ]
+              },
+              "year": {
+                "type": "integer",
+                "minimum": -5000,
+                "maximum": 2100
+              },
+              "sourceFactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "brisk": {
+                "type": "boolean"
+              },
+              "microhooks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "type": {
+                "type": "string",
+                "const": "ledger-page"
+              },
+              "props": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  },
+                  "rows": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entry": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 24
+                        },
+                        "amount": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 10
+                        },
+                        "date": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 20
+                        }
+                      },
+                      "required": [
+                        "entry",
+                        "amount"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "entry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 24
+                      },
+                      "amount": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 10
+                      }
+                    },
+                    "required": [
+                      "entry",
+                      "amount"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "factId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "title",
+                  "rows"
                 ],
                 "additionalProperties": false
               }

@@ -5,7 +5,7 @@ import { CHART_BOX, placeBadge } from "../../charts/layout";
 import { EXIT_FRAMES } from "../../charts/timing";
 import { BODY_FONT, DISPLAY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { fitFontSize, formatNumber } from "../../design/layout";
-import { countUp, dataProgress, popIn } from "../../design/motion";
+import { dataProgress, popIn } from "../../design/motion";
 import { useTheme } from "../../design/theme";
 import { CONTENT, SAFE, VIDEO } from "../../design/tokens";
 import type { CompareProps } from "../../schema/storyboard";
@@ -13,6 +13,12 @@ import type { SceneRenderProps } from "../types";
 import { COMPARE, barHeights } from "./layout";
 
 const COLUMN_ROOM = 360;
+
+/**
+ * Each value fades in over the last stretch of its bar's growth, showing its true figure. Counting up from zero
+ * showed made-up figures mid-way ("0.658 yrs" against "0.000 yrs" in No. 001) to anyone who paused.
+ */
+export const valueIn = (grow: number): number => Math.min(1, Math.max(0, (grow - 0.6) / 0.4));
 
 export const Compare: React.FC<SceneRenderProps<CompareProps>> = ({ props, cues, durationFrames }) => {
   const frame = useCurrentFrame();
@@ -67,9 +73,9 @@ export const Compare: React.FC<SceneRenderProps<CompareProps>> = ({ props, cues,
               <text
                 x={cx} y={COMPARE.baseline - h - 28} textAnchor="middle"
                 fontFamily={NUMBER_FONT} fontWeight={600} fontSize={valueFont} fill={theme.ink}
-                style={TABULAR}
+                fillOpacity={valueIn(grows[i])} style={TABULAR}
               >
-                {fmt(countUp(side.value, grows[i], props.decimals))}
+                {fmt(side.value)}
               </text>
               <text x={cx} y={COMPARE.labelY} textAnchor="middle" fontFamily={BODY_FONT} fontWeight={600} fontSize={44} fill={theme.ink}>
                 {side.label}

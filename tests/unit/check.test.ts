@@ -1,17 +1,28 @@
 import { describe, expect, it } from "vitest";
 import facts from "../../fixtures/finance.facts.json";
 import storyboard from "../../fixtures/finance.storyboard.json";
-import { checkStoryboard, formatReport } from "../../src/skill/check";
+import no004Facts from "../../fixtures/no-004/rule-of-72.facts.json";
+import no004Sb from "../../fixtures/no-004/rule-of-72.storyboard.json";
+import { checkStoryboard, formatReport, openerIssues } from "../../src/skill/check";
+import { parseStoryboard } from "../../src/schema/storyboard";
 
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
 describe("checkStoryboard", () => {
-  it("passes a valid storyboard and reports stats and a length warning when outside 55-60 s", () => {
-    const report = checkStoryboard(storyboard, facts);
+  it("passes the No. 004 reference video with no issues, warning only that its script now runs short", () => {
+    // Scripted for 65-70 s at the old, slower pacing.
+    const report = checkStoryboard(no004Sb, no004Facts);
     expect(report.issues).toEqual([]);
     expect(report.ok).toBe(true);
+    expect(report.stats?.scenes).toBe(7);
+    expect(report.warnings).toEqual([expect.stringMatching(/^estimated length [\d.]+ s is outside 62-70 s/)]);
+  });
+
+  it("holds the older finance demo to the Lombard Row source rules and warns on its length", () => {
+    const report = checkStoryboard(storyboard, facts);
+    expect(new Set(report.issues.map((i) => i.stage))).toEqual(new Set(["sources", "spoken figures"]));
     expect(report.stats?.scenes).toBe(5);
-    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 55-60 s/);
+    expect(report.warnings.join("\n")).toMatch(/estimated length .* outside 62-70 s/);
   });
 
   it("collects every independent issue in one run instead of stopping at the first", () => {
@@ -78,4 +89,44 @@ describe("formatReport", () => {
   it("prints OK when there are no issues", () => {
     expect(formatReport({ ok: true, issues: [], warnings: [], stats: { scenes: 1, words: 5, estimatedSeconds: 3 } })).toMatch(/OK/);
   });
+});
+
+describe("the opening title card", () => {
+  it("must be the first scene", () => {
+    const sb = structuredClone(no004Sb) as { scenes: { type: string }[] };
+    sb.scenes = [sb.scenes[2], sb.scenes[1], sb.scenes[0], ...sb.scenes.slice(3)];
+    const report = checkStoryboard(sb, no004Facts);
+    expect(report.issues).toContainEqual({ stage: "opener", message: expect.stringMatching(/title-card open needs a title scene first/) });
+  });
+});
+
+describe("a cold open", () => {
+  const cold = (narration: string, type?: string) => {
+    const sb = structuredClone(no004Sb) as { meta: Record<string, unknown>; scenes: { type: string; narration: string }[] };
+    sb.meta.open = "cold";
+    const first = sb.scenes.findIndex((s) => s.type === (type ?? "line-chart"));
+    sb.scenes = [sb.scenes[first], ...sb.scenes.filter((_, i) => i !== first)];
+    sb.scenes[0].narration = narration;
+    return parseStoryboard(sb);
+  };
+
+  it("accepts a moving visual first with a claim for its first line", () => {
+    expect(openerIssues(cold("Money doubles faster than most people think. Here is the rule."))).toEqual([]);
+  });
+  it("still needs the title card to be first on a title-card open", () => {
+    const sb = parseStoryboard(no004Sb);
+    expect(openerIssues(sb)).toEqual([]);
+  });
+  it("rejects a text scene as the moving visual", () => {
+    expect(openerIssues(cold("Money doubles faster than you think.", "title"))[0]).toMatch(/starts on something moving/);
+  });
+  it("rejects a question for the first line", () => {
+    expect(openerIssues(cold("How long does money take to double?"))[0]).toMatch(/opens on a question/);
+  });
+  it.each(["Amsterdam, August 1602. A maid bought shares.", "In 1494, a monk wrote it down.", "August 1602 changed money."])(
+    "rejects a date for the first line: %s",
+    (line) => {
+      expect(openerIssues(cold(line))[0]).toMatch(/opens on a date/);
+    },
+  );
 });

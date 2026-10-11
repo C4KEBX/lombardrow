@@ -6,6 +6,8 @@ import { promisify } from "node:util";
 import { z } from "zod";
 import { probeDurationMs } from "../audio/probe";
 import { alignEvents, type RawEvent } from "./align";
+import { PRONUNCIATIONS } from "./pronunciations";
+import { foldTimings, spellNarration } from "./speller";
 import type { VoiceProvider } from "./types";
 
 const run = promisify(execFile);
@@ -20,9 +22,16 @@ const EventsSchema = z.array(
 export const voiceCacheKey = (voice: string, narration: string): string =>
   createHash("sha256").update(`${voice}\n${narration}`).digest("hex").slice(0, 16);
 
-export const ttsArgs = (voice: string, textFile: string, outMp3: string, outJson: string): string[] => [
-  TTS_SCRIPT, "--voice", voice, "--text-file", textFile, "--out-mp3", outMp3, "--out-json", outJson,
-];
+/** A voice can carry a speaking rate after "@" ("en-GB-RyanNeural@+10%"): see `voiceFor`. */
+export function splitVoice(voice: string): { name: string; rate?: string } {
+  const at = voice.indexOf("@");
+  return at < 0 ? { name: voice } : { name: voice.slice(0, at), rate: voice.slice(at + 1) };
+}
+
+export const ttsArgs = (voice: string, textFile: string, outMp3: string, outJson: string): string[] => {
+  const { name, rate } = splitVoice(voice);
+  return [TTS_SCRIPT, "--voice", name, "--text-file", textFile, "--out-mp3", outMp3, "--out-json", outJson, ...(rate ? ["--rate", rate] : [])];
+};
 
 export function parseEvents(raw: string): RawEvent[] {
   let json: unknown;
@@ -55,18 +64,28 @@ const defaultDeps: EdgeDeps = {
   probe: probeDurationMs,
 };
 
-/** Edge TTS provider. Output is cached per (voice, narration); a failed run caches nothing. */
-export function makeEdgeProvider(cacheDir: string, deps: EdgeDeps = defaultDeps): VoiceProvider {
+/**
+ * Edge TTS provider. The voice reads the spelled-out narration ("1494" as "fourteen ninety-four");
+ * word timings fold back onto the written tokens. Output is cached per (voice, spoken text); a
+ * failed run caches nothing.
+ */
+export function makeEdgeProvider(
+  cacheDir: string,
+  deps: EdgeDeps = defaultDeps,
+  dictionary: Readonly<Record<string, string>> = PRONUNCIATIONS,
+): VoiceProvider {
   return async (narration, voice) => {
     fs.mkdirSync(cacheDir, { recursive: true });
-    const key = voiceCacheKey(voice, narration);
+    const spelled = spellNarration(narration, dictionary);
+    const spoken = spelled.spoken;
+    const key = voiceCacheKey(voice, spoken);
     const mp3 = path.join(cacheDir, `${key}.mp3`);
     const json = path.join(cacheDir, `${key}.events.json`);
     if (!(fs.existsSync(mp3) && fs.existsSync(json))) {
       const textFile = path.join(cacheDir, `${key}.txt`);
       const tmpMp3 = `${mp3}.part`;
       const tmpJson = `${json}.part`;
-      fs.writeFileSync(textFile, narration, "utf-8");
+      fs.writeFileSync(textFile, spoken, "utf-8");
       try {
         await deps.runTts(ttsArgs(voice, textFile, tmpMp3, tmpJson));
         fs.renameSync(tmpMp3, mp3);
@@ -77,6 +96,7 @@ export function makeEdgeProvider(cacheDir: string, deps: EdgeDeps = defaultDeps)
       }
     }
     const events = parseEvents(fs.readFileSync(json, "utf-8"));
-    return { audioPath: mp3, words: alignEvents(narration, events), audioMs: await deps.probe(mp3) };
+    const words = foldTimings(spelled, alignEvents(spoken, events));
+    return { audioPath: mp3, words, audioMs: await deps.probe(mp3) };
   };
 }

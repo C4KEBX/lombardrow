@@ -1,0 +1,57 @@
+{
+  "$comment": "Every window and limit from the brand guidelines' variation table (Oct 2026). Tune numbers here, not in code. If the checker rejects too often early on, loosen a window before removing a rule.",
+  "dimensions": {
+    "pillar": {
+      "options": ["origins", "mechanics", "words", "hooks"],
+      "maxRun": 2,
+      "share": {
+        "targets": { "origins": 0.4, "mechanics": 0.3, "words": 0.2, "hooks": 0.1 },
+        "toleranceFraction": 0.1,
+        "window": 20,
+        "enforceFromVideo": 11
+      }
+    },
+    "storyShape": {
+      "options": ["then_to_now", "problem_it_solved", "myth_vs_record", "follow_the_money", "two_people_one_deal", "countdown", "what_if_it_never_existed"],
+      "notSameAsPrevious": true,
+      "maxInWindow": { "count": 2, "window": 5 }
+    },
+    "hookType": {
+      "options": ["question", "surprising_number", "myth_to_correct", "date", "cold_open_scene", "everyday_object", "contrast_then_now"],
+      "notSameAsPrevious": true,
+      "maxInWindow": { "count": 2, "window": 5 }
+    },
+    "era": {
+      "options": ["ancient", "medieval", "early_modern", "industrial", "modern", "contemporary"],
+      "maxRun": 2,
+      "maxInWindow": { "count": 3, "window": 6 }
+    },
+    "region": {
+      "options": ["britain", "western_europe", "mediterranean", "united_states", "other_americas", "middle_east", "asia", "africa", "global"],
+      "maxRun": 2,
+      "maxInWindow": { "count": 3, "window": 5 }
+    },
+    "primaryVisual": {
+      "options": ["line_chart", "bar_chart", "timeline", "map", "flow_diagram", "object_close_up", "split_screen", "ledger_page", "character_scene", "scale_comparison"],
+      "notSameAsPrevious": true,
+      "maxInWindow": { "count": 2, "window": 5 }
+    },
+    "paletteLead": {
+      "options": ["ink", "parchment", "green"],
+      "maxRun": 2
+    }
+  },
+  "visualMetaphor": { "maxSharedWordsFraction": 0.5, "window": 20 },
+  "musicBed": { "notInLast": 3 },
+  "title": { "firstWords": 3, "window": 10 },
+  "script": {
+    "minWords": 175,
+    "maxWords": 215,
+    "$wordsComment": "The guidelines say 160 to 180 words; at the 2026-10-09 pacing the brand voice (en-GB-RyanNeural) fits about 190 to 215 words in 62-70 s, so the range is 175 to 215 and npm run voice decides length.",
+    "ngram": 3,
+    "maxOverlapFraction": 0.15,
+    "window": 20
+  },
+  "sources": { "minSites": 3 },
+  "series": { "origins": "Why It Exists", "mechanics": "How It Works", "words": "Say It Right", "hooks": "On the Row Today" }
+}

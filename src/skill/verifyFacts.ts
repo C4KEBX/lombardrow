@@ -1,6 +1,6 @@
 import dns from "node:dns";
 import type { Facts } from "../schema/facts";
-import type { VerifyResult } from "./verifyTypes";
+import type { Evidence, VerifyResult } from "./verifyTypes";
 
 type Fact = Facts["facts"][number];
 type FetchLike = typeof fetch;
@@ -10,6 +10,10 @@ const MAX_REDIRECTS = 3;
 const DEFAULT_TIMEOUT_MS = 15_000;
 const TEXT_TYPES = /^(text\/html|text\/plain|application\/json|application\/xhtml\+xml)/i;
 const SUPPORTED_AT = 0.6;
+const EVIDENCE_CHARS = 280;
+
+/** A whole number under 100 ("8", "27") turns up on almost any page, so finding it proves nothing. */
+export const isSmallInteger = (token: string): boolean => /^\d{1,2}$/.test(token);
 
 function ipv4Octets(host: string): number[] | null {
   const m = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
@@ -185,6 +189,33 @@ async function readCapped(response: Response): Promise<string> {
   return new TextDecoder().decode(Buffer.concat(chunks)).slice(0, MAX_BODY_BYTES);
 }
 
+const claimWords = (claim: string): Set<string> =>
+  new Set((claim.toLowerCase().match(/\p{L}{5,}/gu) ?? []));
+
+/**
+ * For each number found, the page sentence that contains it, preferring the sentence that shares the
+ * most words with the claim, so the reviewer sees the number in context rather than just a hit.
+ */
+export function evidenceFor(text: string, groups: readonly { token: string; variants: string[] }[], claim: string): Evidence[] {
+  const sentences = text.split(/(?<=[.!?])\s+/);
+  const words = claimWords(claim);
+  return groups.map((g) => {
+    let best = "";
+    let bestScore = -1;
+    for (const sentence of sentences) {
+      if (!g.variants.some((v) => hasToken(sentence, v))) continue;
+      const lower = sentence.toLowerCase();
+      const score = [...words].filter((w) => lower.includes(w)).length;
+      if (score > bestScore) {
+        best = sentence;
+        bestScore = score;
+      }
+    }
+    const trimmed = best.length > EVIDENCE_CHARS ? `${best.slice(0, EVIDENCE_CHARS - 1)}…` : best;
+    return { token: g.token, sentence: trimmed };
+  });
+}
+
 export async function verifyFact(
   fact: Fact,
   fetchImpl: FetchLike = fetch,
@@ -221,12 +252,22 @@ export async function verifyFact(
       }
       if (tokens.length === 0) return { ...base, status: "partial", detail: "nothing numeric to check; read the source yourself" };
       const text = htmlToText(await readCapped(response));
-      const groups = tokenGroups(tokens);
-      const found = groups.filter((g) => g.variants.some((v) => hasToken(text, v))).map((g) => g.token);
+      const all = tokenGroups(tokens);
+      const unverifiable = all.filter((g) => isSmallInteger(g.token)).map((g) => g.token);
+      const groups = all.filter((g) => !isSmallInteger(g.token));
+      if (groups.length === 0) {
+        return {
+          ...base, status: "partial", unverifiable,
+          detail: `only small whole numbers (${unverifiable.join(", ")}), which appear on almost any page; read the source yourself`,
+        };
+      }
+      const foundGroups = groups.filter((g) => g.variants.some((v) => hasToken(text, v)));
+      const found = foundGroups.map((g) => g.token);
       const missing = groups.map((g) => g.token).filter((t) => !found.includes(t));
       const coverage = found.length / groups.length;
       const status = coverage === 1 ? "supported" : coverage >= SUPPORTED_AT ? "partial" : "not-found";
-      return { ...base, status, found, missing };
+      const evidence = evidenceFor(text, foundGroups, fact.claim);
+      return { ...base, status, found, missing, ...(unverifiable.length ? { unverifiable } : {}), evidence };
     }
     return { ...base, status: "unreachable", detail: "too many redirects" };
   } catch (error) {
@@ -236,9 +277,60 @@ export async function verifyFact(
   }
 }
 
-/** Sequential on purpose: polite to the sources. */
-export async function verifyFacts(facts: Facts, fetchImpl: FetchLike = fetch, opts: { resolve?: Resolver } = {}): Promise<VerifyResult[]> {
+/** Sequential on purpose: polite to the sources. With `archive`, each source URL is also snapshotted once. */
+export async function verifyFacts(
+  facts: Facts,
+  fetchImpl: FetchLike = fetch,
+  opts: { resolve?: Resolver; archive?: boolean } = {},
+): Promise<VerifyResult[]> {
   const results: VerifyResult[] = [];
-  for (const fact of facts.facts) results.push(await verifyFact(fact, fetchImpl, opts));
+  const archived = new Map<string, Promise<string | undefined>>();
+  for (const fact of facts.facts) {
+    const result = await verifyFact(fact, fetchImpl, opts);
+    if (opts.archive) {
+      if (!archived.has(fact.source.url)) archived.set(fact.source.url, archiveSource(fact.source.url, fetchImpl));
+      const archiveUrl = await archived.get(fact.source.url);
+      if (archiveUrl) result.archiveUrl = archiveUrl;
+    }
+    results.push(result);
+  }
   return results;
+}
+
+const ARCHIVE_TIMEOUT_MS = 60_000;
+
+/**
+ * Asks the Wayback Machine to snapshot a source and returns the snapshot's address. Falls back to the
+ * closest existing snapshot when saving fails (rate limits, pages that refuse capture). Never throws.
+ */
+export async function archiveSource(url: string, fetchImpl: FetchLike = fetch): Promise<string | undefined> {
+  if (isBlockedUrl(url)) return undefined;
+  const timed = async (target: string, init: RequestInit = {}): Promise<Response | undefined> => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ARCHIVE_TIMEOUT_MS);
+    try {
+      return await fetchImpl(target, { ...init, signal: controller.signal, headers: { "user-agent": "lombard-row-fact-check/1.0" } });
+    } catch {
+      return undefined;
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+  const snapshot = (raw: string | null | undefined): string | undefined => {
+    if (!raw) return undefined;
+    const full = new URL(raw, "https://web.archive.org").toString();
+    return /^https:\/\/web\.archive\.org\/web\/\d{8,14}/.test(full) ? full : undefined;
+  };
+  const saved = await timed(`https://web.archive.org/save/${url}`, { redirect: "manual" });
+  const fromSave = snapshot(saved?.headers.get("location")) ?? snapshot(saved?.headers.get("content-location"));
+  if (fromSave) return fromSave;
+  const available = await timed(`https://archive.org/wayback/available?url=${encodeURIComponent(url)}`);
+  if (!available?.ok) return undefined;
+  try {
+    const json = (await available.json()) as { archived_snapshots?: { closest?: { url?: string; available?: boolean } } };
+    const closest = json.archived_snapshots?.closest;
+    return closest?.available ? snapshot(closest.url?.replace(/^http:/, "https:")) : undefined;
+  } catch {
+    return undefined;
+  }
 }

@@ -1,0 +1,92 @@
+{
+  "facts": [
+    {
+      "id": "f-charter",
+      "claim": "In 1602 the States General of the Dutch Republic granted the Dutch East India Company (VOC) a charter for 21 years, with an interim liquidation after ten years, in 1612, when shareholders could ask for their money back; until then the capital stock stayed fixed. Inhabitants of the Dutch Republic were called upon to invest. The Amsterdam share register opened on August 1, 1602, and closed on August 31, 1602.",
+      "value": 1602,
+      "source": {
+        "name": "Lodewijk Petram, The World's First Stock Exchange (PhD thesis, University of Amsterdam, 2011)",
+        "stamp": "Petram, Univ. of Amsterdam, 2011",
+        "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        { "name": "Lodewijk Petram, \"The world's first IPO\" (2020)", "url": "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/", "tier": "secondary" },
+        { "name": "Schalk, Gelderblom and Jonker, \"Schipperen op de Aziatische vaart\", BMGN 127 (2012)", "url": "https://pure.uva.nl/ws/files/1655015/118877_8613.pdf", "tier": "scholarly" }
+      ]
+    },
+    {
+      "id": "f-amsterdam",
+      "claim": "The VOC's 1602 capital subscription was a great success: in Amsterdam alone, 1,143 investors signed up for 3,679,915 guilders (about 3.7 million).",
+      "value": 1143,
+      "source": {
+        "name": "Lodewijk Petram, The World's First Stock Exchange (PhD thesis, University of Amsterdam, 2011)",
+        "stamp": "Petram, Univ. of Amsterdam, 2011",
+        "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        { "name": "Lodewijk Petram, \"The world's first IPO\" (2020), 1,143 investors, 3,674,945 guilders", "url": "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/", "tier": "secondary" }
+      ]
+    },
+    {
+      "id": "f-maid",
+      "claim": "Under article 10 of the VOC charter all residents of the Dutch Republic could buy shares, in any amount, with no minimum or maximum. In Amsterdam in 1602, Neeltgen Cornelis, maid to Dirck van Os, subscribed 100 guilders; each of the six directors subscribed 12,000 guilders.",
+      "value": 100,
+      "source": {
+        "name": "Lodewijk Petram, \"The world's first IPO\" (2020)",
+        "stamp": "Petram, 2020",
+        "url": "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        { "name": "Lodewijk Petram, The World's First Stock Exchange (PhD thesis, University of Amsterdam, 2011): inhabitants of the Republic were called upon to invest", "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/", "tier": "scholarly" }
+      ]
+    },
+    {
+      "id": "f-transfer",
+      "claim": "Because the VOC's capital was locked up, investors sold their shares to others: buyer and seller went to the East India House, where the bookkeeper, after two company directors had approved the transfer, moved the share from the seller's account to the buyer's in the capital book.",
+      "source": {
+        "name": "Lodewijk Petram, The World's First Stock Exchange (PhD thesis, University of Amsterdam, 2011)",
+        "stamp": "Petram, Univ. of Amsterdam, 2011",
+        "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        { "name": "Lodewijk Petram, \"The world's first IPO\" (2020)", "url": "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/", "tier": "secondary" }
+      ]
+    },
+    {
+      "id": "f-oldest",
+      "claim": "The world's oldest share is a note of remittance dated September 9, 1606, from the Enkhuizen chamber of the VOC: Pieter Harmensz, a city messenger, paid 150 guilders for a share bought in 1602. History student Ruben Schalk discovered it in 2010.",
+      "value": 1606,
+      "source": {
+        "name": "Westfries Archief, \"The world's oldest share\"",
+        "stamp": "Westfries Archief",
+        "url": "https://westfriesarchief.nl/historie/thema-s/geld-en-handel/the-oldest-share",
+        "tier": "primary"
+      },
+      "corroboration": [
+        { "name": "Leiden University Libraries, \"The world's oldest share certificates\"", "url": "https://leidenspecialcollectionsblog.nl/articles/the-worlds-oldest-share-certificates", "tier": "secondary" }
+      ]
+    },
+    {
+      "id": "f-timeline",
+      "claim": "Secondary trading in VOC shares started immediately after the subscription books closed in 1602; the first dividend distributions ran from 1609 to 1618; Amsterdam's Exchange building opened in 1611.",
+      "dataset": [
+        { "year": 1602, "label": "Trading starts" },
+        { "year": 1609, "label": "First dividends" },
+        { "year": 1611, "label": "Exchange building opens" }
+      ],
+      "source": {
+        "name": "Lodewijk Petram, The World's First Stock Exchange (PhD thesis, University of Amsterdam, 2011)",
+        "stamp": "Petram, Univ. of Amsterdam, 2011",
+        "url": "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        { "name": "Gelderblom and Jonker, \"Completing a Financial Revolution\", Journal of Economic History 64 (2004)", "url": "https://ideas.repec.org/a/cup/jechis/v64y2004i03p641-672_00.html", "tier": "scholarly" }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { WIPE, bandPoints, cutFrames, wipeBand } from "../../src/compose/wipe";
+import { WIPE, WIPE_DIRECTIONS, bandPoints, cutFrames, wipeBand, wipeDirections } from "../../src/compose/wipe";
 import { VIDEO } from "../../src/design/tokens";
 
 const CUT = 200;
@@ -53,5 +53,33 @@ describe("bandPoints", () => {
     expect(bandPoints({ trail: 10, lead: 500 })).toBe(
       `10,0 500,0 ${500 - WIPE.slant},${VIDEO.height} ${10 - WIPE.slant},${VIDEO.height}`,
     );
+  });
+});
+
+describe("wipe directions", () => {
+  it("never uses the same direction twice in a row and uses all four", () => {
+    for (const seed of [1, 4, 17, 250]) {
+      const dirs = wipeDirections(40, seed);
+      expect(dirs).toHaveLength(40);
+      for (let i = 1; i < dirs.length; i += 1) expect(dirs[i]).not.toBe(dirs[i - 1]);
+      expect(new Set(dirs)).toEqual(new Set(WIPE_DIRECTIONS));
+    }
+  });
+  it("is the same for the same door number, so re-renders match", () => {
+    expect(wipeDirections(9, 1)).toEqual(wipeDirections(9, 1));
+    expect(wipeDirections(9, 1)).not.toEqual(wipeDirections(9, 2));
+  });
+  it("maps the band onto each side of the frame", () => {
+    const band = { trail: 10, lead: 500 };
+    expect(bandPoints(band, "right-to-left")).toBe(
+      `${VIDEO.width - 10},0 ${VIDEO.width - 500},0 ${VIDEO.width - 500 + WIPE.slant},${VIDEO.height} ${VIDEO.width - 10 + WIPE.slant},${VIDEO.height}`,
+    );
+    expect(bandPoints(band, "top-to-bottom")).toBe(`0,10 0,500 ${VIDEO.width},${500 - WIPE.slant} ${VIDEO.width},${10 - WIPE.slant}`);
+    expect(bandPoints(band, "bottom-to-top").split(" ")[0]).toBe(`0,${VIDEO.height - 10}`);
+  });
+  it("covers the full height on the cut for a vertical sweep", () => {
+    const band = wipeBand(CUT, CUT, 0, VIDEO.height)!;
+    expect(band.trail).toBeLessThanOrEqual(0);
+    expect(band.lead - WIPE.slant).toBeGreaterThanOrEqual(VIDEO.height);
   });
 });

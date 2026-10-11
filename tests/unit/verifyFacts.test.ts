@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseFacts } from "../../src/schema/facts";
-import { factTokens, htmlToText, isBlockedAddress, isBlockedUrl, verifyFact as verifyFactReal, verifyFacts as verifyFactsReal } from "../../src/skill/verifyFacts";
+import { archiveSource, evidenceFor, factTokens, htmlToText, isBlockedAddress, isBlockedUrl, verifyFact as verifyFactReal, verifyFacts as verifyFactsReal } from "../../src/skill/verifyFacts";
 
 const PUBLIC = async () => ["93.184.216.34"];
 type Opts = Parameters<typeof verifyFactReal>[2];
@@ -133,13 +133,13 @@ describe("verifyFact", () => {
     expect(r.found).toContain("57.7");
   });
   it("does not accept a token that is only part of a larger number", async () => {
-    const r = await verifyFact(fact({ value: 57 }), fetchOf(page("<p>about 157 and 570 and 5.7</p>")));
+    const r = await verifyFact(fact({ value: 457 }), fetchOf(page("<p>about 1457 and 4570 and 45.7</p>")));
     expect(r.status).toBe("not-found");
   });
   it("is partial for 60 percent or more and not-found below", async () => {
-    const f = fact({ dataset: [{ x: 11, y: 12 }, { x: 13, y: 14 }, { x: 15, y: 16 }] });
-    expect((await verifyFact(f, fetchOf(page("11 12 13 14")))).status).toBe("partial");
-    expect((await verifyFact(f, fetchOf(page("11 12")))).status).toBe("not-found");
+    const f = fact({ dataset: [{ x: 110, y: 120 }, { x: 130, y: 140 }, { x: 150, y: 160 }] });
+    expect((await verifyFact(f, fetchOf(page("110 120 130 140")))).status).toBe("partial");
+    expect((await verifyFact(f, fetchOf(page("110 120")))).status).toBe("not-found");
   });
   it("is unreachable on network errors, timeouts, non-2xx and non-text content", async () => {
     const f = fact({ value: 5 });
@@ -198,11 +198,83 @@ describe("verifyFacts", () => {
   it("returns one result per fact, in order", async () => {
     const facts = parseFacts({
       facts: [
-        { id: "a", claim: "c", value: 1, source: { name: "n", url: "https://example.org/a" } },
-        { id: "b", claim: "c", value: 2, source: { name: "n", url: "https://example.org/b" } },
+        { id: "a", claim: "c", value: 101, source: { name: "n", url: "https://example.org/a" } },
+        { id: "b", claim: "c", value: 202, source: { name: "n", url: "https://example.org/b" } },
       ],
     });
-    const results = await verifyFacts(facts, fetchOf(page("1"), page("nothing")));
+    const results = await verifyFacts(facts, fetchOf(page("101"), page("nothing")));
     expect(results.map((r) => [r.factId, r.status])).toEqual([["a", "supported"], ["b", "not-found"]]);
+  });
+});
+
+describe("small whole numbers", () => {
+  it("are never counted as support, and a fact with only small numbers stays partial", async () => {
+    const small = await verifyFact(fact({ value: 9, dataset: [8, 27] }), fetchOf(page("8 9 27 everywhere")));
+    expect(small.status).toBe("partial");
+    expect(small.unverifiable).toEqual(["9", "8", "27"]);
+    expect(small.detail).toMatch(/small whole numbers/);
+    const mixed = await verifyFact(fact({ value: 1494, dataset: [8] }), fetchOf(page("printed in 1494")));
+    expect(mixed.status).toBe("supported");
+    expect(mixed.found).toEqual(["1494"]);
+    expect(mixed.unverifiable).toEqual(["8"]);
+  });
+});
+
+describe("evidence", () => {
+  it("quotes the sentence where each number was found, preferring the one closest to the claim", async () => {
+    const r = await verifyFact(
+      fact({ claim: "Pacioli printed the Summa in Venice in 1494.", value: 1494 }),
+      fetchOf(page("<p>Our archive opened in 1494 rooms. Pacioli printed his Summa in Venice in 1494. Other text.</p>")),
+    );
+    expect(r.evidence).toEqual([{ token: "1494", sentence: "Pacioli printed his Summa in Venice in 1494." }]);
+  });
+  it("trims long sentences", () => {
+    const [e] = evidenceFor(`${"word ".repeat(100)}1494 end.`, [{ token: "1494", variants: ["1494"] }], "claim");
+    expect(e.sentence.length).toBeLessThanOrEqual(280);
+    expect(e.sentence.endsWith("…")).toBe(true);
+  });
+});
+
+describe("archiveSource", () => {
+  const snap = "https://web.archive.org/web/20261008120000/https://example.org/page";
+  it("returns the snapshot the save request redirects to", async () => {
+    const calls: string[] = [];
+    const f = (async (url: string) => {
+      calls.push(url);
+      return new Response(null, { status: 302, headers: { location: snap } });
+    }) as unknown as typeof fetch;
+    expect(await archiveSource("https://example.org/page", f)).toBe(snap);
+    expect(calls).toEqual(["https://web.archive.org/save/https://example.org/page"]);
+  });
+  it("falls back to the closest existing snapshot when saving fails", async () => {
+    const f = fetchOf(
+      new Response("rate limited", { status: 429 }),
+      new Response(JSON.stringify({ archived_snapshots: { closest: { available: true, url: snap.replace("https:", "http:") } } }), { status: 200 }),
+    );
+    expect(await archiveSource("https://example.org/page", f)).toBe(snap);
+  });
+  it("gives up quietly when neither works, and never contacts a blocked address", async () => {
+    expect(await archiveSource("https://example.org/page", fetchOf(new Error("offline"), new Error("offline")))).toBeUndefined();
+    let called = false;
+    const spy = (async () => { called = true; return page(""); }) as unknown as typeof fetch;
+    expect(await archiveSource("http://127.0.0.1/x", spy)).toBeUndefined();
+    expect(called).toBe(false);
+  });
+  it("is added to each result by verifyFacts with archive on, once per source url", async () => {
+    const facts = parseFacts({
+      facts: [
+        { id: "a", claim: "c", value: 101, source: { name: "n", url: "https://example.org/a" } },
+        { id: "b", claim: "c", value: 202, source: { name: "n", url: "https://example.org/a" } },
+      ],
+    });
+    const urls: string[] = [];
+    const f = (async (url: string) => {
+      urls.push(url);
+      if (url.startsWith("https://web.archive.org/save/")) return new Response(null, { status: 302, headers: { location: snap } });
+      return page("101 202");
+    }) as unknown as typeof fetch;
+    const results = await verifyFactsReal(facts, f, { resolve: PUBLIC, archive: true });
+    expect(results.map((r) => r.archiveUrl)).toEqual([snap, snap]);
+    expect(urls.filter((u) => u.includes("archive.org"))).toHaveLength(1);
   });
 });

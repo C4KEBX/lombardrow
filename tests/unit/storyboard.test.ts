@@ -3,7 +3,7 @@ import { parseStoryboard, StoryboardError } from "../../src/schema/storyboard";
 
 const valid = () => ({
   schemaVersion: 1,
-  meta: { title: "Test", theme: "lombard-row", voice: "en-US-AndrewNeural" },
+  meta: { title: "Test", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "en-US-AndrewNeural" },
   audio: { music: null },
   scenes: [
     { id: "intro", type: "title", narration: "Hello there.", props: { headline: "Hello" } },

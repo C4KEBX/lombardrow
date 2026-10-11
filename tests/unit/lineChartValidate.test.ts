@@ -11,7 +11,7 @@ const chart = (props: Record<string, unknown> = {}, cues: unknown[] = []) => ({
 const board = (...scenes: unknown[]) =>
   parseStoryboard({
     schemaVersion: 1,
-    meta: { title: "t", theme: "lombard-row", voice: "v" },
+    meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
     audio: { music: null },
     scenes,
   });

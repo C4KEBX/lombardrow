@@ -1,0 +1,21 @@
+{
+  "doorNo": 3,
+  "pillar": "words",
+  "storyShape": "myth_vs_record",
+  "hookType": "cold_open_scene",
+  "era": "medieval",
+  "region": "britain",
+  "primaryVisual": "object_close_up",
+  "visualMetaphor": "John Adams's own 1600 copy of Littleton, the camera creeping down a black-letter page until it reaches the words a dead pledge",
+  "paletteLead": "green",
+  "musicBed": null,
+  "title": "Why a mortgage is a dead pledge",
+  "angle": "The famous explanation, that the land is dead to the borrower if he fails to pay, is a later lawyers' reading; in 1189 a dead pledge meant one whose rents went to the lender without paying down the debt.",
+  "sources": [
+    "https://ahdictionary.com/word/search.html?q=mortgage",
+    "https://archive.org/details/littletonstenure00litt",
+    "https://archive.org/details/translationofgla00glanuoft",
+    "https://www.etymonline.com/word/mortgage",
+    "https://www.merriam-webster.com/dictionary/mortgage"
+  ]
+}

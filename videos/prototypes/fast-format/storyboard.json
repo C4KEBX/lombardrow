@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "What died in your mortgage",
+    "theme": "lombard-row",
+    "paletteLead": "green",
+    "doorNo": 3,
+    "series": "Say It Right",
+    "voice": "en-GB-RyanNeural",
+    "open": "bleed",
+    "format": "fast"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "archival",
+      "brisk": true,
+      "sourceFactId": "f-dead-pledge",
+      "narration": "Every mortgage payment pays off something named after death. And it isn't the borrower who dies.",
+      "microhooks": [
+        "And it isn't the borrower who dies."
+      ],
+      "props": {
+        "title": "Littleton's Tenures, 1600",
+        "assetId": "littleton-1600-dead-pledge",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.7,
+            "y": 0.554,
+            "w": 0.42,
+            "mark": {
+              "x": 0.54,
+              "y": 0.542,
+              "w": 0.33,
+              "h": 0.026
+            }
+          },
+          {
+            "atWord": "death.",
+            "x": 0.43,
+            "y": 0.633,
+            "w": 0.5,
+            "mark": {
+              "x": 0.29,
+              "y": 0.621,
+              "w": 0.28,
+              "h": 0.026
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "page",
+      "type": "archival",
+      "brisk": true,
+      "sourceFactId": "f-dead-pledge",
+      "speaks": [
+        "f-dead-pledge"
+      ],
+      "narration": "This law book, printed in 1600, spells it out. In Latin, mortuum vadium. In English, a dead pledge.",
+      "props": {
+        "title": "Littleton's Tenures, 1600",
+        "assetId": "littleton-1600-dead-pledge",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.39,
+            "w": 0.95
+          },
+          {
+            "atWord": "Latin,",
+            "x": 0.6,
+            "y": 0.607,
+            "w": 0.6,
+            "mark": {
+              "x": 0.44,
+              "y": 0.595,
+              "w": 0.34,
+              "h": 0.026
+            }
+          },
+          {
+            "atWord": "English,",
+            "x": 0.45,
+            "y": 0.633,
+            "w": 0.55,
+            "mark": {
+              "x": 0.29,
+              "y": 0.621,
+              "w": 0.28,
+              "h": 0.026
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "word",
+      "type": "kinetic-text",
+      "sourceFactId": "f-word",
+      "speaks": [
+        "f-word"
+      ],
+      "narration": "Mort, dead. Gage, pledge. But dead how?",
+      "microhooks": [
+        "But dead how?"
+      ],
+      "props": {
+        "lines": [
+          "Mort, dead",
+          "Gage, pledge"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "dead.",
+          "do": "emphasize",
+          "text": "dead"
+        },
+        {
+          "atWord": "pledge.",
+          "do": "emphasize",
+          "text": "pledge"
+        }
+      ]
+    },
+    {
+      "id": "reason",
+      "type": "archival",
+      "speaks": [
+        "f-reason"
+      ],
+      "sourceFactId": "f-reason",
+      "narration": "The book's answer: miss the day you owe 20 pounds, and the land is gone from you for ever.",
+      "props": {
+        "title": "Littleton's Tenures, 1600",
+        "assetId": "littleton-1600-dead-pledge",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.7,
+            "y": 0.472,
+            "w": 0.5,
+            "mark": {
+              "x": 0.77,
+              "y": 0.46,
+              "w": 0.2,
+              "h": 0.026
+            }
+          },
+          {
+            "atWord": "owe",
+            "x": 0.66,
+            "y": 0.501,
+            "w": 0.55,
+            "mark": {
+              "x": 0.48,
+              "y": 0.489,
+              "w": 0.46,
+              "h": 0.026
+            }
+          },
+          {
+            "atWord": "land",
+            "x": 0.58,
+            "y": 0.795,
+            "w": 0.75,
+            "mark": {
+              "x": 0.23,
+              "y": 0.783,
+              "w": 0.72,
+              "h": 0.026
+            }
+          }
+        ]
+      },
+      "microhooks": [
+        "The book's answer:"
+      ]
+    },
+    {
+      "id": "deal",
+      "type": "flow-diagram",
+      "speaks": [
+        "f-reason"
+      ],
+      "narration": "Hand over the land. Pay on the day, and it comes back. Miss it? It's dead to you.",
+      "props": {
+        "title": "A pledge on condition",
+        "steps": [
+          {
+            "label": "Land handed over",
+            "note": "on condition"
+          },
+          {
+            "label": "Pay on the day",
+            "note": "the land comes back"
+          },
+          {
+            "label": "Miss the day",
+            "note": "the land is lost"
+          }
+        ],
+        "arrows": [
+          "\u00a320 owed",
+          "the deadline"
+        ],
+        "factId": "f-reason"
+      },
+      "cues": [
+        {
+          "atWord": "land.",
+          "do": "emphasize",
+          "text": "Land"
+        },
+        {
+          "atWord": "Pay",
+          "do": "emphasize",
+          "text": "Pay"
+        },
+        {
+          "atWord": "Miss",
+          "do": "emphasize",
+          "text": "Miss"
+        }
+      ],
+      "microhooks": [
+        "Miss it?"
+      ]
+    },
+    {
+      "id": "older",
+      "type": "title",
+      "ground": "ink",
+      "year": 1189,
+      "sourceFactId": "f-glanville",
+      "speaks": [
+        "f-glanville"
+      ],
+      "narration": "But it's not the first reason. In 1189, it meant something stranger.",
+      "microhooks": [
+        "But it's not the first reason."
+      ],
+      "props": {
+        "headline": "The older meaning",
+        "kicker": "Glanville's law book"
+      }
+    },
+    {
+      "id": "pledges",
+      "type": "ledger-page",
+      "speaks": [
+        "f-glanville",
+        "f-living"
+      ],
+      "narration": "The lender kept the land's rents. Here's the twist: not a penny came off the debt. A dead pledge. If the rents paid the debt down, it was a living pledge, working for the borrower.",
+      "microhooks": [
+        "Here's the twist:"
+      ],
+      "props": {
+        "title": "Two kinds of pledge",
+        "rows": [
+          {
+            "entry": "Dead pledge",
+            "amount": "Debt stays"
+          },
+          {
+            "entry": "Living pledge",
+            "amount": "Debt falls"
+          }
+        ],
+        "factId": "f-living"
+      },
+      "cues": [
+        {
+          "atWord": "dead",
+          "do": "emphasize",
+          "text": "Dead"
+        },
+        {
+          "atWord": "living",
+          "do": "emphasize",
+          "text": "Living"
+        }
+      ]
+    },
+    {
+      "id": "usury",
+      "type": "kinetic-text",
+      "sourceFactId": "f-living",
+      "speaks": [
+        "f-living"
+      ],
+      "narration": "And there was a word for that. Christian bans on profit from lending made a dead pledge a kind of usury.",
+      "microhooks": [
+        "And there was a word for that."
+      ],
+      "props": {
+        "lines": [
+          "A kind",
+          "of usury"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "lending",
+          "do": "emphasize",
+          "text": "A"
+        },
+        {
+          "atWord": "usury.",
+          "do": "emphasize",
+          "text": "usury"
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "type": "timeline",
+      "speaks": [
+        "f-shift",
+        "f-glanville"
+      ],
+      "narration": "Glanville's dead pledge came in 1189. So where does the other story come from? By 1481, borrowers kept their land, so dead got a new meaning.",
+      "props": {
+        "title": "How dead changed",
+        "events": [
+          {
+            "year": 1189,
+            "label": "Glanville's dead pledge"
+          },
+          {
+            "year": 1481,
+            "label": "Littleton's Tenures"
+          }
+        ],
+        "factId": "f-timeline"
+      },
+      "cues": [
+        {
+          "atWord": "dead",
+          "do": "emphasize",
+          "text": "dead"
+        },
+        {
+          "atWord": "1481,",
+          "do": "emphasize",
+          "text": "Tenures"
+        }
+      ],
+      "microhooks": [
+        "So where does the other story come from?"
+      ]
+    },
+    {
+      "id": "today",
+      "type": "kinetic-text",
+      "ground": "ink",
+      "speaks": [
+        "f-glanville",
+        "f-shift"
+      ],
+      "sourceFactId": "f-shift",
+      "narration": "So which death is in your mortgage? First, rents that never cut the debt. Later, the land you lose.",
+      "microhooks": [
+        "So which death is in your mortgage?"
+      ],
+      "props": {
+        "lines": [
+          "Dead rents",
+          "came first"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "rents",
+          "do": "emphasize",
+          "text": "rents"
+        },
+        {
+          "atWord": "land",
+          "do": "emphasize",
+          "text": "first"
+        }
+      ]
+    }
+  ]
+}

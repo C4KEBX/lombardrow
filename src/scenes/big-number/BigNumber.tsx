@@ -2,9 +2,9 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { BODY_FONT, NUMBER_FONT, TABULAR } from "../../design/fonts";
 import { fitFontSize, formatNumber } from "../../design/layout";
-import { countUp, dataProgress, popIn, staggerDelay, sustainDrift } from "../../design/motion";
+import { dataProgress, popIn, staggerDelay, sustainDrift } from "../../design/motion";
 import { useTheme } from "../../design/theme";
-import { CAPTION_LANE, CONTENT, SAFE, VIDEO } from "../../design/tokens";
+import { CAPTION_LANE, CONTENT, SAFE, VIDEO, lanesFor } from "../../design/tokens";
 import type { BigNumberProps } from "../../schema/storyboard";
 import type { SceneRenderProps } from "../types";
 
@@ -14,17 +14,17 @@ const NUMBER_LANE_PX = CONTENT.width - 40;
 const render = (p: BigNumberProps, value: number) =>
   `${p.prefix}${formatNumber(value, p.decimals)}${p.suffix}`;
 
-/** A counting figure in tabular Inter over a tone rule, the label beneath; a callout lands as a ruled tag. */
-export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, cues, durationFrames }) => {
+/** A figure in tabular Inter, popping in at its true value, over a tone rule, the label beneath; a callout lands as a ruled tag. */
+export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, cues, durationFrames, year }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const theme = useTheme();
   const mark = theme.tone[props.tone];
   const ink = theme.toneText[props.tone];
 
-  const progress = dataProgress(frame, 6, 45);
-  const shown = progress >= 1 ? props.value : countUp(props.value, progress, props.decimals);
-  const text = render(props, shown);
+  // The true figure from the first frame, never a count-up: a paused frame mid-count showed an invented number
+  // (No. 004's draft read "€6.87" for €11.35; the same note as compare values, 2026-10-10).
+  const text = render(props, props.value);
   const size = fitFontSize(render(props, props.value), NUMBER_LANE_PX, 300);
 
   const numIn = Math.min(1, popIn(frame, fps, 0));
@@ -45,7 +45,7 @@ export const BigNumber: React.FC<SceneRenderProps<BigNumberProps>> = ({ props, c
         opacity: exit,
         justifyContent: "center",
         alignItems: "center",
-        padding: `${SAFE.top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
+        padding: `${lanesFor(year !== undefined).top}px ${SAFE.right}px ${VIDEO.height - CAPTION_LANE.top}px ${SAFE.left}px`,
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", transform: `translateY(${drift}px)` }}>

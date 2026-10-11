@@ -8,8 +8,12 @@ import { VIDEO } from "../design/tokens";
 import { parseStoryboard } from "../schema/storyboard";
 import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
-import type { VoiceResult } from "../voice/types";
-import { buildVideo } from "./buildVideo";
+import { pacingIssues } from "../skill/pacing";
+import { voiceFor, type VoiceResult } from "../voice/types";
+import { SIGNOFF } from "../devices/tracks";
+import { voiceSignoff } from "../voice/signoff";
+import { imagesFor } from "./assets";
+import { buildVideo, videoProps } from "./buildVideo";
 import { browserExecutable, getServeUrl, renderConcurrency } from "./bundle";
 import { encodeFrames } from "./encode";
 import { muxVideoAudio } from "./finish";
@@ -22,6 +26,8 @@ export type ProduceOptions = {
   enforceLength: boolean;
   musicDir?: string;
   cacheDir?: string;
+  /** assets.json for archival scenes; defaults to the one next to the storyboard. */
+  assetsPath?: string;
 };
 
 export type ProduceResult = {
@@ -42,17 +48,23 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
 
   const provider = makeVoiceProvider(opts.voice, opts.cacheDir ?? path.resolve("out/voice-cache"));
   const voices: Record<string, VoiceResult> = {};
-  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
+  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, voiceFor(scene, storyboard.meta.voice));
+  // The same sign-off every video; the voice cache keys on text and voice, so this synthesizes once.
+  const signoff = await voiceSignoff(provider, storyboard.meta.voice);
 
   const built = buildVideo(
     storyboardJson,
     factsJson,
     () => Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.words])),
     VIDEO.fps,
-    Object.fromEntries(Object.entries(voices).map(([id, v]) => [id, v.audioMs])),
+    Math.max(...signoff.words.map((w) => w.endMs)),
+    imagesFor(opts.storyboardPath, opts.assetsPath),
+    signoff.words,
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);
+  // `check` judged pacing on estimated timings; report it again on the real voice, without stopping the render.
+  for (const message of pacingIssues(storyboard, built.scenes, VIDEO.fps)) console.warn(`pacing: ${message}`);
 
   fs.mkdirSync(opts.outDir, { recursive: true });
   // Resolve music before rendering so an unsafe or missing name fails fast.
@@ -60,7 +72,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     storyboard.audio.music, totalMs / 1000, opts.musicDir ?? path.resolve("music"), opts.outDir,
   );
 
-  const inputProps = { scenes: built.scenes, captions: built.captions, totalFrames: built.totalFrames };
+  const inputProps = videoProps(built);
   const serveUrl = await getServeUrl();
   const composition = await selectComposition({ serveUrl, browserExecutable: browserExecutable(), id: "Production", inputProps });
   const framesDir = path.join(opts.outDir, "frames");
@@ -74,10 +86,13 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   await encodeFrames(framesDir, VIDEO.fps, silentPath);
 
   const audioPath = path.join(opts.outDir, "audio.m4a");
-  const clips = built.scenes.map((scene) => ({
-    path: voices[scene.id].audioPath,
-    startMs: (scene.startFrame * 1000) / VIDEO.fps,
-  }));
+  const clips = [
+    ...built.scenes.map((scene) => ({
+      path: voices[scene.id].audioPath,
+      startMs: (scene.startFrame * 1000) / VIDEO.fps,
+    })),
+    { path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps },
+  ];
   await mixAudio({ clips, musicPath, totalMs, outPath: audioPath });
 
   const videoPath = path.join(opts.outDir, "final.mp4");
@@ -94,6 +109,9 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
         totalFrames: built.totalFrames,
         durationMs: totalMs,
         loudness,
+        // Every caption word with its time, for npm run listen-back.
+        captions: built.captions.flatMap((c) => c.words.map((w) => ({ text: w.text, startMs: Math.round(w.startMs), endMs: Math.round(w.endMs) }))),
+        signoff: SIGNOFF,
         scenes: built.scenes.map((s) => ({
           id: s.id, type: s.scene.type, startFrame: s.startFrame, durationFrames: s.durationFrames,
           cues: s.cues, audio: voices[s.id].audioPath,

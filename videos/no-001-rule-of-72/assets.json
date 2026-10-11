@@ -1,0 +1,13 @@
+{
+  "assets": [
+    {
+      "id": "summa-fol-181",
+      "file": "assets/summa-fol-181.jpg",
+      "sourceUrl": "https://wellcomecollection.org/works/vh9466j6",
+      "downloadUrl": "https://iiif.wellcomecollection.org/image/b12947568_hin-wel-all-00012617_0381.jp2/full/!2000,2000/0/default.jpg",
+      "license": "public-domain",
+      "credit": "Pacioli, Summa, 1494. Wellcome Collection. Public domain.",
+      "depicts": "Folio 181 of Pacioli's Summa de arithmetica (Venice, 1494). Problem 44, the last paragraph on the page, states the rule of 72 with examples at 6 and 8 per hundred. Wellcome marks the scan Public Domain Mark 1.0."
+    }
+  ]
+}
