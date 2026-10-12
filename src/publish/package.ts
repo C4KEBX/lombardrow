@@ -2,7 +2,7 @@ import type { MusicTrack } from "../audio/library";
 import { doorLabelText } from "../devices/label";
 import type { Assets } from "../schema/assets";
 import type { Facts } from "../schema/facts";
-import type { Storyboard } from "../schema/storyboard";
+import { storyboardAssetIds, type Storyboard } from "../schema/storyboard";
 import { sentencesOf } from "../skill/scriptDoc";
 import type { Plan } from "../variation/index";
 
@@ -55,7 +55,7 @@ export function buildPublishPackage(sb: Storyboard, facts: Facts, opts: { plan?:
   const door = doorLabel(sb.meta.doorNo);
   const hook = sentencesOf(sb.scenes[0].narration)[0] ?? "";
   const sources = sourcesOf(facts);
-  const used = new Set(sb.scenes.flatMap((s) => (s.type === "archival" ? [s.props.assetId] : [])));
+  const used = new Set(storyboardAssetIds(sb));
   const images = (opts.assets?.assets ?? []).filter((a) => used.has(a.id)).map((a) => ({ credit: a.credit, url: a.sourceUrl }));
   const musicCredit = opts.music?.credit ?? null;
   const photoreal = sb.scenes.filter((s) => PHOTOREAL_SCENE_TYPES.includes(s.type)).map((s) => s.id);

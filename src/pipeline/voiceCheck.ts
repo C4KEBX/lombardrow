@@ -3,7 +3,7 @@ import { VIDEO } from "../design/tokens";
 import { voiceSignoff } from "../voice/signoff";
 import { parseStoryboard } from "../schema/storyboard";
 import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
-import type { VoiceProvider, VoiceResult } from "../voice/types";
+import { voiceFor, type VoiceProvider, type VoiceResult } from "../voice/types";
 import { imagesFor } from "./assets";
 import { buildVideo } from "./buildVideo";
 
@@ -25,7 +25,7 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
   const storyboardJson = readJson(storyboardPath);
   const storyboard = parseStoryboard(storyboardJson);
   const voices: Record<string, VoiceResult> = {};
-  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
+  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, voiceFor(scene, storyboard.meta.voice));
   const signoff = await voiceSignoff(provider, storyboard.meta.voice);
 
   const built = buildVideo(

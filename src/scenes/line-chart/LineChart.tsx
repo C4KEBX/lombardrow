@@ -81,7 +81,7 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
   });
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <div style={{ position: "absolute", left: CONTENT.left, top: SAFE.top, width: CONTENT.width }}>
         <div
           style={{

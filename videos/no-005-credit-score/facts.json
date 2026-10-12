@@ -1,0 +1,221 @@
+{
+  "facts": [
+    {
+      "id": "f-tappan",
+      "claim": "Lewis Tappan, a prominent textile merchant and abolitionist who had failed in the panic of 1837, founded the Mercantile Agency, later R.G. Dun, in 1841.",
+      "value": 1841,
+      "source": {
+        "name": "Bruce G. Carruthers, The Economy of Promises (Princeton University Press, 2022), excerpt in Lapham's Quarterly",
+        "stamp": "Carruthers, Princeton UP 2022",
+        "url": "https://www.laphamsquarterly.org/node/12420",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Bertram Wyatt-Brown, God and Dun & Bradstreet, 1841-1851, Business History Review 40:4 (1966)",
+          "url": "https://www.cambridge.org/core/journals/business-history-review/article/god-and-dun-bradstreet-18411851/97E0D78274B9099F5DB73E9B0C5931AE",
+          "tier": "scholarly"
+        },
+        {
+          "name": "Baker Library, Harvard Business School, R.G. Dun & Co. collection",
+          "url": "https://www.library.hbs.edu/hc/collections/dun/",
+          "tier": "primary"
+        }
+      ]
+    },
+    {
+      "id": "f-correspondents",
+      "claim": "The Mercantile Agency chose its local correspondents for their integrity, long residence in the county, general acquaintance, business experience, and judgment; their reports asked whether a man was of fair character and good business habits.",
+      "source": {
+        "name": "Bruce G. Carruthers, The Economy of Promises (Princeton University Press, 2022), excerpt in Lapham's Quarterly",
+        "stamp": "Carruthers, Princeton UP 2022",
+        "url": "https://www.laphamsquarterly.org/node/12420",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Amistad Research Center, The Mercantile Agency: A Curious Relationship of Credit Reporting and Abolitionism (2019)",
+          "url": "https://www.amistadresearchcenter.org/single-post/2019/03/05/The-Mercantile-Agency-A-Curious-Relationship-of-Credit-Reporting-and-Abolitionism",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-ledger",
+      "claim": "A December 20, 1855 Mercantile Agency ledger entry on J.W. Finerty, an Illinois furniture dealer, said he was a journeyman cabinetmaker without a $ in the world; a later entry called him a rough and ready Irishman, and an 1869 Bradstreet's form asked correspondents: Habits? Good, medium, poor.",
+      "value": 1855,
+      "source": {
+        "name": "Bruce G. Carruthers, The Economy of Promises (Princeton University Press, 2022), excerpt in Lapham's Quarterly",
+        "stamp": "Carruthers, Princeton UP 2022",
+        "url": "https://www.laphamsquarterly.org/node/12420",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-ratings",
+      "claim": "In 1880 the Mercantile Agency rated pecuniary strength from A+ ($1,000,000 or more) down to K (less than $2,000).",
+      "value": 1000000,
+      "source": {
+        "name": "Bruce G. Carruthers, The Economy of Promises (Princeton University Press, 2022), excerpt in Lapham's Quarterly",
+        "stamp": "Carruthers, Princeton UP 2022",
+        "url": "https://www.laphamsquarterly.org/node/12420",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-volumes",
+      "claim": "Baker Library at Harvard Business School holds the R.G. Dun & Company Credit Report Volumes: 2,580 volumes of handwritten credit reports from 1841 to the early 1890s.",
+      "value": 2580,
+      "source": {
+        "name": "Baker Library, Harvard Business School, R.G. Dun & Co. collection",
+        "stamp": "Baker Library, Harvard",
+        "url": "https://www.library.hbs.edu/hc/collections/dun/",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-retail",
+      "claim": "In 1899 the brothers Cator and Guy Woolford began operations as the Retail Credit Company in Atlanta; they published their findings on shoppers' payment habits as The Merchant's Guide and sold it for $25. The company is now Equifax.",
+      "value": 1899,
+      "source": {
+        "name": "New Georgia Encyclopedia, Equifax",
+        "stamp": "New Georgia Encyclopedia",
+        "url": "https://www.georgiaencyclopedia.org/articles/business-economy/equifax/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Wikipedia, Equifax",
+          "url": "https://en.wikipedia.org/wiki/Equifax",
+          "tier": "secondary"
+        },
+        {
+          "name": "Encyclopedia.com, Equifax Inc. (International Directory of Company Histories)",
+          "url": "https://www.encyclopedia.com/books/politics-and-business-magazines/equifax-inc",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-rumors",
+      "claim": "Critics said Retail Credit's files held facts, statistics, inaccuracies and rumors about virtually every phase of a person's life, including marital troubles; in the 1970s the government accused it of rating employees by how much negative information they could find on consumers.",
+      "source": {
+        "name": "New Georgia Encyclopedia, Equifax",
+        "stamp": "New Georgia Encyclopedia",
+        "url": "https://www.georgiaencyclopedia.org/articles/business-economy/equifax/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Fast Company, Equifax has a super shady history (2017)",
+          "url": "https://www.fastcompany.com/40464730/equifax-has-a-super-shady-history-that-might-explain-its-shady-present",
+          "tier": "secondary"
+        },
+        {
+          "name": "Wikipedia, Equifax",
+          "url": "https://en.wikipedia.org/wiki/Equifax",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-fcra",
+      "claim": "The Fair Credit Reporting Act, passed by Congress, was enacted in 1970.",
+      "value": 1970,
+      "source": {
+        "name": "EPIC, The Fair Credit Reporting Act (FCRA)",
+        "stamp": "EPIC",
+        "url": "https://epic.org/the-fair-credit-reporting-act-fcra-and-the-privacy-of-your-credit-report/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "UNH Today, Creditworthy: a history of credit bureaus in America (2017)",
+          "url": "https://www.unh.edu/unhtoday/2017/11/creditworthy",
+          "tier": "secondary"
+        },
+        {
+          "name": "Fast Company, Equifax has a super shady history (2017)",
+          "url": "https://www.fastcompany.com/40464730/equifax-has-a-super-shady-history-that-might-explain-its-shady-present",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-fico",
+      "claim": "Fair, Isaac and Company was founded in 1956, and the FICO Score arrived in 1989.",
+      "value": 1989,
+      "source": {
+        "name": "myFICO, The history of the FICO Score",
+        "stamp": "myFICO",
+        "url": "https://www.myfico.com/credit-education/blog/history-of-the-fico-score",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "myFICO, What is a FICO Score?",
+          "url": "https://www.myfico.com/credit-education/what-is-a-fico-score",
+          "tier": "secondary"
+        },
+        {
+          "name": "Wikipedia, FICO",
+          "url": "https://en.wikipedia.org/wiki/FICO",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-range",
+      "claim": "A FICO Score is a three-digit number, ranging from 300 to 850.",
+      "value": 850,
+      "source": {
+        "name": "myFICO, What is a FICO Score?",
+        "stamp": "myFICO",
+        "url": "https://www.myfico.com/credit-education/what-is-a-fico-score",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Wikipedia, FICO",
+          "url": "https://en.wikipedia.org/wiki/FICO",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-lenders",
+      "claim": "A FICO Score is used by 90% of top lenders to assess creditworthiness.",
+      "value": 90,
+      "source": {
+        "name": "myFICO, What is a FICO Score?",
+        "stamp": "myFICO",
+        "url": "https://www.myfico.com/credit-education/what-is-a-fico-score",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "FICO, FICO Scores (fico.com)",
+          "url": "https://www.fico.com/en/products/fico-score",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-bias",
+      "claim": "FICO says the Mercantile Agency's correspondent data was eventually considered too subjective, as many of the opinions noted racial, class and gender biases.",
+      "source": {
+        "name": "myFICO, The history of the FICO Score",
+        "stamp": "myFICO",
+        "url": "https://www.myfico.com/credit-education/blog/history-of-the-fico-score",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Bruce G. Carruthers, The Economy of Promises (Princeton University Press, 2022), excerpt in Lapham's Quarterly",
+          "url": "https://www.laphamsquarterly.org/node/12420",
+          "tier": "scholarly"
+        }
+      ]
+    }
+  ]
+}

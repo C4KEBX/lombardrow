@@ -3,7 +3,8 @@ import facts from "../../fixtures/finance.facts.json";
 import storyboard from "../../fixtures/finance.storyboard.json";
 import no004Facts from "../../fixtures/no-004/rule-of-72.facts.json";
 import no004Sb from "../../fixtures/no-004/rule-of-72.storyboard.json";
-import { checkStoryboard, formatReport } from "../../src/skill/check";
+import { checkStoryboard, formatReport, openerIssues } from "../../src/skill/check";
+import { parseStoryboard } from "../../src/schema/storyboard";
 
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
@@ -95,6 +96,37 @@ describe("the opening title card", () => {
     const sb = structuredClone(no004Sb) as { scenes: { type: string }[] };
     sb.scenes = [sb.scenes[2], sb.scenes[1], sb.scenes[0], ...sb.scenes.slice(3)];
     const report = checkStoryboard(sb, no004Facts);
-    expect(report.issues).toContainEqual({ stage: "opener", message: expect.stringMatching(/first scene must be a title card/) });
+    expect(report.issues).toContainEqual({ stage: "opener", message: expect.stringMatching(/title-card open needs a title scene first/) });
   });
+});
+
+describe("a cold open", () => {
+  const cold = (narration: string, type?: string) => {
+    const sb = structuredClone(no004Sb) as { meta: Record<string, unknown>; scenes: { type: string; narration: string }[] };
+    sb.meta.open = "cold";
+    const first = sb.scenes.findIndex((s) => s.type === (type ?? "line-chart"));
+    sb.scenes = [sb.scenes[first], ...sb.scenes.filter((_, i) => i !== first)];
+    sb.scenes[0].narration = narration;
+    return parseStoryboard(sb);
+  };
+
+  it("accepts a moving visual first with a claim for its first line", () => {
+    expect(openerIssues(cold("Money doubles faster than most people think. Here is the rule."))).toEqual([]);
+  });
+  it("still needs the title card to be first on a title-card open", () => {
+    const sb = parseStoryboard(no004Sb);
+    expect(openerIssues(sb)).toEqual([]);
+  });
+  it("rejects a text scene as the moving visual", () => {
+    expect(openerIssues(cold("Money doubles faster than you think.", "title"))[0]).toMatch(/starts on something moving/);
+  });
+  it("rejects a question for the first line", () => {
+    expect(openerIssues(cold("How long does money take to double?"))[0]).toMatch(/opens on a question/);
+  });
+  it.each(["Amsterdam, August 1602. A maid bought shares.", "In 1494, a monk wrote it down.", "August 1602 changed money."])(
+    "rejects a date for the first line: %s",
+    (line) => {
+      expect(openerIssues(cold(line))[0]).toMatch(/opens on a date/);
+    },
+  );
 });

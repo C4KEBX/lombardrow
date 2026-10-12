@@ -1,0 +1,21 @@
+{
+  "doorNo": 5,
+  "pillar": "origins",
+  "storyShape": "problem_it_solved",
+  "hookType": "everyday_object",
+  "era": "industrial",
+  "region": "united_states",
+  "primaryVisual": "ledger_page",
+  "visualMetaphor": "a correspondent's handwritten ledger of what the neighbors said, its lines turning into a single three-digit number",
+  "paletteLead": "ink",
+  "musicBed": null,
+  "title": "Before your credit score, your neighbors",
+  "angle": "Everyone knows the FICO score; almost no one knows it replaced 150 years of local informants writing down what the neighbors said, from Lewis Tappan's 1841 Mercantile Agency to the Retail Credit Company files Congress reined in in 1970.",
+  "sources": [
+    "https://www.library.hbs.edu/hc/collections/dun/",
+    "https://www.cambridge.org/core/journals/business-history-review/article/god-and-dun-bradstreet-18411851/97E0D78274B9099F5DB73E9B0C5931AE",
+    "https://www.laphamsquarterly.org/node/12420",
+    "https://www.georgiaencyclopedia.org/articles/business-economy/equifax/",
+    "https://www.myfico.com/credit-education/blog/history-of-the-fico-score"
+  ]
+}

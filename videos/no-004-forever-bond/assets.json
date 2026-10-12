@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "id": "munster-oath-1648",
+      "file": "assets/munster-oath-1648.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:De_be%C3%ABdiging_van_het_vredesverdrag_tussen_Spanje_en_de_Verenigde_Nederlanden_in_het_Raadhuis_van_Munster,_15_mei_1648,_SK-A-405.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/62/De_be%C3%ABdiging_van_het_vredesverdrag_tussen_Spanje_en_de_Verenigde_Nederlanden_in_het_Raadhuis_van_Munster%2C_15_mei_1648%2C_SK-A-405.jpg",
+      "license": "cc0",
+      "credit": "After Gerard ter Borch, Munster 1648. Rijksmuseum. CC0.",
+      "depicts": "A copy (about 1675 to 1700) of Gerard ter Borch's painting of the oath ratifying the Peace of Munster between Spain and the Dutch Republic in the town hall of Munster on 15 May 1648; the Dutch delegates raise two fingers, the Spanish lay their hands on the Bible. Rijksmuseum SK-A-405, CC0 on Commons."
+    },
+    {
+      "id": "lekdijk-cushion-1706",
+      "file": "assets/lekdijk-cushion-1706.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kussen_met_het_wapen_van_het_waterschap_Lekdijk_Bovendams_(van_de_rivier_de_Lek_boven_de_dam),_BK-NM-10887.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/Kussen_met_het_wapen_van_het_waterschap_Lekdijk_Bovendams_%28van_de_rivier_de_Lek_boven_de_dam%29%2C_BK-NM-10887.jpg",
+      "license": "cc0",
+      "credit": "Lekdijk Bovendams cushion, 1706. Rijksmuseum. CC0.",
+      "depicts": "A magistrate's cushion embroidered with the arms of the Lekdijk Bovendams water board, dated 1706, Rijksmuseum BK-NM-10887, CC0 on Commons. It shows the borrower's arms, not the bond."
+    },
+    {
+      "id": "rentebrief-1711",
+      "file": "assets/rentebrief-1711.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:In_een_vertrek_houden_enkele_mannen_zich_met_geld_bezig_De_Rentebrief,_RP-P-OB-45.621.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/In_een_vertrek_houden_enkele_mannen_zich_met_geld_bezig_De_Rentebrief%2C_RP-P-OB-45.621.jpg",
+      "license": "cc0",
+      "credit": "De Rentebrief (The Bond), print, 1711. Rijksmuseum. CC0.",
+      "depicts": "A 1711 Dutch book illustration titled De Rentebrief (the bond or annuity letter): men in a room busy with money. Rijksmuseum RP-P-OB-45.621, CC0 on Commons. A period scene of Dutch lending, not Yale's bond."
+    },
+    {
+      "id": "notary-office-1629",
+      "file": "assets/notary-office-1629.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Het_kantoor_van_de_notaris,_SK-A-1341.jpg",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Het_kantoor_van_de_notaris%2C_SK-A-1341.jpg/3840px-Het_kantoor_van_de_notaris%2C_SK-A-1341.jpg",
+      "license": "cc0",
+      "credit": "The notary's office, c. 1629. Rijksmuseum. CC0.",
+      "depicts": "Het kantoor van de notaris (The notary's office), a Dutch painting of about 1629: a notary with an open book and papers, clients gesturing. Rijksmuseum SK-A-1341, CC0 on Commons. Illustrative: a period scene of a loan or contract, not the 1648 bond."
+    },
+    {
+      "id": "rent-payment-1660",
+      "file": "assets/rent-payment-1660.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:De_pachtbetaling_Rijksmuseum_SK-A-2698.jpeg",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/De_pachtbetaling_Rijksmuseum_SK-A-2698.jpeg/3840px-De_pachtbetaling_Rijksmuseum_SK-A-2698.jpeg",
+      "license": "public-domain",
+      "credit": "The rent payment, 1660s. Rijksmuseum. Public domain.",
+      "depicts": "De pachtbetaling (The rent payment), an anonymous Dutch painting of 1660 to 1668: tenants bring payment to a man at a desk. Rijksmuseum SK-A-2698, public domain on Commons. Illustrative: paying money owed in person."
+    },
+    {
+      "id": "river-village-1645",
+      "file": "assets/river-village-1645.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jan_van_Goyen_-_Gezicht_op_een_dorp_aan_een_rivier_-_SK-A-120_-_Rijksmuseum.jpg",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Jan_van_Goyen_-_Gezicht_op_een_dorp_aan_een_rivier_-_SK-A-120_-_Rijksmuseum.jpg/3840px-Jan_van_Goyen_-_Gezicht_op_een_dorp_aan_een_rivier_-_SK-A-120_-_Rijksmuseum.jpg",
+      "license": "public-domain",
+      "credit": "Jan van Goyen, river view, 1645. Rijksmuseum. Public domain.",
+      "depicts": "Jan van Goyen, View of a village on a river, 1645, Rijksmuseum SK-A-120, public domain on Commons. Illustrative: a Dutch river with its bank, not the Lek at Honswijk."
+    },
+    {
+      "id": "sandy-road-1655",
+      "file": "assets/sandy-road-1655.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Landschap_met_zandweg_langs_een_rivier,_SK-C-273.jpg",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Landschap_met_zandweg_langs_een_rivier%2C_SK-C-273.jpg/3840px-Landschap_met_zandweg_langs_een_rivier%2C_SK-C-273.jpg",
+      "license": "cc0",
+      "credit": "Landscape with a sandy road, c. 1655. Rijksmuseum. CC0.",
+      "depicts": "Landschap met zandweg langs een rivier (Landscape with a sandy road along a river), a Dutch painting of about 1655: travellers on a road by a river. Rijksmuseum SK-C-273, CC0 on Commons. Illustrative: a journey made in person."
+    }
+  ]
+}

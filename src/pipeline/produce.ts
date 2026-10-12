@@ -11,7 +11,9 @@ import { VIDEO } from "../design/tokens";
 import { parseStoryboard } from "../schema/storyboard";
 import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
-import type { VoiceResult } from "../voice/types";
+import { pacingIssues } from "../skill/pacing";
+import { assertScriptReviewed } from "../skill/scriptReview";
+import { voiceFor, type VoiceResult } from "../voice/types";
 import { SIGNOFF } from "../devices/tracks";
 import { voiceSignoff } from "../voice/signoff";
 import { imagesFor } from "./assets";
@@ -50,10 +52,12 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   const storyboardJson = readJson(opts.storyboardPath);
   const factsJson = readJson(opts.factsPath);
   const storyboard = parseStoryboard(storyboardJson);
+  // The stand-in voice is a free preview; the Edge voice is a real build and waits for the script review.
+  if (opts.voice === "edge") assertScriptReviewed(opts.storyboardPath, storyboard);
 
   const provider = makeVoiceProvider(opts.voice, opts.cacheDir ?? path.resolve("out/voice-cache"));
   const voices: Record<string, VoiceResult> = {};
-  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, storyboard.meta.voice);
+  for (const scene of storyboard.scenes) voices[scene.id] = await provider(scene.narration, voiceFor(scene, storyboard.meta.voice));
   // The same sign-off every video; the voice cache keys on text and voice, so this synthesizes once.
   const signoff = await voiceSignoff(provider, storyboard.meta.voice);
 
@@ -67,6 +71,8 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
   if (opts.enforceLength) assertDuration(totalMs);
+  // `check` judged pacing on estimated timings; report it again on the real voice, without stopping the render.
+  for (const message of pacingIssues(storyboard, built.scenes, VIDEO.fps)) console.warn(`pacing: ${message}`);
 
   fs.mkdirSync(opts.outDir, { recursive: true });
   // Resolve music before rendering so an unsafe or missing name fails fast.
@@ -99,7 +105,8 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
       path: voices[scene.id].audioPath,
       startMs: (scene.startFrame * 1000) / VIDEO.fps,
     })),
-    { path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps },
+    // A reveal ending has no spoken sign-off (Justin, 2026-10-11): close.frames is 0 then.
+    ...(built.close.frames > 0 ? [{ path: signoff.audioPath, startMs: (built.close.startFrame * 1000) / VIDEO.fps }] : []),
   ];
   await mixAudio({
     clips,

@@ -12,16 +12,35 @@ import { Quote } from "../scenes/quote/Quote";
 import { Timeline } from "../scenes/timeline/Timeline";
 import { Title, type DoorHeader } from "../scenes/title/Title";
 import { Archival } from "../scenes/archival/Archival";
+import { BleedArchival } from "../scenes/archival/BleedArchival";
 import { FlowDiagram } from "../scenes/flow-diagram/FlowDiagram";
 import { LedgerPage } from "../scenes/ledger-page/LedgerPage";
 import { BRAND, ThemeProvider } from "../design/theme";
 import { DoorPlate, SourceStamp, YearCounter } from "../devices/Devices";
 import type { VideoProps } from "../pipeline/buildVideo";
+import { ColdOpenCamera, ColdOpenMasthead, COLD_OPEN_MASTHEAD_FRAMES, COLD_OPEN_PREROLL_FRAMES } from "./ColdOpenMasthead";
+import { CommentPrompt } from "./CommentPrompt";
+import { CornerTag, cornerTagFrames } from "./CornerTag";
+import { HOOK_LINE, HookLine } from "./HookLine";
 import { WipeOverlay } from "./WipeOverlay";
 import { cutFrames, wipeDirections } from "./wipe";
 
+/** A graphic scene over its backdrop: the images moving under a scrim, the scene drawn on top without its ground. */
+const SceneWithBackdrop: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
+  const { backdrop } = composed.scene;
+  if (!backdrop || composed.scene.type === "archival") return <SceneSwitch composed={composed} images={images} door={door} />;
+  return (
+    <AbsoluteFill>
+      <BleedArchival props={backdrop} backdrop shotFrames={composed.shotFrames} durationFrames={composed.durationFrames} images={images} />
+      <ThemeProvider ground="ink" clear>
+        <SceneSwitch composed={composed} images={images} door={door} />
+      </ThemeProvider>
+    </AbsoluteFill>
+  );
+};
+
 const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["images"]; door?: DoorHeader }> = ({ composed, images, door }) => {
-  const { scene, cues, durationFrames } = composed;
+  const { scene, cues, durationFrames, shotFrames } = composed;
   const year = scene.year;
   switch (scene.type) {
     case "title":
@@ -44,6 +63,9 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
       return <MapScene props={scene.props} cues={cues} durationFrames={durationFrames} year={year} />;
     case "archival": {
       const image = images[scene.props.assetId];
+      if (scene.props.layout === "bleed") {
+        return <BleedArchival props={scene.props} shotFrames={shotFrames} durationFrames={durationFrames} images={images} />;
+      }
       return <Archival props={scene.props} cues={cues} durationFrames={durationFrames} year={year} src={image?.src} credit={image?.credit} />;
     }
     case "flow-diagram":
@@ -57,20 +79,37 @@ const SceneSwitch: React.FC<{ composed: ComposedScene; images: VideoProps["image
   }
 };
 
-/** Narrated scenes from the opening title card to the door-plate close, with the overlays on top. */
-export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, years, stamps, images = {} }) => {
+/** Narrated scenes from the open (a title card, a cold open with its masthead overlay, or a bleed open with its corner tag) to the close (the door plate, or the reveal ending's comment question), with the overlays on top. */
+export const Video: React.FC<VideoProps> = ({ scenes, captions, door, coldOpen, bleedOpen, captionStyle = "lane", close, years, stamps, images = {} }) => {
   const grounds = scenes.map((s) => ({ startFrame: s.startFrame, ground: s.ground }));
-  const cuts = close.frames > 0 ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
+  // A bleed image is dark whatever the palette lead, so captions over it are drawn as on ink (a backdrop scene's ground is ink already).
+  const captionGrounds = scenes.map((s) => ({
+    startFrame: s.startFrame,
+    ground: s.scene.type === "archival" && s.scene.props.layout === "bleed" ? ("ink" as const) : s.ground,
+  }));
+  const plate = close.frames > 0 && !close.ending;
+  const cuts = plate ? [...cutFrames(scenes), close.startFrame] : cutFrames(scenes);
   return (
     <AbsoluteFill style={{ background: BRAND.ledgerInk }}>
       {scenes.map((composed, i) => (
         <Sequence key={composed.id} from={composed.startFrame} durationInFrames={composed.durationFrames} name={composed.id}>
           <ThemeProvider ground={composed.ground}>
-            <SceneSwitch composed={composed} images={images} door={i === 0 ? door : undefined} />
+            {i === 0 && coldOpen ? (
+              <ColdOpenCamera durationFrames={composed.durationFrames}>
+                {(frames) => (
+                  <SceneSwitch
+                    composed={{ ...composed, durationFrames: frames, cues: composed.cues.map((c) => ({ ...c, frame: c.frame + COLD_OPEN_PREROLL_FRAMES })) }}
+                    images={images}
+                  />
+                )}
+              </ColdOpenCamera>
+            ) : (
+              <SceneWithBackdrop composed={composed} images={images} door={i === 0 && !bleedOpen ? door : undefined} />
+            )}
           </ThemeProvider>
         </Sequence>
       ))}
-      {close.frames > 0 && (
+      {plate && (
         <Sequence from={close.startFrame} durationInFrames={close.frames} name="Door plate">
           <DoorPlate doorNo={close.doorNo} />
         </Sequence>
@@ -81,8 +120,28 @@ export const Video: React.FC<VideoProps> = ({ scenes, captions, door, close, yea
         directions={wipeDirections(cuts.length, door.doorNo)}
       />
       <YearCounter spans={years} />
+      {coldOpen && (
+        <Sequence from={0} durationInFrames={COLD_OPEN_MASTHEAD_FRAMES} name="Cold-open masthead">
+          <ColdOpenMasthead doorNo={door.doorNo} series={door.series} headline={coldOpen.headline} />
+        </Sequence>
+      )}
+      {bleedOpen && (
+        <Sequence from={0} durationInFrames={cornerTagFrames()} name="Corner tag">
+          <CornerTag doorNo={door.doorNo} series={door.series} />
+        </Sequence>
+      )}
+      {bleedOpen?.hookLine && (
+        <Sequence from={0} durationInFrames={HOOK_LINE.endFrame} name="Hook line">
+          <HookLine text={bleedOpen.hookLine} />
+        </Sequence>
+      )}
+      {close.ending && (
+        <Sequence from={close.ending.promptFrame} name="Comment prompt">
+          <CommentPrompt prompt={close.ending.prompt} />
+        </Sequence>
+      )}
       <SourceStamp spans={stamps} groundAt={(frame) => groundAt(grounds, frame)} />
-      <Captions chunks={captions} grounds={grounds} />
+      <Captions chunks={captions} grounds={captionGrounds} style={captionStyle} />
     </AbsoluteFill>
   );
 };

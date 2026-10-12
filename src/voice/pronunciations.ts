@@ -7,4 +7,6 @@ export const PRONUNCIATIONS: Readonly<Record<string, string>> = {
   vs: "versus",
   "e.g": "for example",
   "i.e": "that is",
+  // Justin, 2026-10-12: FICO is "FYE-co" (the letter I), not "FEE-co".
+  FICO: "Fye-co",
 };

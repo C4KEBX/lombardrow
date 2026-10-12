@@ -32,7 +32,10 @@ export const narrationSeconds = (narrations: readonly string[], wordsPerSecond =
   );
 
 /** Video length: the narrated scenes, then the close. A planning estimate; `npm run voice` has the real number. */
-export const estimateSeconds = (narrations: readonly string[]): number => BOOKEND_SECONDS + narrationSeconds(narrations);
+export const estimateSeconds = (narrations: readonly string[], closeSeconds = BOOKEND_SECONDS): number => closeSeconds + narrationSeconds(narrations);
+
+/** A reveal ending has no spoken sign-off, only the question card's short hold after the last word. */
+export const REVEAL_CLOSE_SECONDS = 0.8;
 
 /** Total narration words that land at the middle of the length window for a given scene count. */
 export const targetWords = (sceneCount: number): number =>

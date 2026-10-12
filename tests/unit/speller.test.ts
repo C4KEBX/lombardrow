@@ -4,6 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { makeEdgeProvider, type EdgeDeps } from "../../src/voice/edge";
 import { cardinal, foldTimings, ordinalWords, spellNarration, yearWords } from "../../src/voice/speller";
+import { PRONUNCIATIONS } from "../../src/voice/pronunciations";
 
 const spoken = (text: string, dict: Record<string, string> = {}) => spellNarration(text, dict).spoken;
 
@@ -56,6 +57,9 @@ describe("spellNarration", () => {
   it("leaves words alone and applies the dictionary to the bare token", () => {
     expect(spoken("Lombard Row")).toBe("Lombard Row");
     expect(spoken("Salt & pepper, vs. sugar.", { "&": "and", vs: "versus" })).toBe("Salt and pepper, versus. sugar.");
+  });
+  it("says FICO with the letter I", () => {
+    expect(spoken("came FICO: one number", PRONUNCIATIONS)).toBe("came Fye-co: one number");
   });
   it("keeps one group per written token", () => {
     const { groups } = spellNarration("Rule of 72.");

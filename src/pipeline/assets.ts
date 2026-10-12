@@ -1,8 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseAssets, type Asset, type Assets } from "../schema/assets";
+import { imageSize } from "./imageSize";
 
-export type SceneImages = Record<string, { src: string; credit: string }>;
+export type SceneImages = Record<string, { src: string; credit: string; width?: number; height?: number }>;
 
 const MIME: Record<string, string> = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
 
@@ -20,7 +21,8 @@ export function loadSceneImages(assetsFile: string, assets: Assets): SceneImages
     if (!fs.existsSync(file)) continue;
     const mime = MIME[path.extname(file).toLowerCase()];
     if (!mime) throw new Error(`asset "${asset.id}": ${asset.file} must be .jpg, .png or .webp`);
-    out[asset.id] = { src: `data:${mime};base64,${fs.readFileSync(file).toString("base64")}`, credit: asset.credit };
+    const bytes = fs.readFileSync(file);
+    out[asset.id] = { src: `data:${mime};base64,${bytes.toString("base64")}`, credit: asset.credit, ...sizeOrNothing(bytes) };
   }
   return out;
 }
@@ -36,4 +38,13 @@ export function findAssets(storyboardPath: string, explicit?: string): { file: s
 export function imagesFor(storyboardPath: string, explicit?: string): SceneImages {
   const found = findAssets(storyboardPath, explicit);
   return found ? loadSceneImages(found.file, found.assets) : {};
+}
+
+/** The image's pixel size when its header can be read; bleed shots need it, and `buildVideo` says so if it is missing. */
+function sizeOrNothing(bytes: Buffer): { width?: number; height?: number } {
+  try {
+    return imageSize(bytes);
+  } catch {
+    return {};
+  }
 }

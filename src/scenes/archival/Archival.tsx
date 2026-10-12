@@ -24,7 +24,7 @@ export const Archival: React.FC<SceneRenderProps<ArchivalProps> & { src?: string
   const height = ARCHIVAL_FRAME.bottom - ARCHIVAL_FRAME.top;
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <div style={{ position: "absolute", left: CONTENT.left, top: SAFE.top + 4, fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: theme.muted, opacity: fadeIn }}>
         {props.title}
       </div>
