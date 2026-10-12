@@ -10,7 +10,7 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "The rope or a fresh start: which would keep you honest?",
+      "prompt": "The rope or the reward: which would keep you honest?",
       "atWord": "So"
     },
     "hookLine": "A bankrupt who hid money could hang.",
@@ -32,7 +32,7 @@
       "type": "archival",
       "narration": "A bankrupt who hid his money could hang. In 18th-century England, one London merchant did. Even the word hides a break.",
       "props": {
-        "title": "Hogarth, a London hanging, 1747",
+        "title": "A London hanging, by Hogarth",
         "assetId": "tyburn-1747",
         "layout": "bleed",
         "shots": [
@@ -186,26 +186,26 @@
     {
       "id": "law-1542",
       "type": "kinetic-text",
-      "narration": "The real record is darker. In 1542, England passed what's considered its first bankruptcy law. Debtors could be jailed.",
+      "narration": "The real record is darker. Under England's 1542 bankruptcy law, debtors could be jailed.",
       "speaks": [
         "f-1542"
       ],
       "props": {
         "lines": [
-          "Considered",
-          "the first law"
+          "Bankrupt?",
+          "Jailed."
         ]
       },
       "cues": [
         {
-          "atWord": "considered",
+          "atWord": "bankruptcy",
           "do": "emphasize",
-          "text": "Considered"
+          "text": "Bankrupt?"
         },
         {
           "atWord": "jailed",
           "do": "emphasize",
-          "text": "law"
+          "text": "Jailed."
         }
       ],
       "backdrop": {
@@ -223,7 +223,7 @@
             "w": 0.3
           },
           {
-            "atWord": "considered",
+            "atWord": "bankruptcy",
             "x": 0.68,
             "y": 0.45,
             "w": 0.3
@@ -287,10 +287,9 @@
           },
           {
             "atWord": "death",
-            "assetId": "tyburn-1747",
-            "x": 0.62,
-            "y": 0.38,
-            "w": 0.22
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.25
           },
           {
             "atWord": "idea",
@@ -340,7 +339,7 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "In 1760, at his bankruptcy hearing, his books came up 13,513 pounds short.",
+      "narration": "In 1760, his bankruptcy commissioners said he was 13,513 pounds short.",
       "speaks": [
         "f-deficiency"
       ],
@@ -366,7 +365,7 @@
             "w": 0.4
           },
           {
-            "atWord": "books",
+            "atWord": "commissioners",
             "x": 0.15,
             "y": 0.32,
             "w": 0.3
@@ -390,15 +389,15 @@
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.55,
-            "y": 0.42,
-            "w": 0.3
+            "x": 0.4,
+            "y": 0.45,
+            "w": 0.2
           },
           {
             "atWord": "trunk",
-            "x": 0.45,
-            "y": 0.45,
-            "w": 0.22
+            "x": 0.55,
+            "y": 0.42,
+            "w": 0.18
           },
           {
             "atWord": "halves",
@@ -410,9 +409,9 @@
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.2,
-            "y": 0.2,
-            "w": 0.4
+            "x": 0.75,
+            "y": 0.33,
+            "w": 0.3
           }
         ]
       },
@@ -428,7 +427,7 @@
       "type": "archival",
       "narration": "In 1761, Perrott was hanged at Smithfield for fraudulent bankruptcy.",
       "props": {
-        "title": "Hogarth, a London hanging, 1747",
+        "title": "A London hanging, by Hogarth",
         "assetId": "tyburn-1747",
         "layout": "bleed",
         "shots": [
@@ -439,9 +438,15 @@
           },
           {
             "atWord": "hanged",
-            "x": 0.5,
-            "y": 0.5,
-            "w": 0.75
+            "x": 0.62,
+            "y": 0.4,
+            "w": 0.3
+          },
+          {
+            "atWord": "fraudulent",
+            "x": 0.55,
+            "y": 0.6,
+            "w": 0.4
           }
         ]
       },
@@ -455,12 +460,12 @@
     {
       "id": "four",
       "type": "big-number",
-      "narration": "He wasn't the last. Likely only 4 Englishmen were hanged for it before the penalty was abolished in 1820.",
+      "narration": "He was one of likely only 4 Englishmen hanged for it. In 1820, the penalty was abolished.",
       "speaks": [
         "f-four-hanged"
       ],
       "microhooks": [
-        "He wasn't the last."
+        "He was one of likely only 4"
       ],
       "props": {
         "value": 4,
@@ -479,15 +484,8 @@
         "shots": [
           {
             "x": 0.62,
-            "y": 0.38,
-            "w": 0.25
-          },
-          {
-            "atWord": "Englishmen",
-            "assetId": "newgate-1780",
-            "x": 0.55,
-            "y": 0.4,
-            "w": 0.4
+            "y": 0.32,
+            "w": 0.2
           },
           {
             "atWord": "penalty",
@@ -502,7 +500,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? Almost an afterthought: the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or a fresh start. Which would keep you honest?",
+      "narration": "That other idea? Almost an afterthought: the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or the reward. Which would keep you honest?",
       "speaks": [
         "f-discharge"
       ],
@@ -513,15 +511,14 @@
       "props": {
         "lines": [
           "The rope",
-          "or a fresh",
-          "start?"
+          "or the reward?"
         ]
       },
       "cues": [
         {
           "atWord": "discharge",
           "do": "emphasize",
-          "text": "fresh"
+          "text": "reward"
         },
         {
           "atWord": "failed",
