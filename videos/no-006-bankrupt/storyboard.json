@@ -30,7 +30,7 @@
     {
       "id": "hook",
       "type": "archival",
-      "narration": "A bankrupt who hid his money could hang, in 18th-century England. Even the word hides a break.",
+      "narration": "A bankrupt who hid his money could hang. In 18th-century England, one London merchant did. Even the word hides a break.",
       "props": {
         "title": "Hogarth, a London hanging, 1747",
         "assetId": "tyburn-1747",
@@ -55,6 +55,13 @@
             "w": 0.4
           },
           {
+            "atWord": "merchant",
+            "assetId": "ludgate",
+            "x": 0.18,
+            "y": 0.85,
+            "w": 0.35
+          },
+          {
             "atWord": "word",
             "assetId": "bankers-1340",
             "x": 0.78,
@@ -76,6 +83,7 @@
         "f-banca-rotta"
       ],
       "microhooks": [
+        "In 18th-century England, one London merchant did.",
         "Even the word hides a break."
       ]
     },
@@ -131,7 +139,7 @@
     {
       "id": "myth",
       "type": "archival",
-      "narration": "Legend says a failed moneylender's bench was smashed. But here's the catch: the dictionary says that's probably a figure of speech.",
+      "narration": "Legend says a failed moneylender's bench was smashed. The dictionary says that's probably a figure of speech.",
       "props": {
         "title": "Italian bankers, c. 1340",
         "assetId": "bankers-1340",
@@ -155,7 +163,7 @@
             "w": 0.25
           },
           {
-            "atWord": "catch",
+            "atWord": "dictionary",
             "x": 0.2,
             "y": 0.45,
             "w": 0.4
@@ -172,7 +180,7 @@
         "f-bench-myth"
       ],
       "microhooks": [
-        "But here's the catch:"
+        "The dictionary says that's probably a figure of speech."
       ]
     },
     {
@@ -184,15 +192,15 @@
       ],
       "props": {
         "lines": [
-          "First",
-          "bankruptcy law"
+          "Considered",
+          "the first law"
         ]
       },
       "cues": [
         {
-          "atWord": "first",
+          "atWord": "considered",
           "do": "emphasize",
-          "text": "First"
+          "text": "Considered"
         },
         {
           "atWord": "jailed",
@@ -215,7 +223,7 @@
             "w": 0.3
           },
           {
-            "atWord": "first",
+            "atWord": "considered",
             "x": 0.68,
             "y": 0.45,
             "w": 0.3
@@ -297,7 +305,7 @@
     {
       "id": "perrott",
       "type": "archival",
-      "narration": "Meet John Perrott, a merchant on Ludgate Hill, in London.",
+      "narration": "That merchant was John Perrott, of Ludgate Hill.",
       "props": {
         "title": "Ludgate Hill, London",
         "assetId": "ludgate",
@@ -315,7 +323,7 @@
             "w": 0.35
           },
           {
-            "atWord": "London",
+            "atWord": "Hill",
             "x": 0.4,
             "y": 0.4,
             "w": 0.6
@@ -326,7 +334,7 @@
         "f-perrott-shop"
       ],
       "microhooks": [
-        "Meet John Perrott,"
+        "That merchant was John Perrott,"
       ]
     },
     {
@@ -375,7 +383,7 @@
     {
       "id": "trunk",
       "type": "archival",
-      "narration": "In his trunk in Newgate prison, halves of four banknotes turned up, tied in a rag. Plus half a 1,000 pound note.",
+      "narration": "In Newgate prison, at the bottom of his trunk, tied in a rag: the other halves of four banknotes. And half a 1,000 pound note.",
       "props": {
         "title": "Newgate prison, London, 1781",
         "assetId": "newgate-1780",
@@ -383,35 +391,28 @@
         "shots": [
           {
             "x": 0.55,
-            "y": 0.45,
-            "w": 0.4
+            "y": 0.42,
+            "w": 0.3
           },
           {
-            "atWord": "prison",
-            "x": 0.4,
-            "y": 0.5,
-            "w": 0.3
+            "atWord": "trunk",
+            "x": 0.45,
+            "y": 0.45,
+            "w": 0.22
           },
           {
             "atWord": "halves",
             "assetId": "boe-note",
             "x": 0.5,
-            "y": 0.45,
-            "w": 0.6
-          },
-          {
-            "atWord": "rag",
-            "assetId": "boe-note",
-            "x": 0.85,
-            "y": 0.42,
-            "w": 0.3
+            "y": 0.5,
+            "w": 0.7
           },
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.15,
-            "y": 0.32,
-            "w": 0.3
+            "x": 0.2,
+            "y": 0.2,
+            "w": 0.4
           }
         ]
       },
@@ -419,13 +420,13 @@
         "f-half-notes"
       ],
       "microhooks": [
-        "In his trunk in Newgate prison,"
+        "In Newgate prison, at the bottom of his trunk,"
       ]
     },
     {
       "id": "hanged",
       "type": "archival",
-      "narration": "On November 11th, 1761, Perrott was hanged at Smithfield for fraudulent bankruptcy.",
+      "narration": "In 1761, Perrott was hanged at Smithfield for fraudulent bankruptcy.",
       "props": {
         "title": "Hogarth, a London hanging, 1747",
         "assetId": "tyburn-1747",
