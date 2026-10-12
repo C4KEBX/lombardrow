@@ -18,5 +18,7 @@ describe("renderSheet (history demo)", () => {
     expect(html).toContain("data:image/png;base64,");
     expect(html).not.toMatch(/<script/i);
     for (const id of ["intro", "east-west", "people", "census", "veni"]) expect(html).toContain(id);
+    expect(html).toContain("<h2>Script with sources</h2>");
+    expect(fs.readFileSync(path.join(out, "script.md"), "utf-8")).toMatch(/^# No\. 004: History Demo/);
   }, 240000);
 });

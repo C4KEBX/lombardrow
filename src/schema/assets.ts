@@ -1,0 +1,57 @@
+import { z } from "zod";
+import { StoryboardError, sceneAssetIds, type Storyboard } from "./storyboard";
+
+/** Only images anyone may reuse without permission: public domain or CC0. */
+export const ASSET_LICENSES = ["public-domain", "cc0"] as const;
+
+const httpUrl = z.url().refine((u) => /^https?:\/\//i.test(u), "url must be http(s)");
+
+const AssetSchema = z.strictObject({
+  id: z.string().regex(/^[a-z0-9-]+$/, "asset id must be lowercase letters, digits, hyphens"),
+  /** Path of the downloaded image, relative to assets.json (e.g. "assets/summa.jpg"). */
+  file: z.string().min(1).refine((f) => !f.startsWith("/") && !f.split(/[\\/]/).includes(".."), "file must stay inside the video folder"),
+  /** The page that states the image's license (e.g. its Wikimedia Commons file page). */
+  sourceUrl: httpUrl,
+  /** Direct link to the image file, for `npm run assets` to download. */
+  downloadUrl: httpUrl.optional(),
+  license: z.enum(ASSET_LICENSES, { message: `license must be ${ASSET_LICENSES.join(" or ")}; any other license cannot be used` }),
+  /** Shown on the image: who made or holds it, and its license ("Jacopo de' Barbari, 1495. Public domain."). */
+  credit: z.string().min(1).max(60),
+  /** What the image actually shows, for the reviewer. */
+  depicts: z.string().min(1),
+});
+
+export const AssetsSchema = z.strictObject({ assets: z.array(AssetSchema) }).superRefine((data, ctx) => {
+  const seen = new Set<string>();
+  data.assets.forEach((a, i) => {
+    if (seen.has(a.id)) ctx.addIssue({ code: "custom", path: ["assets", i, "id"], message: `duplicate asset id "${a.id}"` });
+    seen.add(a.id);
+  });
+});
+export type Assets = z.output<typeof AssetsSchema>;
+export type Asset = Assets["assets"][number];
+
+export function parseAssets(input: unknown): Assets {
+  const result = AssetsSchema.safeParse(input);
+  if (!result.success) throw new StoryboardError(`assets.json: ${z.prettifyError(result.error)}`);
+  return result.data;
+}
+
+/** Every image a scene or the cover shows is in assets.json, and its file has been downloaded. */
+export function assertAssets(sb: Storyboard, assets: Assets | undefined, fileExists: (asset: Asset) => boolean): void {
+  const users: [string, string[]][] = [
+    ...sb.scenes.map((scene): [string, string[]] => [`Scene "${scene.id}" (${scene.backdrop ? "backdrop" : scene.type})`, sceneAssetIds(scene)]),
+    ...(sb.meta.cover ? [["The cover", [sb.meta.cover.assetId]] as [string, string[]]] : []),
+  ];
+  for (const [who, ids] of users) {
+    if (ids.length === 0) continue;
+    if (!assets) throw new StoryboardError(`${who} needs assets.json; pass --assets`);
+    for (const id of ids) {
+      const asset = assets.assets.find((a) => a.id === id);
+      if (!asset) throw new StoryboardError(`${who} uses asset "${id}", which is not in assets.json`);
+      if (!fileExists(asset)) {
+        throw new StoryboardError(`${who}: asset "${asset.id}" file ${asset.file} is missing; run npm run assets -- --assets <assets.json>`);
+      }
+    }
+  }
+}

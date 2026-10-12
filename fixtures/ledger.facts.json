@@ -1,0 +1,21 @@
+{
+  "facts": [
+    {
+      "id": "f-summa",
+      "claim": "Luca Pacioli's Summa de arithmetica was printed in Venice in 1494 (demo data, verify before publishing)",
+      "value": 1494,
+      "source": { "name": "Wikipedia: Luca Pacioli", "url": "https://en.wikipedia.org/wiki/Luca_Pacioli", "stamp": "Wikipedia" }
+    },
+    {
+      "id": "f-double",
+      "claim": "At 8% a year compounded, $1,000 grows to about $2,000 in 9 years (demo data, verify before publishing)",
+      "value": 1999,
+      "source": { "name": "Investor.gov: Compound Interest Calculator", "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator", "stamp": "SEC, Investor.gov" }
+    },
+    {
+      "id": "f-daybook",
+      "claim": "Illustrative day book: cloth for 120 ducats and pepper for 80 ducats, 200 ducats in all, in Venice in 1494 (invented example, not a historical record)",
+      "source": { "name": "Illustrative example", "url": "https://en.wikipedia.org/wiki/Double-entry_bookkeeping", "stamp": "Illustrative" }
+    }
+  ]
+}

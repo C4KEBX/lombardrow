@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "Before credit scores, there was gossip",
+    "theme": "lombard-row",
+    "paletteLead": "ink",
+    "doorNo": 5,
+    "series": "Why It Exists",
+    "voice": "en-GB-RyanNeural",
+    "open": "bleed",
+    "format": "fast",
+    "ending": {
+      "prompt": "A number or your neighbors?",
+      "atWord": "which"
+    },
+    "hookLine": "Your credit report started as gossip.",
+    "cover": {
+      "line": "Your credit report started as gossip.",
+      "mark": "gossip",
+      "assetId": "all-talk-1855",
+      "x": 0.5,
+      "y": 0.38,
+      "w": 0.5
+    }
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "archival",
+      "narration": "Critics said the company behind your credit report once filed rumors about people's marriages. It's called Equifax. And it all started with your neighbors.",
+      "props": {
+        "title": "All Talk and No Work, 1855",
+        "assetId": "all-talk-1855",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.38,
+            "w": 0.5
+          },
+          {
+            "atWord": "rumors",
+            "x": 0.63,
+            "y": 0.4,
+            "w": 0.28
+          },
+          {
+            "atWord": "marriages",
+            "assetId": "new-bonnet",
+            "x": 0.45,
+            "y": 0.42,
+            "w": 0.42
+          },
+          {
+            "atWord": "Equifax",
+            "assetId": "country-store",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.75
+          },
+          {
+            "atWord": "neighbors",
+            "assetId": "census-1854",
+            "x": 0.47,
+            "y": 0.42,
+            "w": 0.42
+          }
+        ]
+      },
+      "brisk": true,
+      "sourceFactId": "f-rumors",
+      "microhooks": [
+        "And it all started with your neighbors."
+      ]
+    },
+    {
+      "id": "tappan",
+      "type": "archival",
+      "narration": "In 1841, Lewis Tappan, a merchant who failed in the panic of 1837, founded the Mercantile Agency.",
+      "props": {
+        "title": "Illustration, 1852",
+        "assetId": "speculator-1852",
+        "layout": "bleed",
+        "shots": [
+          {
+            "assetId": "tappan-1873",
+            "x": 0.56,
+            "y": 0.45,
+            "w": 0.6
+          },
+          {
+            "atWord": "Tappan",
+            "assetId": "tappan-1873",
+            "x": 0.56,
+            "y": 0.42,
+            "w": 0.42
+          },
+          {
+            "atWord": "failed",
+            "assetId": "tappan-1873",
+            "x": 0.54,
+            "y": 0.36,
+            "w": 0.3
+          },
+          {
+            "atWord": "founded",
+            "assetId": "correspondents-page",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.5
+          }
+        ]
+      },
+      "brisk": true,
+      "speaks": [
+        "f-tappan"
+      ]
+    },
+    {
+      "id": "correspondents",
+      "type": "kinetic-text",
+      "narration": "Locals reported on their neighbors: was he of fair character, with good business habits?",
+      "speaks": [
+        "f-correspondents"
+      ],
+      "microhooks": [
+        "Locals reported on their neighbors:"
+      ],
+      "props": {
+        "lines": [
+          "Character?",
+          "Habits?"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "character",
+          "do": "emphasize",
+          "text": "character?"
+        },
+        {
+          "atWord": "habits",
+          "do": "emphasize",
+          "text": "habits?"
+        }
+      ],
+      "backdrop": {
+        "assetId": "correspondents-page",
+        "shots": [
+          {
+            "x": 0.45,
+            "y": 0.28,
+            "w": 0.6
+          },
+          {
+            "atWord": "character",
+            "x": 0.7,
+            "y": 0.55,
+            "w": 0.45
+          },
+          {
+            "atWord": "habits",
+            "assetId": "census-1854",
+            "x": 0.56,
+            "y": 0.48,
+            "w": 0.24
+          }
+        ]
+      }
+    },
+    {
+      "id": "quotes",
+      "type": "kinetic-text",
+      "narration": "One 1855 entry calls a man without a $ in the world. Another, a rough and ready Irishman.",
+      "speaks": [
+        "f-ledger"
+      ],
+      "microhooks": [
+        "Another, a rough and ready Irishman."
+      ],
+      "props": {
+        "lines": [
+          "Without a $",
+          "in the world.",
+          "Rough and",
+          "ready."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "world",
+          "do": "emphasize",
+          "text": "world."
+        },
+        {
+          "atWord": "rough",
+          "do": "emphasize",
+          "text": "ready."
+        }
+      ],
+      "backdrop": {
+        "assetId": "all-talk-1855",
+        "shots": [
+          {
+            "x": 0.42,
+            "y": 0.33,
+            "w": 0.3
+          },
+          {
+            "atWord": "world",
+            "assetId": "speculator-1852",
+            "x": 0.6,
+            "y": 0.35,
+            "w": 0.22
+          },
+          {
+            "atWord": "Another",
+            "assetId": "correspondents-page",
+            "x": 0.5,
+            "y": 0.62,
+            "w": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "ratings",
+      "type": "ledger-page",
+      "narration": "Every name got a grade, from A plus, $1,000,000 or more, down to K: less than $2,000.",
+      "speaks": [
+        "f-ratings"
+      ],
+      "props": {
+        "title": "The 1880 rating key",
+        "rows": [
+          {
+            "entry": "$1,000,000 or more",
+            "amount": "A+",
+            "date": "Top"
+          },
+          {
+            "entry": "Less than $2,000",
+            "amount": "K",
+            "date": "Bottom"
+          }
+        ],
+        "factId": "f-ratings"
+      },
+      "cues": [
+        {
+          "atWord": "plus",
+          "do": "emphasize",
+          "text": "$1,000,000"
+        },
+        {
+          "atWord": "K",
+          "do": "emphasize",
+          "text": "Less"
+        }
+      ],
+      "microhooks": [
+        "Every name got a grade"
+      ],
+      "backdrop": {
+        "assetId": "census-1854",
+        "shots": [
+          {
+            "x": 0.56,
+            "y": 0.5,
+            "w": 0.26
+          },
+          {
+            "atWord": "plus",
+            "x": 0.47,
+            "y": 0.35,
+            "w": 0.22
+          },
+          {
+            "atWord": "K",
+            "x": 0.22,
+            "y": 0.6,
+            "w": 0.28
+          }
+        ]
+      }
+    },
+    {
+      "id": "retail",
+      "type": "archival",
+      "narration": "Next came shoppers. In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. That company became Equifax.",
+      "props": {
+        "title": "Illustration, c. 1880",
+        "assetId": "country-store",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.8
+          },
+          {
+            "atWord": "Woolford",
+            "x": 0.35,
+            "y": 0.55,
+            "w": 0.6
+          },
+          {
+            "atWord": "Atlanta",
+            "x": 0.62,
+            "y": 0.5,
+            "w": 0.6
+          },
+          {
+            "atWord": "shoppers'",
+            "assetId": "new-bonnet",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "became",
+            "assetId": "new-bonnet",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.4
+          }
+        ]
+      },
+      "sourceFactId": "f-retail",
+      "microhooks": [
+        "Next came shoppers.",
+        "That company became Equifax."
+      ]
+    },
+    {
+      "id": "law",
+      "type": "kinetic-text",
+      "narration": "In 1970, Congress passed a credit reporting law.",
+      "speaks": [
+        "f-fcra"
+      ],
+      "props": {
+        "lines": [
+          "A credit",
+          "reporting law."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "law",
+          "do": "emphasize",
+          "text": "law."
+        }
+      ],
+      "backdrop": {
+        "assetId": "capitol",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.45
+          },
+          {
+            "atWord": "credit",
+            "x": 0.5,
+            "y": 0.35,
+            "w": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "rumors",
+      "type": "archival",
+      "narration": "In the 1970s, the government accused Retail Credit of rating its staff by how much negative information they found on consumers.",
+      "props": {
+        "title": "Illustration, 1852",
+        "assetId": "speculator-1852",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.88,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "rating",
+            "assetId": "census-1854",
+            "x": 0.56,
+            "y": 0.5,
+            "w": 0.24
+          },
+          {
+            "atWord": "negative",
+            "assetId": "all-talk-1855",
+            "x": 0.42,
+            "y": 0.35,
+            "w": 0.3
+          },
+          {
+            "atWord": "consumers",
+            "assetId": "new-bonnet",
+            "x": 0.12,
+            "y": 0.5,
+            "w": 0.24
+          }
+        ]
+      },
+      "microhooks": [
+        "the government accused Retail Credit"
+      ],
+      "speaks": [
+        "f-rumors"
+      ]
+    },
+    {
+      "id": "fico",
+      "type": "big-number",
+      "narration": "Then in 1989 came FICO: one number, 300 to 850.",
+      "speaks": [
+        "f-fico",
+        "f-range"
+      ],
+      "microhooks": [
+        "Then in 1989 came FICO"
+      ],
+      "props": {
+        "value": 850,
+        "label": "the top FICO score, from 300 up",
+        "factId": "f-range"
+      },
+      "cues": [
+        {
+          "atWord": "1989",
+          "do": "callout",
+          "text": "FICO, 1989"
+        }
+      ],
+      "backdrop": {
+        "assetId": "office-1987",
+        "shots": [
+          {
+            "x": 0.33,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "number",
+            "x": 0.6,
+            "y": 0.4,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "type": "kinetic-text",
+      "narration": "Even FICO says many of those old opinions carried racial, class and gender biases. So which would you trust: a number or your neighbors?",
+      "speaks": [
+        "f-bias"
+      ],
+      "microhooks": [
+        "Even FICO says"
+      ],
+      "props": {
+        "lines": [
+          "Racial.",
+          "Class. Gender."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "racial",
+          "do": "emphasize",
+          "text": "Racial."
+        },
+        {
+          "atWord": "gender",
+          "do": "emphasize",
+          "text": "Gender."
+        }
+      ],
+      "backdrop": {
+        "assetId": "new-bonnet",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.3,
+            "w": 0.3
+          },
+          {
+            "atWord": "racial",
+            "assetId": "census-1854",
+            "x": 0.56,
+            "y": 0.5,
+            "w": 0.24
+          },
+          {
+            "atWord": "gender",
+            "assetId": "speculator-1852",
+            "x": 0.9,
+            "y": 0.5,
+            "w": 0.22
+          },
+          {
+            "atWord": "which",
+            "assetId": "census-1854",
+            "x": 0.47,
+            "y": 0.42,
+            "w": 0.42
+          }
+        ]
+      }
+    }
+  ]
+}

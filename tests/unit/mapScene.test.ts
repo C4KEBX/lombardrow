@@ -18,7 +18,7 @@ const map = (props: Record<string, unknown> = {}, cues: unknown[] = CUES) => ({
 const board = (...scenes: unknown[]) =>
   parseStoryboard({
     schemaVersion: 1,
-    meta: { title: "t", theme: "lombard-row", voice: "v" },
+    meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
     audio: { music: null },
     scenes,
   });
@@ -104,7 +104,7 @@ describe("map in buildVideo", () => {
     // The 12-frame tail pad means narration alone cannot trigger this, so drive the check with a hand-built short scene.
     const scene = board(map()).scenes[0];
     const composed = (durationFrames: number, lastCue: number) => ({
-      id: "m", scene, ground: "ink" as const, durationFrames, startFrame: 0, words: [],
+      id: "m", scene, ground: "ink" as const, durationFrames, startFrame: 0, words: [], shotFrames: [],
       cues: REGIONS.map((name, i) => ({ frame: i === REGIONS.length - 1 ? lastCue : i, do: "emphasize" as const, text: name })),
     });
     expect(() => assertSceneTiming([composed(30, 25)])).toThrow(/"m".*too short/);

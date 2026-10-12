@@ -39,7 +39,7 @@ describe("produce (stand-in voice, generated music)", () => {
     expect(JSON.parse(fs.readFileSync(result.manifestPath, "utf-8")).scenes).toHaveLength(2);
   }, 240000);
 
-  it("enforces the 55-60 second length by default", async () => {
+  it("enforces the 62-70 second length by default", async () => {
     const outDir = fs.mkdtempSync(path.join(os.tmpdir(), "produce-short-"));
     await expect(
       produce({
@@ -50,7 +50,7 @@ describe("produce (stand-in voice, generated music)", () => {
         enforceLength: true,
         cacheDir: path.join(outDir, "voice"),
       }),
-    ).rejects.toThrow(/required 55-60s/);
+    ).rejects.toThrow(/required 62-70s/);
   }, 120000);
 
   it("rejects an unsafe music name before rendering", async () => {

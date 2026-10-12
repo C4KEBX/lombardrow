@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "meta": { "title": "Ledger Demo", "theme": "lombard-row", "doorNo": 4, "series": "How it works", "voice": "en-GB-RyanNeural" },
+  "audio": { "music": null },
+  "scenes": [
+    {
+      "id": "page",
+      "type": "archival",
+      "sourceFactId": "f-summa",
+      "speaks": ["f-summa"],
+      "narration": "In 1494 a Venetian friar printed a book that taught merchants to keep their books.",
+      "props": { "title": "A merchant's handbook", "assetId": "page-standin", "from": { "x": 0.5, "y": 0.3, "zoom": 1 }, "to": { "x": 0.5, "y": 0.45, "zoom": 1.3 } }
+    },
+    {
+      "id": "doubling",
+      "type": "flow-diagram",
+      "narration": "Deposit a thousand dollars, earn eight percent a year, wait nine years, and you have about two thousand.",
+      "props": {
+        "title": "One deposit, doubling",
+        "steps": [
+          { "label": "Deposit $1,000" },
+          { "label": "Earn 8% a year", "note": "interest on interest" },
+          { "label": "Wait 9 years" },
+          { "label": "About $2,000" }
+        ],
+        "arrows": ["each year", "compounds", "doubles"],
+        "factId": "f-double"
+      },
+      "cues": [
+        { "atWord": "Deposit", "do": "emphasize", "text": "Deposit" },
+        { "atWord": "earn", "do": "emphasize", "text": "Earn" },
+        { "atWord": "wait", "do": "emphasize", "text": "Wait" },
+        { "atWord": "about", "do": "emphasize", "text": "About" }
+      ]
+    },
+    {
+      "id": "accounts",
+      "type": "ledger-page",
+      "narration": "A merchant writes down the cloth, then the pepper, then rules off what he spent in all.",
+      "props": {
+        "title": "A Venetian day book",
+        "rows": [
+          { "entry": "Cloth from Florence", "amount": "120 duc.", "date": "Venice, 1494" },
+          { "entry": "Pepper from Alexandria", "amount": "80 duc." }
+        ],
+        "total": { "entry": "Spent in all", "amount": "200 duc." },
+        "factId": "f-daybook"
+      },
+      "cues": [
+        { "atWord": "cloth", "do": "emphasize", "text": "Cloth" },
+        { "atWord": "pepper", "do": "emphasize", "text": "Pepper" }
+      ]
+    }
+  ]
+}

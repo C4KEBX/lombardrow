@@ -1,0 +1,21 @@
+{
+  "doorNo": 2,
+  "pillar": "origins",
+  "storyShape": "problem_it_solved",
+  "hookType": "date",
+  "era": "early_modern",
+  "region": "western_europe",
+  "primaryVisual": "ledger_page",
+  "visualMetaphor": "a subscription book where a maid's hundred guilders sit two lines above a director's twelve thousand",
+  "paletteLead": "parchment",
+  "musicBed": null,
+  "title": "The first shares anyone could buy",
+  "angle": "The VOC locked investors' money in for ten years, so the only way out was to sell your share to someone else, and that is how a stock market started: trading began the day the books closed.",
+  "sources": [
+    "https://www.docketalarm.com/cases/PTAB/CBM2016-00046/Covered_Business_Method_Patent_Review_of_U.S._Pat._7890416/03-18-2016-Petitioner/Exhibit-1018-Exhibit_1018___Petram/",
+    "https://www.worldsfirststockexchange.com/2020/10/15/the-worlds-first-ipo/",
+    "https://westfriesarchief.nl/historie/thema-s/geld-en-handel/the-oldest-share",
+    "https://pure.uva.nl/ws/files/1655015/118877_8613.pdf",
+    "https://leidenspecialcollectionsblog.nl/articles/the-worlds-oldest-share-certificates"
+  ]
+}

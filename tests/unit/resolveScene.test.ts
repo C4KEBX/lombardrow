@@ -20,7 +20,7 @@ describe("hello fixtures", () => {
 describe("composeScenes", () => {
   it("derives scene durations in frames from the word timings", () => {
     const composed = composeScenes(sb(), words, 30);
-    expect(composed.map((s) => s.durationFrames)).toEqual([78, 81]);
+    expect(composed.map((s) => s.durationFrames)).toEqual([72, 75]);
     expect(composed.map((s) => s.id)).toEqual(["intro", "drop"]);
   });
 

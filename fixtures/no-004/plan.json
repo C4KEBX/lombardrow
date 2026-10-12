@@ -1,0 +1,19 @@
+{
+  "doorNo": 4,
+  "pillar": "mechanics",
+  "storyShape": "then_to_now",
+  "hookType": "question",
+  "era": "early_modern",
+  "region": "mediterranean",
+  "primaryVisual": "line_chart",
+  "visualMetaphor": "a merchant's ledger column that doubles every nine lines",
+  "paletteLead": "ink",
+  "musicBed": null,
+  "title": "The 500-year-old shortcut for doubling money",
+  "angle": "The rule people quote today was printed for Venetian merchants in 1494, and at 8% it is off by about two days.",
+  "sources": [
+    "https://www.cambridge.org/core/journals/british-actuarial-journal/article/emergence-of-compound-interest/799CB1D40CDD46F3010767BFC60F24DB",
+    "https://en.wikipedia.org/wiki/Rule_of_72",
+    "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest"
+  ]
+}

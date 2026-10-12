@@ -1,0 +1,20 @@
+{
+  "doorNo": 1,
+  "pillar": "mechanics",
+  "storyShape": "then_to_now",
+  "hookType": "question",
+  "era": "early_modern",
+  "region": "mediterranean",
+  "primaryVisual": "line_chart",
+  "visualMetaphor": "a merchant's ledger column that doubles every nine lines",
+  "paletteLead": "ink",
+  "musicBed": null,
+  "title": "The 500-year-old shortcut for doubling money",
+  "angle": "Pacioli's own 1494 example is 8 percent doubling in 9 years, the same numbers investors quote today; the exact answer is 9.006.",
+  "sources": [
+    "https://wellcomecollection.org/works/vh9466j6",
+    "https://www.cambridge.org/core/journals/british-actuarial-journal/article/emergence-of-compound-interest/799CB1D40CDD46F3010767BFC60F24DB",
+    "https://en.wikipedia.org/wiki/Rule_of_72",
+    "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest"
+  ]
+}

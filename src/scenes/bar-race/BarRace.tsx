@@ -57,7 +57,7 @@ export const BarRace: React.FC<SceneRenderProps<BarRaceProps>> = ({ props, cues,
   })();
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <div
         style={{
           position: "absolute", left: CONTENT.left, top: SAFE.top,

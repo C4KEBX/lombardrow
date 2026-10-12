@@ -1,13 +1,18 @@
 import { QUOTE_WORD_GAP_EM, fitTitleFontSize, formatNumber } from "../design/layout";
-import { QUOTE_LANE, TITLE_LANE } from "../design/tokens";
-import type { Facts } from "./facts";
+import { DOOR_HEADER_PX, lanesFor } from "../design/tokens";
+import type { Facts, SourceTier } from "./facts";
+import { figureMatches, figuresIn } from "./figures";
 import { COUNTRY_NAMES, regionTouchesBbox, suggestCountries } from "../map/atlas";
 import { deepEqual } from "./deepEqual";
 import { emphasisTarget } from "./emphasis";
-import { StoryboardError, type Scene, type Storyboard } from "./storyboard";
+import { StoryboardError, factIdsOf, type Scene, type Storyboard } from "./storyboard";
 
-export const MIN_VIDEO_MS = 55_000;
-export const MAX_VIDEO_MS = 60_000;
+/**
+ * The length window. At least 62 s, a hard rule: under that a video does not count toward TikTok and
+ * YouTube creator monetization (Justin, 2026-10-09). A short script gets more narration, never padding.
+ */
+export const MIN_VIDEO_MS = 62_000;
+export const MAX_VIDEO_MS = 70_000;
 
 export function assertVariety(sb: Storyboard): void {
   for (let i = 2; i < sb.scenes.length; i += 1) {
@@ -149,11 +154,39 @@ export function assertFactsTraceable(sb: Storyboard, facts: Facts): void {
       case "bar-race":
         assertBarRaceFact(scene, lookup(scene.id, scene.props.factId));
         break;
+      case "archival":
+        break;
+      case "flow-diagram":
+      case "ledger-page":
+        assertOnScreenFigures(scene, factIdsOf(scene).map((id) => lookup(scene.id, id)));
+        break;
       default: {
         const unreachable: never = scene;
         throw new Error(`Unhandled scene type: ${JSON.stringify(unreachable)}`);
       }
     }
+  }
+}
+
+/** Text a flow diagram or ledger page shows that may carry numbers. */
+function onScreenTexts(scene: Extract<Scene, { type: "flow-diagram" | "ledger-page" }>): string[] {
+  if (scene.type === "flow-diagram") {
+    return [...scene.props.steps.flatMap((s) => [s.label, s.note ?? ""]), ...(scene.props.arrows ?? [])];
+  }
+  return [
+    ...scene.props.rows.flatMap((r) => [r.entry, r.amount, r.date ?? ""]),
+    ...(scene.props.total ? [scene.props.total.entry, scene.props.total.amount] : []),
+  ];
+}
+
+/** Every number shown in a flow diagram or ledger page must match a fact the scene names. */
+function assertOnScreenFigures(scene: Extract<Scene, { type: "flow-diagram" | "ledger-page" }>, named: Fact[]): void {
+  const numbers = named.flatMap(factNumbers);
+  const untraced = onScreenTexts(scene).flatMap(figuresIn).filter((f) => !numbers.some((n) => figureMatches(f.value, n)));
+  if (untraced.length) {
+    throw new StoryboardError(
+      `Scene "${scene.id}" (${scene.type}) shows ${untraced.map((f) => `"${f.text}"`).join(", ")}, which no fact it names states; set "factId" or "speaks" to the fact, or remove the number`,
+    );
   }
 }
 
@@ -175,6 +208,9 @@ const MAX_CALLOUTS: Record<Scene["type"], number> = {
   quote: 0,
   timeline: 0,
   map: 0,
+  archival: 0,
+  "flow-diagram": 0,
+  "ledger-page": 0,
 };
 
 function assertCueAnchor(scene: Scene, cue: Scene["cues"][number]): void {
@@ -194,12 +230,12 @@ function assertCueAnchor(scene: Scene, cue: Scene["cues"][number]): void {
   }
 }
 
-const NO_CUES: ReadonlySet<Scene["type"]> = new Set(["title", "quote"]);
+const NO_CUES: ReadonlySet<Scene["type"]> = new Set(["title", "quote", "archival"]);
 const MAX_EMPHASIS = 2;
 
-type EmphasisScene = Extract<Scene, { type: "kinetic-text" | "timeline" | "map" }>;
+type EmphasisScene = Extract<Scene, { type: "kinetic-text" | "timeline" | "map" | "flow-diagram" | "ledger-page" }>;
 const isEmphasisScene = (scene: Scene): scene is EmphasisScene =>
-  scene.type === "kinetic-text" || scene.type === "timeline" || scene.type === "map";
+  scene.type === "kinetic-text" || scene.type === "timeline" || scene.type === "map" || scene.type === "flow-diagram" || scene.type === "ledger-page";
 
 /** What an emphasize cue can point at, and whether every item needs exactly one cue. */
 function emphasisItems(scene: EmphasisScene): { items: string[]; noun: string; exact: boolean } {
@@ -210,6 +246,10 @@ function emphasisItems(scene: EmphasisScene): { items: string[]; noun: string; e
       return { items: scene.props.events.map((e) => e.label), noun: "event", exact: true };
     case "map":
       return { items: scene.props.regions, noun: "region", exact: true };
+    case "flow-diagram":
+      return { items: scene.props.steps.map((s) => s.label), noun: "step", exact: true };
+    case "ledger-page":
+      return { items: scene.props.rows.map((r) => r.entry), noun: "row", exact: true };
   }
 }
 
@@ -265,17 +305,19 @@ export function assertCuesSupported(sb: Storyboard): void {
 export const TITLE_MAX_FONT_PX = 190;
 
 export function assertHeadlinesFit(sb: Storyboard): void {
-  for (const scene of sb.scenes) {
-    if (scene.type !== "title") continue;
+  sb.scenes.forEach((scene, i) => {
+    if (scene.type !== "title") return;
     try {
-      fitTitleFontSize(scene.props.headline, TITLE_LANE.width, TITLE_LANE.height, TITLE_MAX_FONT_PX);
+      const { title } = lanesFor(scene.year !== undefined);
+      // The opening title card also carries the door-number masthead.
+      fitTitleFontSize(scene.props.headline, title.width, title.height - (i === 0 ? DOOR_HEADER_PX : 0), TITLE_MAX_FONT_PX);
     } catch (error) {
       if (error instanceof RangeError) {
         throw new StoryboardError(`Scene "${scene.id}" headline does not fit: ${error.message}`);
       }
       throw error;
     }
-  }
+  });
 }
 
 /** Content rules for text scenes. Numbers must reach the screen through facts, so lines carry none. */
@@ -286,7 +328,8 @@ export function assertTextScenes(sb: Storyboard): void {
     }
     if (scene.type === "quote") {
       try {
-        fitTitleFontSize(scene.props.quote, QUOTE_LANE.width, QUOTE_LANE.height, QUOTE_LANE.maxFont, undefined, QUOTE_WORD_GAP_EM);
+        const { quote } = lanesFor(scene.year !== undefined);
+        fitTitleFontSize(scene.props.quote, quote.width, quote.height, quote.maxFont, undefined, QUOTE_WORD_GAP_EM);
       } catch (error) {
         if (error instanceof RangeError) throw new StoryboardError(`Scene "${scene.id}": the quote does not fit: ${error.message}`);
         throw error;
@@ -309,6 +352,137 @@ export function assertMapRegions(sb: Storyboard): void {
       const hint = suggestCountries(name);
       throw new StoryboardError(
         `Scene "${scene.id}": "${name}" is not a country name in the atlas${hint.length ? ` (did you mean: ${hint.join(", ")})` : ""}`,
+      );
+    }
+  }
+}
+
+/** Scene types whose layout leaves the top-left band (y 200 to 340) free for the year counter. */
+export const YEAR_SCENE_TYPES: readonly Scene["type"][] = ["title", "big-number", "kinetic-text", "quote"];
+
+/**
+ * The year counter is Ledger Ink only (devices.json) and needs the top-left band, so a scene that
+ * sets a year must be on ink and be a type that keeps that band clear.
+ */
+export function assertYears(sb: Storyboard): void {
+  for (const scene of sb.scenes) {
+    if (scene.year === undefined) continue;
+    const ground = scene.ground ?? sb.meta.paletteLead;
+    if (ground !== "ink") {
+      throw new StoryboardError(
+        `Scene "${scene.id}" sets year ${scene.year} on a ${ground} ground; the year counter is Ledger Ink only. Set "ground": "ink" on this scene or drop the year.`,
+      );
+    }
+    if (!YEAR_SCENE_TYPES.includes(scene.type)) {
+      throw new StoryboardError(
+        `Scene "${scene.id}" (${scene.type}) sets a year, but the year counter only fits over ${YEAR_SCENE_TYPES.join(", ")} scenes; ${scene.type} uses that space for its own header`,
+      );
+    }
+  }
+}
+
+/**
+ * Source-stamp text per scene: "Source: " plus each distinct fact source's stamp (or name). A scene
+ * that sets a year must name a source for it, through its own fact or `sourceFactId`.
+ */
+export function sceneStamps(sb: Storyboard, facts: Facts): Record<string, string | undefined> {
+  const byId = new Map(facts.facts.map((fact) => [fact.id, fact]));
+  const out: Record<string, string | undefined> = {};
+  for (const scene of sb.scenes) {
+    const names = [...new Set(factIdsOf(scene).map((id) => {
+      const fact = byId.get(id);
+      if (!fact) throw new StoryboardError(`Scene "${scene.id}" references unknown fact "${id}"`);
+      return fact.source.stamp ?? fact.source.name;
+    }))];
+    if (names.length === 0 && scene.year !== undefined) {
+      throw new StoryboardError(
+        `Scene "${scene.id}" shows the year ${scene.year} but names no source; add "sourceFactId" for the fact that dates it`,
+      );
+    }
+    out[scene.id] = names.length ? `Source: ${names.join("; ")}` : undefined;
+  }
+  return out;
+}
+
+function numbersOf(value: unknown, out: number[] = []): number[] {
+  if (typeof value === "number" && Number.isFinite(value)) out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => numbersOf(v, out));
+  else if (value && typeof value === "object") Object.values(value).forEach((v) => numbersOf(v, out));
+  return out;
+}
+
+/** Every number a fact states: its value, its dataset, and the figures written in its claim. */
+export function factNumbers(fact: Fact): number[] {
+  return [
+    ...(fact.value === undefined ? [] : [fact.value]),
+    ...numbersOf(fact.dataset),
+    ...figuresIn(fact.claim).map((f) => f.value),
+  ].map(Math.abs);
+}
+
+/**
+ * Every number or year the narration says must match a fact the scene names (its data fact,
+ * `sourceFactId` or `speaks`), exactly or rounded to one or two significant figures.
+ */
+export function assertSpokenFigures(sb: Storyboard, facts: Facts): void {
+  const byId = new Map(facts.facts.map((fact) => [fact.id, fact]));
+  for (const scene of sb.scenes) {
+    const named = factIdsOf(scene).map((id) => {
+      const fact = byId.get(id);
+      if (!fact) throw new StoryboardError(`Scene "${scene.id}" references unknown fact "${id}"`);
+      return fact;
+    });
+    const numbers = named.flatMap(factNumbers);
+    const untraced = figuresIn(scene.narration).filter((f) => !numbers.some((n) => figureMatches(f.value, n)));
+    if (untraced.length === 0) continue;
+    const hints = untraced.map((f) => {
+      const owner = facts.facts.find((fact) => factNumbers(fact).some((n) => figureMatches(f.value, n)));
+      return owner ? `"${f.text}" (fact "${owner.id}" states it: add it to "speaks")` : `"${f.text}" (no fact states it: add a sourced fact or cut it)`;
+    });
+    throw new StoryboardError(`Scene "${scene.id}" says figures no fact it names supports: ${hints.join(", ")}`);
+  }
+}
+
+const hostOf = (url: string): string => new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+
+/**
+ * The accuracy standard's source rules: every source has a tier; a secondary source has a second
+ * independent one (a different site); the video cites at least 3 sites, at least 1 primary or scholarly.
+ */
+export function assertSources(facts: Facts): void {
+  const problems: string[] = [];
+  const all: { host: string; tier?: SourceTier }[] = [];
+  for (const fact of facts.facts) {
+    const main = { host: hostOf(fact.source.url), tier: fact.source.tier };
+    const extra = (fact.corroboration ?? []).map((c) => ({ host: hostOf(c.url), tier: c.tier }));
+    all.push(main, ...extra);
+    if (!fact.source.tier) problems.push(`fact "${fact.id}" source has no tier (primary, scholarly or secondary)`);
+    if (fact.source.tier === "secondary" && !extra.some((c) => c.host !== main.host)) {
+      problems.push(`fact "${fact.id}" rests on a secondary source; add an independent source from another site under "corroboration"`);
+    }
+  }
+  const hosts = new Set(all.map((s) => s.host));
+  if (hosts.size < 3) problems.push(`the video cites ${hosts.size} site${hosts.size === 1 ? "" : "s"} (${[...hosts].join(", ")}); it needs at least 3`);
+  if (!all.some((s) => s.tier === "primary" || s.tier === "scholarly")) problems.push("no primary or scholarly source; at least one is required");
+  if (problems.length) throw new StoryboardError(problems.join("; "));
+}
+
+const HEDGES = [
+  "popular story", "the story goes", "legend", "historians disagree", "historians debate", "disputed", "probably",
+  "may have", "might have", "reportedly", "it is said", "is said to", "supposedly", "according to tradition", "traditionally",
+  "the evidence is thin", "no one knows", "nobody knows", "unclear",
+];
+
+/** A scene that uses a disputed fact must say so in its narration. */
+export function assertDisputedHedged(sb: Storyboard, facts: Facts): void {
+  const disputed = new Set(facts.facts.filter((f) => f.disputed).map((f) => f.id));
+  for (const scene of sb.scenes) {
+    const ids = factIdsOf(scene).filter((id) => disputed.has(id));
+    if (ids.length === 0) continue;
+    const text = scene.narration.toLowerCase();
+    if (!HEDGES.some((h) => text.includes(h))) {
+      throw new StoryboardError(
+        `Scene "${scene.id}" uses disputed fact "${ids[0]}" without saying so; label it ("the popular story is", "historians disagree", "probably") or cut it`,
       );
     }
   }

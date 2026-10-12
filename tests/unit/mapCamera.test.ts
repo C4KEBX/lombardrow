@@ -95,7 +95,7 @@ describe("review fixes: zoom direction, antimeridian, labels", () => {
   });
   it("the schema rejects focus latitudes the camera cannot honor", () => {
     const sb = (focus: number[]) => parseStoryboard({
-      schemaVersion: 1, meta: { title: "t", theme: "lombard-row", voice: "v" }, audio: { music: null },
+      schemaVersion: 1, meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" }, audio: { music: null },
       scenes: [{ id: "m", type: "map", narration: "x", cues: [{ atWord: "x", do: "emphasize", text: "Italy" }], props: { title: "T", regions: ["Italy"], focus, factId: "f" } }],
     });
     expect(() => sb([0, 70, 10, 80])).not.toThrow();

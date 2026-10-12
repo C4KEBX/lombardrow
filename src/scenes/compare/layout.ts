@@ -1,11 +1,14 @@
+import { DEVICES } from "../../design/tokens";
+
 export const COMPARE = {
-  baseline: 1130,
+  /** The bars stand on the ledger line, so a compare opener grows out of the open's rule. */
+  baseline: DEVICES.devices.ledger_line.rule.y,
   maxBar: 420,
   barWidth: 280,
   /** Centered on the content area (x 72 to 918), clear of the right-hand action rail. */
   centers: [283, 707],
   middle: 495,
-  labelY: 1196,
+  labelY: 1166,
   growStart: 12,
   growFrames: 40,
   sideDelay: 6,

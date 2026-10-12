@@ -15,13 +15,12 @@ const built = buildVideo(
 
 // Two frames per chart scene: mid-animation and settled. Offsets come from the composed scenes.
 const targets: { name: string; frame: number }[] = [];
-let start = 0;
 for (const scene of built.scenes) {
+  const start = scene.startFrame; // scenes begin after the 2 s open
   if (scene.scene.type === "line-chart" || scene.scene.type === "bar-race") {
     targets.push({ name: `${scene.id}-mid`, frame: start + Math.round(scene.durationFrames * 0.45) });
     targets.push({ name: `${scene.id}-end`, frame: start + scene.durationFrames - SETTLE_MARGIN });
   }
-  start += scene.durationFrames;
 }
 
 describe("FinanceDemo chart snapshots", () => {

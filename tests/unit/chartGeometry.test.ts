@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  cursorX, decimalsForStep, niceTicks, pointOnPathAtX, valueAtX, visibleMax, yDomainAt,
+  cursorX, decimalsForStep, niceTicks, pointOnPathAtX, reachedValueAtX, valueAtX, visibleMax, yDomainAt,
   type DataPoint,
 } from "../../src/charts/geometry";
 
@@ -13,6 +13,18 @@ describe("cursorX", () => {
     expect(cursorX(pts, 1)).toBe(2002);
     expect(cursorX(pts, -1)).toBe(2000);
     expect(cursorX(pts, 2)).toBe(2002);
+  });
+});
+
+describe("reachedValueAtX", () => {
+  it("holds the last data point reached, never an in-between value", () => {
+    const p = [{ x: 0, y: 1000 }, { x: 9, y: 1999 }, { x: 18, y: 3996 }];
+    expect(reachedValueAtX(p, -1)).toBe(1000);
+    expect(reachedValueAtX(p, 8.99)).toBe(1000);
+    expect(reachedValueAtX(p, 9)).toBe(1999);
+    expect(reachedValueAtX(p, 12)).toBe(1999);
+    expect(reachedValueAtX(p, 18)).toBe(3996);
+    expect(reachedValueAtX(p, 30)).toBe(3996);
   });
 });
 

@@ -86,4 +86,12 @@ describe("makeEdgeProvider", () => {
     const provider = makeEdgeProvider(dir, fakeDeps([]));
     await expect(provider("Goodbye moon.", "v")).rejects.toThrow(/differ from the narration/);
   });
+  it("does not cache a voice cut off before the end, so a retry fetches again", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "edge-"));
+    const calls: string[][] = [];
+    const provider = makeEdgeProvider(dir, fakeDeps(calls));
+    await expect(provider("Hello world again.", "v")).rejects.toThrow(/differ from the narration/);
+    await expect(provider("Hello world again.", "v")).rejects.toThrow(/differ from the narration/);
+    expect(calls).toHaveLength(2);
+  });
 });

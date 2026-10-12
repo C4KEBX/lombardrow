@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "meta": { "title": "Ancient Demo", "theme": "lombard-row", "voice": "en-US-AndrewNeural" },
+  "meta": { "title": "Ancient Demo", "theme": "lombard-row", "doorNo": 4, "series": "How it works", "voice": "en-US-AndrewNeural" },
   "audio": { "music": null },
   "scenes": [
     {

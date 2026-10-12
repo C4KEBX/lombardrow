@@ -1,0 +1,99 @@
+[
+  {
+    "factId": "f-dead-pledge",
+    "url": "https://archive.org/details/littletonstenure00litt",
+    "found": [
+      "1600"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1600",
+        "sentence": "BRL ; Boston Public Library (John Adams Library) BRL Publication date 1600 Topics Land tenure , Land tenure , Real property Publisher London : Imprinted by Thomas Wight Collection johnadamsBPL ; bostonpubliclibrary ; americana Contributor John Adams Library at the Boston Public …"
+      }
+    ]
+  },
+  {
+    "factId": "f-word",
+    "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+    "found": [],
+    "missing": [],
+    "status": "partial",
+    "detail": "nothing numeric to check; read the source yourself",
+    "archiveUrl": "https://web.archive.org/web/20261010022936/https://ahdictionary.com/word/search.html?q=mortgage"
+  },
+  {
+    "factId": "f-reason",
+    "url": "https://archive.org/details/littletonstenure00litt",
+    "found": [],
+    "missing": [],
+    "status": "partial",
+    "unverifiable": [
+      "20"
+    ],
+    "detail": "only small whole numbers (20), which appear on almost any page; read the source yourself"
+  },
+  {
+    "factId": "f-glanville",
+    "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+    "found": [
+      "1189"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1189",
+        "sentence": "In his Tractatus de legibus et consuetudinibus regni Angliae (1189), Ranulf de Glanville explains that this latter type of pledge, in which the fruits of the property were taken by the creditor without reduction in the debt, was known by the term mort gage, which in Old French m…"
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20261010022936/https://ahdictionary.com/word/search.html?q=mortgage"
+  },
+  {
+    "factId": "f-living",
+    "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+    "found": [],
+    "missing": [],
+    "status": "partial",
+    "detail": "nothing numeric to check; read the source yourself",
+    "archiveUrl": "https://web.archive.org/web/20261010022936/https://ahdictionary.com/word/search.html?q=mortgage"
+  },
+  {
+    "factId": "f-shift",
+    "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+    "found": [
+      "1481"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1481",
+        "sentence": "The preferred type of pledge, in which the property's profits went to paying off the debt and thus continued to benefit the borrower, was known in Old French by the term vif gage, \"living pledge.\" By the time of the great English jurist Thomas Littleton's Treatise on Tenures (14…"
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20261010022936/https://ahdictionary.com/word/search.html?q=mortgage"
+  },
+  {
+    "factId": "f-timeline",
+    "url": "https://ahdictionary.com/word/search.html?q=mortgage",
+    "found": [
+      "1189",
+      "1481"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1189",
+        "sentence": "In his Tractatus de legibus et consuetudinibus regni Angliae (1189), Ranulf de Glanville explains that this latter type of pledge, in which the fruits of the property were taken by the creditor without reduction in the debt, was known by the term mort gage, which in Old French m…"
+      },
+      {
+        "token": "1481",
+        "sentence": "The preferred type of pledge, in which the property's profits went to paying off the debt and thus continued to benefit the borrower, was known in Old French by the term vif gage, \"living pledge.\" By the time of the great English jurist Thomas Littleton's Treatise on Tenures (14…"
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20261010022936/https://ahdictionary.com/word/search.html?q=mortgage"
+  }
+]

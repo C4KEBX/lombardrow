@@ -20,6 +20,8 @@ export type Theme = {
   name: Ground;
   /** Background fill. */
   ground: string;
+  /** What a scene paints its whole frame with: the ground, or transparent over a backdrop. */
+  fill: string;
   /** Primary text and marks. */
   ink: string;
   /** Secondary text: Parchment at 72% on dark grounds, Slate on Parchment. */
@@ -54,6 +56,7 @@ export const THEMES: Record<Ground, Theme> = {
   ink: {
     name: "ink",
     ground: ledgerInk,
+    fill: ledgerInk,
     ink: parchment,
     muted: mix(parchment, ledgerInk, 0.72),
     axis: parchment,
@@ -65,6 +68,7 @@ export const THEMES: Record<Ground, Theme> = {
   parchment: {
     name: "parchment",
     ground: parchment,
+    fill: parchment,
     ink: ledgerInk,
     muted: slate,
     axis: ledgerInk,
@@ -76,6 +80,7 @@ export const THEMES: Record<Ground, Theme> = {
   green: {
     name: "green",
     ground: bankersGreen,
+    fill: bankersGreen,
     ink: parchment,
     muted: mix(parchment, bankersGreen, 0.78),
     axis: parchment,
@@ -88,7 +93,8 @@ export const THEMES: Record<Ground, Theme> = {
 
 const ThemeContext = createContext<Theme>(THEMES.ink);
 
-export const ThemeProvider: React.FC<{ ground: Ground; children: React.ReactNode }> = ({ ground, children }) =>
-  React.createElement(ThemeContext.Provider, { value: THEMES[ground] }, children);
+/** `clear`: the scene sits over a backdrop, so it leaves its frame unpainted. */
+export const ThemeProvider: React.FC<{ ground: Ground; clear?: boolean; children: React.ReactNode }> = ({ ground, clear, children }) =>
+  React.createElement(ThemeContext.Provider, { value: clear ? { ...THEMES[ground], fill: "transparent" } : THEMES[ground] }, children);
 
 export const useTheme = (): Theme => useContext(ThemeContext);

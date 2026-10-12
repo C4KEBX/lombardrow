@@ -1,16 +1,22 @@
 import type { Facts } from "../schema/facts";
-import type { Scene, Storyboard } from "../schema/storyboard";
+import { factIdsOf, type Scene, type Storyboard } from "../schema/storyboard";
 import { adviceLint } from "./adviceLint";
 import { TARGET_SECONDS, countWords, estimateSeconds } from "./estimate";
 import { factTokens } from "./verifyFacts";
+import type { ScriptLine } from "./scriptDoc";
 import type { VerifyResult, VerifyStatus } from "./verifyTypes";
 
 export type ReviewModel = {
   title: string;
   scenes: { id: string; type: string; narration: string; image?: string; cues: string[]; factIds: string[] }[];
-  facts: { id: string; claim: string; sourceName: string; sourceUrl: string; verify?: VerifyStatus | "stale"; flags: string[] }[];
+  facts: {
+    id: string; claim: string; sourceName: string; sourceUrl: string; tier?: string; disputed: boolean;
+    verify?: VerifyStatus | "stale"; evidence: string[]; archiveUrl?: string; flags: string[];
+  }[];
   warnings: string[];
   stats: { scenes: number; words: number; estimatedSeconds: number };
+  /** Every spoken sentence with its sources (the script document), when the sheet has it. */
+  script?: ScriptLine[];
 };
 
 export const escapeHtml = (text: string): string =>
@@ -19,13 +25,6 @@ export const escapeHtml = (text: string): string =>
 const PLACEHOLDER = /demo data|verify before publishing|placeholder|todo/i;
 const HAS_DIGIT = /\d/;
 
-function factIdsOf(scene: Scene): string[] {
-  switch (scene.type) {
-    case "compare": return [scene.props.left.factId, scene.props.right.factId];
-    case "title": case "kinetic-text": return [];
-    default: return [scene.props.factId];
-  }
-}
 
 function titleOf(scene: Scene): string | undefined {
   return scene.type === "title" || scene.type === "kinetic-text" || scene.type === "big-number" || scene.type === "quote"
@@ -61,7 +60,7 @@ function untracedTextWarnings(scene: Scene): string[] {
 
 /** A verify result is stale when the numbers it checked are no longer the fact's numbers (the fact was edited after verify-facts ran). */
 function isStale(fact: Facts["facts"][number], result: VerifyResult): boolean {
-  const checked = [...result.found, ...result.missing].sort();
+  const checked = [...result.found, ...result.missing, ...(result.unverifiable ?? [])].sort();
   if (checked.length === 0) return false;
   const now = factTokens(fact).filter((t) => !t.includes(",")).sort();
   return checked.length !== now.length || checked.some((t, i) => t !== now[i]);
@@ -102,7 +101,11 @@ export function buildReviewModel(
       claim: f.claim,
       sourceName: f.source.name,
       sourceUrl: f.source.url,
+      tier: f.source.tier,
+      disputed: f.disputed === true,
       verify: ((v) => (v && isStale(f, v) ? "stale" : v?.status))(verifyById.get(f.id)),
+      evidence: (verifyById.get(f.id)?.evidence ?? []).map((ev) => `${ev.token}: "${ev.sentence}"`),
+      archiveUrl: verifyById.get(f.id)?.archiveUrl,
       flags: PLACEHOLDER.test(f.claim) ? ["placeholder wording in the claim: replace with the verified claim"] : [],
     })),
     warnings,
@@ -128,11 +131,20 @@ export function renderReviewHtml(model: ReviewModel): string {
   const facts = model.facts
     .map((f) => {
       const link = HTTP_URL.test(f.sourceUrl) ? `<a href="${e(f.sourceUrl)}" rel="noopener noreferrer">${e(f.sourceName)}</a>` : e(f.sourceName);
-      return `<tr><td>${e(f.id)}</td><td>${e(f.claim)}${f.flags.map((x) => `<br><b>${e(x)}</b>`).join("")}</td><td>${link}</td><td>${e(f.verify ?? "not checked")}</td></tr>`;
+      const snapshot = f.archiveUrl && HTTP_URL.test(f.archiveUrl) ? `<br><a href="${e(f.archiveUrl)}" rel="noopener noreferrer">snapshot</a>` : "";
+      const evidence = f.evidence.length ? `<ul class="meta">${f.evidence.map((x) => `<li>${e(x)}</li>`).join("")}</ul>` : "";
+      const tier = f.tier ? `<br><small>${e(f.tier)}</small>` : "";
+      const disputed = f.disputed ? "<br><b>disputed: the narration must say so</b>" : "";
+      return `<tr><td>${e(f.id)}</td><td>${e(f.claim)}${disputed}${f.flags.map((x) => `<br><b>${e(x)}</b>`).join("")}</td><td>${link}${tier}${snapshot}</td><td>${e(f.verify ?? "not checked")}${evidence}</td></tr>`;
     })
     .join("");
   const warnings = model.warnings.length
     ? `<h2>Warnings</h2><ul>${model.warnings.map((w) => `<li>${e(w)}</li>`).join("")}</ul>`
     : "<h2>Warnings</h2><p>None.</p>";
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>Review: ${e(model.title)}</title><style>body{font:14px system-ui;margin:24px;max-width:1200px;background:#fafafa;color:#111}.scene{display:inline-block;vertical-align:top;width:290px;margin:0 12px 24px 0}.scene img{border:1px solid #ccc;display:block}.meta,small{color:#666}table{border-collapse:collapse}td{border:1px solid #ddd;padding:4px 8px;vertical-align:top}</style></head><body><h1>${e(model.title)}</h1><p>${model.stats.scenes} scenes, ${model.stats.words} words, about ${model.stats.estimatedSeconds} s</p>${warnings}<h2>Scenes</h2>${scenes}<h2>Facts</h2><table><tr><td>id</td><td>claim</td><td>source</td><td>source check</td></tr>${facts}</table></body></html>`;
+  const script = model.script
+    ? `<h2>Script with sources</h2><table><tr><td>scene</td><td>narration</td><td>sources</td></tr>${model.script
+        .map((l) => `<tr><td>${e(l.sceneId)}</td><td>${e(l.sentence)}</td><td>${l.factIds.length ? l.factIds.map(e).join(", ") : "<b>none named</b>"}${l.basis === "scene" ? " <small>(scene)</small>" : ""}</td></tr>`)
+        .join("")}</table>`
+    : "";
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>Review: ${e(model.title)}</title><style>body{font:14px system-ui;margin:24px;max-width:1200px;background:#fafafa;color:#111}.scene{display:inline-block;vertical-align:top;width:290px;margin:0 12px 24px 0}.scene img{border:1px solid #ccc;display:block}.meta,small{color:#666}table{border-collapse:collapse}td{border:1px solid #ddd;padding:4px 8px;vertical-align:top}</style></head><body><h1>${e(model.title)}</h1><p>${model.stats.scenes} scenes, ${model.stats.words} words, about ${model.stats.estimatedSeconds} s</p>${warnings}${script}<h2>Scenes</h2>${scenes}<h2>Facts</h2><table><tr><td>id</td><td>claim</td><td>source</td><td>source check</td></tr>${facts}</table></body></html>`;
 }

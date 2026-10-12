@@ -4,7 +4,7 @@ import { scaleLinear } from "d3-scale";
 import { area as d3area, curveMonotoneX, line as d3line } from "d3-shape";
 import { CalloutBadge } from "../../charts/CalloutBadge";
 import {
-  cursorX, decimalsForStep, niceTicks, pointOnPathAtX, valueAtX, yDomainAt,
+  cursorX, decimalsForStep, niceTicks, pointOnPathAtX, reachedValueAtX, valueAtX, yDomainAt,
   type DataPoint, type Domain,
 } from "../../charts/geometry";
 import { TICK_FONT_PX, badgeRect, overlaps, tickLabelRect } from "../../charts/labels";
@@ -49,7 +49,7 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
   const tip = pointOnPathAtX(linePath, sx(cx));
 
   const fmt = (v: number, decimals: number) => `${props.prefix}${formatNumber(v, decimals)}${props.suffix}`;
-  const readout = fmt(valueAtX(points, cx), props.decimals);
+  const readout = fmt(reachedValueAtX(points, cx), props.decimals);
   const readoutSize = readoutFontSize(
     points.map((p) => p.y),
     (v) => fmt(v, props.decimals),
@@ -81,7 +81,7 @@ export const LineChart: React.FC<SceneRenderProps<LineChartProps>> = ({ props, c
   });
 
   return (
-    <AbsoluteFill style={{ background: theme.ground, opacity: exit }}>
+    <AbsoluteFill style={{ background: theme.fill, opacity: exit }}>
       <div style={{ position: "absolute", left: CONTENT.left, top: SAFE.top, width: CONTENT.width }}>
         <div
           style={{

@@ -7,3 +7,7 @@ tests/render/_tmp/
 tts/.venv/
 music/generated/
 videos/*/review/
+models/
+videos/*/assets/
+videos/prototypes/*/assets/
+renders/

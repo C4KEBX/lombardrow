@@ -3,6 +3,8 @@
   "meta": {
     "title": "How Fast Prices Rose",
     "theme": "lombard-row",
+    "doorNo": 1,
+    "series": "How it works",
     "voice": "en-US-AndrewNeural"
   },
   "audio": {

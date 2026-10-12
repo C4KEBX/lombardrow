@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "The first shares anyone could buy",
+    "theme": "lombard-row",
+    "paletteLead": "parchment",
+    "doorNo": 2,
+    "series": "Why It Exists",
+    "voice": "en-GB-RyanNeural",
+    "open": "cold"
+  },
+  "audio": {
+    "music": null
+  },
+  "scenes": [
+    {
+      "id": "book",
+      "type": "ledger-page",
+      "speaks": [
+        "f-maid"
+      ],
+      "narration": "A maid bought into the first shares anyone could buy, with 100 guilders. Each of the six directors put in 12,000.",
+      "props": {
+        "title": "Amsterdam subscription, 1602",
+        "rows": [
+          {
+            "entry": "Neeltgen Cornelis, maid",
+            "amount": "ƒ100"
+          },
+          {
+            "entry": "Each director",
+            "amount": "ƒ12,000"
+          }
+        ],
+        "factId": "f-maid"
+      },
+      "cues": [
+        {
+          "atWord": "maid",
+          "do": "emphasize",
+          "text": "Neeltgen"
+        },
+        {
+          "atWord": "directors",
+          "do": "emphasize",
+          "text": "director"
+        }
+      ]
+    },
+    {
+      "id": "charter",
+      "type": "kinetic-text",
+      "ground": "ink",
+      "speaks": [
+        "f-charter"
+      ],
+      "sourceFactId": "f-charter",
+      "narration": "It was Amsterdam, 1602, and the Dutch East India Company. Its charter ran 21 years, and your money stayed in for at least ten.",
+      "props": {
+        "lines": [
+          "Built",
+          "to last"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "charter",
+          "do": "emphasize",
+          "text": "last"
+        }
+      ]
+    },
+    {
+      "id": "investors",
+      "type": "big-number",
+      "narration": "In Amsterdam alone, 1,143 investors signed up.",
+      "props": {
+        "value": 1143,
+        "label": "investors in Amsterdam",
+        "factId": "f-amsterdam"
+      }
+    }
+  ]
+}

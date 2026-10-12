@@ -6,7 +6,7 @@ describe("composeScenes carries the cue x anchor", () => {
   it("passes x through to the resolved cue", () => {
     const sb = parseStoryboard({
       schemaVersion: 1,
-      meta: { title: "t", theme: "lombard-row", voice: "v" },
+      meta: { title: "t", theme: "lombard-row", doorNo: 1, series: "How it works", voice: "v" },
       audio: { music: null },
       scenes: [{
         id: "c", type: "line-chart", narration: "It rose fast.",

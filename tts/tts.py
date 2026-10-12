@@ -10,8 +10,8 @@ import edge_tts
 TICKS_PER_MS = 10_000  # Edge reports offsets in 100ns ticks
 
 
-async def synth(text: str, voice: str):
-    comm = edge_tts.Communicate(text, voice, boundary="WordBoundary")
+async def synth(text: str, voice: str, rate: str):
+    comm = edge_tts.Communicate(text, voice, rate=rate, boundary="WordBoundary")
     audio, events = bytearray(), []
     async for chunk in comm.stream():
         if chunk["type"] == "audio":
@@ -31,13 +31,14 @@ def main() -> int:
     parser.add_argument("--text-file", required=True)
     parser.add_argument("--out-mp3", required=True)
     parser.add_argument("--out-json", required=True)
+    parser.add_argument("--rate", default="+0%", help='speaking rate, e.g. "+10%"')
     args = parser.parse_args()
     text = Path(args.text_file).read_text(encoding="utf-8").strip()
     if not text:
         print("narration is empty", file=sys.stderr)
         return 2
     try:
-        audio, events = asyncio.run(synth(text, args.voice))
+        audio, events = asyncio.run(synth(text, args.voice, args.rate))
     except Exception as exc:
         print(f"edge-tts failed: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1

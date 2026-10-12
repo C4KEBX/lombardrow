@@ -1,0 +1,13 @@
+{
+  "assets": [
+    {
+      "id": "littleton-1600-dead-pledge",
+      "file": "assets/littleton-1600-dead-pledge.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Littletons_Tenures_in_English_-_lately_perused_and_amended_(IA_littletonstenure00litt).pdf",
+      "downloadUrl": "https://archive.org/download/littletonstenure00litt/page/n147_w1400.jpg",
+      "license": "public-domain",
+      "credit": "Littleton, Tenures, 1600. Boston Public Library. PD.",
+      "depicts": "A page of Littletons Tenures in English (London, 1600), John Adams's copy at the Boston Public Library, in the chapter on estates upon condition. It reads that the tenant in Mortgage is in French Morgage, in Latin Mortuum vadium and in English a dead pledge, and gives the reason. Commons marks the scan PD-US-expired."
+    }
+  ]
+}
