@@ -34,7 +34,6 @@ export type PublishPackage = {
   aiDisclosure: { required: boolean; scenes: string[]; reason: string };
   youtube: { title: string; description: string };
   tiktok: { caption: string };
-  instagram: { caption: string };
 };
 
 /** Every distinct source link, primary first as the facts list them, then corroboration. */
@@ -88,7 +87,5 @@ export function buildPublishPackage(sb: Storyboard, facts: Facts, opts: { plan?:
     },
     // TikTok and YouTube are searched: lead with the title's keywords.
     tiktok: { caption: [`${title} | Lombard Row ${door}`, hook, "", sourceBlock, "", FOOTER, "", tags].join("\n") },
-    // Instagram shows one line before "more": lead with the hook.
-    instagram: { caption: [hook, "", `${title} | Lombard Row ${door}`, "", sourceBlock, "", FOOTER, "", tags].join("\n") },
   };
 }

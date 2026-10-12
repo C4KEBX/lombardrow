@@ -5,12 +5,10 @@ import { browserExecutable, getServeUrl } from "../pipeline/bundle";
 import type { CoverArt, ThumbnailProps } from "./Thumbnail";
 import type { PublishPackage } from "./package";
 
-/** Covers per platform: 9:16 for YouTube Shorts, TikTok and Reels, and Instagram's 3:4 profile-grid crop. */
+/** Covers per platform: 9:16 for YouTube Shorts and TikTok, the only platforms from 2026-10-12. */
 export const THUMBNAILS = [
   { file: "thumb-youtube.png", width: 1080, height: 1920 },
   { file: "thumb-tiktok.png", width: 1080, height: 1920 },
-  { file: "thumb-instagram.png", width: 1080, height: 1920 },
-  { file: "thumb-instagram-grid.png", width: 1080, height: 1440 },
 ] as const;
 
 /** `cover`: the image cover from `meta.cover`; without it, the door cover. */
@@ -41,7 +39,6 @@ export function writePackageTexts(pkg: PublishPackage, outDir: string): string[]
   const files: [string, string][] = [
     ["youtube.txt", `TITLE\n${pkg.youtube.title}\n\nDESCRIPTION\n${pkg.youtube.description}\n`],
     ["tiktok.txt", `${pkg.tiktok.caption}\n`],
-    ["instagram.txt", `${pkg.instagram.caption}\n`],
     ["package.json", `${JSON.stringify(pkg, null, 2)}\n`],
   ];
   for (const [name, text] of files) fs.writeFileSync(path.join(outDir, name), text);
