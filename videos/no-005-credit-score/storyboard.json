@@ -215,9 +215,10 @@
           },
           {
             "atWord": "Another",
-            "x": 0.63,
-            "y": 0.4,
-            "w": 0.3
+            "assetId": "correspondents-page",
+            "x": 0.5,
+            "y": 0.62,
+            "w": 0.5
           }
         ]
       }
