@@ -79,35 +79,38 @@
     {
       "id": "tappan",
       "type": "archival",
-      "narration": "In 1841, Lewis Tappan, a merchant ruined in the panic of 1837, founded the Mercantile Agency.",
+      "narration": "In 1841, Lewis Tappan, a merchant who failed in the panic of 1837, founded the Mercantile Agency.",
       "props": {
         "title": "Illustration, 1852",
         "assetId": "speculator-1852",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.6,
-            "y": 0.55,
-            "w": 0.55
+            "assetId": "tappan-1873",
+            "x": 0.56,
+            "y": 0.45,
+            "w": 0.6
           },
           {
             "atWord": "Tappan",
             "assetId": "tappan-1873",
             "x": 0.56,
-            "y": 0.45,
+            "y": 0.42,
             "w": 0.42
           },
           {
-            "atWord": "ruined",
-            "x": 0.68,
-            "y": 0.6,
+            "atWord": "failed",
+            "assetId": "tappan-1873",
+            "x": 0.54,
+            "y": 0.36,
             "w": 0.3
           },
           {
             "atWord": "founded",
-            "x": 0.5,
-            "y": 0.55,
-            "w": 0.35
+            "assetId": "correspondents-page",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.5
           }
         ]
       },
@@ -287,7 +290,7 @@
     {
       "id": "retail",
       "type": "archival",
-      "narration": "Then it came for shoppers. In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. That company became Equifax.",
+      "narration": "Next came shoppers. In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. That company became Equifax.",
       "props": {
         "title": "Illustration, c. 1880",
         "assetId": "country-store",
@@ -328,7 +331,7 @@
       },
       "sourceFactId": "f-retail",
       "microhooks": [
-        "Then it came for shoppers.",
+        "Next came shoppers.",
         "That company became Equifax."
       ]
     },
@@ -456,7 +459,7 @@
     {
       "id": "today",
       "type": "kinetic-text",
-      "narration": "Even FICO says the old reports were full of racial, class and gender biases. So which would you trust: a number or your neighbors?",
+      "narration": "Even FICO says many of those old opinions carried racial, class and gender biases. So which would you trust: a number or your neighbors?",
       "speaks": [
         "f-bias"
       ],
