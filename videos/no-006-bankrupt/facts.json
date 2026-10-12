@@ -76,19 +76,36 @@
     },
     {
       "id": "f-perrott-shop",
-      "claim": "John Perrott kept a shop on Ludgate Hill in London from about 1752; at his April 1760 bankruptcy examination his accounts showed a deficiency of 13,513 pounds.",
+      "claim": "The London Gazette of 6 May 1760 gave notice that a commission of bankrupt had been awarded against John Perrott, of Ludgate Hill, London, Merchant.",
+      "source": {
+        "name": "The London Gazette, issue 9998, 6 May 1760, page 4",
+        "stamp": "The London Gazette, 1760",
+        "url": "https://www.thegazette.co.uk/London/issue/9998/page/4/data.pdf",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "The Newgate Calendar, John Perrott (a shop on Ludgate Hill from about 1752)",
+          "url": "https://www.exclassics.com/newgate/ng289.htm",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-deficiency",
+      "claim": "At Perrott's 1760 bankruptcy examination, the commissioners' interrogatory stated: there is a deficiency of the sum of 13,513 pounds.",
       "value": 13513,
       "source": {
-        "name": "The Newgate Calendar, John Perrott",
-        "stamp": "The Newgate Calendar",
-        "url": "https://www.exclassics.com/newgate/ng289.htm",
+        "name": "Emily Kadens, Perrott Bankruptcy, Part 2, Credit Slips (2007)",
+        "stamp": "Kadens, Credit Slips 2007",
+        "url": "https://creditslips.org/2007/08/07/perrott-bankr-1/",
         "tier": "secondary"
       },
       "corroboration": [
         {
-          "name": "Emily Kadens, Perrott Bankruptcy, Part 2, Credit Slips (2007)",
-          "url": "https://creditslips.org/2007/08/07/perrott-bankr-1/",
-          "tier": "scholarly"
+          "name": "The Newgate Calendar, John Perrott: a deficiency of thirteen thousand, five hundred and thirteen pounds",
+          "url": "https://www.exclassics.com/newgate/ng289.htm",
+          "tier": "secondary"
         }
       ]
     },

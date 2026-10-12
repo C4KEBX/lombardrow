@@ -10,7 +10,7 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "Rope or fresh start: which kept bankrupts honest?",
+      "prompt": "The rope or a fresh start: which would keep you honest?",
       "atWord": "So"
     },
     "hookLine": "A bankrupt who hid money could hang.",
@@ -30,7 +30,7 @@
     {
       "id": "hook",
       "type": "archival",
-      "narration": "In England, a bankrupt who hid his money could hang. And the word bankrupt? It means broken bench.",
+      "narration": "In 18th-century England, a bankrupt who hid his money could hang. Even the word bankrupt sounds violent.",
       "props": {
         "title": "Hogarth, a London hanging, 1747",
         "assetId": "tyburn-1747",
@@ -62,11 +62,11 @@
             "w": 0.4
           },
           {
-            "atWord": "broken",
-            "assetId": "rake-fleet",
-            "x": 0.42,
+            "atWord": "violent",
+            "assetId": "bankers-1340",
+            "x": 0.8,
             "y": 0.75,
-            "w": 0.3
+            "w": 0.35
           }
         ]
       },
@@ -76,7 +76,7 @@
         "f-banca-rotta"
       ],
       "microhooks": [
-        "And the word bankrupt?"
+        "Even the word bankrupt sounds violent."
       ]
     },
     {
@@ -121,10 +121,9 @@
           },
           {
             "atWord": "broken",
-            "assetId": "rake-fleet",
-            "x": 0.42,
-            "y": 0.78,
-            "w": 0.25
+            "x": 0.8,
+            "y": 0.8,
+            "w": 0.3
           }
         ]
       }
@@ -132,7 +131,7 @@
     {
       "id": "myth",
       "type": "archival",
-      "narration": "The popular story: a failed moneylender's bench was smashed. But here's the catch: the dictionary says that's probably figurative.",
+      "narration": "Legend says a failed moneylender's bench was smashed. But here's the catch: the dictionary says that's probably a figure of speech.",
       "props": {
         "title": "Italian bankers, c. 1340",
         "assetId": "bankers-1340",
@@ -151,10 +150,9 @@
           },
           {
             "atWord": "smashed",
-            "assetId": "rake-fleet",
-            "x": 0.42,
-            "y": 0.78,
-            "w": 0.3
+            "x": 0.85,
+            "y": 0.8,
+            "w": 0.25
           },
           {
             "atWord": "catch",
@@ -163,7 +161,7 @@
             "w": 0.4
           },
           {
-            "atWord": "figurative",
+            "atWord": "figure",
             "x": 0.5,
             "y": 0.5,
             "w": 0.9
@@ -174,14 +172,13 @@
         "f-bench-myth"
       ],
       "microhooks": [
-        "But here's the catch:",
-        "the dictionary says that's probably figurative."
+        "But here's the catch:"
       ]
     },
     {
       "id": "law-1542",
       "type": "kinetic-text",
-      "narration": "The real record is darker. In 1542, England passed its first bankruptcy law. Debtors could be jailed.",
+      "narration": "The real record is darker. In 1542, England passed what's considered its first bankruptcy law.",
       "speaks": [
         "f-1542"
       ],
@@ -198,7 +195,7 @@
           "text": "First"
         },
         {
-          "atWord": "jailed",
+          "atWord": "law",
           "do": "emphasize",
           "text": "law"
         }
@@ -224,7 +221,7 @@
             "w": 0.3
           },
           {
-            "atWord": "jailed",
+            "atWord": "law",
             "assetId": "rake-fleet",
             "x": 0.8,
             "y": 0.45,
@@ -300,7 +297,7 @@
     {
       "id": "perrott",
       "type": "archival",
-      "narration": "Meet John Perrott, a shopkeeper on Ludgate Hill, in London.",
+      "narration": "Meet John Perrott, a merchant on Ludgate Hill, in London.",
       "props": {
         "title": "Ludgate Hill, London",
         "assetId": "ludgate",
@@ -312,7 +309,7 @@
             "w": 0.6
           },
           {
-            "atWord": "shopkeeper",
+            "atWord": "merchant",
             "x": 0.18,
             "y": 0.8,
             "w": 0.35
@@ -335,15 +332,15 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "In 1760, his books came up 13,513 pounds short.",
+      "narration": "In 1760, at his bankruptcy hearing, his books came up 13,513 pounds short.",
       "speaks": [
-        "f-perrott-shop"
+        "f-deficiency"
       ],
       "props": {
         "value": 13513,
         "prefix": "£",
-        "label": "missing from Perrott's books",
-        "factId": "f-perrott-shop"
+        "label": "short in Perrott's books",
+        "factId": "f-deficiency"
       },
       "cues": [
         {
@@ -378,7 +375,7 @@
     {
       "id": "trunk",
       "type": "archival",
-      "narration": "Then, in his trunk in Newgate prison, they found halves of banknotes tied up in a rag. Plus half a 1,000 pound note.",
+      "narration": "In his trunk in Newgate prison, halves of four banknotes turned up, tied in a rag. Plus half a 1,000 pound note.",
       "props": {
         "title": "Newgate prison, London, 1781",
         "assetId": "newgate-1780",
@@ -422,7 +419,7 @@
         "f-half-notes"
       ],
       "microhooks": [
-        "Then, in his trunk in Newgate prison"
+        "In his trunk in Newgate prison,"
       ]
     },
     {
@@ -435,27 +432,15 @@
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.55,
-            "y": 0.55,
-            "w": 0.45
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.9
           },
           {
             "atWord": "hanged",
-            "x": 0.62,
-            "y": 0.38,
-            "w": 0.22
-          },
-          {
-            "atWord": "Smithfield",
-            "x": 0.85,
-            "y": 0.4,
-            "w": 0.3
-          },
-          {
-            "atWord": "fraudulent",
-            "x": 0.3,
+            "x": 0.5,
             "y": 0.5,
-            "w": 0.35
+            "w": 0.75
           }
         ]
       },
@@ -469,12 +454,12 @@
     {
       "id": "four",
       "type": "big-number",
-      "narration": "He wasn't even the last. Likely only 4 Englishmen were hanged for it. The penalty was abolished in 1820.",
+      "narration": "And he wasn't the last. Likely only 4 Englishmen were hanged for it before the penalty was abolished in 1820.",
       "speaks": [
         "f-four-hanged"
       ],
       "microhooks": [
-        "He wasn't even the last."
+        "And he wasn't the last."
       ],
       "props": {
         "value": 4,
@@ -522,7 +507,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? Almost as an afterthought, the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So, rope or fresh start: which kept bankrupts honest?",
+      "narration": "That other idea? The same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or a fresh start. Which would keep you honest?",
       "speaks": [
         "f-discharge"
       ],
@@ -533,7 +518,7 @@
       "props": {
         "lines": [
           "The rope",
-          "or the fresh",
+          "or a fresh",
           "start?"
         ]
       },
@@ -558,7 +543,7 @@
             "w": 0.3
           },
           {
-            "atWord": "afterthought",
+            "atWord": "brought",
             "x": 0.3,
             "y": 0.45,
             "w": 0.35
