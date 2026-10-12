@@ -88,6 +88,8 @@ export function makeEdgeProvider(
       fs.writeFileSync(textFile, spoken, "utf-8");
       try {
         await deps.runTts(ttsArgs(voice, textFile, tmpMp3, tmpJson));
+        // A cut-off stream ends the events early; check them before caching so a retry fetches again.
+        alignEvents(spoken, parseEvents(fs.readFileSync(tmpJson, "utf-8")));
         fs.renameSync(tmpMp3, mp3);
         fs.renameSync(tmpJson, json);
       } finally {
