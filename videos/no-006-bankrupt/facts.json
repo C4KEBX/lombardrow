@@ -1,0 +1,143 @@
+{
+  "facts": [
+    {
+      "id": "f-banca-rotta",
+      "claim": "The English word bankrupt comes from Italian banca rotta, literally 'a broken bench', from banca, 'moneylender's shop', literally 'bench'; rotta is from Latin rupta, from rumpere, 'to break'.",
+      "source": {
+        "name": "Online Etymology Dictionary, bankrupt",
+        "stamp": "Etymonline",
+        "url": "https://www.etymonline.com/word/bankrupt",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Merriam-Webster Dictionary, bankrupt (etymology: Old Italian bancarotta, from banca + rotta)",
+          "url": "https://www.merriam-webster.com/dictionary/bankrupt",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-bench-myth",
+      "claim": "The word is said to come from an old custom of breaking the bench of bankrupts, but the allusion probably is figurative.",
+      "disputed": true,
+      "source": {
+        "name": "Online Etymology Dictionary, bankrupt",
+        "stamp": "Etymonline",
+        "url": "https://www.etymonline.com/word/bankrupt",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "The Gazette (official public record), the history of bankruptcy: 'the bench was broken in a symbolic show of failure'",
+          "url": "https://www.thegazette.co.uk/all-notices/content/100723",
+          "tier": "primary"
+        }
+      ]
+    },
+    {
+      "id": "f-1542",
+      "claim": "In 1542, during the reign of Henry VIII, Parliament passed what scholars generally consider England's first bankruptcy law; debtors could be punished by imprisonment and, by 1705, death.",
+      "value": 1542,
+      "source": {
+        "name": "Constitution Annotated (Congressional Research Service), Historical Background on the Bankruptcy Clause",
+        "stamp": "Constitution Annotated, CRS",
+        "url": "https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/historical-background-on-the-bankruptcy-clause",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-1706-capital",
+      "claim": "The Act of 4 & 5 Anne, passed in 1706, made fraudulent bankruptcy (hiding assets from creditors) a capital offense, and the same act introduced the discharge of debt.",
+      "value": 1706,
+      "source": {
+        "name": "Emily Kadens, The Last Bankrupt Hanged: Balancing Incentives in the Development of Bankruptcy Law, Duke Law Journal 59 (2010)",
+        "stamp": "Kadens, Duke Law Journal 2010",
+        "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "Constitution Annotated (Congressional Research Service): debtors could be punished by, by 1705, death",
+          "url": "https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/historical-background-on-the-bankruptcy-clause",
+          "tier": "primary"
+        }
+      ]
+    },
+    {
+      "id": "f-discharge",
+      "claim": "In 1705-1706 Parliament made the bankrupt's refusal to cooperate with the commissioners running his bankruptcy a capital crime; almost as an afterthought, it also introduced discharge of debt. Coercing the debtor to be honest proved a failure; incentivizing cooperation with discharge would have a fruitful future.",
+      "source": {
+        "name": "Emily Kadens, The Last Bankrupt Hanged, Duke Law Journal 59 (2010), abstract",
+        "stamp": "Kadens, Duke Law Journal 2010",
+        "url": "https://scholarship.law.duke.edu/dlj/vol59/iss7/1",
+        "tier": "scholarly"
+      }
+    },
+    {
+      "id": "f-perrott-shop",
+      "claim": "John Perrott kept a shop on Ludgate Hill in London from about 1752; at his April 1760 bankruptcy examination his accounts showed a deficiency of 13,513 pounds.",
+      "value": 13513,
+      "source": {
+        "name": "The Newgate Calendar, John Perrott",
+        "stamp": "The Newgate Calendar",
+        "url": "https://www.exclassics.com/newgate/ng289.htm",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Emily Kadens, Perrott Bankruptcy, Part 2, Credit Slips (2007)",
+          "url": "https://creditslips.org/2007/08/07/perrott-bankr-1/",
+          "tier": "scholarly"
+        }
+      ]
+    },
+    {
+      "id": "f-half-notes",
+      "claim": "The other halves of four banknotes were found tied up in a rag at the bottom of Perrott's trunk in Newgate prison, along with half of a 1,000-pound note.",
+      "value": 1000,
+      "source": {
+        "name": "Emily Kadens, Perrott Bankruptcy, Part 3, Credit Slips (2007)",
+        "stamp": "Kadens, Credit Slips 2007",
+        "url": "https://creditslips.org/2007/08/08/perrott-bankr-2/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "The Newgate Calendar, John Perrott",
+          "url": "https://www.exclassics.com/newgate/ng289.htm",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-perrott-hanged",
+      "claim": "John Perrott was hanged for fraudulent bankruptcy on Wednesday, November 11, 1761, at the ancient hanging place in West Smithfield, London.",
+      "value": 1761,
+      "source": {
+        "name": "Emily Kadens, The Last Bankrupt Hanged, Duke Law Journal 59 (2010)",
+        "stamp": "Kadens, Duke Law Journal 2010",
+        "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "The Gazette: John Perrott was one of the few people in England hanged for fraudulent bankruptcy",
+          "url": "https://www.thegazette.co.uk/all-notices/content/100723",
+          "tier": "primary"
+        }
+      ]
+    },
+    {
+      "id": "f-four-hanged",
+      "claim": "Likely only four Englishmen were hanged for fraudulent bankruptcy between 1706 and 1820; the last was hanged in York in 1813, and the death penalty for the crime was abolished in 1820.",
+      "value": 4,
+      "source": {
+        "name": "Emily Kadens, The Last Bankrupt Hanged, Duke Law Journal 59 (2010)",
+        "stamp": "Kadens, Duke Law Journal 2010",
+        "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+        "tier": "scholarly"
+      }
+    }
+  ]
+}

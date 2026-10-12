@@ -1,0 +1,66 @@
+[
+  {
+    "factId": "f-banca-rotta",
+    "url": "https://www.etymonline.com/word/bankrupt",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.etymonline.com"
+  },
+  {
+    "factId": "f-bench-myth",
+    "url": "https://www.etymonline.com/word/bankrupt",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.etymonline.com"
+  },
+  {
+    "factId": "f-1542",
+    "url": "https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/historical-background-on-the-bankruptcy-clause",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.law.cornell.edu"
+  },
+  {
+    "factId": "f-1706-capital",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND scholarship.law.duke.edu"
+  },
+  {
+    "factId": "f-perrott-shop",
+    "url": "https://www.exclassics.com/newgate/ng289.htm",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND www.exclassics.com"
+  },
+  {
+    "factId": "f-half-notes",
+    "url": "https://creditslips.org/2007/08/08/perrott-bankr-2/",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND creditslips.org"
+  },
+  {
+    "factId": "f-perrott-hanged",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND scholarship.law.duke.edu"
+  },
+  {
+    "factId": "f-four-hanged",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "getaddrinfo ENOTFOUND scholarship.law.duke.edu"
+  }
+]
