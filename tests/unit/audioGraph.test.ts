@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { TARGET, assertLoudnessOk, buildAudioGraph, parseLoudnorm } from "../../src/audio/graph";
+import { AMBIENT_DB, DUCK, TARGET, assertLoudnessOk, buildAudioGraph, parseLoudnorm } from "../../src/audio/graph";
 
 const measure = { inputI: -22.75, inputTp: -10.67, inputLra: 1, inputThresh: -32.87, targetOffset: -0.3 };
 
@@ -17,15 +17,35 @@ describe("buildAudioGraph", () => {
     expect(g).toContain("[n0]anull[narr]");
     expect(g).not.toContain("amix=inputs=1");
   });
-  it("adds ducked music only when there is music, sinking nothing and using the right input index", () => {
+  it("adds ducked, faded music only when there is music, sinking nothing and using the right input index", () => {
     const without = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5 });
     expect(without).not.toContain("sidechaincompress");
     const withMusic = buildAudioGraph({ clipStartsMs: [0, 2000], hasMusic: true, totalSeconds: 5 });
     expect(withMusic).toContain("[2:a]");
-    expect(withMusic).toContain("sidechaincompress=threshold=0.02:ratio=10:attack=15:release=350:makeup=1");
-    expect(withMusic).toContain("volume=0.35");
+    expect(withMusic).toContain(`sidechaincompress=${DUCK}`);
+    expect(withMusic).toContain(`volume=${AMBIENT_DB}dB`);
+    expect(withMusic).toContain("atrim=0:5,afade=t=in:d=0.4,afade=t=out:st=3.5:d=1.5");
     expect(withMusic).toContain("asplit=2[narrA][narrB]");
-    expect(withMusic).toContain("amix=inputs=2:normalize=0:duration=longest[mix0]");
+    expect(withMusic).toContain("[narrB][ducked]amix=inputs=2:normalize=0:duration=longest[mix0]");
+    expect(buildAudioGraph({ clipStartsMs: [0], hasMusic: true, totalSeconds: 5, musicGainDb: -12.5 })).toContain("volume=-12.5dB[music]");
+  });
+  it("splits each sound file once per cue, levels and delays every cue, and mixes them beside the voice and music", () => {
+    const g = buildAudioGraph({
+      clipStartsMs: [0], hasMusic: true, totalSeconds: 5,
+      sfx: { files: 2, cues: [{ file: 0, atMs: 100, gainDb: -20 }, { file: 1, atMs: 900.4, gainDb: -18 }, { file: 0, atMs: 2000, gainDb: -26 }] },
+    });
+    // inputs: clip 0, music 1, sound files 2 and 3
+    expect(g).toContain("[2:a]aformat=sample_rates=44100:channel_layouts=stereo,asplit=2[s0][s2]");
+    expect(g).toContain("[3:a]aformat=sample_rates=44100:channel_layouts=stereo,anull[s1]");
+    expect(g).toContain("[s1]volume=-18dB,adelay=900|900[c1]");
+    expect(g).toContain("[c0][c1][c2]amix=inputs=3:normalize=0:duration=longest[sfx]");
+    expect(g).toContain("[narrB][ducked][sfx]amix=inputs=3");
+    const early = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5, sfx: { files: 1, cues: [{ file: 0, atMs: -650, gainDb: -20 }] } });
+    expect(early).toContain("[s0]atrim=start=0.650,asetpts=PTS-STARTPTS,volume=-20dB,adelay=0|0[c0]");
+    const noMusic = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5, sfx: { files: 1, cues: [{ file: 0, atMs: 0, gainDb: -20 }] } });
+    expect(noMusic).toContain("[1:a]");
+    expect(noMusic).toContain("[c0]anull[sfx]");
+    expect(noMusic).toContain("[narrP][sfx]amix=inputs=2");
   });
   it("measures with loudnorm json on pass 1 and applies measured values linearly on pass 2", () => {
     const pass1 = buildAudioGraph({ clipStartsMs: [0], hasMusic: false, totalSeconds: 5 });

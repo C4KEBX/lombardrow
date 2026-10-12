@@ -18,6 +18,7 @@
     "voice": "tsx scripts/voice.ts",
     "variation": "tsx scripts/variation.ts",
     "assets": "tsx scripts/assets.ts",
+    "audio": "tsx scripts/audio-library.ts",
     "listen-back": "tsx scripts/listen-back.ts",
     "publish-kit": "tsx scripts/publish-kit.ts",
     "check": "tsx scripts/check.ts",

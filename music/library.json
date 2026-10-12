@@ -1,0 +1,133 @@
+{
+  "loudnessLufs": -20,
+  "tracks": [
+    {
+      "id": "almost-new",
+      "file": "almost-new.mp3",
+      "title": "Almost New",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "curious",
+        "warm"
+      ],
+      "bpm": 80,
+      "use": "Default origin story: light piano and bass, curious without being comic",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1800008",
+      "credit": "\"Almost New\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "envision",
+      "file": "envision.mp3",
+      "title": "Envision",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "mysterious",
+        "driving"
+      ],
+      "bpm": 99,
+      "use": "Myth vs record and investigations: a soft pulse that keeps the story moving",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1900000",
+      "credit": "\"Envision\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "teller-of-the-tales",
+      "file": "teller-of-the-tales.mp3",
+      "title": "Teller of the Tales",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "old-world",
+        "reflective"
+      ],
+      "bpm": 130,
+      "use": "Medieval and Renaissance stories (Venice, Florence, Lombard bankers): plucked lute duet",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400020",
+      "credit": "\"Teller of the Tales\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "sinfonia-5",
+      "file": "sinfonia-5.mp3",
+      "title": "Sinfonia Number 5",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "baroque",
+        "somber"
+      ],
+      "bpm": 71,
+      "use": "17th to 18th century (Amsterdam, London, the Bank of England): Bach on harpsichord",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100673",
+      "credit": "\"Sinfonia Number 5\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "feel-it-coming",
+      "file": "feel-it-coming.mp3",
+      "title": "I Can Feel it Coming",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "tense",
+        "driving"
+      ],
+      "bpm": 94,
+      "use": "Bubbles, panics and frauds: steady tension under the narration",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700085",
+      "credit": "\"I Can Feel it Coming\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "river-of-io",
+      "file": "river-of-io.mp3",
+      "title": "River of Io",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "tense",
+        "mysterious"
+      ],
+      "bpm": 104,
+      "use": "Stories that build to a reveal or a collapse: grows over the minute",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600065",
+      "credit": "\"River of Io\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "on-the-shore",
+      "file": "on-the-shore.mp3",
+      "title": "On the Shore",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "reflective",
+        "somber"
+      ],
+      "bpm": 82,
+      "use": "Losses and lessons, what it means today: thoughtful strings",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200016",
+      "credit": "\"On the Shore\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "perspectives",
+      "file": "perspectives.mp3",
+      "title": "Perspectives",
+      "artist": "Kevin MacLeod",
+      "moods": [
+        "uplifting",
+        "warm"
+      ],
+      "bpm": 59,
+      "use": "Compounding, progress and payoff endings: calm and bright",
+      "gainDb": 0,
+      "license": "cc-by-4.0",
+      "sourceUrl": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300027",
+      "credit": "\"Perspectives\" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}

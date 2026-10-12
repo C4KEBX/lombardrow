@@ -2,6 +2,7 @@ import { execFile } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
+import { findTrack, loadMusicLibrary, type MusicTrack } from "./library";
 
 const run = promisify(execFile);
 
@@ -31,24 +32,35 @@ export async function generateAmbient(durationSec: number, outPath: string): Pro
 export const isSafeMusicName = (name: string): boolean =>
   /^[A-Za-z0-9_][A-Za-z0-9._-]*$/.test(name) && !name.includes("..");
 
-/** `null` -> no music; `"ambient"` -> generated bed; otherwise a file name inside `musicDir`. */
+export type ResolvedMusic = { path: string; gainDb: number; track?: MusicTrack };
+
+/**
+ * `null` -> no music; `"ambient"` -> generated bed; a library id (music/library.json) -> that bed with
+ * its gain; otherwise a plain file name inside `musicDir`.
+ */
 export async function resolveMusic(
   name: string | null,
   durationSec: number,
   musicDir: string,
   workDir: string,
-): Promise<string | undefined> {
+): Promise<ResolvedMusic | undefined> {
   if (name === null) return undefined;
   if (name === "ambient") {
     fs.mkdirSync(workDir, { recursive: true });
     const out = path.join(workDir, "ambient.wav");
     await generateAmbient(durationSec, out);
-    return out;
+    return { path: out, gainDb: 0 };
+  }
+  const track = findTrack(loadMusicLibrary(musicDir), name);
+  if (track) {
+    const file = path.join(musicDir, track.file);
+    if (!fs.existsSync(file)) throw new Error(`Music bed "${name}" is in the library but ${track.file} is missing from ${musicDir}`);
+    return { path: file, gainDb: track.gainDb, track };
   }
   if (!isSafeMusicName(name)) {
-    throw new Error(`Music name "${name}" is unsafe; use a plain file name from the music/ folder`);
+    throw new Error(`Music name "${name}" is unsafe; use a library id or a plain file name from the music/ folder`);
   }
   const file = path.join(musicDir, name);
-  if (!fs.existsSync(file)) throw new Error(`Music file "${name}" not found in ${musicDir}`);
-  return file;
+  if (!fs.existsSync(file)) throw new Error(`Music "${name}" is neither a library id nor a file in ${musicDir}`);
+  return { path: file, gainDb: 0 };
 }

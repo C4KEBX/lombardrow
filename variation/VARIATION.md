@@ -12,7 +12,7 @@ Every Lombard Row video declares a plan before scripting. The plan is checked ag
 2. Write `videos/<no>-<slug>/plan.json` (copy `fixtures/no-004/plan.json`):
    - `doorNo`, `pillar` (origins, mechanics, words, hooks), `storyShape`, `hookType`, `era`, `region`, `primaryVisual`, `paletteLead`: one option each from the spec.
    - `visualMetaphor`: one concrete image invented for this topic ("a merchant's ledger column that doubles every nine lines"). Not a stock image; must not share half its words with any of the last 20.
-   - `musicBed`: a library track id, or `null`.
+   - `musicBed`: a `music/library.json` id (`npm run audio -- list`), or `null`. The storyboard's `audio.music` must match it.
    - `title`: its first three words must differ from the last 10 titles.
    - `angle`: one sentence saying what this video says that a generic explainer would not.
    - `sources`: the source URLs you expect to use, at least 3 sites.
