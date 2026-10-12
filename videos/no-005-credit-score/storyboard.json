@@ -13,14 +13,14 @@
       "prompt": "A number or your neighbors?",
       "atWord": "which"
     },
-    "hookLine": "Your neighbors were your credit score.",
+    "hookLine": "Your credit report started as gossip.",
     "cover": {
-      "line": "Your neighbors were your credit score.",
-      "mark": "neighbors",
-      "assetId": "census-1854",
-      "x": 0.47,
-      "y": 0.42,
-      "w": 0.42
+      "line": "Your credit report started as gossip.",
+      "mark": "gossip",
+      "assetId": "all-talk-1855",
+      "x": 0.5,
+      "y": 0.38,
+      "w": 0.5
     }
   },
   "audio": {
@@ -30,47 +30,50 @@
     {
       "id": "hook",
       "type": "archival",
-      "narration": "Before credit scores, your loan depended on what the locals said about you. And someone wrote it all down.",
+      "narration": "Critics said the company behind your credit report once filed rumors about people's marriages. It's called Equifax. And it all started with your neighbors.",
       "props": {
-        "title": "Taking the Census, 1854",
-        "assetId": "census-1854",
+        "title": "All Talk and No Work, 1855",
+        "assetId": "all-talk-1855",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.47,
+            "x": 0.5,
+            "y": 0.38,
+            "w": 0.5
+          },
+          {
+            "atWord": "rumors",
+            "x": 0.63,
+            "y": 0.4,
+            "w": 0.28
+          },
+          {
+            "atWord": "marriages",
+            "assetId": "new-bonnet",
+            "x": 0.45,
             "y": 0.42,
             "w": 0.42
           },
           {
-            "atWord": "loan",
-            "x": 0.43,
-            "y": 0.45,
-            "w": 0.3
-          },
-          {
-            "atWord": "locals",
-            "x": 0.33,
-            "y": 0.6,
-            "w": 0.32
-          },
-          {
-            "atWord": "someone",
-            "x": 0.56,
-            "y": 0.48,
-            "w": 0.28
-          },
-          {
-            "atWord": "wrote",
-            "x": 0.53,
+            "atWord": "Equifax",
+            "assetId": "country-store",
+            "x": 0.5,
             "y": 0.5,
-            "w": 0.18
+            "w": 0.75
+          },
+          {
+            "atWord": "neighbors",
+            "assetId": "census-1854",
+            "x": 0.47,
+            "y": 0.42,
+            "w": 0.42
           }
         ]
       },
       "brisk": true,
-      "sourceFactId": "f-correspondents",
+      "sourceFactId": "f-rumors",
       "microhooks": [
-        "And someone wrote it all down."
+        "And it all started with your neighbors."
       ]
     },
     {
@@ -222,7 +225,7 @@
     {
       "id": "ratings",
       "type": "ledger-page",
-      "narration": "Every name got a grade. A plus meant $1,000,000 or more. K meant less than $2,000.",
+      "narration": "Every name got a grade, from A plus, $1,000,000 or more, down to K: less than $2,000.",
       "speaks": [
         "f-ratings"
       ],
@@ -255,7 +258,7 @@
         }
       ],
       "microhooks": [
-        "Every name got a grade."
+        "Every name got a grade"
       ],
       "backdrop": {
         "assetId": "census-1854",
@@ -281,41 +284,9 @@
       }
     },
     {
-      "id": "volumes",
-      "type": "big-number",
-      "narration": "Harvard still holds 2,580 volumes of these handwritten reports.",
-      "speaks": [
-        "f-volumes"
-      ],
-      "props": {
-        "value": 2580,
-        "label": "volumes of handwritten credit reports",
-        "factId": "f-volumes"
-      },
-      "microhooks": [
-        "Harvard still holds"
-      ],
-      "backdrop": {
-        "assetId": "correspondents-page",
-        "shots": [
-          {
-            "x": 0.5,
-            "y": 0.08,
-            "w": 0.85
-          },
-          {
-            "atWord": "volumes",
-            "x": 0.3,
-            "y": 0.6,
-            "w": 0.5
-          }
-        ]
-      }
-    },
-    {
       "id": "retail",
       "type": "archival",
-      "narration": "In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. Today it's called Equifax.",
+      "narration": "Then it came for shoppers. In 1899, the Woolford brothers started the Retail Credit Company in Atlanta, selling notes on shoppers' payment habits. That company became Equifax.",
       "props": {
         "title": "Illustration, c. 1880",
         "assetId": "country-store",
@@ -346,7 +317,7 @@
             "w": 0.4
           },
           {
-            "atWord": "Today",
+            "atWord": "became",
             "assetId": "new-bonnet",
             "x": 0.5,
             "y": 0.5,
@@ -356,49 +327,52 @@
       },
       "sourceFactId": "f-retail",
       "microhooks": [
-        "Today it's called Equifax."
+        "Then it came for shoppers.",
+        "That company became Equifax."
       ]
     },
     {
       "id": "rumors",
       "type": "archival",
-      "narration": "Here's the catch. Critics said its files held rumors about virtually every phase of a person's life, including marital troubles.",
+      "narration": "In the 1970s, the government accused it of rating its staff by how much negative information they found on consumers.",
       "props": {
-        "title": "Illustration, 1855",
-        "assetId": "all-talk-1855",
+        "title": "Illustration, 1852",
+        "assetId": "speculator-1852",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.35,
-            "y": 0.4,
-            "w": 0.4
-          },
-          {
-            "atWord": "rumors",
-            "x": 0.6,
-            "y": 0.45,
+            "x": 0.88,
+            "y": 0.5,
             "w": 0.3
           },
           {
-            "atWord": "phase",
-            "assetId": "new-bonnet",
-            "x": 0.3,
+            "atWord": "rating",
+            "assetId": "census-1854",
+            "x": 0.56,
             "y": 0.5,
-            "w": 0.35
+            "w": 0.24
           },
           {
-            "atWord": "marital",
-            "assetId": "speculator-1852",
-            "x": 0.88,
-            "y": 0.55,
-            "w": 0.25
+            "atWord": "negative",
+            "assetId": "all-talk-1855",
+            "x": 0.42,
+            "y": 0.35,
+            "w": 0.3
+          },
+          {
+            "atWord": "consumers",
+            "assetId": "new-bonnet",
+            "x": 0.12,
+            "y": 0.5,
+            "w": 0.24
           }
         ]
       },
-      "sourceFactId": "f-rumors",
       "microhooks": [
-        "Here's the catch.",
-        "including marital troubles."
+        "the government accused it"
+      ],
+      "speaks": [
+        "f-rumors"
       ]
     },
     {
