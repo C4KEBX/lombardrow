@@ -9,6 +9,7 @@ import { parseStoryboard } from "../schema/storyboard";
 import { assertDuration } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import { pacingIssues } from "../skill/pacing";
+import { assertScriptReviewed } from "../skill/scriptReview";
 import { voiceFor, type VoiceResult } from "../voice/types";
 import { SIGNOFF } from "../devices/tracks";
 import { voiceSignoff } from "../voice/signoff";
@@ -45,6 +46,8 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   const storyboardJson = readJson(opts.storyboardPath);
   const factsJson = readJson(opts.factsPath);
   const storyboard = parseStoryboard(storyboardJson);
+  // The stand-in voice is a free preview; the Edge voice is a real build and waits for the script review.
+  if (opts.voice === "edge") assertScriptReviewed(opts.storyboardPath, storyboard);
 
   const provider = makeVoiceProvider(opts.voice, opts.cacheDir ?? path.resolve("out/voice-cache"));
   const voices: Record<string, VoiceResult> = {};
