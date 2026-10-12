@@ -333,50 +333,6 @@
       ]
     },
     {
-      "id": "rumors",
-      "type": "archival",
-      "narration": "In the 1970s, the government accused it of rating its staff by how much negative information they found on consumers.",
-      "props": {
-        "title": "Illustration, 1852",
-        "assetId": "speculator-1852",
-        "layout": "bleed",
-        "shots": [
-          {
-            "x": 0.88,
-            "y": 0.5,
-            "w": 0.3
-          },
-          {
-            "atWord": "rating",
-            "assetId": "census-1854",
-            "x": 0.56,
-            "y": 0.5,
-            "w": 0.24
-          },
-          {
-            "atWord": "negative",
-            "assetId": "all-talk-1855",
-            "x": 0.42,
-            "y": 0.35,
-            "w": 0.3
-          },
-          {
-            "atWord": "consumers",
-            "assetId": "new-bonnet",
-            "x": 0.12,
-            "y": 0.5,
-            "w": 0.24
-          }
-        ]
-      },
-      "microhooks": [
-        "the government accused it"
-      ],
-      "speaks": [
-        "f-rumors"
-      ]
-    },
-    {
       "id": "law",
       "type": "kinetic-text",
       "narration": "In 1970, Congress passed a credit reporting law.",
@@ -412,6 +368,50 @@
           }
         ]
       }
+    },
+    {
+      "id": "rumors",
+      "type": "archival",
+      "narration": "Still, in the 1970s, the government accused Retail Credit of rating its staff by how much negative information they found on consumers.",
+      "props": {
+        "title": "Illustration, 1852",
+        "assetId": "speculator-1852",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.88,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "rating",
+            "assetId": "census-1854",
+            "x": 0.56,
+            "y": 0.5,
+            "w": 0.24
+          },
+          {
+            "atWord": "negative",
+            "assetId": "all-talk-1855",
+            "x": 0.42,
+            "y": 0.35,
+            "w": 0.3
+          },
+          {
+            "atWord": "consumers",
+            "assetId": "new-bonnet",
+            "x": 0.12,
+            "y": 0.5,
+            "w": 0.24
+          }
+        ]
+      },
+      "microhooks": [
+        "the government accused Retail Credit"
+      ],
+      "speaks": [
+        "f-rumors"
+      ]
     },
     {
       "id": "fico",
