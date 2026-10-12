@@ -30,7 +30,7 @@
     {
       "id": "hook",
       "type": "archival",
-      "narration": "In 18th-century England, a bankrupt who hid his money could hang. Even the word bankrupt sounds violent.",
+      "narration": "A bankrupt who hid his money could hang, in 18th-century England. Even the word hides a break.",
       "props": {
         "title": "Hogarth, a London hanging, 1747",
         "assetId": "tyburn-1747",
@@ -62,7 +62,7 @@
             "w": 0.4
           },
           {
-            "atWord": "violent",
+            "atWord": "break",
             "assetId": "bankers-1340",
             "x": 0.8,
             "y": 0.75,
@@ -76,7 +76,7 @@
         "f-banca-rotta"
       ],
       "microhooks": [
-        "Even the word bankrupt sounds violent."
+        "Even the word hides a break."
       ]
     },
     {
@@ -178,7 +178,7 @@
     {
       "id": "law-1542",
       "type": "kinetic-text",
-      "narration": "The real record is darker. In 1542, England passed what's considered its first bankruptcy law.",
+      "narration": "The real record is darker. In 1542, England passed what's considered its first bankruptcy law. Debtors could be jailed.",
       "speaks": [
         "f-1542"
       ],
@@ -195,7 +195,7 @@
           "text": "First"
         },
         {
-          "atWord": "law",
+          "atWord": "jailed",
           "do": "emphasize",
           "text": "law"
         }
@@ -221,7 +221,7 @@
             "w": 0.3
           },
           {
-            "atWord": "law",
+            "atWord": "jailed",
             "assetId": "rake-fleet",
             "x": 0.8,
             "y": 0.45,
@@ -236,13 +236,13 @@
     {
       "id": "law-1706",
       "type": "kinetic-text",
-      "narration": "It got worse. In 1706, hiding your assets from creditors became a crime punishable by death. And that law hid one more idea.",
+      "narration": "In 1706, hiding assets from creditors became punishable by death. And that law hid one more idea.",
       "speaks": [
         "f-1706-capital",
         "f-discharge"
       ],
       "microhooks": [
-        "It got worse.",
+        "became punishable by death.",
         "And that law hid one more idea."
       ],
       "props": {
@@ -346,7 +346,7 @@
         {
           "atWord": "short",
           "do": "callout",
-          "text": "Unaccounted for"
+          "text": "Short"
         }
       ],
       "backdrop": {
@@ -454,12 +454,12 @@
     {
       "id": "four",
       "type": "big-number",
-      "narration": "And he wasn't the last. Likely only 4 Englishmen were hanged for it before the penalty was abolished in 1820.",
+      "narration": "He wasn't the last. Likely only 4 Englishmen were hanged for it before the penalty was abolished in 1820.",
       "speaks": [
         "f-four-hanged"
       ],
       "microhooks": [
-        "And he wasn't the last."
+        "He wasn't the last."
       ],
       "props": {
         "value": 4,
@@ -477,25 +477,19 @@
         "assetId": "tyburn-1747",
         "shots": [
           {
-            "x": 0.15,
-            "y": 0.5,
-            "w": 0.3
+            "x": 0.62,
+            "y": 0.38,
+            "w": 0.25
           },
           {
             "atWord": "Englishmen",
-            "x": 0.85,
-            "y": 0.6,
-            "w": 0.3
+            "assetId": "newgate-1780",
+            "x": 0.55,
+            "y": 0.4,
+            "w": 0.4
           },
           {
             "atWord": "penalty",
-            "assetId": "newgate-1780",
-            "x": 0.75,
-            "y": 0.4,
-            "w": 0.3
-          },
-          {
-            "atWord": "abolished",
             "assetId": "rake-fleet",
             "x": 0.5,
             "y": 0.5,
@@ -507,7 +501,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? The same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or a fresh start. Which would keep you honest?",
+      "narration": "That other idea? Almost an afterthought: the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or a fresh start. Which would keep you honest?",
       "speaks": [
         "f-discharge"
       ],
@@ -543,7 +537,7 @@
             "w": 0.3
           },
           {
-            "atWord": "brought",
+            "atWord": "afterthought",
             "x": 0.3,
             "y": 0.45,
             "w": 0.35
@@ -571,10 +565,10 @@
           },
           {
             "atWord": "So",
-            "assetId": "bankers-1340",
-            "x": 0.78,
-            "y": 0.62,
-            "w": 0.4
+            "assetId": "tyburn-1747",
+            "x": 0.62,
+            "y": 0.4,
+            "w": 0.3
           }
         ]
       }
