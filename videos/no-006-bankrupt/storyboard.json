@@ -1,0 +1,598 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "Why 'bankrupt' means 'broken bench'",
+    "theme": "lombard-row",
+    "paletteLead": "parchment",
+    "doorNo": 6,
+    "series": "Say It Right",
+    "voice": "en-GB-RyanNeural",
+    "open": "bleed",
+    "format": "fast",
+    "ending": {
+      "prompt": "Rope or fresh start: which kept bankrupts honest?",
+      "atWord": "So"
+    },
+    "hookLine": "A bankrupt who hid money could hang.",
+    "cover": {
+      "line": "A bankrupt who hid money could hang.",
+      "mark": "hang",
+      "assetId": "tyburn-1747",
+      "x": 0.62,
+      "y": 0.4,
+      "w": 0.3
+    }
+  },
+  "audio": {
+    "music": "sinfonia-5"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "archival",
+      "narration": "In England, a bankrupt who hid his money could hang. And the word bankrupt? It means broken bench.",
+      "props": {
+        "title": "Hogarth, a London hanging, 1747",
+        "assetId": "tyburn-1747",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.62,
+            "y": 0.4,
+            "w": 0.3
+          },
+          {
+            "atWord": "money",
+            "assetId": "boe-note",
+            "x": 0.2,
+            "y": 0.22,
+            "w": 0.45
+          },
+          {
+            "atWord": "hang",
+            "x": 0.55,
+            "y": 0.55,
+            "w": 0.4
+          },
+          {
+            "atWord": "word",
+            "assetId": "bankers-1340",
+            "x": 0.78,
+            "y": 0.62,
+            "w": 0.4
+          },
+          {
+            "atWord": "broken",
+            "assetId": "rake-fleet",
+            "x": 0.42,
+            "y": 0.75,
+            "w": 0.3
+          }
+        ]
+      },
+      "brisk": true,
+      "speaks": [
+        "f-1706-capital",
+        "f-banca-rotta"
+      ],
+      "microhooks": [
+        "And the word bankrupt?"
+      ]
+    },
+    {
+      "id": "italian",
+      "type": "kinetic-text",
+      "narration": "It's Italian: banca rotta. A moneylender's bench, broken.",
+      "speaks": [
+        "f-banca-rotta"
+      ],
+      "brisk": true,
+      "props": {
+        "lines": [
+          "Banca rotta.",
+          "Broken bench."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "banca",
+          "do": "emphasize",
+          "text": "Banca"
+        },
+        {
+          "atWord": "broken",
+          "do": "emphasize",
+          "text": "Broken"
+        }
+      ],
+      "backdrop": {
+        "assetId": "bankers-1340",
+        "shots": [
+          {
+            "x": 0.25,
+            "y": 0.6,
+            "w": 0.4
+          },
+          {
+            "atWord": "moneylender's",
+            "x": 0.75,
+            "y": 0.6,
+            "w": 0.4
+          },
+          {
+            "atWord": "broken",
+            "assetId": "rake-fleet",
+            "x": 0.42,
+            "y": 0.78,
+            "w": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "myth",
+      "type": "archival",
+      "narration": "The popular story: a failed moneylender's bench was smashed. But here's the catch: the dictionary says that's probably figurative.",
+      "props": {
+        "title": "Italian bankers, c. 1340",
+        "assetId": "bankers-1340",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.8,
+            "y": 0.75,
+            "w": 0.4
+          },
+          {
+            "atWord": "failed",
+            "x": 0.72,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "smashed",
+            "assetId": "rake-fleet",
+            "x": 0.42,
+            "y": 0.78,
+            "w": 0.3
+          },
+          {
+            "atWord": "catch",
+            "x": 0.2,
+            "y": 0.45,
+            "w": 0.4
+          },
+          {
+            "atWord": "figurative",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.9
+          }
+        ]
+      },
+      "speaks": [
+        "f-bench-myth"
+      ],
+      "microhooks": [
+        "But here's the catch:",
+        "the dictionary says that's probably figurative."
+      ]
+    },
+    {
+      "id": "law-1542",
+      "type": "kinetic-text",
+      "narration": "The real record is darker. In 1542, England passed its first bankruptcy law. Debtors could be jailed.",
+      "speaks": [
+        "f-1542"
+      ],
+      "props": {
+        "lines": [
+          "First",
+          "bankruptcy law"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "first",
+          "do": "emphasize",
+          "text": "First"
+        },
+        {
+          "atWord": "jailed",
+          "do": "emphasize",
+          "text": "law"
+        }
+      ],
+      "backdrop": {
+        "assetId": "rake-arrest",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.35
+          },
+          {
+            "atWord": "1542",
+            "x": 0.4,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "first",
+            "x": 0.68,
+            "y": 0.45,
+            "w": 0.3
+          },
+          {
+            "atWord": "jailed",
+            "assetId": "rake-fleet",
+            "x": 0.8,
+            "y": 0.45,
+            "w": 0.3
+          }
+        ]
+      },
+      "microhooks": [
+        "The real record is darker."
+      ]
+    },
+    {
+      "id": "law-1706",
+      "type": "kinetic-text",
+      "narration": "It got worse. In 1706, hiding your assets from creditors became a crime punishable by death. And that law hid one more idea.",
+      "speaks": [
+        "f-1706-capital",
+        "f-discharge"
+      ],
+      "microhooks": [
+        "It got worse.",
+        "And that law hid one more idea."
+      ],
+      "props": {
+        "lines": [
+          "Hide it.",
+          "Hang for it."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "hiding",
+          "do": "emphasize",
+          "text": "Hide"
+        },
+        {
+          "atWord": "death",
+          "do": "emphasize",
+          "text": "Hang"
+        }
+      ],
+      "backdrop": {
+        "assetId": "boe-note",
+        "shots": [
+          {
+            "x": 0.15,
+            "y": 0.32,
+            "w": 0.35
+          },
+          {
+            "atWord": "hiding",
+            "x": 0.72,
+            "y": 0.33,
+            "w": 0.35
+          },
+          {
+            "atWord": "death",
+            "assetId": "tyburn-1747",
+            "x": 0.62,
+            "y": 0.38,
+            "w": 0.22
+          },
+          {
+            "atWord": "idea",
+            "assetId": "rake-fleet",
+            "x": 0.65,
+            "y": 0.55,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "perrott",
+      "type": "archival",
+      "narration": "Meet John Perrott, a shopkeeper on Ludgate Hill, in London.",
+      "props": {
+        "title": "Ludgate Hill, London",
+        "assetId": "ludgate",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.6
+          },
+          {
+            "atWord": "shopkeeper",
+            "x": 0.18,
+            "y": 0.8,
+            "w": 0.35
+          },
+          {
+            "atWord": "London",
+            "x": 0.4,
+            "y": 0.4,
+            "w": 0.6
+          }
+        ]
+      },
+      "speaks": [
+        "f-perrott-shop"
+      ],
+      "microhooks": [
+        "Meet John Perrott,"
+      ]
+    },
+    {
+      "id": "short",
+      "type": "big-number",
+      "narration": "In 1760, his books came up 13,513 pounds short.",
+      "speaks": [
+        "f-perrott-shop"
+      ],
+      "props": {
+        "value": 13513,
+        "prefix": "£",
+        "label": "missing from Perrott's books",
+        "factId": "f-perrott-shop"
+      },
+      "cues": [
+        {
+          "atWord": "short",
+          "do": "callout",
+          "text": "Unaccounted for"
+        }
+      ],
+      "backdrop": {
+        "assetId": "boe-note",
+        "shots": [
+          {
+            "x": 0.2,
+            "y": 0.2,
+            "w": 0.4
+          },
+          {
+            "atWord": "books",
+            "x": 0.15,
+            "y": 0.32,
+            "w": 0.3
+          },
+          {
+            "atWord": "short",
+            "x": 0.85,
+            "y": 0.4,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "trunk",
+      "type": "archival",
+      "narration": "Then, in his trunk in Newgate prison, they found halves of banknotes tied up in a rag. Plus half a 1,000 pound note.",
+      "props": {
+        "title": "Newgate prison, London, 1781",
+        "assetId": "newgate-1780",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.55,
+            "y": 0.45,
+            "w": 0.4
+          },
+          {
+            "atWord": "prison",
+            "x": 0.4,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "halves",
+            "assetId": "boe-note",
+            "x": 0.5,
+            "y": 0.45,
+            "w": 0.6
+          },
+          {
+            "atWord": "rag",
+            "assetId": "boe-note",
+            "x": 0.85,
+            "y": 0.42,
+            "w": 0.3
+          },
+          {
+            "atWord": "1,000",
+            "assetId": "boe-note",
+            "x": 0.15,
+            "y": 0.32,
+            "w": 0.3
+          }
+        ]
+      },
+      "speaks": [
+        "f-half-notes"
+      ],
+      "microhooks": [
+        "Then, in his trunk in Newgate prison"
+      ]
+    },
+    {
+      "id": "hanged",
+      "type": "archival",
+      "narration": "On November 11th, 1761, Perrott was hanged at Smithfield for fraudulent bankruptcy.",
+      "props": {
+        "title": "Hogarth, a London hanging, 1747",
+        "assetId": "tyburn-1747",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.55,
+            "y": 0.55,
+            "w": 0.45
+          },
+          {
+            "atWord": "hanged",
+            "x": 0.62,
+            "y": 0.38,
+            "w": 0.22
+          },
+          {
+            "atWord": "Smithfield",
+            "x": 0.85,
+            "y": 0.4,
+            "w": 0.3
+          },
+          {
+            "atWord": "fraudulent",
+            "x": 0.3,
+            "y": 0.5,
+            "w": 0.35
+          }
+        ]
+      },
+      "speaks": [
+        "f-perrott-hanged"
+      ],
+      "microhooks": [
+        "Perrott was hanged at Smithfield"
+      ]
+    },
+    {
+      "id": "four",
+      "type": "big-number",
+      "narration": "He wasn't even the last. Likely only 4 Englishmen were hanged for it. The penalty was abolished in 1820.",
+      "speaks": [
+        "f-four-hanged"
+      ],
+      "microhooks": [
+        "He wasn't even the last."
+      ],
+      "props": {
+        "value": 4,
+        "label": "bankrupts likely hanged, 1706 to 1820",
+        "factId": "f-four-hanged"
+      },
+      "cues": [
+        {
+          "atWord": "abolished",
+          "do": "callout",
+          "text": "Abolished, 1820"
+        }
+      ],
+      "backdrop": {
+        "assetId": "tyburn-1747",
+        "shots": [
+          {
+            "x": 0.15,
+            "y": 0.5,
+            "w": 0.3
+          },
+          {
+            "atWord": "Englishmen",
+            "x": 0.85,
+            "y": 0.6,
+            "w": 0.3
+          },
+          {
+            "atWord": "penalty",
+            "assetId": "newgate-1780",
+            "x": 0.75,
+            "y": 0.4,
+            "w": 0.3
+          },
+          {
+            "atWord": "abolished",
+            "assetId": "rake-fleet",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "fresh-start",
+      "type": "kinetic-text",
+      "narration": "That other idea? Almost as an afterthought, the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So, rope or fresh start: which kept bankrupts honest?",
+      "speaks": [
+        "f-discharge"
+      ],
+      "microhooks": [
+        "That other idea?",
+        "The rope failed."
+      ],
+      "props": {
+        "lines": [
+          "The rope",
+          "or the fresh",
+          "start?"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "discharge",
+          "do": "emphasize",
+          "text": "fresh"
+        },
+        {
+          "atWord": "failed",
+          "do": "emphasize",
+          "text": "rope"
+        }
+      ],
+      "backdrop": {
+        "assetId": "rake-fleet",
+        "shots": [
+          {
+            "x": 0.65,
+            "y": 0.6,
+            "w": 0.3
+          },
+          {
+            "atWord": "afterthought",
+            "x": 0.3,
+            "y": 0.45,
+            "w": 0.35
+          },
+          {
+            "atWord": "discharge",
+            "assetId": "boe-note",
+            "x": 0.2,
+            "y": 0.18,
+            "w": 0.4
+          },
+          {
+            "atWord": "rope",
+            "assetId": "tyburn-1747",
+            "x": 0.62,
+            "y": 0.38,
+            "w": 0.22
+          },
+          {
+            "atWord": "lasted",
+            "assetId": "ludgate",
+            "x": 0.5,
+            "y": 0.75,
+            "w": 0.6
+          },
+          {
+            "atWord": "So",
+            "assetId": "bankers-1340",
+            "x": 0.78,
+            "y": 0.62,
+            "w": 0.4
+          }
+        ]
+      }
+    }
+  ]
+}
