@@ -39,6 +39,7 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 ## Voice
 
 - **British voice,** en-GB-RyanNeural by default (2026-10-08).
+- **FICO is "FYE-co" (2026-10-12).** Justin: the voice said it with an "e" sound. Names the voice misreads go in `src/voice/pronunciations.ts`; captions keep the written form.
 - **The sign-off is "Lombard Row, how money got this way!" in one natural breath.** "Lombard Row" is two words, but it is never run together, spliced or split by full stops. Justin picked the take, which lives in `src/brand/signoff/`, and every video reuses it (2026-10-09).
 
 ## Music
