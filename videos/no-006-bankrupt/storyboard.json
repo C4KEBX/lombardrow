@@ -339,7 +339,7 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "In 1760, his bankruptcy commissioners said he was 13,513 pounds short.",
+      "narration": "In 1760, he came up 13,513 pounds short.",
       "speaks": [
         "f-deficiency"
       ],
@@ -365,7 +365,7 @@
             "w": 0.4
           },
           {
-            "atWord": "commissioners",
+            "atWord": "came",
             "x": 0.15,
             "y": 0.32,
             "w": 0.3
@@ -382,7 +382,7 @@
     {
       "id": "trunk",
       "type": "archival",
-      "narration": "In Newgate prison, at the bottom of his trunk, tied in a rag: the other halves of four banknotes. And half a 1,000 pound note.",
+      "narration": "In Newgate prison, at the bottom of his trunk: the other halves of four banknotes. And half a 1,000 pound note.",
       "props": {
         "title": "Newgate prison, London, 1781",
         "assetId": "newgate-1780",
@@ -419,7 +419,7 @@
         "f-half-notes"
       ],
       "microhooks": [
-        "In Newgate prison, at the bottom of his trunk,"
+        "In Newgate prison, at the bottom of his trunk"
       ]
     },
     {
@@ -460,12 +460,12 @@
     {
       "id": "four",
       "type": "big-number",
-      "narration": "He was one of likely only 4 Englishmen hanged for it. In 1820, the penalty was abolished.",
+      "narration": "He was likely one of only 4 Englishmen hanged for it. In 1820, the penalty was abolished.",
       "speaks": [
         "f-four-hanged"
       ],
       "microhooks": [
-        "He was one of likely only 4"
+        "He was likely one of only 4"
       ],
       "props": {
         "value": 4,
@@ -500,7 +500,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? Almost an afterthought: the same law brought in the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or the reward. Which would keep you honest?",
+      "narration": "That other idea? Almost an afterthought: the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or the reward. Which would keep you honest?",
       "speaks": [
         "f-discharge"
       ],
