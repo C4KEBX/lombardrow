@@ -10,7 +10,7 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "The rope or the reward: which would keep you honest?",
+      "prompt": "Owing a fortune: the rope or the reward?",
       "atWord": "So"
     },
     "hookLine": "A bankrupt who hid money could hang.",
@@ -30,7 +30,7 @@
     {
       "id": "hook",
       "type": "archival",
-      "narration": "A bankrupt who hid his money could hang. In 18th-century England, one London merchant did. Even the word hides a break.",
+      "narration": "A bankrupt who hid his money could hang. In 18th-century England, one London merchant did. Even the word 'bankrupt' hides something broken.",
       "props": {
         "title": "A London hanging, by Hogarth",
         "assetId": "tyburn-1747",
@@ -69,7 +69,7 @@
             "w": 0.4
           },
           {
-            "atWord": "break",
+            "atWord": "broken",
             "assetId": "bankers-1340",
             "x": 0.8,
             "y": 0.75,
@@ -84,7 +84,7 @@
       ],
       "microhooks": [
         "In 18th-century England, one London merchant did.",
-        "Even the word hides a break."
+        "Even the word 'bankrupt' hides something broken."
       ]
     },
     {
@@ -134,12 +134,15 @@
             "w": 0.3
           }
         ]
-      }
+      },
+      "microhooks": [
+        "A moneylender's bench, broken."
+      ]
     },
     {
       "id": "myth",
       "type": "archival",
-      "narration": "Legend says a failed moneylender's bench was smashed. The dictionary says that's probably a figure of speech.",
+      "narration": "Legend says a failed moneylender's bench was smashed. Dictionaries say it's probably just a figure of speech. The real record is darker.",
       "props": {
         "title": "Italian bankers, c. 1340",
         "assetId": "bankers-1340",
@@ -163,7 +166,7 @@
             "w": 0.25
           },
           {
-            "atWord": "dictionary",
+            "atWord": "Dictionaries",
             "x": 0.2,
             "y": 0.45,
             "w": 0.4
@@ -180,19 +183,18 @@
         "f-bench-myth"
       ],
       "microhooks": [
-        "The dictionary says that's probably a figure of speech."
+        "The real record is darker."
       ]
     },
     {
       "id": "law-1706",
       "type": "kinetic-text",
-      "narration": "The real record is darker. In 1706, England made hiding assets from creditors punishable by death. And that law hid one more idea.",
+      "narration": "In 1706, England made hiding assets from creditors punishable by death. And that law hid one more idea.",
       "speaks": [
         "f-1706-capital",
         "f-discharge"
       ],
       "microhooks": [
-        "The real record is darker.",
         "And that law hid one more idea."
       ],
       "props": {
@@ -236,17 +238,17 @@
           },
           {
             "atWord": "death",
-            "assetId": "boe-note",
-            "x": 0.5,
-            "y": 0.5,
-            "w": 0.25
+            "assetId": "tyburn-1747",
+            "x": 0.62,
+            "y": 0.42,
+            "w": 0.22
           },
           {
             "atWord": "idea",
-            "assetId": "ludgate",
-            "x": 0.4,
-            "y": 0.4,
-            "w": 0.6
+            "assetId": "rake-fleet",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.5
           }
         ]
       }
@@ -341,13 +343,13 @@
           {
             "x": 0.68,
             "y": 0.55,
-            "w": 0.15
+            "w": 0.28
           },
           {
             "atWord": "trunk",
             "x": 0.55,
             "y": 0.42,
-            "w": 0.18
+            "w": 0.28
           },
           {
             "atWord": "halves",
@@ -359,8 +361,8 @@
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.15,
-            "y": 0.62,
+            "x": 0.12,
+            "y": 0.85,
             "w": 0.3
           }
         ]
@@ -410,7 +412,7 @@
     {
       "id": "four",
       "type": "big-number",
-      "narration": "He was likely one of only 4 Englishmen hanged for it. In 1820, the death penalty was abolished.",
+      "narration": "He was likely one of only 4 Englishmen hanged for it. In 1820, hanging for it was abolished.",
       "speaks": [
         "f-four-hanged"
       ],
@@ -438,7 +440,7 @@
             "w": 0.25
           },
           {
-            "atWord": "penalty",
+            "atWord": "1820",
             "x": 0.62,
             "y": 0.5,
             "w": 0.2
@@ -449,7 +451,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? Almost an afterthought: the discharge of debt, a reward for cooperating. The rope failed. The discharge lasted. So: the rope, or the reward. Which would keep you honest?",
+      "narration": "That other idea? Almost an afterthought: cooperate, and your debts were wiped. The rope failed. The reward lasted. So, owing a fortune, which keeps you honest: the rope, or the reward?",
       "speaks": [
         "f-discharge"
       ],
@@ -465,7 +467,7 @@
       },
       "cues": [
         {
-          "atWord": "discharge",
+          "atWord": "wiped",
           "do": "emphasize",
           "text": "reward"
         },
@@ -490,7 +492,7 @@
             "w": 0.35
           },
           {
-            "atWord": "discharge",
+            "atWord": "wiped",
             "assetId": "boe-note",
             "x": 0.2,
             "y": 0.18,
@@ -505,10 +507,10 @@
           },
           {
             "atWord": "lasted",
-            "assetId": "ludgate",
-            "x": 0.5,
+            "assetId": "bankers-1340",
+            "x": 0.8,
             "y": 0.75,
-            "w": 0.6
+            "w": 0.35
           },
           {
             "atWord": "So",
