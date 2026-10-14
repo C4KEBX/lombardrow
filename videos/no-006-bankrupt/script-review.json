@@ -1,11 +1,6 @@
 {
-  "score": 68,
-  "verdict": "The hook and the Perrott trunk detail work. Three things still cost points: the climax plays over a print that is engraved \"Executed at Tyburn\" while the voice says \"Smithfield\", the trunk scene has unclear references, and the ending never says what \"discharge\" means. It is one picture pass and two line edits away from building.",
-  "scriptHash": "dda648fd443f2b15",
-  "reviewedAt": "2026-10-12T04:00:40.927Z",
-  "override": {
-    "by": "Justin",
-    "reason": "Override",
-    "at": "2026-10-12T11:11:18.664Z"
-  }
+  "score": 71,
+  "verdict": "It could be built now. The open, the trunk and the \"afterthought\" payoff are strong. But the main question closes at the hanging (about 48 s) with nothing left open to carry the viewer through the next 8 s, the word detour sits on one painting for about 14 s, and the closing text on screen doesn't match the spoken question.",
+  "scriptHash": "554903a41104786e",
+  "reviewedAt": "2026-10-14T00:11:36.443Z"
 }
