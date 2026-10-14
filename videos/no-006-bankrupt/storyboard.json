@@ -10,7 +10,7 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "Owing a fortune: the rope or the reward?",
+      "prompt": "With the rope waiting, would you have hidden it?",
       "atWord": "So"
     },
     "hookLine": "A bankrupt who hid money could hang.",
@@ -142,7 +142,7 @@
     {
       "id": "myth",
       "type": "archival",
-      "narration": "Legend says a failed moneylender's bench was smashed. Dictionaries say it's probably just a figure of speech. The real record is darker.",
+      "narration": "Legend says a failed moneylender's bench was smashed. A dictionary says it's probably a figure of speech. The real record is darker.",
       "props": {
         "title": "Italian bankers, c. 1340",
         "assetId": "bankers-1340",
@@ -166,7 +166,7 @@
             "w": 0.25
           },
           {
-            "atWord": "Dictionaries",
+            "atWord": "dictionary",
             "x": 0.2,
             "y": 0.45,
             "w": 0.4
@@ -189,13 +189,13 @@
     {
       "id": "law-1706",
       "type": "kinetic-text",
-      "narration": "In 1706, England made hiding assets from creditors punishable by death. And that law hid one more idea.",
+      "narration": "In 1706, England made hiding assets from creditors punishable by death. That law hid one more idea.",
       "speaks": [
         "f-1706-capital",
         "f-discharge"
       ],
       "microhooks": [
-        "And that law hid one more idea."
+        "That law hid one more idea."
       ],
       "props": {
         "lines": [
@@ -291,7 +291,7 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "In 1760, the officials running his bankruptcy said he was 13,513 pounds short.",
+      "narration": "In 1760, his bankruptcy officials said he was 13,513 pounds short. Where was it?",
       "speaks": [
         "f-deficiency"
       ],
@@ -329,27 +329,30 @@
             "w": 0.3
           }
         ]
-      }
+      },
+      "microhooks": [
+        "Where was it?"
+      ]
     },
     {
       "id": "trunk",
       "type": "archival",
-      "narration": "In Newgate prison, at the bottom of his trunk, tied in a rag: halves of four banknotes. And half a 1,000 pound note.",
+      "narration": "In prison, at the very bottom of his trunk, tied in a rag: halves of four banknotes. And half a 1,000 pound note.",
       "props": {
-        "title": "Newgate prison, London",
-        "assetId": "newgate-1780",
+        "title": "A London prison, by Hogarth",
+        "assetId": "rake-fleet",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.68,
-            "y": 0.55,
-            "w": 0.28
+            "x": 0.7,
+            "y": 0.17,
+            "w": 0.25
           },
           {
             "atWord": "trunk",
-            "x": 0.55,
-            "y": 0.42,
-            "w": 0.28
+            "x": 0.92,
+            "y": 0.7,
+            "w": 0.2
           },
           {
             "atWord": "halves",
@@ -371,7 +374,7 @@
         "f-half-notes"
       ],
       "microhooks": [
-        "In Newgate prison, at the bottom of his trunk,"
+        "In prison, at the very bottom of his trunk,"
       ]
     },
     {
@@ -451,7 +454,7 @@
     {
       "id": "fresh-start",
       "type": "kinetic-text",
-      "narration": "That other idea? Almost an afterthought: cooperate, and your debts were wiped. The rope failed. The reward lasted. So, owing a fortune, which keeps you honest: the rope, or the reward?",
+      "narration": "That other idea? Almost an afterthought: cooperate, and your debts were wiped. The rope failed. The reward lasted. So, owing a fortune, with the rope waiting: would you have hidden it?",
       "speaks": [
         "f-discharge"
       ],
@@ -461,20 +464,20 @@
       ],
       "props": {
         "lines": [
-          "The rope",
-          "or the reward?"
+          "The rope,",
+          "or hide it?"
         ]
       },
       "cues": [
         {
-          "atWord": "wiped",
-          "do": "emphasize",
-          "text": "reward"
-        },
-        {
           "atWord": "failed",
           "do": "emphasize",
           "text": "rope"
+        },
+        {
+          "atWord": "hidden",
+          "do": "emphasize",
+          "text": "hide"
         }
       ],
       "backdrop": {
