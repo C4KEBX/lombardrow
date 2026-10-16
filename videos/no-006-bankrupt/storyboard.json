@@ -78,9 +78,9 @@
           {
             "atWord": "law",
             "assetId": "tyburn-1747",
-            "x": 0.3,
-            "y": 0.48,
-            "w": 0.22
+            "x": 0.15,
+            "y": 0.38,
+            "w": 0.15
           },
           {
             "atWord": "way",
@@ -130,7 +130,7 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "His bankruptcy officials said he was 13,513 pounds short.",
+      "narration": "Officials running his bankruptcy said he was 13,513 pounds short.",
       "speaks": [
         "f-deficiency"
       ],
@@ -273,20 +273,20 @@
       ],
       "props": {
         "lines": [
-          "Half for him.",
-          "Ferne's half."
+          "Perrott: half.",
+          "Ferne: half."
         ]
       },
       "cues": [
         {
           "atWord": "Perrott",
           "do": "emphasize",
-          "text": "him"
+          "text": "Perrott"
         },
         {
           "atWord": "Ferne's",
           "do": "emphasize",
-          "text": "Ferne's"
+          "text": "Ferne"
         }
       ],
       "backdrop": {
@@ -311,10 +311,10 @@
           },
           {
             "atWord": "Searchers",
-            "assetId": "ludgate",
+            "assetId": "rake-arrest",
             "x": 0.5,
-            "y": 0.55,
-            "w": 0.5
+            "y": 0.58,
+            "w": 0.22
           }
         ]
       }
@@ -343,24 +343,17 @@
           },
           {
             "atWord": "rag",
-            "assetId": "rake-fleet",
-            "x": 0.92,
-            "y": 0.72,
-            "w": 0.15
-          },
-          {
-            "atWord": "matching",
             "assetId": "boe-note",
-            "x": 0.55,
-            "y": 0.12,
-            "w": 0.3
+            "x": 0.9,
+            "y": 0.34,
+            "w": 0.2
           },
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.9,
-            "y": 0.38,
-            "w": 0.2
+            "x": 0.85,
+            "y": 0.27,
+            "w": 0.3
           }
         ]
       }
@@ -395,9 +388,9 @@
           },
           {
             "atWord": "Englishmen",
-            "x": 0.32,
-            "y": 0.42,
-            "w": 0.18
+            "x": 0.05,
+            "y": 0.22,
+            "w": 0.12
           }
         ]
       }
@@ -416,8 +409,8 @@
       ],
       "props": {
         "lines": [
-          "Cooperate.",
-          "Debts wiped."
+          "Cooperate,",
+          "could be wiped"
         ]
       },
       "cues": [
@@ -461,10 +454,10 @@
           },
           {
             "atWord": "lasted",
-            "assetId": "tyburn-1747",
-            "x": 0.32,
-            "y": 0.42,
-            "w": 0.18
+            "assetId": "ludgate",
+            "x": 0.18,
+            "y": 0.8,
+            "w": 0.35
           }
         ]
       }
