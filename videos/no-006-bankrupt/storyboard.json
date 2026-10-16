@@ -10,12 +10,12 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "With the rope waiting, would you have hidden it?",
+      "prompt": "With the rope waiting, would you have hidden the money?",
       "atWord": "With"
     },
-    "hookLine": "Hanged, £13,513 short",
+    "hookLine": "Hanged, about £3m short in today's money",
     "cover": {
-      "line": "Hanged, £13,513 short",
+      "line": "Hanged, about £3m short in today's money",
       "mark": "Hanged",
       "assetId": "tyburn-1747",
       "x": 0.62,
@@ -36,13 +36,13 @@
       "id": "hook",
       "type": "archival",
       "brisk": true,
-      "narration": "London hanged a merchant for hiding money from his creditors. The hanging law also gave bankrupts something they still get today.",
+      "narration": "London hanged a merchant for hiding money from his creditors. The hanging law also gave bankrupts a way out they still get today.",
       "speaks": [
         "f-perrott-hanged",
         "f-1706-capital"
       ],
       "microhooks": [
-        "The hanging law also gave bankrupts something they still get today."
+        "The hanging law also gave bankrupts a way out they still get today."
       ],
       "props": {
         "title": "A London hanging, by Hogarth",
@@ -121,7 +121,10 @@
             "w": 0.6
           }
         ]
-      }
+      },
+      "microhooks": [
+        "went bankrupt."
+      ]
     },
     {
       "id": "short",
@@ -151,8 +154,8 @@
         "assetId": "boe-note",
         "shots": [
           {
-            "x": 0.1,
-            "y": 0.1,
+            "x": 0.12,
+            "y": 0.85,
             "w": 0.3
           },
           {
@@ -236,14 +239,72 @@
       }
     },
     {
-      "id": "trunk",
-      "type": "archival",
-      "narration": "In his prison trunk, tied in a rag: halves of four banknotes, and half a 1,000 pound note.",
+      "id": "cut",
+      "type": "kinetic-text",
+      "narration": "A witness swore she saw Ferne cut banknotes in half and give one half to Perrott. Searchers found halves of five notes at Ferne's.",
       "speaks": [
-        "f-half-notes"
+        "f-cut-notes"
       ],
       "microhooks": [
-        "In his prison trunk, tied in a rag:",
+        "Searchers found halves of five notes at Ferne's."
+      ],
+      "props": {
+        "lines": [
+          "Half for him.",
+          "Ferne's half."
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "Perrott",
+          "do": "emphasize",
+          "text": "him"
+        },
+        {
+          "atWord": "Ferne's",
+          "do": "emphasize",
+          "text": "Ferne's"
+        }
+      ],
+      "backdrop": {
+        "assetId": "boe-note",
+        "shots": [
+          {
+            "x": 0.9,
+            "y": 0.6,
+            "w": 0.3
+          },
+          {
+            "atWord": "cut",
+            "x": 0.85,
+            "y": 0.3,
+            "w": 0.3
+          },
+          {
+            "atWord": "Perrott",
+            "x": 0.15,
+            "y": 0.62,
+            "w": 0.3
+          },
+          {
+            "atWord": "Searchers",
+            "x": 0.12,
+            "y": 0.85,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "trunk",
+      "type": "archival",
+      "narration": "In Perrott's prison trunk, tied in a rag: the other halves of four, and half a 1,000 pound note.",
+      "speaks": [
+        "f-half-notes",
+        "f-cut-notes"
+      ],
+      "microhooks": [
+        "In Perrott's prison trunk, tied in a rag:",
         "and half a 1,000 pound note."
       ],
       "props": {
@@ -263,7 +324,7 @@
             "w": 0.15
           },
           {
-            "atWord": "halves",
+            "atWord": "other",
             "assetId": "boe-note",
             "x": 0.85,
             "y": 0.3,
@@ -272,63 +333,6 @@
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.12,
-            "y": 0.85,
-            "w": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "cut",
-      "type": "kinetic-text",
-      "narration": "A witness swore she saw Ferne cut banknotes in half and give one half to Perrott. Ferne kept the matching halves.",
-      "speaks": [
-        "f-cut-notes"
-      ],
-      "microhooks": [
-        "Ferne kept the matching halves."
-      ],
-      "props": {
-        "lines": [
-          "Half for him.",
-          "Ferne's half."
-        ]
-      },
-      "cues": [
-        {
-          "atWord": "Perrott",
-          "do": "emphasize",
-          "text": "him"
-        },
-        {
-          "atWord": "kept",
-          "do": "emphasize",
-          "text": "Ferne's"
-        }
-      ],
-      "backdrop": {
-        "assetId": "boe-note",
-        "shots": [
-          {
-            "x": 0.5,
-            "y": 0.5,
-            "w": 0.9
-          },
-          {
-            "atWord": "cut",
-            "x": 0.85,
-            "y": 0.3,
-            "w": 0.3
-          },
-          {
-            "atWord": "Perrott",
-            "x": 0.15,
-            "y": 0.62,
-            "w": 0.3
-          },
-          {
-            "atWord": "kept",
             "x": 0.12,
             "y": 0.85,
             "w": 0.3
@@ -429,7 +433,7 @@
     {
       "id": "fresh-start",
       "type": "big-number",
-      "narration": "The rope failed. The deal lasted: in England, bankrupts are still usually freed from their debts after 12 months. With the rope waiting, would you have hidden it?",
+      "narration": "The rope failed. The deal lasted: in England, bankrupts are still usually freed from their debts after 12 months. With the rope waiting, would you have hidden the money?",
       "speaks": [
         "f-discharge",
         "f-discharge-today"
