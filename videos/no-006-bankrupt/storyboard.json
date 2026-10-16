@@ -10,12 +10,12 @@
     "open": "bleed",
     "format": "fast",
     "ending": {
-      "prompt": "With the rope waiting, would you have hidden the money?",
-      "atWord": "With"
+      "prompt": "Would you have hidden the money?",
+      "atWord": "Would"
     },
-    "hookLine": "Hanged, about £3m short in today's money",
+    "hookLine": "Hanged for hiding money",
     "cover": {
-      "line": "Hanged, about £3m short in today's money",
+      "line": "Hanged for hiding money",
       "mark": "Hanged",
       "assetId": "tyburn-1747",
       "x": 0.62,
@@ -62,10 +62,10 @@
           },
           {
             "atWord": "hiding",
-            "assetId": "boe-note",
-            "x": 0.85,
-            "y": 0.3,
-            "w": 0.3
+            "assetId": "rake-fleet",
+            "x": 0.75,
+            "y": 0.62,
+            "w": 0.18
           },
           {
             "atWord": "creditors",
@@ -82,11 +82,11 @@
             "w": 0.22
           },
           {
-            "atWord": "today",
-            "assetId": "boe-note",
-            "x": 0.9,
-            "y": 0.6,
-            "w": 0.3
+            "atWord": "way",
+            "assetId": "rake-fleet",
+            "x": 0.7,
+            "y": 0.17,
+            "w": 0.2
           }
         ]
       }
@@ -129,13 +129,12 @@
     {
       "id": "short",
       "type": "big-number",
-      "narration": "His bankruptcy officials said he was 13,513 pounds short. About 3 million pounds today.",
+      "narration": "His bankruptcy officials said he was 13,513 pounds short.",
       "speaks": [
-        "f-deficiency",
-        "f-value-today"
+        "f-deficiency"
       ],
       "microhooks": [
-        "About 3 million pounds today."
+        "13,513 pounds short."
       ],
       "props": {
         "value": 13513,
@@ -143,20 +142,14 @@
         "label": "short, by the officials' count",
         "factId": "f-deficiency"
       },
-      "cues": [
-        {
-          "atWord": "today",
-          "do": "callout",
-          "text": "About £3m today"
-        }
-      ],
+      "cues": [],
       "backdrop": {
         "assetId": "boe-note",
         "shots": [
           {
-            "x": 0.12,
-            "y": 0.85,
-            "w": 0.3
+            "x": 0.2,
+            "y": 0.17,
+            "w": 0.35
           },
           {
             "atWord": "said",
@@ -166,15 +159,43 @@
           },
           {
             "atWord": "short",
-            "x": 0.9,
-            "y": 0.6,
-            "w": 0.3
+            "assetId": "rake-fleet",
+            "x": 0.75,
+            "y": 0.62,
+            "w": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "type": "big-number",
+      "narration": "About 3 million pounds today.",
+      "speaks": [
+        "f-value-today"
+      ],
+      "microhooks": [
+        "About 3 million pounds today."
+      ],
+      "props": {
+        "value": 3000000,
+        "prefix": "£",
+        "label": "about, in today's money",
+        "factId": "f-value-today"
+      },
+      "backdrop": {
+        "assetId": "ludgate",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.6
           },
           {
             "atWord": "million",
-            "x": 0.15,
-            "y": 0.62,
-            "w": 0.3
+            "x": 0.4,
+            "y": 0.4,
+            "w": 0.5
           }
         ]
       }
@@ -271,8 +292,8 @@
         "shots": [
           {
             "x": 0.9,
-            "y": 0.6,
-            "w": 0.3
+            "y": 0.33,
+            "w": 0.25
           },
           {
             "atWord": "cut",
@@ -282,15 +303,16 @@
           },
           {
             "atWord": "Perrott",
-            "x": 0.15,
-            "y": 0.62,
+            "x": 0.2,
+            "y": 0.17,
             "w": 0.3
           },
           {
             "atWord": "Searchers",
-            "x": 0.12,
-            "y": 0.85,
-            "w": 0.3
+            "assetId": "ludgate",
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.5
           }
         ]
       }
@@ -308,19 +330,20 @@
         "and half a 1,000 pound note."
       ],
       "props": {
-        "title": "A London prison, by Hogarth",
-        "assetId": "rake-fleet",
+        "title": "Newgate prison, London",
+        "assetId": "newgate-1780",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.92,
-            "y": 0.7,
-            "w": 0.2
+            "x": 0.48,
+            "y": 0.42,
+            "w": 0.25
           },
           {
             "atWord": "rag",
-            "x": 0.92,
-            "y": 0.72,
+            "assetId": "rake-fleet",
+            "x": 0.75,
+            "y": 0.62,
             "w": 0.15
           },
           {
@@ -333,8 +356,8 @@
           {
             "atWord": "1,000",
             "assetId": "boe-note",
-            "x": 0.12,
-            "y": 0.85,
+            "x": 0.2,
+            "y": 0.17,
             "w": 0.3
           }
         ]
@@ -380,13 +403,14 @@
     {
       "id": "deal",
       "type": "kinetic-text",
-      "narration": "But the hanging law had one more idea, almost an afterthought: cooperate, and your debts could be wiped.",
+      "narration": "But the hanging law had one more idea, almost an afterthought: cooperate, and your debts could be wiped. The rope failed. The deal lasted.",
       "speaks": [
         "f-1706-capital",
         "f-discharge"
       ],
       "microhooks": [
-        "But the hanging law had one more idea,"
+        "But the hanging law had one more idea,",
+        "The rope failed."
       ],
       "props": {
         "lines": [
@@ -422,10 +446,23 @@
           },
           {
             "atWord": "wiped",
-            "assetId": "boe-note",
-            "x": 0.2,
-            "y": 0.18,
-            "w": 0.4
+            "x": 0.75,
+            "y": 0.62,
+            "w": 0.15
+          },
+          {
+            "atWord": "rope",
+            "assetId": "tyburn-1747",
+            "x": 0.62,
+            "y": 0.38,
+            "w": 0.12
+          },
+          {
+            "atWord": "lasted",
+            "assetId": "ludgate",
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.6
           }
         ]
       }
@@ -433,13 +470,12 @@
     {
       "id": "fresh-start",
       "type": "big-number",
-      "narration": "The rope failed. The deal lasted: in England, bankrupts are still usually freed from their debts after 12 months. With the rope waiting, would you have hidden the money?",
+      "narration": "In England, bankrupts are still usually freed from their debts after 12 months. Would you have hidden the money?",
       "speaks": [
-        "f-discharge",
         "f-discharge-today"
       ],
       "microhooks": [
-        "The rope failed."
+        "after 12 months."
       ],
       "props": {
         "value": 12,
@@ -448,29 +484,22 @@
       },
       "cues": [],
       "backdrop": {
-        "assetId": "tyburn-1747",
+        "assetId": "ludgate",
         "shots": [
           {
-            "x": 0.62,
-            "y": 0.5,
-            "w": 0.2
-          },
-          {
-            "atWord": "lasted",
-            "assetId": "ludgate",
-            "x": 0.5,
-            "y": 0.55,
-            "w": 0.6
-          },
-          {
-            "atWord": "months",
-            "assetId": "ludgate",
             "x": 0.4,
             "y": 0.4,
             "w": 0.6
           },
           {
-            "atWord": "With",
+            "atWord": "months",
+            "assetId": "rake-fleet",
+            "x": 0.7,
+            "y": 0.17,
+            "w": 0.2
+          },
+          {
+            "atWord": "Would",
             "assetId": "tyburn-1747",
             "x": 0.62,
             "y": 0.5,
