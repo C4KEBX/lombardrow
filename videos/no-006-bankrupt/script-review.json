@@ -1,6 +1,6 @@
 {
-  "score": 71,
-  "verdict": "It could be built now. The open, the trunk and the \"afterthought\" payoff are strong. But the main question closes at the hanging (about 48 s) with nothing left open to carry the viewer through the next 8 s, the word detour sits on one painting for about 14 s, and the closing text on screen doesn't match the spoken question.",
-  "scriptHash": "554903a41104786e",
-  "reviewedAt": "2026-10-14T00:11:36.443Z"
+  "score": 67,
+  "verdict": "This is a real rebuild. The open is concrete, the money trail drives the story, and the payoff (\"freed from their debts after 12 months\") is something you can say out loud. It is not ready to build yet. The leftover etymology line breaks in between the hanging and the payoff. The last scene crams four ideas into about 13 s and drops the source's \"almost\". Three on-screen items (the hook line, \"a woman, Ferne\", \"Half for her.\") claim more than facts.json supports.",
+  "scriptHash": "cec9ea11e975f5e4",
+  "reviewedAt": "2026-10-16T02:10:54.763Z"
 }
