@@ -1,12 +1,12 @@
-import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
+import { lengthWindow, type LengthWindow } from "../schema/validate";
 import { FOOTER, type PublishPackage } from "./package";
 
-const MIN_S = MIN_VIDEO_MS / 1000;
-const MAX_S = MAX_VIDEO_MS / 1000;
 
 export type AutoChecks = {
   /** Real length from produce's manifest, in seconds. */
   durationSeconds?: number;
+  /** The length window, when a waiver lowers the floor for this video. */
+  window?: LengthWindow;
   /** Reasons the final variation check failed; empty when it passed; undefined when it was not run. */
   variation?: string[];
   /** Words and numbers the listen-back found wrong; undefined when it was not run. */
@@ -23,6 +23,8 @@ const box = (ok: boolean | undefined, text: string, why = ""): string =>
 /** The brand guidelines' pre-publish checklist, with the items the pipeline can verify already ticked. */
 export function renderChecklist(pkg: PublishPackage, auto: AutoChecks): string {
   const d = auto.durationSeconds;
+  const window = auto.window ?? lengthWindow();
+  const [MIN_S, MAX_S] = [window.minMs / 1000, window.maxMs / 1000];
   const lengthOk = d === undefined ? undefined : d >= MIN_S && d <= MAX_S;
   const descriptionsOk = [pkg.youtube.description, pkg.tiktok.caption].every(
     (t) => t.includes(FOOTER) && pkg.sources.every((s) => t.includes(s.url)),

@@ -9,7 +9,7 @@ import { resolveMusic } from "../audio/music";
 import { MUSIC_BED_DB } from "../audio/graph";
 import { VIDEO } from "../design/tokens";
 import { parseStoryboard } from "../schema/storyboard";
-import { assertDuration } from "../schema/validate";
+import { assertDuration, lengthWindow } from "../schema/validate";
 import { makeVoiceProvider, type VoiceMode } from "../voice/index";
 import { pacingIssues } from "../skill/pacing";
 import { assertScriptReviewed } from "../skill/scriptReview";
@@ -70,7 +70,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     imagesFor(opts.storyboardPath, opts.assetsPath),
   );
   const totalMs = (built.totalFrames / VIDEO.fps) * 1000;
-  if (opts.enforceLength) assertDuration(totalMs);
+  if (opts.enforceLength) assertDuration(totalMs, lengthWindow(storyboard));
   // `check` judged pacing on estimated timings; report it again on the real voice, without stopping the render.
   for (const message of pacingIssues(storyboard, built.scenes, VIDEO.fps)) console.warn(`pacing: ${message}`);
 

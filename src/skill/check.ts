@@ -13,7 +13,7 @@ import { stampTrack } from "../devices/tracks";
 import { synthWords } from "../voice/synthWords";
 import { adviceLint, tickerHits } from "./adviceLint";
 import { assertAssets, parseAssets, type Asset } from "../schema/assets";
-import { checkPlan, crossCheck, parsePlan, scriptOf, type HistoryEntry, type Spec } from "../variation/index";
+import { checkPlan, crossCheck, specFor, parsePlan, scriptOf, type HistoryEntry, type Spec } from "../variation/index";
 import { REVEAL_CLOSE_SECONDS, TARGET_SECONDS, countWords, estimateSeconds, targetWords } from "./estimate";
 import { estimatedWords, pacingIssues } from "./pacing";
 
@@ -73,7 +73,7 @@ export function checkStoryboard(
   if (variation) {
     const plan = attempt(issues, "plan", () => parsePlan(variation.plan));
     if (plan) {
-      for (const reason of checkPlan(plan, variation.history, variation.spec, scriptOf(sb)).reasons) issues.push({ stage: "variation", message: reason });
+      for (const reason of checkPlan(plan, variation.history, specFor(variation.spec, sb), scriptOf(sb)).reasons) issues.push({ stage: "variation", message: reason });
       for (const reason of crossCheck(plan, sb, variation.spec)) issues.push({ stage: "plan vs storyboard", message: reason });
     }
   }
@@ -106,9 +106,10 @@ export function checkStoryboard(
   const narrations = sb.scenes.map((s) => s.narration);
   const estimatedSeconds = Math.round(estimateSeconds(narrations, sb.meta.ending ? REVEAL_CLOSE_SECONDS : undefined) * 10) / 10;
   const words = narrations.reduce((n, t) => n + countWords(t), 0);
-  if (estimatedSeconds < TARGET_SECONDS.min || estimatedSeconds > TARGET_SECONDS.max) {
+  const minSeconds = sb.meta.lengthWaiver?.minSeconds ?? TARGET_SECONDS.min;
+  if (estimatedSeconds < minSeconds || estimatedSeconds > TARGET_SECONDS.max) {
     warnings.push(
-      `estimated length ${estimatedSeconds} s is outside ${TARGET_SECONDS.min}-${TARGET_SECONDS.max} s (${words} words now; about ${targetWords(sb.scenes.length)} words fits ${sb.scenes.length} scenes)`,
+      `estimated length ${estimatedSeconds} s is outside ${minSeconds}-${TARGET_SECONDS.max} s (${words} words now; about ${targetWords(sb.scenes.length)} words fits ${sb.scenes.length} scenes)`,
     );
   }
   for (const hit of adviceLint(sb)) {

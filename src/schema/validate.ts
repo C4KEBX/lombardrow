@@ -190,10 +190,18 @@ function assertOnScreenFigures(scene: Extract<Scene, { type: "flow-diagram" | "l
   }
 }
 
-export function assertDuration(totalMs: number): void {
-  if (!Number.isFinite(totalMs) || totalMs < MIN_VIDEO_MS || totalMs > MAX_VIDEO_MS) {
+export type LengthWindow = { minMs: number; maxMs: number };
+
+/** The length window for a storyboard: 62-70 s, unless Justin waived the floor for this video (`meta.lengthWaiver`). */
+export function lengthWindow(sb?: { meta: { lengthWaiver?: { minSeconds: number } } }): LengthWindow {
+  const waiver = sb?.meta.lengthWaiver;
+  return { minMs: waiver ? waiver.minSeconds * 1000 : MIN_VIDEO_MS, maxMs: MAX_VIDEO_MS };
+}
+
+export function assertDuration(totalMs: number, window: LengthWindow = lengthWindow()): void {
+  if (!Number.isFinite(totalMs) || totalMs < window.minMs || totalMs > window.maxMs) {
     throw new StoryboardError(
-      `Video length ${(totalMs / 1000).toFixed(1)}s is outside the required ${MIN_VIDEO_MS / 1000}-${MAX_VIDEO_MS / 1000}s`,
+      `Video length ${(totalMs / 1000).toFixed(1)}s is outside the required ${window.minMs / 1000}-${window.maxMs / 1000}s`,
     );
   }
 }

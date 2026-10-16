@@ -76,8 +76,9 @@ export function buildReviewModel(
   const warnings: string[] = sb.scenes.flatMap(untracedTextWarnings);
   const narrations = sb.scenes.map((s) => s.narration);
   const estimatedSeconds = Math.round(estimateSeconds(narrations) * 10) / 10;
-  if (estimatedSeconds < TARGET_SECONDS.min || estimatedSeconds > TARGET_SECONDS.max) {
-    warnings.push(`estimated length ${estimatedSeconds} s is outside ${TARGET_SECONDS.min}-${TARGET_SECONDS.max} s`);
+  const minSeconds = sb.meta.lengthWaiver?.minSeconds ?? TARGET_SECONDS.min;
+  if (estimatedSeconds < minSeconds || estimatedSeconds > TARGET_SECONDS.max) {
+    warnings.push(`estimated length ${estimatedSeconds} s is outside ${minSeconds}-${TARGET_SECONDS.max} s`);
   }
   for (const hit of adviceLint(sb)) warnings.push(`Scene "${hit.sceneId}" narration contains advice-style phrasing: "${hit.phrase}"`);
   for (const fact of facts.facts) {

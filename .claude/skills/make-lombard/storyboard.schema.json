@@ -69,6 +69,30 @@
           "minLength": 1,
           "maxLength": 44
         },
+        "lengthWaiver": {
+          "type": "object",
+          "properties": {
+            "minSeconds": {
+              "type": "number",
+              "minimum": 20,
+              "maximum": 62
+            },
+            "by": {
+              "type": "string",
+              "const": "Justin"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "minSeconds",
+            "by",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
         "cover": {
           "type": "object",
           "properties": {
