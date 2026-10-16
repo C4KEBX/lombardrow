@@ -1,22 +1,24 @@
 {
   "doorNo": 6,
-  "pillar": "words",
-  "storyShape": "myth_vs_record",
-  "hookType": "myth_to_correct",
+  "pillar": "origins",
+  "storyShape": "follow_the_money",
+  "hookType": "cold_open_scene",
   "era": "industrial",
   "region": "britain",
   "primaryVisual": "object_close_up",
   "visualMetaphor": "a moneylender's wooden bench snapped in two, its halves turning into a banknote torn down the middle",
   "paletteLead": "parchment",
   "musicBed": "sinfonia-5",
-  "title": "Why 'bankrupt' means 'broken bench'",
-  "angle": "The bench-smashing story behind 'banca rotta' is probably figurative; the real record is harsher: England's 1706 act made hiding assets from creditors a hanging crime, and in 1761 John Perrott, a Ludgate Hill shopkeeper caught with torn halves of banknotes, was hanged for it. The same act created the discharge, the fresh start bankruptcy still means today.",
+  "title": "Hanged for hiding his money",
+  "angle": "In 1761 London hanged John Perrott, a Ludgate Hill bankrupt £13,513 short (about £3m today), under the 1706 act that made hiding assets from creditors a hanging crime. The money trail runs to banknotes cut in half in his prison trunk. The same act's afterthought, the discharge, outlived the rope: English bankrupts are still usually freed from their debts after 12 months.",
   "sources": [
     "https://www.etymonline.com/word/bankrupt",
     "https://www.merriam-webster.com/dictionary/bankrupt",
     "https://scholarship.law.duke.edu/dlj/vol59/iss7/1",
     "https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/overview-of-bankruptcy-clause",
     "https://www.exclassics.com/newgate/ng289.htm",
-    "https://www.thegazette.co.uk/all-notices/content/100723"
+    "https://www.thegazette.co.uk/all-notices/content/100723",
+    "https://www.measuringworth.com/calculators/ukcompare/",
+    "https://www.gov.uk/becoming-bankrupt/when-bankruptcy-ends"
   ]
 }

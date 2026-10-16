@@ -155,6 +155,52 @@
         "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
         "tier": "scholarly"
       }
+    },
+    {
+      "id": "f-cut-notes",
+      "claim": "At Perrott's trial a witness, Harris, testified that she saw Ferne cut banknotes in half and give one half to Perrott; Ferne kept the matching halves, and searchers found halves of five notes at her lodging.",
+      "source": {
+        "name": "Emily Kadens, Perrott Bankruptcy, Part 3, Credit Slips (2007)",
+        "stamp": "Kadens, Credit Slips 2007",
+        "url": "https://creditslips.org/2007/08/08/perrott-bankr-2/",
+        "tier": "scholarly"
+      },
+      "corroboration": [
+        {
+          "name": "The Newgate Calendar, John Perrott",
+          "url": "https://www.exclassics.com/newgate/ng289.htm",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-value-today",
+      "claim": "£13,513 in 1760 has a real price (RPI) value of £2,870,000 in 2025 by MeasuringWorth's UK calculator; the ONS composite price index gives about £3,541,898 in 2026. Both are about 3 million pounds.",
+      "value": 3000000,
+      "source": {
+        "name": "MeasuringWorth, Five Ways to Compute the Relative Value of a UK Pound Amount, 1270 to Present (real price, 1760 to 2025)",
+        "url": "https://www.measuringworth.com/calculators/ukcompare/",
+        "stamp": "MeasuringWorth",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "officialdata.org, UK inflation calculator, 1760 (ONS composite price index)",
+          "url": "https://officialdata.org/uk/inflation/1760?amount=13513",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-discharge-today",
+      "claim": "In England and Wales today, a bankrupt is usually released ('discharged') automatically from bankruptcy restrictions and debts after 12 months.",
+      "value": 12,
+      "source": {
+        "name": "GOV.UK, Becoming bankrupt: when bankruptcy ends",
+        "stamp": "GOV.UK",
+        "url": "https://www.gov.uk/becoming-bankrupt/when-bankruptcy-ends",
+        "tier": "primary"
+      }
     }
   ]
 }
