@@ -6,7 +6,7 @@
       "value": 283,
       "source": {
         "name": "U.S. Energy Information Administration, Weekly U.S. Ending Stocks of Crude Oil in SPR (WCSSTUS1), released 10/15/2026",
-        "stamp": "U.S. EIA, Oct. 2026",
+        "stamp": "EIA, 2026",
         "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCSSTUS1&f=W",
         "tier": "primary"
       },
@@ -28,7 +28,7 @@
       "claim": "On March 11, 2026, the Department of Energy announced a 172 million barrel release from the Strategic Petroleum Reserve, the U.S. share of a 400 million barrel IEA collective action, in response to supply disruptions tied to the Middle East war and the Strait of Hormuz crisis.",
       "source": {
         "name": "Rigzone, USA Continues Strategic Petroleum Reserve Release, 5 Oct 2026",
-        "stamp": "Rigzone, Oct. 2026",
+        "stamp": "Rigzone, 2026",
         "url": "https://www.rigzone.com/news/usa_continues_strategic_petroleum_reserve_release-05-oct-2026-184770-article/",
         "tier": "secondary"
       },
@@ -61,7 +61,7 @@
       "value": 1000000000,
       "source": {
         "name": "U.S. Department of Energy, SPR Origins",
-        "stamp": "U.S. Dept. of Energy",
+        "stamp": "U.S. Energy Dept.",
         "url": "https://www.energy.gov/node/4040106",
         "tier": "primary"
       },
@@ -78,7 +78,7 @@
       "claim": "In April 1977 the government acquired several existing salt caverns on the Gulf Coast as the first storage sites, and on July 21, 1977 the first oil arrived: approximately 412,000 barrels of Saudi Arabian light crude.",
       "source": {
         "name": "U.S. Department of Energy, SPR Origins",
-        "stamp": "U.S. Dept. of Energy",
+        "stamp": "U.S. Energy Dept.",
         "url": "https://www.energy.gov/node/4040106",
         "tier": "primary"
       }
@@ -89,7 +89,7 @@
       "value": 61,
       "source": {
         "name": "Bipartisan Policy Center, How the U.S. Strategic Petroleum Reserve Works",
-        "stamp": "Bipartisan Policy Center",
+        "stamp": "Bipartisan Policy Ctr.",
         "url": "https://bipartisanpolicy.org/explainer/how-the-u-s-strategic-petroleum-reserve-works/",
         "tier": "secondary"
       },

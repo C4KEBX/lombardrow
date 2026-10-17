@@ -19,41 +19,49 @@
       "w": 0.3
     },
     "ending": {
-      "prompt": "What are you paying for gas right now?",
-      "atWord": "What"
+      "prompt": "Refill it, or let it run down?",
+      "atWord": "Refill"
     }
   },
   "audio": {
-    "music": "feel-it-coming"
+    "music": null
   },
   "scenes": [
     {
       "id": "hook",
       "type": "archival",
       "brisk": true,
-      "narration": "America's emergency oil is at its lowest since 1982. And it's kept in caves of salt.",
+      "narration": "America's emergency oil just hit its lowest since 1982, during a Middle East war. And it's kept in caves of salt.",
       "speaks": [
         "f-spr-low",
+        "f-release",
         "f-caverns"
       ],
       "microhooks": [
         "And it's kept in caves of salt."
       ],
       "props": {
-        "title": "An empty pump, 1973",
-        "assetId": "gas-empty",
+        "title": "The Strategic Petroleum Reserve",
+        "assetId": "spr-wellpad",
         "layout": "bleed",
         "shots": [
           {
-            "x": 0.66,
-            "y": 0.55,
-            "w": 0.3
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.35
           },
           {
             "atWord": "lowest",
-            "assetId": "spr-wellpad",
+            "assetId": "spr-pumps",
             "x": 0.5,
             "y": 0.5,
+            "w": 0.6
+          },
+          {
+            "atWord": "war.",
+            "assetId": "hormuz-night",
+            "x": 0.55,
+            "y": 0.45,
             "w": 0.35
           },
           {
@@ -89,17 +97,15 @@
           },
           {
             "atWord": "crisis,",
-            "assetId": "hormuz-night",
-            "x": 0.55,
-            "y": 0.45,
-            "w": 0.35
+            "x": 0.62,
+            "y": 0.4,
+            "w": 0.2
           },
           {
             "atWord": "releasing",
-            "assetId": "spr-pumps",
             "x": 0.5,
             "y": 0.5,
-            "w": 0.6
+            "w": 0.37
           }
         ]
       }
@@ -238,7 +244,7 @@
     {
       "id": "salt",
       "type": "archival",
-      "narration": "The government bought salt caverns on the Gulf Coast. The first oil arrived in July 1977.",
+      "narration": "The government acquired salt caverns. The first oil arrived in July 1977.",
       "speaks": [
         "f-first-oil"
       ],
@@ -275,9 +281,11 @@
     {
       "id": "today",
       "type": "archival",
-      "narration": "Today it's 61 caverns in Texas and Louisiana. What are you paying for gas right now?",
+      "narration": "Today it's 61 salt caverns in Texas and Louisiana. Salt doesn't let oil through. But it holds under a third of Ford's billion. Refill it, or let it run down?",
       "speaks": [
-        "f-caverns"
+        "f-caverns",
+        "f-spr-low",
+        "f-epca"
       ],
       "props": {
         "title": "The Strategic Petroleum Reserve",
@@ -297,14 +305,31 @@
             "w": 0.4
           },
           {
-            "atWord": "What",
+            "atWord": "Salt",
+            "assetId": "spr-wellhead",
+            "x": 0.45,
+            "y": 0.4,
+            "w": 0.5
+          },
+          {
+            "atWord": "third",
+            "assetId": "spr-site",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "Refill",
             "assetId": "gas-empty",
             "x": 0.66,
             "y": 0.55,
             "w": 0.3
           }
         ]
-      }
+      },
+      "microhooks": [
+        "But it holds under a third of Ford's billion."
+      ]
     }
   ]
 }
