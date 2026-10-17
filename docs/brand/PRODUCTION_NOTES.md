@@ -69,6 +69,11 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 
 - **Pictures must not mislabel people (2026-10-12).** No. 005's draft put "a rough and ready Irishman" over the Black man in Edmonds's *All Talk and No Work*. When a line names a person or group, the picture under it shows that person, or a document instead.
 
+## Viral & trending
+
+- **A shorter T-series on this week's news (2026-10-17).** Justin: shorter posts on current, viral topics that tie into the channel, to drive followers to the main videos; "they don't need to be over 62s"; the branding should stay familiar. Numbered T-01 on (door 901 on), 20 to 60 s, TikTok only with no music bed ("we wont need any of these with music. for tiktok only"), otherwise every rule here applies. See `docs/brand/TRENDING.md`.
+- **TikTok uploads have no music bed (2026-10-17).** Justin: "using tiktok music performs much better." The TikTok file is voice and effects only; the music is added in the app.
+
 ## Earlier decisions
 
 - When captions and the source stamp would overlap, the stamp moves (2026-10-08).

@@ -1,0 +1,130 @@
+{
+  "assets": [
+    {
+      "id": "gas-empty",
+      "file": "assets/gas-empty.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:GAS_SHORTAGE_-_NARA_-_548175.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/GAS_SHORTAGE_-_NARA_-_548175.jpg",
+      "license": "public-domain",
+      "credit": "David Falconer, EPA Documerica, 1973. Public domain.",
+      "depicts": "A gas pump in Oregon with a hand-lettered EMPTY sign, June 1973, during the shortage before the embargo; illustrative of empty pumps."
+    },
+    {
+      "id": "no-gas",
+      "file": "assets/no-gas.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%22NO_GAS%22_SIGNS_WERE_A_COMMON_SIGHT_IN_OREGON_DURING_THE_FALL_OF_1973,_SUCH_AS_AT_THIS_STATION_IN_LINCOLN_CITY_ALONG..._-_NARA_-_555416.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/%22NO_GAS%22_SIGNS_WERE_A_COMMON_SIGHT_IN_OREGON_DURING_THE_FALL_OF_1973%2C_SUCH_AS_AT_THIS_STATION_IN_LINCOLN_CITY_ALONG..._-_NARA_-_555416.jpg",
+      "license": "public-domain",
+      "credit": "David Falconer, EPA Documerica, 1973. Public domain.",
+      "depicts": "A 'Sorry... No gas today' sign at a station in Lincoln City, Oregon, October 1973."
+    },
+    {
+      "id": "gas-line",
+      "file": "assets/gas-line.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:AFTER_HOURS_IN_A_GASOLINE_LINE_A_DRIVER_COULD_ARRIVE_AT_THE_PUMPS_AND_FIND_OUT_THAT_THE_CAR_AHEAD_OF_HIM_WAS_THE_LAST..._-_NARA_-_555459.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4c/AFTER_HOURS_IN_A_GASOLINE_LINE_A_DRIVER_COULD_ARRIVE_AT_THE_PUMPS_AND_FIND_OUT_THAT_THE_CAR_AHEAD_OF_HIM_WAS_THE_LAST..._-_NARA_-_555459.jpg",
+      "license": "public-domain",
+      "credit": "David Falconer, EPA Documerica, 1973. Public domain.",
+      "depicts": "A line of cars at a Portland, Oregon gas station, December 1973; the last car carries a 'Sorry! Temporarily out of gas' sign."
+    },
+    {
+      "id": "odd-even",
+      "file": "assets/odd-even.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:THE_STATE_OF_OREGON_WAS_THE_FIRST_TO_GO_TO_A_SYSTEM_OF_ODD_AND_EVEN_NUMBERS_DURING_THE_GASOLINE_CRISIS_IN_THE_FALL..._-_NARA_-_555489.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/THE_STATE_OF_OREGON_WAS_THE_FIRST_TO_GO_TO_A_SYSTEM_OF_ODD_AND_EVEN_NUMBERS_DURING_THE_GASOLINE_CRISIS_IN_THE_FALL..._-_NARA_-_555489.jpg",
+      "license": "public-domain",
+      "credit": "David Falconer, EPA Documerica, 1974. Public domain.",
+      "depicts": "An Oregon gas station with an 'Even numbers only' sign under odd-even rationing, February 1974."
+    },
+    {
+      "id": "out-of-gas",
+      "file": "assets/out-of-gas.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gas_station_attendants_peer_over_their_%22out_of_gas%22_sign_in_Portland_-_NARA_-_555434.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Gas_station_attendants_peer_over_their_%22out_of_gas%22_sign_in_Portland_-_NARA_-_555434.jpg",
+      "license": "public-domain",
+      "credit": "David Falconer, EPA Documerica, 1973. Public domain.",
+      "depicts": "Gas station attendants in Portland, Oregon, behind a 'Sorry no gasoline' sign, November 1973."
+    },
+    {
+      "id": "hormuz-day",
+      "file": "assets/hormuz-day.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Strait_of_Hormuz_(MODIS_2020-12-04).jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Strait_of_Hormuz_%28MODIS_2020-12-04%29.jpg",
+      "license": "public-domain",
+      "credit": "NASA MODIS, 2020. Public domain.",
+      "depicts": "NASA satellite image of the Strait of Hormuz between Iran and the Arabian Peninsula, December 2020."
+    },
+    {
+      "id": "hormuz-night",
+      "file": "assets/hormuz-night.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:ISS-46_Gulf_of_Oman_with_Strait_of_Hormuz_at_night.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b4/ISS-46_Gulf_of_Oman_with_Strait_of_Hormuz_at_night.jpg",
+      "license": "public-domain",
+      "credit": "NASA, ISS Expedition 46, 2016. Public domain.",
+      "depicts": "The Gulf of Oman and the Strait of Hormuz at night from the International Space Station, January 2016."
+    },
+    {
+      "id": "ford-1975",
+      "file": "assets/ford-1975.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:President_Gerald_R._Ford_Making_a_Statement_in_the_White_House_Press_Briefing_Room_Upon_Signing_S._622,_the_Energy_Policy_and_Conservation_Act_-_NARA_-_23898561.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/President_Gerald_R._Ford_Making_a_Statement_in_the_White_House_Press_Briefing_Room_Upon_Signing_S._622%2C_the_Energy_Policy_and_Conservation_Act_-_NARA_-_23898561.jpg",
+      "license": "public-domain",
+      "credit": "White House photo, 22 Dec 1975 (NARA). Public domain.",
+      "depicts": "President Ford speaking in the White House press briefing room on signing the Energy Policy and Conservation Act, 22 December 1975."
+    },
+    {
+      "id": "spr-wellhead",
+      "file": "assets/spr-wellhead.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_032.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/United_States_Strategic_Petroleum_Reserve_032.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "A wellhead over a crude oil storage cavern at Bryan Mound, Texas, Strategic Petroleum Reserve."
+    },
+    {
+      "id": "spr-site",
+      "file": "assets/spr-site.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_098.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/United_States_Strategic_Petroleum_Reserve_098.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "Aerial view of a Strategic Petroleum Reserve site: pump pad, crude oil separator pond and brine pond."
+    },
+    {
+      "id": "spr-piping",
+      "file": "assets/spr-piping.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_092.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/United_States_Strategic_Petroleum_Reserve_092.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "Cavern piping on a well pad at a Strategic Petroleum Reserve site."
+    },
+    {
+      "id": "spr-pipes",
+      "file": "assets/spr-pipes.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_039.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/United_States_Strategic_Petroleum_Reserve_039.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "Crude oil and raw water/brine pipes on a high pressure pump pad, Strategic Petroleum Reserve."
+    },
+    {
+      "id": "spr-wellpad",
+      "file": "assets/spr-wellpad.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_063.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d2/United_States_Strategic_Petroleum_Reserve_063.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "Aerial view of a well pad at West Hackberry, Louisiana, Strategic Petroleum Reserve."
+    },
+    {
+      "id": "spr-pumps",
+      "file": "assets/spr-pumps.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:United_States_Strategic_Petroleum_Reserve_060.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ef/United_States_Strategic_Petroleum_Reserve_060.jpg",
+      "license": "public-domain",
+      "credit": "U.S. Department of Energy. Public domain.",
+      "depicts": "Crude oil pumps on the high pressure pump pads at a Strategic Petroleum Reserve site."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "doorNo": 901,
+  "pillar": "hooks",
+  "storyShape": "then_to_now",
+  "hookType": "surprising_number",
+  "era": "contemporary",
+  "region": "united_states",
+  "primaryVisual": "object_close_up",
+  "visualMetaphor": "a wellhead over a salt cavern, the tap on America's emergency oil",
+  "paletteLead": "ink",
+  "musicBed": null,
+  "title": "America's emergency oil, hidden in salt",
+  "angle": "Trending T-01. The U.S. Strategic Petroleum Reserve is at its lowest since 1982 (EIA, week ending 9 Oct 2026) after releases since March during the Strait of Hormuz crisis. It exists because of the 1973 embargo: Ford signed the law in December 1975 for up to a billion barrels, the first Saudi crude arrived in July 1977, and today it is 61 salt caverns in Texas and Louisiana holding under a third of that billion.",
+  "sources": [
+    "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCSSTUS1&f=W",
+    "https://www.energy.gov/node/4040106",
+    "https://www.energy.gov/node/4856800",
+    "https://history.state.gov/milestones/1969-1976/oil-embargo",
+    "https://bipartisanpolicy.org/explainer/how-the-u-s-strategic-petroleum-reserve-works/",
+    "https://www.rigzone.com/news/usa_continues_strategic_petroleum_reserve_release-05-oct-2026-184770-article/",
+    "https://foxbusiness.com/markets/oil-us-strategic-petroleum-reserve-falls-lowest-level-since-1983"
+  ]
+}

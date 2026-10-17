@@ -3,6 +3,7 @@ import type { Facts } from "../schema/facts";
 import { figureMatches, figuresIn } from "../schema/figures";
 import { factIdsOf, sceneAssetIds, type Storyboard } from "../schema/storyboard";
 import { factNumbers } from "../schema/validate";
+import { doorLabelText } from "../devices/label";
 
 type Fact = Facts["facts"][number];
 
@@ -59,7 +60,7 @@ const cell = (text: string): string => text.replace(/\|/g, "\\|").replace(/\n/g,
 
 /** Markdown for the reviewer: script table, then a checklist of facts and images. */
 export function renderScriptMarkdown(doc: ScriptDoc): string {
-  const no = String(doc.doorNo).padStart(3, "0");
+  const no = doorLabelText(doc.doorNo);
   const rows = doc.lines.map((l) => {
     const sources = l.factIds.length ? l.factIds.join(", ") : "none named";
     const note = l.basis === "scene" ? " (scene's facts; confirm the sentence)" : l.basis === "none" ? " (confirm it states no fact)" : "";

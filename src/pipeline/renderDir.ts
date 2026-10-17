@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { isTrending, trendingNo } from "../devices/label";
 
 /**
  * Everything made for one video lives in one folder, renders/no-XXX/ (Justin, 2026-10-09):
@@ -11,7 +12,9 @@ export const RENDERS_ENV = "LOMBARD_RENDERS_DIR";
 export const RENDER_STAGES = ["factcheck", "final", "drafts", "audio", "research"] as const;
 export type RenderStage = (typeof RENDER_STAGES)[number];
 
-export const doorFolder = (doorNo: number): string => `no-${String(doorNo).padStart(3, "0")}`;
+/** no-004 for a main door; t-001 for a trending one (door 901), which lives in the shared trending/ folder. */
+export const doorFolder = (doorNo: number): string =>
+  isTrending(doorNo) ? `t-${String(trendingNo(doorNo)).padStart(3, "0")}` : `no-${String(doorNo).padStart(3, "0")}`;
 
 export const rendersRoot = (env: NodeJS.ProcessEnv = process.env): string => path.resolve(env[RENDERS_ENV] || "renders");
 

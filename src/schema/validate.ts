@@ -3,6 +3,7 @@ import { DOOR_HEADER_PX, lanesFor } from "../design/tokens";
 import type { Facts, SourceTier } from "./facts";
 import { figureMatches, figuresIn } from "./figures";
 import { COUNTRY_NAMES, regionTouchesBbox, suggestCountries } from "../map/atlas";
+import { isTrending } from "../devices/label";
 import { deepEqual } from "./deepEqual";
 import { emphasisTarget } from "./emphasis";
 import { StoryboardError, factIdsOf, type Scene, type Storyboard } from "./storyboard";
@@ -192,8 +193,15 @@ function assertOnScreenFigures(scene: Extract<Scene, { type: "flow-diagram" | "l
 
 export type LengthWindow = { minMs: number; maxMs: number };
 
+/**
+ * Trending videos (T-01 on) are short posts that send viewers to the main videos; the 62 s monetization floor does
+ * not apply to them (Justin, 2026-10-17: "they don't need to be over 62s").
+ */
+export const TRENDING_VIDEO_MS = { min: 20_000, max: 60_000 } as const;
+
 /** The length window for a storyboard: 62-70 s, unless Justin waived the floor for this video (`meta.lengthWaiver`). */
-export function lengthWindow(sb?: { meta: { lengthWaiver?: { minSeconds: number } } }): LengthWindow {
+export function lengthWindow(sb?: { meta: { doorNo?: number; lengthWaiver?: { minSeconds: number } } }): LengthWindow {
+  if (sb?.meta.doorNo !== undefined && isTrending(sb.meta.doorNo)) return { minMs: TRENDING_VIDEO_MS.min, maxMs: TRENDING_VIDEO_MS.max };
   const waiver = sb?.meta.lengthWaiver;
   return { minMs: waiver ? waiver.minSeconds * 1000 : MIN_VIDEO_MS, maxMs: MAX_VIDEO_MS };
 }

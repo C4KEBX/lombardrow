@@ -1,7 +1,8 @@
 import type { Facts } from "../schema/facts";
 import { factIdsOf, type Scene, type Storyboard } from "../schema/storyboard";
 import { adviceLint } from "./adviceLint";
-import { TARGET_SECONDS, countWords, estimateSeconds } from "./estimate";
+import { lengthWindow } from "../schema/validate";
+import { countWords, estimateSeconds } from "./estimate";
 import { factTokens } from "./verifyFacts";
 import type { ScriptLine } from "./scriptDoc";
 import type { VerifyResult, VerifyStatus } from "./verifyTypes";
@@ -76,9 +77,10 @@ export function buildReviewModel(
   const warnings: string[] = sb.scenes.flatMap(untracedTextWarnings);
   const narrations = sb.scenes.map((s) => s.narration);
   const estimatedSeconds = Math.round(estimateSeconds(narrations) * 10) / 10;
-  const minSeconds = sb.meta.lengthWaiver?.minSeconds ?? TARGET_SECONDS.min;
-  if (estimatedSeconds < minSeconds || estimatedSeconds > TARGET_SECONDS.max) {
-    warnings.push(`estimated length ${estimatedSeconds} s is outside ${minSeconds}-${TARGET_SECONDS.max} s`);
+  const window = lengthWindow(sb);
+  const [minSeconds, maxSeconds] = [window.minMs / 1000, window.maxMs / 1000];
+  if (estimatedSeconds < minSeconds || estimatedSeconds > maxSeconds) {
+    warnings.push(`estimated length ${estimatedSeconds} s is outside ${minSeconds}-${maxSeconds} s`);
   }
   for (const hit of adviceLint(sb)) warnings.push(`Scene "${hit.sceneId}" narration contains advice-style phrasing: "${hit.phrase}"`);
   for (const fact of facts.facts) {
