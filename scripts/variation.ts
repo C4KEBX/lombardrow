@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseStoryboard } from "../src/schema/storyboard";
-import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../src/schema/validate";
+import { lengthWindow } from "../src/schema/validate";
 import { parseFlags } from "../src/skill/flags";
-import { VISUAL_SCENES, checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, suggest } from "../src/variation/index";
+import { VISUAL_SCENES, checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, specFor, suggest } from "../src/variation/index";
 
 const USAGE = `Usage:
   npm run variation -- suggest [--history H]
@@ -33,9 +33,10 @@ try {
     const sb = sbPath ? parseStoryboard(readJson(sbPath)) : undefined;
     const duration = values.has("--duration") ? Number(values.get("--duration")) : plan.durationSeconds;
     const script = sb ? scriptOf(sb) : plan.script;
-    const report = checkPlan(plan, history, spec, script);
+    const report = checkPlan(plan, history, specFor(spec, sb), script);
     const reasons = [...report.reasons, ...(sb ? crossCheck(plan, sb, spec) : [])];
-    if (duration !== undefined && (duration < MIN_VIDEO_MS / 1000 || duration > MAX_VIDEO_MS / 1000)) reasons.push(`length ${duration} s is outside ${MIN_VIDEO_MS / 1000}-${MAX_VIDEO_MS / 1000} s`);
+    const window = lengthWindow(sb);
+    if (duration !== undefined && (duration < window.minMs / 1000 || duration > window.maxMs / 1000)) reasons.push(`length ${duration} s is outside ${window.minMs / 1000}-${window.maxMs / 1000} s`);
     if (command === "record") {
       if (!sb || duration === undefined) throw new Error(USAGE);
       if (reasons.length) throw new Error(`not recording a plan that fails:\n  ${reasons.join("\n  ")}`);

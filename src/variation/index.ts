@@ -148,6 +148,16 @@ function dimensionReasons(name: DimensionName, value: string, history: readonly 
 export type VariationReport = { ok: boolean; reasons: string[] };
 
 /** Checks a plan against recent videos. With a storyboard, its narration is the script. */
+/**
+ * The spec for one storyboard: with a length waiver (Justin's word for one video), the word floor shrinks in
+ * proportion to the waived length floor. Everything else stays.
+ */
+export function specFor(spec: Spec, sb?: Pick<Storyboard, "meta">): Spec {
+  const waiver = sb?.meta.lengthWaiver;
+  if (!waiver) return spec;
+  return { ...spec, script: { ...spec.script, minWords: Math.floor((spec.script.minWords * waiver.minSeconds) / 62) } };
+}
+
 export function checkPlan(plan: Plan, history: readonly HistoryEntry[], spec: Spec, script = plan.script): VariationReport {
   const reasons: string[] = DIMENSIONS.flatMap((d) => dimensionReasons(d, plan[d], history, spec));
 

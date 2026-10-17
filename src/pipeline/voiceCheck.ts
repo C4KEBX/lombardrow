@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { VIDEO } from "../design/tokens";
 import { voiceSignoff } from "../voice/signoff";
 import { parseStoryboard } from "../schema/storyboard";
-import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
+import { lengthWindow, type LengthWindow } from "../schema/validate";
 import { voiceFor, type VoiceProvider, type VoiceResult } from "../voice/types";
 import { imagesFor } from "./assets";
 import { buildVideo } from "./buildVideo";
@@ -12,6 +12,7 @@ export type VoiceReport = {
   closeMs: number;
   totalMs: number;
   withinGate: boolean;
+  window: LengthWindow;
 };
 
 const readJson = (file: string): unknown => JSON.parse(fs.readFileSync(file, "utf-8"));
@@ -37,11 +38,13 @@ export async function voiceCheck(storyboardPath: string, factsPath: string, prov
     imagesFor(storyboardPath),
   );
   const totalMs = framesMs(built.totalFrames);
+  const window = lengthWindow(storyboard);
   return {
     scenes: built.scenes.map((s) => ({ id: s.id, voiceMs: voices[s.id].audioMs, sceneMs: framesMs(s.durationFrames) })),
     closeMs: framesMs(built.close.frames),
     totalMs,
-    withinGate: totalMs >= MIN_VIDEO_MS && totalMs <= MAX_VIDEO_MS,
+    withinGate: totalMs >= window.minMs && totalMs <= window.maxMs,
+    window,
   };
 }
 
@@ -54,8 +57,8 @@ export function formatVoiceReport(report: VoiceReport): string {
     ...report.scenes.map((x) => `${x.id.padEnd(width)}  ${s(x.voiceMs).padStart(5)}   ${s(x.sceneMs)}`),
     `${"(door)".padEnd(width)}      -   ${s(report.closeMs)}`,
     "",
-    `Total ${s(report.totalMs)} (gate ${MIN_VIDEO_MS / 1000}-${MAX_VIDEO_MS / 1000}s): ${
-      report.withinGate ? "OK" : report.totalMs < MIN_VIDEO_MS ? `SHORT by ${s(MIN_VIDEO_MS - report.totalMs)}` : `LONG by ${s(report.totalMs - MAX_VIDEO_MS)}`
+    `Total ${s(report.totalMs)} (gate ${report.window.minMs / 1000}-${report.window.maxMs / 1000}s): ${
+      report.withinGate ? "OK" : report.totalMs < report.window.minMs ? `SHORT by ${s(report.window.minMs - report.totalMs)}` : `LONG by ${s(report.totalMs - report.window.maxMs)}`
     }`,
   ];
   return lines.join("\n");

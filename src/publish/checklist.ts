@@ -1,12 +1,12 @@
-import { MAX_VIDEO_MS, MIN_VIDEO_MS } from "../schema/validate";
+import { lengthWindow, type LengthWindow } from "../schema/validate";
 import { FOOTER, type PublishPackage } from "./package";
 
-const MIN_S = MIN_VIDEO_MS / 1000;
-const MAX_S = MAX_VIDEO_MS / 1000;
 
 export type AutoChecks = {
   /** Real length from produce's manifest, in seconds. */
   durationSeconds?: number;
+  /** The length window, when a waiver lowers the floor for this video. */
+  window?: LengthWindow;
   /** Reasons the final variation check failed; empty when it passed; undefined when it was not run. */
   variation?: string[];
   /** Words and numbers the listen-back found wrong; undefined when it was not run. */
@@ -23,8 +23,10 @@ const box = (ok: boolean | undefined, text: string, why = ""): string =>
 /** The brand guidelines' pre-publish checklist, with the items the pipeline can verify already ticked. */
 export function renderChecklist(pkg: PublishPackage, auto: AutoChecks): string {
   const d = auto.durationSeconds;
+  const window = auto.window ?? lengthWindow();
+  const [MIN_S, MAX_S] = [window.minMs / 1000, window.maxMs / 1000];
   const lengthOk = d === undefined ? undefined : d >= MIN_S && d <= MAX_S;
-  const descriptionsOk = [pkg.youtube.description, pkg.tiktok.caption, pkg.instagram.caption].every(
+  const descriptionsOk = [pkg.youtube.description, pkg.tiktok.caption].every(
     (t) => t.includes(FOOTER) && pkg.sources.every((s) => t.includes(s.url)),
   );
   const lb = auto.listenBack;
@@ -45,7 +47,7 @@ export function renderChecklist(pkg: PublishPackage, auto: AutoChecks): string {
         ? human("Captions checked word for word", `listen closely at the ${lb.mismatches + lb.drift} places in listen-back.md (${lb.mismatches} words differ, ${lb.drift} captions out of sync)`)
         : box(undefined, "Captions checked word for word", "run `npm run listen-back`"),
     box(true, "Photorealistic AI scenes disclosed", pkg.aiDisclosure.required ? `REQUIRED for ${pkg.aiDisclosure.scenes.join(", ")}: ${pkg.aiDisclosure.reason}` : `none needed (${pkg.aiDisclosure.reason})`),
-    box(descriptionsOk, "Description has the sources and the standard footer", "youtube.txt, tiktok.txt, instagram.txt"),
+    box(descriptionsOk, "Description has the sources and the standard footer", "youtube.txt, tiktok.txt"),
     box(auto.thumbnails.length > 0, "Door number, title and thumbnail ready for every platform", auto.thumbnails.join(", ")),
     human("Final plan appended to history.jsonl after publishing", "`npm run variation -- record --plan ... --storyboard ... --duration ...`"),
     "",

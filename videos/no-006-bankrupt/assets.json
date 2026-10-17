@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "id": "bankers-1340",
+      "file": "assets/bankers-1340.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Avarice1.png",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Avarice1.png",
+      "license": "public-domain",
+      "credit": "Cocharelli, Italian bankers, c. 1340. Public domain.",
+      "depicts": "Illustrative: a 14th-century Genoese manuscript painting of bankers at their counting table (the banca); not a bankruptcy."
+    },
+    {
+      "id": "boe-note",
+      "file": "assets/boe-note.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:70_BoE_issue_888103.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/70_BoE_issue_888103.jpg",
+      "license": "public-domain",
+      "credit": "Bank of England note, 18th century. Public domain.",
+      "depicts": "Illustrative: an 18th-century Bank of England note, front and back; not one of Perrott's notes."
+    },
+    {
+      "id": "ludgate",
+      "file": "assets/ludgate.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Morris_-_View_of_the_North_front_of_Ludgate_Street_from_Ludgate_Hill_-_B1977.14.18767_-_Yale_Center_for_British_Art.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Thomas_Morris_-_View_of_the_North_front_of_Ludgate_Street_from_Ludgate_Hill_-_B1977.14.18767_-_Yale_Center_for_British_Art.jpg",
+      "license": "cc0",
+      "credit": "Thomas Morris, Ludgate Hill, London. Yale Center, CC0.",
+      "depicts": "An 18th-century print of shop fronts on Ludgate Street seen from Ludgate Hill, London; Perrott's own shop is not identified."
+    },
+    {
+      "id": "newgate-1780",
+      "file": "assets/newgate-1780.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:An_exact_representation_of_the_Burning,_Plundering_and_Destruction_of_Newgate_by_the_rioters,_on_the_memorable_7th_of_June_1780_(BM_1880,1113.4252).jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/An_exact_representation_of_the_Burning%2C_Plundering_and_Destruction_of_Newgate_by_the_rioters%2C_on_the_memorable_7th_of_June_1780_%28BM_1880%2C1113.4252%29.jpg",
+      "license": "public-domain",
+      "credit": "Henry Roberts, Newgate prison, 1781. Public domain.",
+      "depicts": "Newgate prison in London, shown during the Gordon riots of 1780, 19 years after Perrott; used for the prison where he was held."
+    },
+    {
+      "id": "rake-arrest",
+      "file": "assets/rake-arrest.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:William_Hogarth_-_A_Rake%27s_Progress,_Plate_4,_Arrested_for_Debt_-_Google_Art_Project.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/6/65/William_Hogarth_-_A_Rake%27s_Progress%2C_Plate_4%2C_Arrested_for_Debt_-_Google_Art_Project.jpg",
+      "license": "public-domain",
+      "credit": "William Hogarth, Arrested for Debt, 1735. Public domain.",
+      "depicts": "Illustrative: Hogarth's 1735 print of a young man arrested for debt in a London street; fiction, not a bankrupt named here."
+    },
+    {
+      "id": "rake-fleet",
+      "file": "assets/rake-fleet.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:William_Hogarth_-_A_Rake%27s_Progress,_Plate_VII,_In_Fleet_Street_Prison_-_B1981.25.1417_-_Yale_Center_for_British_Art.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/William_Hogarth_-_A_Rake%27s_Progress%2C_Plate_VII%2C_In_Fleet_Street_Prison_-_B1981.25.1417_-_Yale_Center_for_British_Art.jpg",
+      "license": "cc0",
+      "credit": "William Hogarth, In the Fleet Prison, 1735. Yale, CC0.",
+      "depicts": "Illustrative: Hogarth's 1735 print of a debtor in the Fleet prison, London; fiction."
+    },
+    {
+      "id": "tyburn-1747",
+      "file": "assets/tyburn-1747.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Idle_%27Prentice_Executed_at_Tyburn-_Industry_and_Idleness,_plate_11_MET_DP825278.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/16/The_Idle_%27Prentice_Executed_at_Tyburn-_Industry_and_Idleness%2C_plate_11_MET_DP825278.jpg",
+      "license": "cc0",
+      "credit": "William Hogarth, a London hanging, 1747. The Met, CC0.",
+      "depicts": "Illustrative: Hogarth's 1747 print of a crowd at a hanging at Tyburn, London; not Perrott, and not Smithfield."
+    }
+  ]
+}

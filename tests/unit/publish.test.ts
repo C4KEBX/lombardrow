@@ -60,20 +60,20 @@ describe("publish package", () => {
   it("uses the plan's title and the same door number on every platform", () => {
     expect(pkg.title).toBe(plan.title);
     expect(doorLabel(4)).toBe("No. 004");
-    for (const text of [pkg.youtube.title, pkg.youtube.description, pkg.tiktok.caption, pkg.instagram.caption]) expect(text).toContain("No. 004");
+    for (const text of [pkg.youtube.title, pkg.youtube.description, pkg.tiktok.caption]) expect(text).toContain("No. 004");
     expect(pkg.youtube.title.length).toBeLessThanOrEqual(YOUTUBE_TITLE_MAX);
   });
   it("lists every source link once and ends with the standard footer and tags", () => {
     expect(pkg.sources.map((s) => s.url)).toHaveLength(4);
-    for (const text of [pkg.youtube.description, pkg.tiktok.caption, pkg.instagram.caption]) {
+    for (const text of [pkg.youtube.description, pkg.tiktok.caption]) {
       expect(text).toContain(FOOTER);
       for (const s of pkg.sources) expect(text).toContain(s.url);
     }
     expect(FOOTER).toBe("Sources are listed above. Education and history only, not financial, investment, tax or legal advice. Spot an error? Comment and we will correct it.");
   });
-  it("leads TikTok with the title and Instagram with the hook", () => {
+  it("leads TikTok with the title and writes only TikTok and YouTube", () => {
     expect(pkg.tiktok.caption.split("\n")[0]).toBe(`${plan.title} | Lombard Row No. 004`);
-    expect(pkg.instagram.caption.split("\n")[0]).toBe("How long does it take money to double?");
+    expect(Object.keys(pkg)).not.toContain("instagram");
   });
   it("falls back to the storyboard title and shortens a long YouTube title", () => {
     expect(buildPublishPackage(sb, facts).title).toBe("The Rule of 72");
@@ -96,7 +96,7 @@ describe("publish package", () => {
     };
     const p = buildPublishPackage(sb, facts, { plan, music: track });
     expect(p.musicCredit).toBe(track.credit);
-    for (const text of [p.youtube.description, p.tiktok.caption, p.instagram.caption]) expect(text).toContain(`Music: ${track.credit}`);
+    for (const text of [p.youtube.description, p.tiktok.caption]) expect(text).toContain(`Music: ${track.credit}`);
     expect(buildPublishPackage(sb, facts, { plan, music: { ...track, license: "licensed", credit: null } }).youtube.description).not.toContain("Music:");
     expect(pkg.musicCredit).toBeNull();
   });

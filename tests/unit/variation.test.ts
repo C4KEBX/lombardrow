@@ -4,7 +4,7 @@ import sbJson from "../../fixtures/no-004/rule-of-72.storyboard.json";
 import specJson from "../../variation/variation_spec.json";
 import { parseStoryboard } from "../../src/schema/storyboard";
 import {
-  VISUAL_SCENES, checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, suggest, type HistoryEntry, type Plan,
+  VISUAL_SCENES, checkPlan, crossCheck, parseHistory, parsePlan, parseSpec, scriptOf, specFor, suggest, type HistoryEntry, type Plan,
 } from "../../src/variation/index";
 
 const spec = parseSpec(specJson);
@@ -142,5 +142,14 @@ describe("check with a plan", () => {
     expect(checkStoryboard(sbJson, facts, { variation: { plan: planJson, history: [], spec } }).issues.map((i) => i.message)).toEqual(["script is 158 words (175-215)"]);
     const report = checkStoryboard(sbJson, facts, { variation: { plan: { ...planJson, paletteLead: "green" }, history: [past({ storyShape: "then_to_now" })], spec } });
     expect(report.issues.map((i) => i.stage)).toEqual(["variation", "variation", "plan vs storyboard"]);
+  });
+});
+
+describe("specFor", () => {
+  it("keeps the spec without a waiver and scales the word floor with one", () => {
+    expect(specFor(spec, sb)).toBe(spec);
+    const waived = specFor(spec, { meta: { ...sb.meta, lengthWaiver: { minSeconds: 31, by: "Justin", reason: "test" } } });
+    expect(waived.script.minWords).toBe(Math.floor(spec.script.minWords / 2));
+    expect(waived.script.maxWords).toBe(spec.script.maxWords);
   });
 });

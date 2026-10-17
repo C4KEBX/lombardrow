@@ -5,6 +5,7 @@ import {
   assertDuration,
   assertFactsTraceable,
   assertVariety,
+  lengthWindow,
   MAX_VIDEO_MS,
   MIN_VIDEO_MS,
 } from "../../src/schema/validate";
@@ -66,5 +67,12 @@ describe("assertDuration", () => {
   });
   it("rejects NaN", () => {
     expect(() => assertDuration(NaN)).toThrow(StoryboardError);
+  });
+  it("takes a lower floor from a length waiver, keeping the 70 s cap", () => {
+    const window = lengthWindow({ meta: { lengthWaiver: { minSeconds: 40 } } });
+    expect(() => assertDuration(45_000, window)).not.toThrow();
+    expect(() => assertDuration(39_000, window)).toThrow(/40.*70/);
+    expect(() => assertDuration(70_001, window)).toThrow();
+    expect(lengthWindow({ meta: {} })).toEqual({ minMs: MIN_VIDEO_MS, maxMs: MAX_VIDEO_MS });
   });
 });

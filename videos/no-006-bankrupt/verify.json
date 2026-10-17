@@ -1,0 +1,113 @@
+[
+  {
+    "factId": "f-banca-rotta",
+    "url": "https://www.etymonline.com/word/bankrupt",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403",
+    "archiveUrl": "https://web.archive.org/web/20260829051104/https://www.etymonline.com/word/bankrupt"
+  },
+  {
+    "factId": "f-bench-myth",
+    "url": "https://www.etymonline.com/word/bankrupt",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403",
+    "archiveUrl": "https://web.archive.org/web/20260829051104/https://www.etymonline.com/word/bankrupt"
+  },
+  {
+    "factId": "f-1542",
+    "url": "https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/historical-background-on-the-bankruptcy-clause",
+    "found": [
+      "1542"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1542",
+        "sentence": "In 1542, during the reign of Henry VIII, Parliament passed what scholars generally consider England’s first bankruptcy law."
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20261012033750/https://www.law.cornell.edu/constitution-conan/article-1/section-8/clause-4/historical-background-on-the-bankruptcy-clause"
+  },
+  {
+    "factId": "f-1706-capital",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403",
+    "archiveUrl": "https://web.archive.org/web/20240622231236/https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj"
+  },
+  {
+    "factId": "f-discharge",
+    "url": "https://scholarship.law.duke.edu/dlj/vol59/iss7/1",
+    "found": [],
+    "missing": [],
+    "status": "partial",
+    "detail": "nothing numeric to check; read the source yourself",
+    "archiveUrl": "https://web.archive.org/web/20261012033821/https://scholarship.law.duke.edu/dlj/vol59/iss7/1/"
+  },
+  {
+    "factId": "f-perrott-shop",
+    "url": "https://www.thegazette.co.uk/London/issue/9998/page/4/data.pdf",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "content type application/pdf;charset=UTF-8 is not checkable text",
+    "archiveUrl": "https://web.archive.org/web/20261012035103/https://www.thegazette.co.uk/London/issue/9998/page/4/data.pdf"
+  },
+  {
+    "factId": "f-deficiency",
+    "url": "https://creditslips.org/2007/08/07/perrott-bankr-1/",
+    "found": [
+      "13513"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "13513",
+        "sentence": "there is a deficiency of the sum of 13,513 £ ."
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20261012035112/https://creditslips.org/2007/08/07/perrott-bankr-1/"
+  },
+  {
+    "factId": "f-half-notes",
+    "url": "https://creditslips.org/2007/08/08/perrott-bankr-2/",
+    "found": [
+      "1000"
+    ],
+    "missing": [],
+    "status": "supported",
+    "evidence": [
+      {
+        "token": "1000",
+        "sentence": "The other half of four of the notes turned up tied up in a rag at the bottom of Perrott’s trunk in Newgate, along with half a note for 1000 £."
+      }
+    ],
+    "archiveUrl": "https://web.archive.org/web/20260710233618/https://creditslips.org/2007/08/08/perrott-bankr-2/"
+  },
+  {
+    "factId": "f-perrott-hanged",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403",
+    "archiveUrl": "https://web.archive.org/web/20240622231236/https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj"
+  },
+  {
+    "factId": "f-four-hanged",
+    "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj",
+    "found": [],
+    "missing": [],
+    "status": "unreachable",
+    "detail": "HTTP 403",
+    "archiveUrl": "https://web.archive.org/web/20240622231236/https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1462&context=dlj"
+  }
+]

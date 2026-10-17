@@ -415,6 +415,13 @@ export const StoryboardSchema = z
        */
       hookLine: z.string().min(1).max(44).optional(),
       /**
+       * Lowers the 62 s floor for this one video, only on Justin's own words (quoted in `reason`). The 70 s cap and
+       * every other rule still hold. No. 006 is the first (2026-10-16).
+       */
+      lengthWaiver: z
+        .strictObject({ minSeconds: z.number().min(20).max(62), by: z.literal("Justin"), reason: z.string().min(1) })
+        .optional(),
+      /**
        * The cover (thumbnail): a close, bright crop of one image with a short line that makes a scroller want the
        * answer, instead of the plain door-number card (Justin, 2026-10-11: covers "should intrigue a potential
        * viewer, not just be a generic placeholder"). YouTube Shorts and X show a frame of the video instead, so open
