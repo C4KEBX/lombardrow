@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "title": "America's emergency oil, hidden in salt",
+    "theme": "lombard-row",
+    "paletteLead": "ink",
+    "doorNo": 901,
+    "series": "On the Row Today",
+    "voice": "en-GB-RyanNeural",
+    "open": "bleed",
+    "format": "fast",
+    "hookLine": "Emergency oil: lowest since 1982",
+    "cover": {
+      "line": "Emergency oil: lowest since 1982",
+      "mark": "lowest",
+      "assetId": "gas-empty",
+      "x": 0.66,
+      "y": 0.55,
+      "w": 0.3
+    },
+    "ending": {
+      "prompt": "What are you paying for gas right now?",
+      "atWord": "What"
+    }
+  },
+  "audio": {
+    "music": "feel-it-coming"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "type": "archival",
+      "brisk": true,
+      "narration": "America's emergency oil is at its lowest since 1982. And it's kept in caves of salt.",
+      "speaks": [
+        "f-spr-low",
+        "f-caverns"
+      ],
+      "microhooks": [
+        "And it's kept in caves of salt."
+      ],
+      "props": {
+        "title": "An empty pump, 1973",
+        "assetId": "gas-empty",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.66,
+            "y": 0.55,
+            "w": 0.3
+          },
+          {
+            "atWord": "lowest",
+            "assetId": "spr-wellpad",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.35
+          },
+          {
+            "atWord": "caves",
+            "assetId": "spr-wellhead",
+            "x": 0.45,
+            "y": 0.5,
+            "w": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "hormuz",
+      "type": "archival",
+      "brisk": true,
+      "narration": "With the Strait of Hormuz in crisis, Washington has been releasing it since March.",
+      "speaks": [
+        "f-release"
+      ],
+      "microhooks": [
+        "releasing it since March."
+      ],
+      "props": {
+        "title": "The Strait of Hormuz",
+        "assetId": "hormuz-day",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.6,
+            "y": 0.42,
+            "w": 0.35
+          },
+          {
+            "atWord": "crisis,",
+            "assetId": "hormuz-night",
+            "x": 0.55,
+            "y": 0.45,
+            "w": 0.35
+          },
+          {
+            "atWord": "releasing",
+            "assetId": "spr-pumps",
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "left",
+      "type": "big-number",
+      "narration": "By October 9th, about 283 million barrels were left. So why does it even exist?",
+      "speaks": [
+        "f-spr-low"
+      ],
+      "microhooks": [
+        "So why does it even exist?"
+      ],
+      "props": {
+        "value": 283,
+        "label": "million barrels left",
+        "factId": "f-spr-low"
+      },
+      "backdrop": {
+        "assetId": "spr-site",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "million",
+            "assetId": "spr-piping",
+            "x": 0.5,
+            "y": 0.6,
+            "w": 0.4
+          },
+          {
+            "atWord": "why",
+            "assetId": "gas-line",
+            "x": 0.55,
+            "y": 0.65,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "embargo",
+      "type": "archival",
+      "narration": "In 1973, Arab oil producers embargoed the United States. The price of a barrel doubled, then quadrupled.",
+      "speaks": [
+        "f-embargo"
+      ],
+      "microhooks": [
+        "doubled, then quadrupled."
+      ],
+      "props": {
+        "title": "Oregon, 1973 to 1974",
+        "assetId": "no-gas",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.45,
+            "y": 0.55,
+            "w": 0.37
+          },
+          {
+            "atWord": "embargoed",
+            "assetId": "gas-line",
+            "x": 0.6,
+            "y": 0.68,
+            "w": 0.28
+          },
+          {
+            "atWord": "price",
+            "assetId": "odd-even",
+            "x": 0.25,
+            "y": 0.55,
+            "w": 0.3
+          },
+          {
+            "atWord": "quadrupled.",
+            "assetId": "out-of-gas",
+            "x": 0.78,
+            "y": 0.6,
+            "w": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "ford",
+      "type": "kinetic-text",
+      "narration": "In December 1975, President Ford signed a law for a reserve of up to a billion barrels.",
+      "speaks": [
+        "f-epca"
+      ],
+      "microhooks": [
+        "up to a billion barrels."
+      ],
+      "props": {
+        "lines": [
+          "Up to",
+          "a billion",
+          "barrels"
+        ]
+      },
+      "cues": [
+        {
+          "atWord": "billion",
+          "do": "emphasize",
+          "text": "billion"
+        }
+      ],
+      "backdrop": {
+        "assetId": "ford-1975",
+        "shots": [
+          {
+            "x": 0.2,
+            "y": 0.42,
+            "w": 0.3
+          },
+          {
+            "atWord": "signed",
+            "x": 0.62,
+            "y": 0.6,
+            "w": 0.35
+          },
+          {
+            "atWord": "billion",
+            "x": 0.25,
+            "y": 0.5,
+            "w": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "salt",
+      "type": "archival",
+      "narration": "The government bought salt caverns on the Gulf Coast. The first oil arrived in July 1977.",
+      "speaks": [
+        "f-first-oil"
+      ],
+      "microhooks": [
+        "The first oil arrived in July 1977."
+      ],
+      "props": {
+        "title": "The Strategic Petroleum Reserve",
+        "assetId": "spr-site",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.4
+          },
+          {
+            "atWord": "caverns",
+            "assetId": "spr-wellhead",
+            "x": 0.45,
+            "y": 0.4,
+            "w": 0.5
+          },
+          {
+            "atWord": "first",
+            "assetId": "spr-pipes",
+            "x": 0.55,
+            "y": 0.6,
+            "w": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "today",
+      "type": "archival",
+      "narration": "Today it's 61 caverns in Texas and Louisiana. What are you paying for gas right now?",
+      "speaks": [
+        "f-caverns"
+      ],
+      "props": {
+        "title": "The Strategic Petroleum Reserve",
+        "assetId": "spr-wellpad",
+        "layout": "bleed",
+        "shots": [
+          {
+            "x": 0.5,
+            "y": 0.5,
+            "w": 0.35
+          },
+          {
+            "atWord": "Texas",
+            "assetId": "spr-piping",
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.4
+          },
+          {
+            "atWord": "What",
+            "assetId": "gas-empty",
+            "x": 0.66,
+            "y": 0.55,
+            "w": 0.3
+          }
+        ]
+      }
+    }
+  ]
+}

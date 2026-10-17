@@ -1,0 +1,105 @@
+{
+  "facts": [
+    {
+      "id": "f-spr-low",
+      "claim": "The U.S. Strategic Petroleum Reserve held 282,983 thousand barrels (about 283 million) of crude oil in the week ending October 9, 2026; the last week it held less was the week ending October 15, 1982 (280,802 thousand barrels).",
+      "value": 283,
+      "source": {
+        "name": "U.S. Energy Information Administration, Weekly U.S. Ending Stocks of Crude Oil in SPR (WCSSTUS1), released 10/15/2026",
+        "stamp": "U.S. EIA, Oct. 2026",
+        "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCSSTUS1&f=W",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "Fox Business, 10 Aug 2026: the reserve fell below 300 million barrels, the lowest in EIA weekly data since January 1983",
+          "url": "https://foxbusiness.com/markets/oil-us-strategic-petroleum-reserve-falls-lowest-level-since-1983",
+          "tier": "secondary"
+        },
+        {
+          "name": "Rigzone, 5 Oct 2026: 283.8 million barrels in the week ending September 25, 39.69 percent of 714 million barrels of capacity (EIA data)",
+          "url": "https://www.rigzone.com/news/usa_continues_strategic_petroleum_reserve_release-05-oct-2026-184770-article/",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-release",
+      "claim": "On March 11, 2026, the Department of Energy announced a 172 million barrel release from the Strategic Petroleum Reserve, the U.S. share of a 400 million barrel IEA collective action, in response to supply disruptions tied to the Middle East war and the Strait of Hormuz crisis.",
+      "source": {
+        "name": "Rigzone, USA Continues Strategic Petroleum Reserve Release, 5 Oct 2026",
+        "stamp": "Rigzone, Oct. 2026",
+        "url": "https://www.rigzone.com/news/usa_continues_strategic_petroleum_reserve_release-05-oct-2026-184770-article/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Fox Business, 10 Aug 2026: in March 2026 President Trump authorized releasing up to 172 million barrels; Iranian attacks have disrupted tanker movement through the Strait of Hormuz",
+          "url": "https://foxbusiness.com/markets/oil-us-strategic-petroleum-reserve-falls-lowest-level-since-1983",
+          "tier": "secondary"
+        },
+        {
+          "name": "U.S. Department of Energy, United States to Release 172 Million Barrels of Oil From the Strategic Petroleum Reserve",
+          "url": "https://www.energy.gov/node/4856800",
+          "tier": "primary"
+        }
+      ]
+    },
+    {
+      "id": "f-embargo",
+      "claim": "During the 1973 Arab-Israeli War, Arab members of OPEC imposed an embargo against the United States; the price of oil per barrel first doubled, then quadrupled, and the embargo was lifted in March 1974.",
+      "source": {
+        "name": "U.S. Department of State, Office of the Historian, Oil Embargo, 1973-1974",
+        "stamp": "U.S. State Dept. Historian",
+        "url": "https://history.state.gov/milestones/1969-1976/oil-embargo",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-epca",
+      "claim": "President Ford set the Strategic Petroleum Reserve in motion when he signed the Energy Policy and Conservation Act on December 22, 1975; the law made it U.S. policy to build a reserve of up to one billion barrels of petroleum.",
+      "value": 1000000000,
+      "source": {
+        "name": "U.S. Department of Energy, SPR Origins",
+        "stamp": "U.S. Dept. of Energy",
+        "url": "https://www.energy.gov/node/4040106",
+        "tier": "primary"
+      },
+      "corroboration": [
+        {
+          "name": "Bipartisan Policy Center: Congress created the reserve in the 1975 Energy Policy and Conservation Act, to buffer the economy against disruptions like the 1973 oil crisis",
+          "url": "https://bipartisanpolicy.org/explainer/how-the-u-s-strategic-petroleum-reserve-works/",
+          "tier": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "f-first-oil",
+      "claim": "In April 1977 the government acquired several existing salt caverns on the Gulf Coast as the first storage sites, and on July 21, 1977 the first oil arrived: approximately 412,000 barrels of Saudi Arabian light crude.",
+      "source": {
+        "name": "U.S. Department of Energy, SPR Origins",
+        "stamp": "U.S. Dept. of Energy",
+        "url": "https://www.energy.gov/node/4040106",
+        "tier": "primary"
+      }
+    },
+    {
+      "id": "f-caverns",
+      "claim": "The Strategic Petroleum Reserve stores its oil in naturally impermeable underground salt caverns: 61 caverns at four sites on the Gulf Coast, Bryan Mound and Big Hill in Texas and West Hackberry and Bayou Choctaw in Louisiana.",
+      "value": 61,
+      "source": {
+        "name": "Bipartisan Policy Center, How the U.S. Strategic Petroleum Reserve Works",
+        "stamp": "Bipartisan Policy Center",
+        "url": "https://bipartisanpolicy.org/explainer/how-the-u-s-strategic-petroleum-reserve-works/",
+        "tier": "secondary"
+      },
+      "corroboration": [
+        {
+          "name": "Congressional Research Service, The Strategic Petroleum Reserve: History, Perspectives, and Issues (RL33341): underground storage hollowed out from naturally occurring salt domes in Texas and Louisiana",
+          "url": "https://www.everycrsreport.com/files/20090818_RL33341_b27388f68c57bc0be0dff302bfc1b461be12b48b.html",
+          "tier": "primary"
+        }
+      ]
+    }
+  ]
+}
