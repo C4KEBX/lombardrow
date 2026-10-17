@@ -42,13 +42,13 @@
       ],
       "props": {
         "title": "The Strategic Petroleum Reserve",
-        "assetId": "spr-wellpad",
+        "assetId": "spr-wellhead",
         "layout": "bleed",
         "shots": [
           {
             "x": 0.5,
-            "y": 0.5,
-            "w": 0.35
+            "y": 0.45,
+            "w": 0.55
           },
           {
             "atWord": "lowest",
@@ -66,10 +66,10 @@
           },
           {
             "atWord": "caves",
-            "assetId": "spr-wellhead",
-            "x": 0.45,
-            "y": 0.5,
-            "w": 0.6
+            "assetId": "spr-piping",
+            "x": 0.5,
+            "y": 0.6,
+            "w": 0.4
           }
         ]
       }
