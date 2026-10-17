@@ -37,6 +37,10 @@ describe("produce (stand-in voice, generated music)", () => {
     expect(Math.abs(loud.inputI - -14)).toBeLessThan(1);
     expect(loud.inputTp).toBeLessThanOrEqual(-1.5);
     expect(JSON.parse(fs.readFileSync(result.manifestPath, "utf-8")).scenes).toHaveLength(2);
+    // The TikTok file: the same cut without the bed, at the same loudness.
+    expect(result.tiktokPath).toBeDefined();
+    expect(await probeDurationMs(result.tiktokPath!)).toBeCloseTo((result.totalFrames / 30) * 1000, -2);
+    expect(Math.abs((await measureLoudness(result.tiktokPath!)).inputI - -14)).toBeLessThan(1);
   }, 240000);
 
   it("enforces the 62-70 second length by default", async () => {

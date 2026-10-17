@@ -39,6 +39,8 @@ export type ProduceOptions = {
 
 export type ProduceResult = {
   videoPath: string;
+  /** The same cut with voice and sound effects but no music bed, for TikTok (Justin, 2026-10-17); absent when there is no bed. */
+  tiktokPath?: string;
   totalFrames: number;
   durationMs: number;
   loudness: LoudnormMeasure;
@@ -100,6 +102,10 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   }
 
   const audioPath = path.join(opts.outDir, "audio.m4a");
+  const sfx = cues.map((c) => {
+    const sound = sounds.get(c.sound)!;
+    return { path: path.join(sfxLib.dir, sound.file), atMs: c.atMs - sound.hitMs, gainDb: sound.gainDb + c.gainDb };
+  });
   const clips = [
     ...built.scenes.map((scene) => ({
       path: voices[scene.id].audioPath,
@@ -113,10 +119,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
     musicPath: music?.path,
     // Library beds share one loudness; the ambient drone keeps its own level.
     musicGainDb: music?.track ? MUSIC_BED_DB + music.gainDb : undefined,
-    sfx: cues.map((c) => {
-      const sound = sounds.get(c.sound)!;
-      return { path: path.join(sfxLib.dir, sound.file), atMs: c.atMs - sound.hitMs, gainDb: sound.gainDb + c.gainDb };
-    }),
+    sfx,
     totalMs,
     outPath: audioPath,
   });
@@ -125,6 +128,16 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
   await muxVideoAudio(silentPath, audioPath, videoPath);
   const loudness = await measureLoudness(videoPath);
   assertLoudnessOk(loudness);
+
+  // TikTok uploads add a TikTok sound instead of our bed, which performs better there (Justin, 2026-10-17).
+  let tiktokPath: string | undefined;
+  if (music) {
+    const tiktokAudio = path.join(opts.outDir, "audio-no-bed.m4a");
+    await mixAudio({ clips, sfx, totalMs, outPath: tiktokAudio });
+    tiktokPath = path.join(opts.outDir, `no-${String(storyboard.meta.doorNo).padStart(3, "0")}-tiktok-voice-only.mp4`);
+    await muxVideoAudio(silentPath, tiktokAudio, tiktokPath);
+    assertLoudnessOk(await measureLoudness(tiktokPath));
+  }
 
   const manifestPath = path.join(opts.outDir, "manifest.json");
   fs.writeFileSync(
@@ -137,6 +150,7 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
         loudness,
         music: storyboard.audio.music,
         musicCredit: music?.track?.credit ?? null,
+        tiktokNoBed: tiktokPath ? path.basename(tiktokPath) : null,
         sfx: cues.map((c) => ({ sound: c.sound, atMs: Math.round(c.atMs), gainDb: Number(c.gainDb.toFixed(2)) })),
         // Every caption word with its time, for npm run listen-back.
         captions: built.captions.flatMap((c) => c.words.map((w) => ({ text: w.text, startMs: Math.round(w.startMs), endMs: Math.round(w.endMs) }))),
@@ -150,5 +164,5 @@ export async function produce(opts: ProduceOptions): Promise<ProduceResult> {
       2,
     ),
   );
-  return { videoPath, totalFrames: built.totalFrames, durationMs: totalMs, loudness, manifestPath };
+  return { videoPath, tiktokPath, totalFrames: built.totalFrames, durationMs: totalMs, loudness, manifestPath };
 }

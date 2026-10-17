@@ -59,6 +59,7 @@ The nine changes below come from the TikTok teardown of No. 003 (research/tiktok
 - **Frame 0 shows the subject, big (2026-10-11).** From the No. 004 analytics: half the viewers left by 3 s. The first shot is a close, bright crop of the one thing the hook names, and the hook line sits big just above the middle of the frame, not tucked at the top.
 - **Covers that make people curious (2026-10-11).** Justin: covers "should intrigue a potential viewer, not just be a generic placeholder." `meta.cover` sets a close crop of one image and a short line with one word in Brass; the door number and wordmark go small. YouTube Shorts and X show a frame of the video instead of the cover, so the cover reuses the open's crop and the hook line, which makes frame 0 work as a cover too.
 - **TikTok and YouTube only (2026-10-12).** Justin, after posting No. 005: "Let's focus only on TikTok and YouTube moving forward." `publish-kit` writes only `youtube.txt`, `tiktok.txt` and their 9:16 covers, and the reviewers judge for those two feeds.
+- **A TikTok file with no music bed (2026-10-17).** Justin: "i need a tiktok version without the music bed.. using tiktok music performs much better." `produce` now also writes `final/no-XXX-tiktok-voice-only.mp4`: the same cut with voice and sound effects, without our bed, so a TikTok sound can be added at upload. YouTube keeps `final.mp4` with the bed.
 - **Keywords in every posting kit (2026-10-11).** Justin read that keywords help on TikTok. The Posting kits thread adds them.
 
 ## Accuracy on screen
